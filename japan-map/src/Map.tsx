@@ -22,6 +22,7 @@ const JAPAN_BOUNDS: mapboxgl.LngLatBoundsLike = [
 export default function JapanMap() {
     const mapRef = useRef<Map | null>(null);
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
+    const popupRef = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
 
     const [roadsVisible, setRoadsVisible] = useState(false);
     const [adminVisible, setAdminVisible] = useState(false);
@@ -191,7 +192,7 @@ export default function JapanMap() {
             // Mesh sources
             map.addSource('chiba-1km-mesh', {
                 type: 'geojson',
-                data: '/data/12_chiba_1km.geojson'
+                data: '/data/12_chiba_1km_pop.geojson'
             });
 
             map.addSource('chiba-500m-mesh', {
@@ -214,6 +215,33 @@ export default function JapanMap() {
                 paint: {
                     'line-color': '#ff9900',
                     'line-width': 1
+                }
+            });
+
+            map.addLayer({
+                id: 'mesh-1km-fill',
+                type: 'fill',
+                source: 'chiba-1km-mesh',
+                minzoom: 0,
+                maxzoom: 12,
+                paint: {
+                    'fill-color': [
+                        'interpolate',
+                        ['linear'],
+                        ['get', 'PTN_2020'],
+                        0, '#00FF00',   // bright green (very low pop)
+                        100, '#7FFF00',   // chartreuse
+                        300, '#ADFF2F',   // green-yellow
+                        600, '#FFFF00',   // yellow
+                        1000, '#FFD700',   // golden yellow
+                        1500, '#FFA500',   // orange
+                        2000, '#FF8C00',   // dark orange
+                        2500, '#FF4500',   // orange-red
+                        3000, '#FF0000',   // red
+                        4000, '#B22222',   // firebrick
+                        5000, '#8B0000'    // dark red (very high pop)
+                    ],
+                    'fill-opacity': 0.6
                 }
             });
 
@@ -299,6 +327,22 @@ export default function JapanMap() {
                     map.setLayoutProperty(layer.id, 'visibility', 'none');
                 }
             });
+        });
+
+        map.on('mousemove', 'mesh-1km-fill', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const pop = feature.properties?.PTN_2020 ?? 'N/A';
+                popupRef.setLngLat(e.lngLat)
+                    .setHTML(`<strong>Population (2020):</strong> ${pop}`)
+                    .addTo(map);
+            }
+        });
+
+        map.on('mouseleave', 'mesh-1km-fill', () => {
+            map.getCanvas().style.cursor = '';
+            popupRef.remove();
         });
     }, []);
 
