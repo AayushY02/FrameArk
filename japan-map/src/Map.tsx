@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import mapboxgl, { Map, type ExpressionSpecification } from 'mapbox-gl';
+import mapboxgl, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css';
 
@@ -33,13 +33,13 @@ export default function JapanMap() {
         'road-trunk', 'road-motorway', 'road-rail', 'road-path', 'road-network'
     ];
 
-    const generateColorExpressions = () => {
-        const fillMatch: ExpressionSpecification = ['match', ['get', 'nam_ja']];
-        const lineMatch: ExpressionSpecification = ['match', ['get', 'nam_ja']];
-        fillMatch.push('#ccc');
-        lineMatch.push('#333');
-        return { fillMatch, lineMatch };
-    };
+    // const generateColorExpressions = () => {
+    //     const fillMatch: ExpressionSpecification = ['match', ['get', 'nam_ja']];
+    //     const lineMatch: ExpressionSpecification = ['match', ['get', 'nam_ja']];
+    //     fillMatch.push('#ccc');
+    //     lineMatch.push('#333');
+    //     return { fillMatch, lineMatch };
+    // };
 
     const toggleRoads = () => {
         const map = mapRef.current;
