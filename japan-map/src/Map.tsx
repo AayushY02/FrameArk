@@ -35,6 +35,8 @@ export default function JapanMap() {
         'road-trunk', 'road-motorway', 'road-rail', 'road-path', 'road-network'
     ];
     const selectedMetricRef = useRef(selectedMetric);
+    const [agriLayerVisible, setAgriLayerVisible] = useState(false);
+
 
     // const generateColorExpressions = () => {
     //     const fillMatch: ExpressionSpecification = ['match', ['get', 'nam_ja']];
@@ -43,6 +45,108 @@ export default function JapanMap() {
     //     lineMatch.push('#333');
     //     return { fillMatch, lineMatch };
     // };
+
+    const toggleAgriLayer = () => {
+        const map = mapRef.current;
+        if (!map) return;
+
+        if (!agriLayerVisible) {
+            if (!map.getSource('kashiwa-agri')) {
+                map.addSource('kashiwa-agri', {
+                    type: 'geojson',
+                    data: '/data/kashiwa_agricultural_land.geojson'
+                });
+            }
+
+            if (!map.getLayer('agri-fill')) {
+                map.addLayer({
+                    id: 'agri-fill',
+                    type: 'fill',
+                    source: 'kashiwa-agri',
+                    paint: {
+                        'fill-color': [
+                            'match',
+                            ['get', 'KOUCHI'],
+                            '畑', '#8bc34a',
+                            '田', '#4caf50',
+                            '樹園地', '#aed581',
+                            'その他', '#c8e6c9',
+                            '#e0e0e0' // fallback
+                        ],
+                        'fill-opacity': 0.6
+                    }
+                });
+            }
+
+            if (!map.getLayer('agri-outline')) {
+                map.addLayer({
+                    id: 'agri-outline',
+                    type: 'line',
+                    source: 'kashiwa-agri',
+                    paint: {
+                        'line-color': '#2e7d32',
+                        'line-width': 1
+                    }
+                });
+            }
+
+            if (!map.getLayer('agri-labels')) {
+                map.addLayer({
+                    id: 'agri-labels',
+                    type: 'symbol',
+                    source: 'kashiwa-agri',
+                    layout: {
+                        'text-field': ['get', 'KOUCHI'],
+                        'text-size': 11,
+                        'text-anchor': 'center'
+                    },
+                    paint: {
+                        'text-color': '#1b5e20',
+                        'text-halo-color': '#ffffff',
+                        'text-halo-width': 1
+                    }
+                });
+            }
+
+            // Hide other layers
+            const layersToHide = [
+                'mesh-1km-fill', 'mesh-1km-outline',
+                'mesh-500m-fill', 'mesh-500m-outline',
+                'mesh-250m-fill', 'mesh-250m-outline',
+                'admin-fill', 'admin-line'
+            ];
+            layersToHide.forEach(id => {
+                if (map.getLayer(id)) {
+                    map.setLayoutProperty(id, 'visibility', 'none');
+                }
+            });
+
+        } else {
+            // Remove agri layers
+            ['agri-fill', 'agri-outline', 'agri-labels'].forEach(id => {
+                if (map.getLayer(id)) map.removeLayer(id);
+            });
+            if (map.getSource('kashiwa-agri')) {
+                map.removeSource('kashiwa-agri');
+            }
+
+            // Show other layers again
+            const layersToShow = [
+                'mesh-1km-fill', 'mesh-1km-outline',
+                'mesh-500m-fill', 'mesh-500m-outline',
+                'mesh-250m-fill', 'mesh-250m-outline',
+                'admin-fill', 'admin-line'
+            ];
+            layersToShow.forEach(id => {
+                if (map.getLayer(id)) {
+                    map.setLayoutProperty(id, 'visibility', 'visible');
+                }
+            });
+        }
+
+        setAgriLayerVisible(!agriLayerVisible);
+    };
+
 
 
     const getColorExpression = (metric: string): ExpressionSpecification => {
@@ -101,6 +205,13 @@ export default function JapanMap() {
         }
         if (map.getLayer('mesh-500m-fill')) {
             map.setPaintProperty('mesh-500m-fill', 'fill-color', color);
+        }
+
+        if (map.getLayer('mesh-1km-outline')) {
+            map.setPaintProperty('mesh-1km-outline', 'line-color', color);
+        }
+        if (map.getLayer('mesh-500m-outline')) {
+            map.setPaintProperty('mesh-500m-outline', 'line-color', color);
         }
     };
 
@@ -190,6 +301,25 @@ export default function JapanMap() {
                 data: '/data/12_chiba_1km_pop.geojson'
             });
         }
+
+        // if (!map.getSource('mapbox-dem')) {
+        //     map.addSource('mapbox-dem', {
+        //         type: 'raster-dem',
+        //         url: 'mapbox://mapbox.terrain-rgb',
+        //         tileSize: 512,
+        //         maxzoom: 14
+        //     });
+        // }
+
+        // map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
+
+        // map.addLayer({
+        //     id: 'hillshading',
+        //     type: 'hillshade',
+        //     source: 'mapbox-dem',
+        //     layout: { visibility: 'visible' },
+        //     paint: {}
+        // });
         map.addLayer({
             id: 'mesh-1km-fill',
             type: 'fill',
@@ -214,7 +344,7 @@ export default function JapanMap() {
             source: 'chiba-1km-mesh',
             minzoom: 0,
             maxzoom: 12,
-            paint: { 'line-color': '#ff9900', 'line-width': 1 }
+            paint: { 'line-color': '#0099cc', 'line-width': 1 }
         }, labelLayerId);
 
         if (!map.getSource('chiba-500m-mesh')) {
@@ -299,6 +429,8 @@ export default function JapanMap() {
                 'line-width': 1.2
             }
         }, labelLayerId);
+
+
     };
 
     useEffect(() => {
@@ -306,7 +438,7 @@ export default function JapanMap() {
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
             style: currentStyle,
-            center: [139.6917, 35.6895],
+            center: [139.9797, 35.8676],
             zoom: 5.5,
             minZoom: 4.5,
             maxZoom: 18,
@@ -315,13 +447,39 @@ export default function JapanMap() {
         mapRef.current = map;
 
         map.on('load', () => {
+
+            map.flyTo({
+                center: [139.9797, 35.8676], // 📍 Kashiwa
+                zoom: 10,
+                speed: 1.2,
+                curve: 1,
+                essential: true
+            });
+
             map.getStyle().layers?.forEach(layer => {
                 if (layer.type === 'symbol' && ['poi-label', 'road-label', 'waterway-label'].some(id => layer.id.startsWith(id))) {
                     map.setLayoutProperty(layer.id, 'visibility', 'none');
                 }
             });
             addMeshLayers(map);
+
+            // map.addLayer({
+            //     id: '3d-buildings',
+            //     source: 'composite',
+            //     'source-layer': 'building',
+            //     filter: ['==', 'extrude', 'true'],
+            //     type: 'fill-extrusion',
+            //     minzoom: 15,
+            //     paint: {
+            //         'fill-extrusion-color': '#aaa',
+            //         'fill-extrusion-height': ['get', 'height'],
+            //         'fill-extrusion-base': ['get', 'min_height'],
+            //         'fill-extrusion-opacity': 0.6
+            //     }
+            // });
         });
+
+
 
         map.on('style.load', () => {
             addMeshLayers(map);
@@ -381,6 +539,29 @@ export default function JapanMap() {
             map.getCanvas().style.cursor = '';
             popupRef.remove();
         });
+
+        map.on('mousemove', 'agri-fill', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    popupRef
+                        .setLngLat(e.lngLat)
+                        .setHTML(`
+        <strong>Type:</strong> ${props.KOUCHI}<br/>
+        <strong>City:</strong> ${props.CITY}<br/>
+        <strong>ID:</strong> ${props.ID}
+      `)
+                        .addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'agri-fill', () => {
+            map.getCanvas().style.cursor = '';
+            popupRef.remove();
+        });
     }, []);
 
     return (
@@ -407,6 +588,9 @@ export default function JapanMap() {
                 </button>
                 <button onClick={fitBoundsToKashiwa} className="w-full px-4 py-2 text-[#f2f2f2] bg-black hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-full border border-gray-800">
                     Focus 柏市
+                </button>
+                <button onClick={toggleAgriLayer} className="w-full px-4 py-2 text-[#f2f2f2] bg-green-700 hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-full border border-green-900">
+                    {agriLayerVisible ? 'Hide 農業レイヤー' : 'Show 農業レイヤー'}
                 </button>
 
                 <select
