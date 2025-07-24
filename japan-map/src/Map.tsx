@@ -15,44 +15,27 @@ const MAP_STYLES = {
 };
 
 const JAPAN_BOUNDS: mapboxgl.LngLatBoundsLike = [
-    [122.93457, 20.42596], // SW corner
-    [153.98667, 45.55148]  // NE corner
+    [122.93457, 20.42596],
+    [153.98667, 45.55148]
 ];
 
 export default function JapanMap() {
     const mapRef = useRef<Map | null>(null);
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const popupRef = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
-
     const [roadsVisible, setRoadsVisible] = useState(false);
     const [adminVisible, setAdminVisible] = useState(false);
     const [terrainEnabled, setTerrainEnabled] = useState(false);
     const [currentStyle, setCurrentStyle] = useState(MAP_STYLES.Streets);
 
     const ROAD_LAYER_IDS = [
-        'road', 'road-street', 'road-street-low',
-        'road-secondary-tertiary', 'road-primary', 'road-trunk',
-        'road-motorway', 'road-rail', 'road-path', 'road-network'
-    ];
-
-    // Prefectures
-    const prefectureNames = [
-        '北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県',
-        '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県',
-        '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県',
-        '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県',
-        '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県',
-        '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県',
-        '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'
+        'road', 'road-street', 'road-street-low', 'road-secondary-tertiary', 'road-primary',
+        'road-trunk', 'road-motorway', 'road-rail', 'road-path', 'road-network'
     ];
 
     const generateColorExpressions = () => {
         const fillMatch: ExpressionSpecification = ['match', ['get', 'nam_ja']];
         const lineMatch: ExpressionSpecification = ['match', ['get', 'nam_ja']];
-        prefectureNames.forEach(name => {
-            fillMatch.push(name, `hsl(${Math.random() * 360}, 60%, 70%)`);
-            lineMatch.push(name, `hsl(${Math.random() * 360}, 50%, 40%)`);
-        });
         fillMatch.push('#ccc');
         lineMatch.push('#333');
         return { fillMatch, lineMatch };
@@ -93,14 +76,7 @@ export default function JapanMap() {
                 maxzoom: 14
             });
             map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
-
-            map.addLayer({
-                id: 'hillshading',
-                type: 'hillshade',
-                source: 'mapbox-dem',
-                layout: { visibility: 'visible' },
-                paint: {}
-            });
+            map.addLayer({ id: 'hillshading', type: 'hillshade', source: 'mapbox-dem', layout: { visibility: 'visible' }, paint: {} });
         } else {
             map.setTerrain(null);
             if (map.getLayer('hillshading')) map.removeLayer('hillshading');
@@ -112,16 +88,7 @@ export default function JapanMap() {
     const fitBoundsToKashiwa = () => {
         const map = mapRef.current;
         if (!map) return;
-
-        const kashiwaBounds: mapboxgl.LngLatBoundsLike = [
-            [139.935, 35.825], // Southwest corner
-            [140.05, 35.91]    // Northeast corner
-        ];
-
-        map.fitBounds(kashiwaBounds, {
-            padding: 40,
-            duration: 1000
-        });
+        map.fitBounds([[139.935, 35.825], [140.05, 35.91]], { padding: 40, duration: 1000 });
     };
 
     const handleStyleChange = (styleUrl: string) => {
@@ -131,9 +98,96 @@ export default function JapanMap() {
         map.setStyle(styleUrl);
     };
 
+    const addMeshLayers = (map: mapboxgl.Map) => {
+        if (!map.getSource('chiba-1km-mesh')) {
+            map.addSource('chiba-1km-mesh', {
+                type: 'geojson',
+                data: '/data/12_chiba_1km_pop.geojson'
+            });
+        }
+        map.addLayer({
+            id: 'mesh-1km-fill',
+            type: 'fill',
+            source: 'chiba-1km-mesh',
+            minzoom: 0,
+            maxzoom: 12,
+            paint: {
+                'fill-color': [
+                    'interpolate', ['linear'], ['get', 'PTN_2020'],
+                    0, '#00FF00', 100, '#7FFF00', 300, '#ADFF2F',
+                    600, '#FFFF00', 1000, '#FFD700', 1500, '#FFA500',
+                    2000, '#FF8C00', 2500, '#FF4500', 3000, '#FF0000',
+                    4000, '#B22222', 5000, '#8B0000'
+                ],
+                'fill-opacity': 0.6
+            }
+        });
+        map.addLayer({
+            id: 'mesh-1km-outline',
+            type: 'line',
+            source: 'chiba-1km-mesh',
+            minzoom: 0,
+            maxzoom: 12,
+            paint: { 'line-color': '#ff9900', 'line-width': 1 }
+        });
+
+        if (!map.getSource('chiba-500m-mesh')) {
+            map.addSource('chiba-500m-mesh', {
+                type: 'geojson',
+                data: '/data/12_chiba_500m_pop.geojson'
+            });
+        }
+        map.addLayer({
+            id: 'mesh-500m-outline',
+            type: 'line',
+            source: 'chiba-500m-mesh',
+            minzoom: 12,
+            maxzoom: 13.5,
+            paint: { 'line-color': '#0099cc', 'line-width': 0.75 }
+        });
+
+        map.addLayer({
+            id: 'mesh-500m-fill',
+            type: 'fill',
+            source: 'chiba-500m-mesh',
+            minzoom: 12,
+            maxzoom: 13.5,
+            paint: {
+                'fill-color': [
+                    'interpolate', ['linear'], ['get', 'PTN_2020'],
+                    0, '#00FF00', 100, '#7FFF00', 300, '#ADFF2F',
+                    600, '#FFFF00', 1000, '#FFD700', 1500, '#FFA500',
+                    2000, '#FF8C00', 2500, '#FF4500', 3000, '#FF0000',
+                    4000, '#B22222', 5000, '#8B0000'
+                ],
+                'fill-opacity': 0.6
+            }
+        });
+
+        if (!map.getSource('chiba-250m-mesh')) {
+            map.addSource('chiba-250m-mesh', {
+                type: 'geojson',
+                data: '/data/12_chiba_250m.geojson'
+            });
+        }
+        map.addLayer({
+            id: 'mesh-250m-fill',
+            type: 'fill',
+            source: 'chiba-250m-mesh',
+            minzoom: 13.5,
+            paint: { 'fill-color': '#ffffff', 'fill-opacity': 0 }
+        });
+        map.addLayer({
+            id: 'mesh-250m-outline',
+            type: 'line',
+            source: 'chiba-250m-mesh',
+            minzoom: 13.5,
+            paint: { 'line-color': '#000000', 'line-width': 0.5 }
+        });
+    };
+
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
-
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
             style: currentStyle,
@@ -143,190 +197,19 @@ export default function JapanMap() {
             maxZoom: 18,
             maxBounds: JAPAN_BOUNDS
         });
-
         mapRef.current = map;
 
         map.on('load', () => {
-            // Hide noisy labels but keep place names
             map.getStyle().layers?.forEach(layer => {
-                if (
-                    layer.type === 'symbol' &&
-                    ['poi-label', 'road-label', 'waterway-label'].some(id => layer.id.startsWith(id))
-                ) {
+                if (layer.type === 'symbol' && ['poi-label', 'road-label', 'waterway-label'].some(id => layer.id.startsWith(id))) {
                     map.setLayoutProperty(layer.id, 'visibility', 'none');
                 }
             });
-
-            // Prefecture layer
-            map.addSource('admin-tiles', {
-                type: 'vector',
-                url: 'mapbox://frame-ark.5l5v468c'
-            });
-
-            const { fillMatch, lineMatch } = generateColorExpressions();
-
-            map.addLayer({
-                id: 'admin-fill',
-                type: 'fill',
-                source: 'admin-tiles',
-                'source-layer': 'japan-2ix0gj',
-                layout: { visibility: 'none' },
-                paint: {
-                    'fill-color': fillMatch,
-                    'fill-opacity': 0.6
-                }
-            });
-
-            map.addLayer({
-                id: 'admin-line',
-                type: 'line',
-                source: 'admin-tiles',
-                'source-layer': 'japan-2ix0gj',
-                layout: { visibility: 'none' },
-                paint: {
-                    'line-color': lineMatch,
-                    'line-width': 1.5
-                }
-            });
-
-            // Mesh sources
-            map.addSource('chiba-1km-mesh', {
-                type: 'geojson',
-                data: '/data/12_chiba_1km_pop.geojson'
-            });
-
-            map.addSource('chiba-500m-mesh', {
-                type: 'geojson',
-                data: '/data/12_chiba_500m.geojson'
-            });
-
-            map.addSource('chiba-250m-mesh', {
-                type: 'geojson',
-                data: '/data/12_chiba_250m.geojson'
-            });
-
-            // 1km Mesh Layer (zoom 0–12)
-            map.addLayer({
-                id: 'mesh-1km-outline',
-                type: 'line',
-                source: 'chiba-1km-mesh',
-                minzoom: 0,
-                maxzoom: 12,
-                paint: {
-                    'line-color': '#ff9900',
-                    'line-width': 1
-                }
-            });
-
-            map.addLayer({
-                id: 'mesh-1km-fill',
-                type: 'fill',
-                source: 'chiba-1km-mesh',
-                minzoom: 0,
-                maxzoom: 12,
-                paint: {
-                    'fill-color': [
-                        'interpolate',
-                        ['linear'],
-                        ['get', 'PTN_2020'],
-                        0, '#00FF00',   // bright green (very low pop)
-                        100, '#7FFF00',   // chartreuse
-                        300, '#ADFF2F',   // green-yellow
-                        600, '#FFFF00',   // yellow
-                        1000, '#FFD700',   // golden yellow
-                        1500, '#FFA500',   // orange
-                        2000, '#FF8C00',   // dark orange
-                        2500, '#FF4500',   // orange-red
-                        3000, '#FF0000',   // red
-                        4000, '#B22222',   // firebrick
-                        5000, '#8B0000'    // dark red (very high pop)
-                    ],
-                    'fill-opacity': 0.6
-                }
-            });
-
-            // 500m Mesh Layer (zoom 12–13.5)
-            map.addLayer({
-                id: 'mesh-500m-outline',
-                type: 'line',
-                source: 'chiba-500m-mesh',
-                minzoom: 12,
-                maxzoom: 13.5,
-                paint: {
-                    'line-color': '#0099cc',
-                    'line-width': 0.75
-                }
-            });
-
-            // 250m Mesh Layer (zoom 13.5+)
-            map.addLayer({
-                id: 'mesh-250m-fill',
-                type: 'fill',
-                source: 'chiba-250m-mesh',
-                minzoom: 13.5,
-                paint: {
-                    'fill-color': '#ffffff',
-                    'fill-opacity': 0
-                }
-            });
-
-            map.addLayer({
-                id: 'mesh-250m-outline',
-                type: 'line',
-                source: 'chiba-250m-mesh',
-                minzoom: 13.5,
-                paint: {
-                    'line-color': '#000000',
-                    'line-width': 0.5
-                }
-            });
-
-            // Interaction: click on 250m mesh
-            map.on('click', 'mesh-250m-fill', (e) => {
-                const lngLat = e.lngLat;
-                new mapboxgl.Popup()
-                    .setLngLat(lngLat)
-                    .setHTML(`<strong>Mesh Cell</strong><br/>Lng: ${lngLat.lng.toFixed(6)}<br/>Lat: ${lngLat.lat.toFixed(6)}`)
-                    .addTo(map);
-            });
-
-            map.on('mouseenter', 'mesh-250m-fill', () => {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-            map.on('mouseleave', 'mesh-250m-fill', () => {
-                map.getCanvas().style.cursor = '';
-            });
-
-            // Center on Kashiwa
-            map.flyTo({
-                center: [139.9825, 35.8675],
-                zoom: 12
-            });
+            addMeshLayers(map);
         });
 
         map.on('style.load', () => {
-            // Restore layer visibility after style change
-            ROAD_LAYER_IDS.forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', roadsVisible ? 'visible' : 'none');
-                }
-            });
-
-            ['admin-fill', 'admin-line'].forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', adminVisible ? 'visible' : 'none');
-                }
-            });
-
-            map.getStyle().layers?.forEach(layer => {
-                if (
-                    layer.type === 'symbol' &&
-                    ['poi-label', 'road-label', 'waterway-label'].some(id => layer.id.startsWith(id))
-                ) {
-                    map.setLayoutProperty(layer.id, 'visibility', 'none');
-                }
-            });
+            addMeshLayers(map);
         });
 
         map.on('mousemove', 'mesh-1km-fill', (e) => {
@@ -334,12 +217,9 @@ export default function JapanMap() {
             if (feature) {
                 map.getCanvas().style.cursor = 'pointer';
                 const pop = feature.properties?.PTN_2020 ?? 'N/A';
-                popupRef.setLngLat(e.lngLat)
-                    .setHTML(`<strong>Population (2020):</strong> ${pop}`)
-                    .addTo(map);
+                popupRef.setLngLat(e.lngLat).setHTML(`<strong>Population (2020):</strong> ${pop}`).addTo(map);
             }
         });
-
         map.on('mouseleave', 'mesh-1km-fill', () => {
             map.getCanvas().style.cursor = '';
             popupRef.remove();
@@ -368,14 +248,10 @@ export default function JapanMap() {
                 <button onClick={toggleTerrain} className="w-full px-4 py-1 bg-green-600 text-white text-sm rounded hover:bg-green-700">
                     {terrainEnabled ? 'Hide 地形' : 'Show 地形'}
                 </button>
-                <button
-                    onClick={fitBoundsToKashiwa}
-                    className="w-full px-4 py-1 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700"
-                >
+                <button onClick={fitBoundsToKashiwa} className="w-full px-4 py-1 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700">
                     Focus 柏市 (Kashiwa)
                 </button>
             </div>
-
             <div ref={mapContainerRef} className="w-full h-full" />
         </div>
     );
