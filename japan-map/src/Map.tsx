@@ -717,7 +717,10 @@ export default function JapanMap() {
                 })()}
             </Card>
 
-            <Card className='absolute top-3 left-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
+            <h1 className={`absolute top-3 left-3 z-10 ${currentStyle === MAP_STYLES.ダーク ? "text-white" : "text-black"} text-lg font-mono  rounded-2xl`}>
+                FrameArk 1.0 Beta
+            </h1>
+            <Card className='absolute bottom-3 left-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
                 {!agriLayerVisible ? <h1>2020年の人口推計データ</h1> : <h1>柏市農地データ</h1>}
             </Card>
             <div ref={mapContainerRef} className="w-full h-full" />
