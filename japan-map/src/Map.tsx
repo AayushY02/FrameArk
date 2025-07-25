@@ -3,22 +3,66 @@ import mapboxgl, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css';
 import type { ExpressionSpecification } from 'mapbox-gl';
+import { Button } from './components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Grid } from 'ldrs/react'
+import 'ldrs/react/Grid.css'
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 const MAP_STYLES = {
-    Streets: 'mapbox://styles/mapbox/streets-v12',
-    Light: 'mapbox://styles/mapbox/light-v11',
-    Dark: 'mapbox://styles/mapbox/dark-v11',
-    Satellite: 'mapbox://styles/mapbox/satellite-v9',
-    Outdoors: 'mapbox://styles/mapbox/outdoors-v12',
-    Navigation: 'mapbox://styles/mapbox/navigation-day-v1'
+    ストリート: 'mapbox://styles/mapbox/streets-v12',
+    ライト: 'mapbox://styles/mapbox/light-v11',
+    ダーク: 'mapbox://styles/mapbox/dark-v11',
+    衛星写真: 'mapbox://styles/mapbox/satellite-v9',
+    アウトドア: 'mapbox://styles/mapbox/outdoors-v12',
+    ナビゲーション: 'mapbox://styles/mapbox/navigation-day-v1'
+};
+
+const getGradientLegendForMetric = (metric: string) => {
+    if (metric === 'ELDERLY_RATIO') {
+        return {
+            title: '高齢者比率（65歳以上／総人口）',
+            gradient: ['#edf8e9', '#bae4b3', '#74c476', '#31a354', '#006d2c'],
+            labels: ['<10%', '20%', '30%', '40%', '>40%']
+        };
+    } else if (metric === 'PTC_2020') {
+        return {
+            title: '65歳以上の人口（2020年）',
+            gradient: ['#fff5eb', '#fd8d3c', '#f16913', '#d94801', '#a63603'],
+            labels: ['<500', '1500', '3000', '5000', '>5000']
+        };
+    } else if (metric === 'PTA_2020') {
+        return {
+            title: '0〜14歳の人口（2020年）',
+            gradient: ['#f7fbff', '#c6dbef', '#6baed6', '#2171b5', '#08306b'],
+            labels: ['<300', '800', '1200', '2000', '>2000']
+        };
+    } else {
+        return {
+            title: '総人口（2020年）',
+            gradient: ['#ffffcc', '#a1dab4', '#41b6c4', '#2c7fb8', '#253494'],
+            labels: ['<500', '1500', '3000', '5000', '>5000']
+        };
+    }
 };
 
 
 const JAPAN_BOUNDS: mapboxgl.LngLatBoundsLike = [
     [122.93457, 20.42596],
     [153.98667, 45.55148]
+];
+
+const CHIBA_BOUNDS: mapboxgl.LngLatBoundsLike = [
+    [139.544, 34.856],  // south-west corner of Chiba
+    [140.974, 35.898]   // north-east corner of Chiba
 ];
 
 export default function JapanMap() {
@@ -28,8 +72,9 @@ export default function JapanMap() {
     const [roadsVisible, setRoadsVisible] = useState(false);
     const [adminVisible, setAdminVisible] = useState(false);
     const [terrainEnabled, setTerrainEnabled] = useState(false);
-    const [currentStyle, setCurrentStyle] = useState(MAP_STYLES.Streets);
+    const [currentStyle, setCurrentStyle] = useState(MAP_STYLES.ストリート);
     const [selectedMetric, setSelectedMetric] = useState('PTN_2020');
+    const [isLoading, setIsLoading] = useState(true);
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary', 'road-primary',
         'road-trunk', 'road-motorway', 'road-rail', 'road-path', 'road-network'
@@ -47,6 +92,7 @@ export default function JapanMap() {
     // };
 
     const toggleAgriLayer = () => {
+        setIsLoading(true);
         const map = mapRef.current;
         if (!map) return;
 
@@ -135,7 +181,6 @@ export default function JapanMap() {
                 'mesh-1km-fill', 'mesh-1km-outline',
                 'mesh-500m-fill', 'mesh-500m-outline',
                 'mesh-250m-fill', 'mesh-250m-outline',
-                'admin-fill', 'admin-line'
             ];
             layersToShow.forEach(id => {
                 if (map.getLayer(id)) {
@@ -145,6 +190,9 @@ export default function JapanMap() {
         }
 
         setAgriLayerVisible(!agriLayerVisible);
+        map.once('idle', () => {
+            setIsLoading(false);
+        });
     };
 
 
@@ -268,8 +316,18 @@ export default function JapanMap() {
     const handleStyleChange = (styleUrl: string) => {
         const map = mapRef.current;
         if (!map) return;
+        setIsLoading(true);
         setCurrentStyle(styleUrl);
         map.setStyle(styleUrl);
+        setSelectedMetric('PTN_2020');
+        setTerrainEnabled(false);
+        setAgriLayerVisible(false)
+
+        map.once('style.load', () => {
+            addMeshLayers(map, selectedMetric);
+            updateMetricStyles();  // <-- Ensures styles are applied for new base layer
+        });
+        map.once('idle', () => setIsLoading(false));
     };
 
     const getLabelLayerId = (map: mapboxgl.Map): string | undefined => {
@@ -286,14 +344,22 @@ export default function JapanMap() {
     };
 
     useEffect(() => {
+        const map = mapRef.current;
+        setIsLoading(true);
         updateMetricStyles();
+        if (map) {
+            // wait until map finishes rendering
+            map.once('idle', () => {
+                setIsLoading(false);
+            });
+        }
     }, [selectedMetric]);
 
     useEffect(() => {
         selectedMetricRef.current = selectedMetric;
     }, [selectedMetric]);
 
-    const addMeshLayers = (map: mapboxgl.Map) => {
+    const addMeshLayers = (map: mapboxgl.Map, metric: string) => {
         const labelLayerId = getLabelLayerId(map);
         if (!map.getSource('chiba-1km-mesh')) {
             map.addSource('chiba-1km-mesh', {
@@ -334,7 +400,7 @@ export default function JapanMap() {
                 //     2000, '#FF8C00', 2500, '#FF4500', 3000, '#FF0000',
                 //     4000, '#B22222', 5000, '#8B0000'
                 // ],
-                'fill-color': getColorExpression(selectedMetric),
+                'fill-color': getColorExpression(metric),
                 'fill-opacity': 0.6
             }
         }, labelLayerId);
@@ -376,7 +442,7 @@ export default function JapanMap() {
                 //     2000, '#FF8C00', 2500, '#FF4500', 3000, '#FF0000',
                 //     4000, '#B22222', 5000, '#8B0000'
                 // ],
-                'fill-color': getColorExpression(selectedMetric),
+                'fill-color': getColorExpression(metric),
                 'fill-opacity': 0.6
             }
         }, labelLayerId);
@@ -435,6 +501,7 @@ export default function JapanMap() {
 
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
+        setIsLoading(true);
         const map = new mapboxgl.Map({
             container: mapContainerRef.current,
             style: currentStyle,
@@ -456,12 +523,18 @@ export default function JapanMap() {
                 essential: true
             });
 
+            map.once('idle', () => setIsLoading(false));
+
+            map.once('moveend', () => {
+                map.setMaxBounds(CHIBA_BOUNDS);
+            });
+
             map.getStyle().layers?.forEach(layer => {
                 if (layer.type === 'symbol' && ['poi-label', 'road-label', 'waterway-label'].some(id => layer.id.startsWith(id))) {
                     map.setLayoutProperty(layer.id, 'visibility', 'none');
                 }
             });
-            addMeshLayers(map);
+            addMeshLayers(map, selectedMetric);
 
             // map.addLayer({
             //     id: '3d-buildings',
@@ -482,7 +555,7 @@ export default function JapanMap() {
 
 
         map.on('style.load', () => {
-            addMeshLayers(map);
+            addMeshLayers(map, selectedMetric);
         });
 
         map.on('mousemove', 'mesh-1km-fill', (e) => {
@@ -496,10 +569,10 @@ export default function JapanMap() {
                     : feature.properties?.[metric] ?? 'N/A';
 
                 const label = {
-                    PTN_2020: 'Total Population (2020)',
-                    PTA_2020: 'Age 0–14 (2020)',
-                    PTC_2020: 'Age 65+ (2020)',
-                    ELDERLY_RATIO: 'Elderly Ratio (65+ / Total)'
+                    PTN_2020: '総人口（2020年）',
+                    PTA_2020: '0〜14歳の人口（2020年）',
+                    PTC_2020: '65歳以上の人口（2020年）',
+                    ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
                 }[metric];
 
                 popupRef
@@ -519,10 +592,10 @@ export default function JapanMap() {
                     : feature.properties?.[metric] ?? 'N/A';
 
                 const label = {
-                    PTN_2020: 'Total Population (2020)',
-                    PTA_2020: 'Age 0–14 (2020)',
-                    PTC_2020: 'Age 65+ (2020)',
-                    ELDERLY_RATIO: 'Elderly Ratio (65+ / Total)'
+                    PTN_2020: '総人口（2020年）',
+                    PTA_2020: '0〜14歳の人口（2020年）',
+                    PTC_2020: '65歳以上の人口（2020年）',
+                    ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
                 }[metric];
 
                 popupRef
@@ -566,44 +639,87 @@ export default function JapanMap() {
 
     return (
         <div className="relative w-screen h-screen">
-            <div className="absolute right-2 top-2 z-10  flex flex-col items-center justify-center space-y-2 w-fit">
-                <select
-                    value={currentStyle}
-                    onChange={(e) => handleStyleChange(e.target.value)}
-                    className="block w-full px-4 py-2 text-sm bg-white rounded-full text-black shadow-2xl border border-gray-200"
+            {isLoading && (
+                <Card
+                    className="
+    absolute
+    top-1/2 left-1/2
+    transform -translate-x-1/2 -translate-y-1/2
+    p-5 z-50
+    rounded-2xl bg-white
+  "
                 >
-                    {Object.entries(MAP_STYLES).map(([label, url]) => (
-                        <option key={url} value={url}>{label}</option>
-                    ))}
-                </select>
+                    <Grid size="60" speed="1.5" color="black" />
+                </Card>
+            )}
+            <div className="absolute right-3 top-3 z-10  flex flex-col items-center justify-center space-y-2 w-fit">
+                <Select value={currentStyle} onValueChange={handleStyleChange}>
+                    <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-2xl text-black shadow-2xl border border-gray-200">
+                        <SelectValue placeholder="Select map style" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Object.entries(MAP_STYLES).map(([label, url]) => (
+                            <SelectItem key={url} value={url}>
+                                {label}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
 
-                <button onClick={toggleRoads} className="w-full px-4 py-2 text-[#f2f2f2] bg-black hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-full border border-gray-800">
-                    {roadsVisible ? 'Hide 道路' : 'Show 道路'}
-                </button>
-                <button onClick={toggleAdminBoundaries} className="w-full px-4 py-2 text-[#f2f2f2] bg-black hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-full border border-gray-800">
-                    {adminVisible ? 'Hide 行政界' : 'Show 行政界'}
-                </button>
-                <button onClick={toggleTerrain} className="w-full px-4 py-2 text-[#f2f2f2] bg-black hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-full border border-gray-800">
-                    {terrainEnabled ? 'Hide 地形' : 'Show 地形'}
-                </button>
-                <button onClick={fitBoundsToKashiwa} className="w-full px-4 py-2 text-[#f2f2f2] bg-black hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-full border border-gray-800">
-                    Focus 柏市
-                </button>
-                <button onClick={toggleAgriLayer} className="w-full px-4 py-2 text-[#f2f2f2] bg-green-700 hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-full border border-green-900">
-                    {agriLayerVisible ? 'Hide 農業レイヤー' : 'Show 農業レイヤー'}
-                </button>
+                <Button onClick={toggleRoads} className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  ">
+                    {roadsVisible ? '道路を非表示' : '道路を表示'}
+                </Button>
+                <Button onClick={toggleAdminBoundaries} className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  ">
+                    {adminVisible ? '行政界を非表示' : '行政界を表示'}
+                </Button>
+                <Button onClick={toggleTerrain} className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  ">
+                    {terrainEnabled ? '地形を非表示' : '地形を表示'}
+                </Button>
+                <Button onClick={fitBoundsToKashiwa} className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  ">
+                    柏市にフォーカス
+                </Button>
+                <Button onClick={toggleAgriLayer} className="w-full px-4 py-2 text-black bg-white hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  ">
+                    {agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}
+                </Button>
 
-                <select
-                    value={selectedMetric}
-                    onChange={(e) => setSelectedMetric(e.target.value)}
-                    className="block w-full px-4 py-2 text-sm bg-white rounded-full text-black shadow-2xl border border-gray-200"
-                >
-                    <option value="PTN_2020">Total Population</option>
-                    <option value="PTC_2020">Age 65+</option>
-                    <option value="PTA_2020">Age 0–14</option>
-                    <option value="ELDERLY_RATIO">Elderly Ratio</option>
-                </select>
+                <Select value={selectedMetric} onValueChange={(val) => { setIsLoading(true); setSelectedMetric(val) }}>
+                    <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-2xl text-black shadow-2xl border border-gray-200">
+                        <SelectValue placeholder="Select Metric" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="PTN_2020">総人口（2020年）</SelectItem>
+                        <SelectItem value="PTC_2020">65歳以上の人口（2020年）</SelectItem>
+                        <SelectItem value="PTA_2020">0〜14歳の人口（2020年）</SelectItem>
+                        <SelectItem value="ELDERLY_RATIO">高齢者比率（65歳以上／総人口）</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
+            <Card className="absolute bottom-10 right-3 z-10 bg-white p-3 rounded-2xl shadow-xl text-xs w-64 ">
+                {(() => {
+                    const legend = getGradientLegendForMetric(selectedMetric);
+                    return (
+                        <div className='space-y-2'>
+                            <CardHeader>
+                                <CardTitle className="font-semibold text-center">{legend.title}</CardTitle>
+                            </CardHeader>
+                            <CardContent className='p-0 space-y-1'>
+                                <div className="relative h-4 w-full rounded overflow-hidden " style={{
+                                    background: `linear-gradient(to right, ${legend.gradient.join(',')})`
+                                }} />
+                                <div className="flex justify-between text-[10px] text-gray-700">
+                                    {legend.labels.map((label, idx) => (
+                                        <span key={idx}>{label}</span>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </div>
+                    );
+                })()}
+            </Card>
+
+            <Card className='absolute top-3 left-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
+                {!agriLayerVisible ? <h1>2020年の人口推計データ</h1> : <h1>柏市農地データ</h1>}
+            </Card>
             <div ref={mapContainerRef} className="w-full h-full" />
         </div>
     );
