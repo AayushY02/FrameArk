@@ -254,12 +254,18 @@ export default function JapanMap() {
         if (map.getLayer('mesh-500m-fill')) {
             map.setPaintProperty('mesh-500m-fill', 'fill-color', color);
         }
+        if (map.getLayer('mesh-250m-fill')) {
+            map.setPaintProperty('mesh-250m-fill', 'fill-color', color);
+        }
 
         if (map.getLayer('mesh-1km-outline')) {
             map.setPaintProperty('mesh-1km-outline', 'line-color', color);
         }
         if (map.getLayer('mesh-500m-outline')) {
             map.setPaintProperty('mesh-500m-outline', 'line-color', color);
+        }
+        if (map.getLayer('mesh-250m-outline')) {
+            map.setPaintProperty('mesh-250m-outline', 'line-color', color);
         }
     };
 
@@ -410,7 +416,7 @@ export default function JapanMap() {
             source: 'chiba-1km-mesh',
             minzoom: 0,
             maxzoom: 12,
-            paint: { 'line-color': '#0099cc', 'line-width': 1 }
+            paint: { 'line-color': '#0099cc', 'line-width': 0.75 }
         }, labelLayerId);
 
         if (!map.getSource('chiba-500m-mesh')) {
@@ -450,7 +456,7 @@ export default function JapanMap() {
         if (!map.getSource('chiba-250m-mesh')) {
             map.addSource('chiba-250m-mesh', {
                 type: 'geojson',
-                data: '/data/12_chiba_250m.geojson'
+                data: '/data/12_chiba_250m_pop.geojson'
             });
         }
         map.addLayer({
@@ -458,14 +464,15 @@ export default function JapanMap() {
             type: 'fill',
             source: 'chiba-250m-mesh',
             minzoom: 13.5,
-            paint: { 'fill-color': '#ffffff', 'fill-opacity': 0 }
+            paint: { 'fill-color': getColorExpression(metric), 'fill-opacity': 0.6 }
         }, labelLayerId);
         map.addLayer({
             id: 'mesh-250m-outline',
             type: 'line',
             source: 'chiba-250m-mesh',
             minzoom: 13.5,
-            paint: { 'line-color': '#000000', 'line-width': 0.5 }
+            paint: { 'line-color': '#0099cc', 'line-width': 0.75 }
+
         });
         map.addSource('admin-tiles', {
             type: 'vector',
@@ -509,7 +516,8 @@ export default function JapanMap() {
             zoom: 5.5,
             minZoom: 4.5,
             maxZoom: 18,
-            maxBounds: JAPAN_BOUNDS
+            maxBounds: JAPAN_BOUNDS,
+            language :"ja"
         });
         mapRef.current = map;
 
@@ -604,11 +612,38 @@ export default function JapanMap() {
                     .addTo(map);
             }
         });
+        map.on('mousemove', 'mesh-250m-fill', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const metric = selectedMetricRef.current;
+
+                const value = metric === 'ELDERLY_RATIO'
+                    ? ((feature.properties?.PTC_2020 / feature.properties?.PTN_2020) * 100).toFixed(1) + '%'
+                    : feature.properties?.[metric] ?? 'N/A';
+
+                const label = {
+                    PTN_2020: '総人口（2020年）',
+                    PTA_2020: '0〜14歳の人口（2020年）',
+                    PTC_2020: '65歳以上の人口（2020年）',
+                    ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
+                }[metric];
+
+                popupRef
+                    .setLngLat(e.lngLat)
+                    .setHTML(`<strong>${label}:</strong> ${value}`)
+                    .addTo(map);
+            }
+        });
         map.on('mouseleave', 'mesh-1km-fill', () => {
             map.getCanvas().style.cursor = '';
             popupRef.remove();
         });
         map.on('mouseleave', 'mesh-500m-fill', () => {
+            map.getCanvas().style.cursor = '';
+            popupRef.remove();
+        });
+        map.on('mouseleave', 'mesh-250m-fill', () => {
             map.getCanvas().style.cursor = '';
             popupRef.remove();
         });
