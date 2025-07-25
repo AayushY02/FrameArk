@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 
+/public/data/12_chiba_250m_pop.geojson
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
