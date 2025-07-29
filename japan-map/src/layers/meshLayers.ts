@@ -128,28 +128,5 @@ export const addMeshLayers = (map: mapboxgl.Map, metric: string) => {
         }
     }, labelLayerId);
 
-    if (!map.getSource('transportation-info-2022')) {
-        map.addSource('transportation-info-2022', {
-            type: 'vector',
-            url: 'mapbox://frame-ark.0w6zjp19' // replace with actual tileset ID
-        });
-    }
-
-    // Add fill layer
-    map.addLayer({
-        id: 'transportation-info-2022-fill',
-        type: 'fill',
-        source: 'transportation-info-2022',
-        'source-layer': 'N07-22_12-4lbl4c', // replace with actual source layer
-        paint: {
-            'fill-color': '#ff6600',
-            'fill-opacity': 0.5
-        },
-        layout: {
-            visibility: 'visible'
-        },
-        minzoom: 0
-    }, labelLayerId);
-
 
 };

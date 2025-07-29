@@ -23,6 +23,10 @@ interface MapControlsProps {
     selectedMetric: string;
     onMetricChange: (val: string) => void;
     styles: Record<string, string>;
+    transportVisible: boolean;
+    toggleTransport: () => void;
+    pbFacilityVisible: boolean;
+    togglePbFacility: () => void;
 }
 
 export default function MapControls({
@@ -39,7 +43,11 @@ export default function MapControls({
     toggleAgri,
     selectedMetric,
     onMetricChange,
-    styles
+    styles,
+    transportVisible,
+    toggleTransport,
+    pbFacilityVisible,
+    togglePbFacility
 }: MapControlsProps) {
     return (
         <div className="absolute right-3 top-3 z-10  flex flex-col items-center justify-center space-y-2 w-fit">
@@ -59,6 +67,9 @@ export default function MapControls({
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleTerrain}>{terrainEnabled ? '地形を非表示' : '地形を表示'}</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={fitToBounds}>柏市にフォーカス</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleAgri}>{agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}</Button>
+            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleTransport}>{transportVisible ? '交通レイヤーを非表示' : '交通レイヤーを表示'}</Button>
+            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={togglePbFacility}>{pbFacilityVisible ? 'Hide public fac' : 'Show public fac'}</Button>
+
 
             <Select value={selectedMetric} onValueChange={onMetricChange}>
                 <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-2xl text-black shadow-2xl border border-gray-200">

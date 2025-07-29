@@ -19,13 +19,15 @@ import { useSetRecoilState } from 'recoil';
 import { selectedMeshIdState } from './state/meshSelection';
 import ChatPanel from './components/ChatPanel';
 import { AnimatePresence, motion } from 'framer-motion';
-
+import { toggleTransportationLayer } from './layers/transportationLayer';
+import { togglePublicFacilityLayer } from './layers/publicFacilityLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
     const mapRef = useRef<Map | null>(null);
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const popupRef = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
+    const transportPopupRef = new mapboxgl.Popup({ closeButton: false, closeOnClick: true, className: "ai-popup" });
 
     const [roadsVisible, setRoadsVisible] = useState(false);
     const [adminVisible, setAdminVisible] = useState(false);
@@ -39,6 +41,8 @@ export default function MapView() {
     const [chatOpen, setChatOpen] = useState(false);
     const [chatMeshId, setChatMeshId] = useState<string | null>(null);
     const selectionPopupRef = useRef<mapboxgl.Popup | null>(null);
+    const [transportVisible, setTransportVisible] = useState(false);
+    const [pbFacilityVisible, setPbFacilityVisible] = useState(false);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -83,6 +87,7 @@ export default function MapView() {
 
 
 
+
     const handleStyleChange = (styleUrl: string) => {
         const map = mapRef.current;
         if (!map) return;
@@ -92,6 +97,7 @@ export default function MapView() {
         setSelectedMetric('PTN_2020');
         setTerrainEnabled(false);
         setAgriLayerVisible(false);
+        setTransportVisible(false)
 
         map.setStyle(styleUrl);
         map.once('style.load', () => {
@@ -313,7 +319,61 @@ export default function MapView() {
             popupRef.remove();
         });
 
+
+        map.on('mousemove', 'transportation-line-hover', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    transportPopupRef
+                        .setLngLat(e.lngLat)
+                        .setHTML(`
+                             <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-40">
+                            <strong>Name:</strong> ${props.N07_001}<br/>
+                            </div>
+                    
+                        `)
+                        .addTo(map);
+                }
+            }
+        });
+
+
+        map.on('mouseleave', 'transportation-line-hover', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
+        map.on('click', 'facilities-circle', (e) => {
+            const feature = e.features?.[0];
+            if (!feature) return;
+
+            const props = feature.properties ?? {};
+            const lngLat = e.lngLat;
+
+            const popupContent = `
+        <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-64 text-sm">
+            <div><strong>施設名:</strong> ${props.P02_004 ?? '不明'}</div>
+            <div><strong>住所:</strong> ${props.P02_005 ?? '不明'}</div>
+            <div><strong>種別コード:</strong> ${props.P02_003}</div>
+            <div><strong>出典:</strong> ${props.P02_007}</div>
+        </div>
+    `;
+
+            transportPopupRef.setLngLat(lngLat).setHTML(popupContent).addTo(map);
+        });
     }, []);
+
+    const cardTitle = (() => {
+        if (agriLayerVisible) return '柏市農地データ';
+        if (transportVisible) return '交通機関運行情報_国土数値情報_2022年度';
+        if (pbFacilityVisible) return '公共施設_国土数値情報_2006年度';
+        // you can add more cases here, e.g.:
+        // if (adminVisible) return '行政界データ';
+        // if (terrainEnabled) return '地形データ';
+        return '2020年の人口推計データ';
+    })();
 
     return (
         <div className="relative w-screen h-screen">
@@ -351,6 +411,11 @@ export default function MapView() {
                     setSelectedMetric(val);
                 }}
                 styles={MAP_STYLES}
+                transportVisible={transportVisible}
+                toggleTransport={() => toggleTransportationLayer(mapRef.current!, transportVisible, setIsLoading, setTransportVisible)}
+                pbFacilityVisible={pbFacilityVisible}
+                togglePbFacility={() => togglePublicFacilityLayer(mapRef.current!, pbFacilityVisible, setIsLoading, setPbFacilityVisible)}
+
             />
 
             <Legend selectedMetric={selectedMetric} />
@@ -360,7 +425,7 @@ export default function MapView() {
             </h1>
             {!chatOpen && !chatMeshId && (
                 <Card className='absolute bottom-10 left-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
-                    {!agriLayerVisible ? <h1>2020年の人口推計データ</h1> : <h1>柏市農地データ</h1>}
+                    <h1>{cardTitle}</h1>
                 </Card>
             )
             }
