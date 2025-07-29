@@ -1,7 +1,6 @@
 // components/ChatPanel.tsx
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
-import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { cn } from "../lib/utils";
 

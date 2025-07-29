@@ -63,6 +63,13 @@ export const togglePublicFacilityLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
+        ['agri-fill', 'agri-outline', 'agri-labels',
+            'transportation-line-hover', 'transportation-line',
+            'admin-fill', 'admin-line'].forEach(id => {
+                if (map.getLayer(id)) {
+                    map.setLayoutProperty(id, 'visibility', 'none');
+                }
+            });
 
         // Show mesh layers again
         [

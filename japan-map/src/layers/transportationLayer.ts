@@ -29,7 +29,7 @@ export const toggleTransportationLayer = (
                 id: 'transportation-line',
                 type: 'line',
                 source: sourceId,
-                minzoom:0,
+                minzoom: 0,
                 'source-layer': sourceLayer,
                 layout: { visibility: 'visible' },
                 paint: {
@@ -61,7 +61,8 @@ export const toggleTransportationLayer = (
             'mesh-500m-fill', 'mesh-500m-outline',
             'mesh-250m-fill', 'mesh-250m-outline',
             'agri-fill', 'agri-outline', 'agri-labels',
-            'admin-fill', 'admin-line'
+            'admin-fill', 'admin-line',
+            'facilities-circle'
         ].forEach(id => {
             if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
         });
@@ -71,6 +72,14 @@ export const toggleTransportationLayer = (
         TRANSPORT_LAYER_IDS.forEach(id => {
             if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
         });
+
+        ['agri-fill', 'agri-outline', 'agri-labels',
+            'facilities-circle',
+            'admin-fill', 'admin-line'].forEach(id => {
+                if (map.getLayer(id)) {
+                    map.setLayoutProperty(id, 'visibility', 'none');
+                }
+            });
 
         // show mesh layers again
         [

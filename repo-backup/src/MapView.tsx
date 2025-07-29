@@ -4,21 +4,13 @@ import mapboxgl, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css';
 
-import { Button } from './components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { Grid } from 'ldrs/react';
+import { Card} from './components/ui/card';
+
 import 'ldrs/react/Grid.css';
 
 import { MAP_STYLES } from './constants/mapStyles';
 import { JAPAN_BOUNDS, CHIBA_BOUNDS } from './constants/bounds';
-import { getGradientLegendForMetric } from './utils/metrics';
+
 import { getColorExpression } from './utils/expressions';
 import { addMeshLayers } from './layers/meshLayers';
 import { toggleAdminBoundaries } from './layers/adminBoundaries';

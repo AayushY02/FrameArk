@@ -98,6 +98,7 @@ export default function MapView() {
         setTerrainEnabled(false);
         setAgriLayerVisible(false);
         setTransportVisible(false)
+        setPbFacilityVisible(false)
 
         map.setStyle(styleUrl);
         map.once('style.load', () => {
@@ -196,26 +197,26 @@ export default function MapView() {
             ensureHighlightLayer();
         });
 
-        const showPopup = (e: mapboxgl.MapMouseEvent) => {
-            const feature = e.features?.[0];
-            if (!feature) return;
+        // const showPopup = (e: mapboxgl.MapMouseEvent) => {
+        //     const feature = e.features?.[0];
+        //     if (!feature) return;
 
-            map.getCanvas().style.cursor = 'pointer';
-            const metric = selectedMetricRef.current;
+        //     map.getCanvas().style.cursor = 'pointer';
+        //     const metric = selectedMetricRef.current;
 
-            const value = metric === 'ELDERLY_RATIO'
-                ? ((feature.properties?.PTC_2020 / feature.properties?.PTN_2020) * 100).toFixed(1) + '%'
-                : feature.properties?.[metric] ?? 'N/A';
+        //     const value = metric === 'ELDERLY_RATIO'
+        //         ? ((feature.properties?.PTC_2020 / feature.properties?.PTN_2020) * 100).toFixed(1) + '%'
+        //         : feature.properties?.[metric] ?? 'N/A';
 
-            const label = {
-                PTN_2020: '総人口（2020年）',
-                PTA_2020: '0〜14歳の人口（2020年）',
-                PTC_2020: '65歳以上の人口（2020年）',
-                ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
-            }[metric];
+        //     const label = {
+        //         PTN_2020: '総人口（2020年）',
+        //         PTA_2020: '0〜14歳の人口（2020年）',
+        //         PTC_2020: '65歳以上の人口（2020年）',
+        //         ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
+        //     }[metric];
 
-            popupRef.setLngLat(e.lngLat).setHTML(`<strong>${label}:</strong> ${value}`).addTo(map);
-        };
+        //     popupRef.setLngLat(e.lngLat).setHTML(`<strong>${label}:</strong> ${value}`).addTo(map);
+        // };
 
         // ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(layer => {
         //     map.on('mousemove', layer, showPopup);

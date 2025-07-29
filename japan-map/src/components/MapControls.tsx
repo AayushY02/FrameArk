@@ -68,7 +68,7 @@ export default function MapControls({
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={fitToBounds}>柏市にフォーカス</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleAgri}>{agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleTransport}>{transportVisible ? '交通レイヤーを非表示' : '交通レイヤーを表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={togglePbFacility}>{pbFacilityVisible ? 'Hide public fac' : 'Show public fac'}</Button>
+            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={togglePbFacility}>{pbFacilityVisible ? '公共施設を非表示' : '公共施設を表示'}</Button>
 
 
             <Select value={selectedMetric} onValueChange={onMetricChange}>

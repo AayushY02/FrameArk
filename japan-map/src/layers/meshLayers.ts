@@ -47,8 +47,8 @@ export const addMeshLayers = (map: mapboxgl.Map, metric: string) => {
 
     if (!map.getSource('chiba-500m-mesh')) {
         map.addSource('chiba-500m-mesh', {
-            type: 'geojson',
-            data: '/data/12_chiba_500m_pop.geojson'
+            type: 'vector',
+            url: 'mapbox://frame-ark.mesh-500'
         });
     }
 
@@ -56,6 +56,7 @@ export const addMeshLayers = (map: mapboxgl.Map, metric: string) => {
         id: 'mesh-500m-outline',
         type: 'line',
         source: 'chiba-500m-mesh',
+        "source-layer": "mesh-500",
         minzoom: 12,
         maxzoom: 13.5,
         paint: { 'line-color': '#0099cc', 'line-width': 0.75 }
@@ -65,6 +66,7 @@ export const addMeshLayers = (map: mapboxgl.Map, metric: string) => {
         id: 'mesh-500m-fill',
         type: 'fill',
         source: 'chiba-500m-mesh',
+        "source-layer": "mesh-500",
         minzoom: 12,
         maxzoom: 13.5,
         paint: {
@@ -75,8 +77,8 @@ export const addMeshLayers = (map: mapboxgl.Map, metric: string) => {
 
     if (!map.getSource('chiba-250m-mesh')) {
         map.addSource('chiba-250m-mesh', {
-            type: 'geojson',
-            data: '/data/12_chiba_250m_pop.geojson'
+            type: 'vector',
+            url: 'mapbox://frame-ark.mesh-250'
         });
     }
 
@@ -84,6 +86,7 @@ export const addMeshLayers = (map: mapboxgl.Map, metric: string) => {
         id: 'mesh-250m-fill',
         type: 'fill',
         source: 'chiba-250m-mesh',
+        "source-layer": "mesh-250",
         minzoom: 13.5,
         paint: {
             'fill-color': getColorExpression(metric),
@@ -95,6 +98,7 @@ export const addMeshLayers = (map: mapboxgl.Map, metric: string) => {
         id: 'mesh-250m-outline',
         type: 'line',
         source: 'chiba-250m-mesh',
+        "source-layer": "mesh-250",
         minzoom: 13.5,
         paint: { 'line-color': '#0099cc', 'line-width': 0.75 }
     });
