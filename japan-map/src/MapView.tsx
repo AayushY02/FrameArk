@@ -3,10 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css';
-
 import { Card } from './components/ui/card';
 import 'ldrs/react/Grid.css';
-
 import { MAP_STYLES } from './constants/mapStyles';
 import { JAPAN_BOUNDS, CHIBA_BOUNDS } from './constants/bounds';
 import { getColorExpression } from './utils/expressions';
@@ -17,6 +15,10 @@ import { toggleAgriLayer } from './layers/agriLayer';
 import LoadingOverlay from './components/LoadingOverlay';
 import MapControls from './components/MapControls';
 import Legend from './components/Legend';
+import { useSetRecoilState } from 'recoil';
+import { selectedMeshIdState } from './state/meshSelection';
+import ChatPanel from './components/ChatPanel';
+import { AnimatePresence, motion } from 'framer-motion';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
@@ -33,6 +35,10 @@ export default function MapView() {
     const selectedMetricRef = useRef(selectedMetric);
     const [agriLayerVisible, setAgriLayerVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const setSelectedMeshId = useSetRecoilState(selectedMeshIdState);
+    const [chatOpen, setChatOpen] = useState(false);
+    const [chatMeshId, setChatMeshId] = useState<string | null>(null);
+    const selectionPopupRef = useRef<mapboxgl.Popup | null>(null);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -75,6 +81,8 @@ export default function MapView() {
         map.fitBounds([[139.935, 35.825], [140.05, 35.91]], { padding: 40, duration: 1000 });
     };
 
+
+
     const handleStyleChange = (styleUrl: string) => {
         const map = mapRef.current;
         if (!map) return;
@@ -103,6 +111,16 @@ export default function MapView() {
     }, [selectedMetric]);
 
     useEffect(() => {
+        const handleAskMirai = (e: Event) => {
+            const detail = (e as CustomEvent).detail;
+            setChatMeshId(detail.meshId);
+            setChatOpen(true);
+        };
+        window.addEventListener('mirai:ask', handleAskMirai);
+        return () => window.removeEventListener('mirai:ask', handleAskMirai);
+    }, []);
+
+    useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
 
         const map = new mapboxgl.Map({
@@ -116,7 +134,31 @@ export default function MapView() {
             language: "ja"
         });
 
+        const ensureHighlightLayer = () => {
+            if (map.getSource('clicked-mesh')) return;   // already present
+
+            map.addSource('clicked-mesh', {
+                type: 'geojson',
+                data: { type: 'FeatureCollection', features: [] },
+            });
+
+            map.addLayer({
+                id: 'clicked-mesh-fill',
+                type: 'fill',
+                source: 'clicked-mesh',
+                paint: { 'fill-color': '#ff0000', 'fill-opacity': 0.65 },
+            });
+            map.addLayer({
+                id: 'clicked-mesh-line',
+                type: 'line',
+                source: 'clicked-mesh',
+                paint: { 'line-color': '#ff0000', 'line-width': 2 },
+            });
+        };
+
         mapRef.current = map;
+
+
 
         map.on('load', () => {
             map.flyTo({
@@ -138,11 +180,14 @@ export default function MapView() {
             });
 
             addMeshLayers(map, selectedMetric);
+
+            ensureHighlightLayer();
             map.once('idle', () => setIsLoading(false));
         });
 
         map.on('style.load', () => {
             addMeshLayers(map, selectedMetric);
+            ensureHighlightLayer();
         });
 
         const showPopup = (e: mapboxgl.MapMouseEvent) => {
@@ -166,13 +211,84 @@ export default function MapView() {
             popupRef.setLngLat(e.lngLat).setHTML(`<strong>${label}:</strong> ${value}`).addTo(map);
         };
 
-        ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(layer => {
-            map.on('mousemove', layer, showPopup);
-            map.on('mouseleave', layer, () => {
-                map.getCanvas().style.cursor = '';
-                popupRef.remove();
+        // ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(layer => {
+        //     map.on('mousemove', layer, showPopup);
+        //     map.on('mouseleave', layer, () => {
+        //         map.getCanvas().style.cursor = '';
+        //         popupRef.remove();
+        //     });
+        // });
+
+        ['mesh-250m-fill', 'mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
+            map.on('click', layer, e => {
+                const feature = e.features?.[0];
+                if (!feature) return;
+
+                const meshId = feature.properties?.MESH_ID as string | undefined;
+                if (!meshId) return;
+
+                // 1️⃣ Update global state (Recoil)
+                setSelectedMeshId(meshId);
+
+                // 2️⃣ Highlight the clicked mesh
+                ensureHighlightLayer();
+                const geojson: GeoJSON.FeatureCollection = {
+                    type: 'FeatureCollection',
+                    features: [
+                        {
+                            ...(feature.toJSON ? feature.toJSON() : (feature as any)),
+                            id: meshId,
+                        },
+                    ],
+                };
+                (map.getSource('clicked-mesh') as mapboxgl.GeoJSONSource).setData(geojson);
+
+                // 3️⃣ Show / update the *selection* popup with the "Ask Mirai AI" button
+                if (selectionPopupRef.current) {
+                    selectionPopupRef.current.remove();
+                }
+
+                const selectionPopup = new mapboxgl.Popup({ closeButton: false, offset: 0, className: "ai-popup" })
+                    .setLngLat(e.lngLat)
+                    .setHTML(
+                        `
+                        <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-40">
+      <div class="text-sm font-semibold text-gray-900">Mesh ID : <span class="text-base text-muted-foreground">${meshId}</span> </div>
+      
+      <button
+        id="ask-mirai-btn"
+        class="inline-flex items-center w-full justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none"
+      >
+        Ask Mirai AI
+      </button>
+    </div>
+                        `,
+                    )
+                    .addTo(map);
+
+                selectionPopupRef.current = selectionPopup;
+
+                // Optional: wire up an event handler for the button
+                const popupElement = selectionPopup.getElement();
+                const askBtn = popupElement?.querySelector<HTMLButtonElement>('#ask-mirai-btn');
+
+                askBtn?.addEventListener('click', () => {
+                    window.dispatchEvent(
+                        new CustomEvent('mirai:ask', {
+                            detail: { meshId },
+                        }),
+                    );
+                    // optionally close popup
+                    selectionPopupRef.current?.remove();
+                });
+
             });
         });
+
+        /**
+         * ===== Extra interactions for agricultural layer =====
+         */
+
 
         map.on('mousemove', 'agri-fill', (e) => {
             const feature = e.features?.[0];
@@ -203,6 +319,20 @@ export default function MapView() {
         <div className="relative w-screen h-screen">
             {isLoading && <LoadingOverlay />}
 
+            <AnimatePresence>
+                {chatOpen && chatMeshId && (
+                    <motion.div
+                        key="chat-container"
+                        initial={{ x: -400, opacity: 1 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: -400, opacity: 1 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                        className="absolute top-0 left-0 z-30 h-full w-[400px]"
+                    >
+                        <ChatPanel meshId={chatMeshId} onClose={() => setChatOpen(false)} />
+                    </motion.div>
+                )}
+            </AnimatePresence>
             <MapControls
                 currentStyle={currentStyle}
                 onStyleChange={handleStyleChange}
@@ -228,10 +358,12 @@ export default function MapView() {
             <h1 className={`absolute top-3 left-3 z-10 ${currentStyle === MAP_STYLES.ダーク ? "text-white" : "text-black"} text-lg font-mono rounded-2xl`}>
                 FrameArk 1.0 Beta
             </h1>
-
-            <Card className='absolute bottom-10 left-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
-                {!agriLayerVisible ? <h1>2020年の人口推計データ</h1> : <h1>柏市農地データ</h1>}
-            </Card>
+            {!chatOpen && !chatMeshId && (
+                <Card className='absolute bottom-10 left-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
+                    {!agriLayerVisible ? <h1>2020年の人口推計データ</h1> : <h1>柏市農地データ</h1>}
+                </Card>
+            )
+            }
 
             <div ref={mapContainerRef} className="w-full h-full" />
         </div>

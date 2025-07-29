@@ -5,12 +5,15 @@ import './index.css'
 import { RecoilRoot } from 'recoil'
 // import Map from './Map.tsx'
 import MapView from './MapView.tsx'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+const queryClient = new QueryClient();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RecoilRoot>
-    {/* <App /> */}
-    <MapView />
-  </RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <MapView />
+      </QueryClientProvider>
+    </RecoilRoot>
   </StrictMode>,
 )

@@ -34,4 +34,11 @@
   padding: 4px 10px;
   border-radius: 10px;
   cursor: pointer;
+
+}
+.ai-popup .mapboxgl-popup-content {
+  background-color: green;
+  padding: 0;
+  border-radius: 4rem;
+  box-shadow: 2rem;
 }
