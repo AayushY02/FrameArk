@@ -50,7 +50,8 @@ export const toggleMedicalLayer = (
             'agri-fill', 'agri-outline', 'agri-labels',
             'transportation-line-hover', 'transportation-line',
             'school-layer',
-            'admin-fill', 'admin-line'
+            'admin-fill', 'admin-line',
+            'facilities-circle'
         ].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');

@@ -49,7 +49,9 @@ export const togglePublicFacilityLayer = (
             'mesh-250m-fill', 'mesh-250m-outline',
             'agri-fill', 'agri-outline', 'agri-labels',
             'transportation-line-hover', 'transportation-line',
-            'admin-fill', 'admin-line'
+            'admin-fill', 'admin-line',
+            'medical-layer', 'school-layer',
+            
         ].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');

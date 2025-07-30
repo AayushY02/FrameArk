@@ -31,6 +31,10 @@ interface MapControlsProps {
     toggleSchoolLayer: () => void;
     medicalLayerVisible: boolean;
     toggleMedicalLayer: () => void;
+    touristLayerVisible: boolean;
+    toggleTouristLayer: () => void;
+    roadsideStationLayerVisible: boolean;
+    toggleRoadsideStationLayerVisible: () => void;
 }
 
 export default function MapControls({
@@ -56,6 +60,10 @@ export default function MapControls({
     toggleSchoolLayer,
     medicalLayerVisible,
     toggleMedicalLayer,
+    touristLayerVisible,
+    toggleTouristLayer,
+    roadsideStationLayerVisible,
+    toggleRoadsideStationLayerVisible
 }: MapControlsProps) {
     return (
         <div className="absolute right-3 top-3 z-10  flex flex-col items-center justify-center space-y-2 w-fit">
@@ -79,6 +87,8 @@ export default function MapControls({
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={togglePbFacility}>{pbFacilityVisible ? '公共施設を非表示' : '公共施設を表示'}</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleSchoolLayer}>{schoolLayerVisible ? '学校を隠す' : '学校を表示'}</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleMedicalLayer}>{medicalLayerVisible ? '医療機関を隠す' : '医療機関を表示'}</Button>
+            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl" onClick={toggleTouristLayer}>{touristLayerVisible ? '観光地を非表示' : '観光地を表示'}</Button>
+            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl" onClick={toggleRoadsideStationLayerVisible}>{roadsideStationLayerVisible ? '道の駅を非表示' : '道の駅を表示'}</Button>
 
 
             <Select value={selectedMetric} onValueChange={onMetricChange}>

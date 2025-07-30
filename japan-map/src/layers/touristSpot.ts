@@ -1,45 +1,49 @@
-const SCHOOL_LAYER_IDS = ['school-layer'];
+const TOURIST_LAYER_IDS = ['tourist-layer'];
 
-export const toggleSchoolLayer = (
+export const toggleTouristLayer = (
     map: mapboxgl.Map,
-    schoolLayerVisible: boolean,
+    touristLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
-    setSchoolLayerVisible: (v: boolean) => void
+    setTouristLayerVisible: (v: boolean) => void
 ) => {
     setIsLoading(true);
 
-    const sourceId = 'school-national-land';
-    const tilesetUrl = 'mapbox://frame-ark.school-national-land';
-    const sourceLayer = 'school-national-land';
+    const sourceId = 'tourist-spots';
+    const tilesetUrl = 'mapbox://frame-ark.tourist-spots';
+    const sourceLayer = 'tourist-spots';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
     )?.id;
 
-    if (!schoolLayerVisible) {
+    if (!touristLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
             map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
         }
 
         // Add circle layer
-        if (!map.getLayer('school-layer')) {
+        if (!map.getLayer('tourist-layer')) {
             map.addLayer({
-                id: 'school-layer',
+                id: 'tourist-layer',
                 type: 'symbol',
                 source: sourceId,
                 'source-layer': sourceLayer,
                 minzoom: 5,
                 layout: {
-                    'icon-image': 'school',
-                    'icon-size': 1,
+                    'icon-image': ['get', 'marker-icon'],
+                    'icon-size': 2,
                     'icon-allow-overlap': true,
                     'icon-anchor': 'bottom',
                     visibility: 'visible'
                 }
             }, labelLayerId);
+
+            
+
+            
         } else {
-            map.setLayoutProperty('school-layer', 'visibility', 'visible');
+            map.setLayoutProperty('tourist-layer', 'visibility', 'visible');
         }
 
         // Hide all other relevant layers
@@ -50,7 +54,7 @@ export const toggleSchoolLayer = (
             'agri-fill', 'agri-outline', 'agri-labels',
             'transportation-line-hover', 'transportation-line',
             'admin-fill', 'admin-line',
-            'facilities-circle', 'medical-layer'
+            'facilities-circle', 'medical-layer', 'school-layer'
 
         ].forEach(id => {
             if (map.getLayer(id)) {
@@ -60,7 +64,7 @@ export const toggleSchoolLayer = (
 
     } else {
         // Hide facility layer
-        SCHOOL_LAYER_IDS.forEach(id => {
+        TOURIST_LAYER_IDS.forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
@@ -85,7 +89,7 @@ export const toggleSchoolLayer = (
         });
     }
 
-    setSchoolLayerVisible(!schoolLayerVisible);
+    setTouristLayerVisible(!touristLayerVisible);
 
     map.once('idle', () => setIsLoading(false));
 };

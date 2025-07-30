@@ -23,6 +23,8 @@ import { toggleTransportationLayer } from './layers/transportationLayer';
 import { togglePublicFacilityLayer } from './layers/publicFacilityLayer';
 import { toggleSchoolLayer } from './layers/schoolLandLayer';
 import { toggleMedicalLayer } from './layers/medicalInstituteLayer';
+import { toggleTouristLayer } from './layers/touristSpot';
+import { toggleRoadsideStationLayer } from './layers/roadsideStationLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -47,6 +49,8 @@ export default function MapView() {
     const [pbFacilityVisible, setPbFacilityVisible] = useState(false);
     const [schoolLayerVisible, setSchoolLayerVisible] = useState(false);
     const [medicalLayerVisible, setMedicalLayerVisible] = useState(false);
+    const [touristLayerVisible, setTouristLayerVisible] = useState(false);
+    const [roadsideStationLayerVisible, setRoadsideStationLayerVisible] = useState(false);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -103,6 +107,8 @@ export default function MapView() {
         setAgriLayerVisible(false);
         setTransportVisible(false)
         setPbFacilityVisible(false)
+        setSchoolLayerVisible(false)
+        setMedicalLayerVisible(false)
 
         map.setStyle(styleUrl);
         map.once('style.load', () => {
@@ -410,6 +416,72 @@ export default function MapView() {
             transportPopupRef.remove();
         });
 
+        map.on('mousemove', 'tourist-layer', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border bg-white p-4 shadow-xl text-xs space-y-1 w-60">
+                    <div><strong>名称 (P12_002):</strong> ${props.P12_002}</div>
+                    <div><strong>住所 (P12_006):</strong> ${props.P12_006}</div>
+                    <div><strong>コード (P12_001):</strong> ${props.P12_001}</div>
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'tourist-layer', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
+        map.on('mousemove', 'roadside-station', (e) => {
+            const feature = e.features?.[0];
+            if (!feature) return;
+
+            map.getCanvas().style.cursor = 'pointer';
+            const props = feature.properties;
+            if (!props) return;
+
+            const html = `
+    <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-80 text-xs">
+      <div><strong>緯度 (P35_001):</strong> ${props.P35_001}</div>
+      <div><strong>経度 (P35_002):</strong> ${props.P35_002}</div>
+      <div><strong>都道府県 (P35_003):</strong> ${props.P35_003}</div>
+      <div><strong>市区町村 (P35_004):</strong> ${props.P35_004}</div>
+      <div><strong>市区町村コード (P35_005):</strong> ${props.P35_005}</div>
+      <div><strong>駅名 (P35_006):</strong> ${props.P35_006}</div>
+      <div><strong>道の駅公式URL (P35_007):</strong> ${props.P35_007
+                    ? `<a class="text-blue-500 underline" href="${props.P35_007}" target="_blank">リンク</a>`
+                    : 'なし'}</div>
+      <div><strong>地方会公式URL (P35_008):</strong> ${props.P35_008
+                    ? `<a class="text-blue-500 underline" href="${props.P35_008}" target="_blank">リンク</a>`
+                    : 'なし'}</div>
+      <div><strong>市町村公式URL (P35_009):</strong> ${props.P35_009
+                    ? `<a class="text-blue-500 underline" href="${props.P35_009}" target="_blank">リンク</a>`
+                    : 'なし'}</div>
+      <div><strong>備考 (P35_010):</strong> ${props.P35_010 ?? 'N/A'}</div>
+
+      ${[...Array(18)].map((_, i) => {
+                        const index = i + 11;
+                        return `<div><strong>P35_${String(index).padStart(3, '0')}:</strong> ${props[`P35_${String(index).padStart(3, '0')}`]}</div>`;
+                    }).join('')}
+    </div>
+  `;
+
+            transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+        });
+
+
+        map.on('mouseleave', 'roadside-station', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
         map.on('click', 'facilities-circle', (e) => {
             const feature = e.features?.[0];
             if (!feature) return;
@@ -436,6 +508,8 @@ export default function MapView() {
         if (pbFacilityVisible) return '公共施設_国土数値情報_2006年度';
         if (schoolLayerVisible) return '学校_国土数値情報_2023年度';
         if (medicalLayerVisible) return '医療機関_国土数値情報_2020年度';
+        if (touristLayerVisible) return '観光施設_国土数値情報_2014年度';
+        if (roadsideStationLayerVisible) return '道の駅_国土数値情報_2018年度';
         // you can add more cases here, e.g.:
         // if (adminVisible) return '行政界データ';
         // if (terrainEnabled) return '地形データ';
@@ -486,7 +560,10 @@ export default function MapView() {
                 toggleSchoolLayer={() => toggleSchoolLayer(mapRef.current!, schoolLayerVisible, setIsLoading, setSchoolLayerVisible)}
                 medicalLayerVisible={medicalLayerVisible}
                 toggleMedicalLayer={() => toggleMedicalLayer(mapRef.current!, medicalLayerVisible, setIsLoading, setMedicalLayerVisible)}
-
+                touristLayerVisible={medicalLayerVisible}
+                toggleTouristLayer={() => toggleTouristLayer(mapRef.current!, touristLayerVisible, setIsLoading, setTouristLayerVisible)}
+                roadsideStationLayerVisible={roadsideStationLayerVisible}
+                toggleRoadsideStationLayerVisible={() => toggleRoadsideStationLayer(mapRef.current!, roadsideStationLayerVisible, setIsLoading, setRoadsideStationLayerVisible)}
             />
 
             <Legend selectedMetric={selectedMetric} />
