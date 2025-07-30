@@ -21,6 +21,8 @@ import ChatPanel from './components/ChatPanel';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toggleTransportationLayer } from './layers/transportationLayer';
 import { togglePublicFacilityLayer } from './layers/publicFacilityLayer';
+import { toggleSchoolLayer } from './layers/schoolLandLayer';
+import { toggleMedicalLayer } from './layers/medicalInstituteLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -43,6 +45,8 @@ export default function MapView() {
     const selectionPopupRef = useRef<mapboxgl.Popup | null>(null);
     const [transportVisible, setTransportVisible] = useState(false);
     const [pbFacilityVisible, setPbFacilityVisible] = useState(false);
+    const [schoolLayerVisible, setSchoolLayerVisible] = useState(false);
+    const [medicalLayerVisible, setMedicalLayerVisible] = useState(false);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -346,6 +350,66 @@ export default function MapView() {
             transportPopupRef.remove();
         });
 
+        map.on('mousemove', 'school-layer', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+            <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-72 text-xs">
+                <div><strong>都道府県コード (P29_001):</strong> ${props.P29_001}</div>
+                <div><strong>施設ID (P29_002):</strong> ${props.P29_002}</div>
+                <div><strong>施設種別コード (P29_003):</strong> ${props.P29_003}</div>
+                <div><strong>施設名 (P29_004):</strong> ${props.P29_004}</div>
+                <div><strong>住所 (P29_005):</strong> ${props.P29_005}</div>
+                <div><strong>分類コード (P29_006):</strong> ${props.P29_006}</div>
+                <div><strong>ステータスコード (P29_007):</strong> ${props.P29_007}</div>
+                <div><strong>不明コード (P29_008):</strong> ${props.P29_008}</div>
+                <div><strong>予備フィールド (P29_009):</strong> ${props.P29_009 ?? 'N/A'}</div>
+            </div>
+        `;
+
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'school-layer', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
+        map.on('mousemove', 'medical-layer', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-72 text-xs">
+                    <div><strong>都道府県コード (P04_001):</strong> ${props.P04_001}</div>
+                    <div><strong>病院名 (P04_002):</strong> ${props.P04_002}</div>
+                    <div><strong>住所 (P04_003):</strong> ${props.P04_003}</div>
+                    <div><strong>診療科目 (P04_004):</strong> ${props.P04_004}</div>
+                    <div><strong>電話番号 (P04_005):</strong> ${props.P04_005 ?? 'N/A'}</div>
+                    <div><strong>FAX番号 (P04_006):</strong> ${props.P04_006 ?? 'N/A'}</div>
+                    <div><strong>病床数 (P04_007):</strong> ${props.P04_007}</div>
+                    <div><strong>診療日数 (P04_008):</strong> ${props.P04_008}</div>
+                    <div><strong>外来数 (P04_009):</strong> ${props.P04_009}</div>
+                    <div><strong>救急数 (P04_010):</strong> ${props.P04_010}</div>
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'medical-layer', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
         map.on('click', 'facilities-circle', (e) => {
             const feature = e.features?.[0];
             if (!feature) return;
@@ -370,6 +434,8 @@ export default function MapView() {
         if (agriLayerVisible) return '柏市農地データ';
         if (transportVisible) return '交通機関運行情報_国土数値情報_2022年度';
         if (pbFacilityVisible) return '公共施設_国土数値情報_2006年度';
+        if (schoolLayerVisible) return '学校_国土数値情報_2023年度';
+        if (medicalLayerVisible) return '医療機関_国土数値情報_2020年度';
         // you can add more cases here, e.g.:
         // if (adminVisible) return '行政界データ';
         // if (terrainEnabled) return '地形データ';
@@ -416,6 +482,10 @@ export default function MapView() {
                 toggleTransport={() => toggleTransportationLayer(mapRef.current!, transportVisible, setIsLoading, setTransportVisible)}
                 pbFacilityVisible={pbFacilityVisible}
                 togglePbFacility={() => togglePublicFacilityLayer(mapRef.current!, pbFacilityVisible, setIsLoading, setPbFacilityVisible)}
+                schoolLayerVisible={schoolLayerVisible}
+                toggleSchoolLayer={() => toggleSchoolLayer(mapRef.current!, schoolLayerVisible, setIsLoading, setSchoolLayerVisible)}
+                medicalLayerVisible={medicalLayerVisible}
+                toggleMedicalLayer={() => toggleMedicalLayer(mapRef.current!, medicalLayerVisible, setIsLoading, setMedicalLayerVisible)}
 
             />
 

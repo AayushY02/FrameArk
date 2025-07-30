@@ -27,6 +27,10 @@ interface MapControlsProps {
     toggleTransport: () => void;
     pbFacilityVisible: boolean;
     togglePbFacility: () => void;
+    schoolLayerVisible: boolean;
+    toggleSchoolLayer: () => void;
+    medicalLayerVisible: boolean;
+    toggleMedicalLayer: () => void;
 }
 
 export default function MapControls({
@@ -47,7 +51,11 @@ export default function MapControls({
     transportVisible,
     toggleTransport,
     pbFacilityVisible,
-    togglePbFacility
+    togglePbFacility,
+    schoolLayerVisible,
+    toggleSchoolLayer,
+    medicalLayerVisible,
+    toggleMedicalLayer,
 }: MapControlsProps) {
     return (
         <div className="absolute right-3 top-3 z-10  flex flex-col items-center justify-center space-y-2 w-fit">
@@ -69,6 +77,8 @@ export default function MapControls({
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleAgri}>{agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleTransport}>{transportVisible ? '交通レイヤーを非表示' : '交通レイヤーを表示'}</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={togglePbFacility}>{pbFacilityVisible ? '公共施設を非表示' : '公共施設を表示'}</Button>
+            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleSchoolLayer}>{schoolLayerVisible ? '学校を隠す' : '学校を表示'}</Button>
+            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleMedicalLayer}>{medicalLayerVisible ? '医療機関を隠す' : '医療機関を表示'}</Button>
 
 
             <Select value={selectedMetric} onValueChange={onMetricChange}>
