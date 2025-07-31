@@ -42,6 +42,8 @@ interface MapControlsProps {
     touristLayerVisible: boolean;
     toggleTouristLayer: () => void;
     roadsideStationLayerVisible: boolean;
+    toggleAttractionLayer: () => void;
+    attractionLayerVisible: boolean;
     toggleRoadsideStationLayerVisible: () => void;
     busStopsVisible: boolean;
     toggleBusStops: () => void;
@@ -86,9 +88,11 @@ export default function MapControls({
     toggleBoarding,
     alightingVisible,
     toggleAlighting,
+    toggleAttractionLayer,
+    attractionLayerVisible
 }: MapControlsProps) {
     return (
-        <div className="absolute right-3 top-3 z-10  flex flex-col items-center justify-center space-y-2 w-fit">
+        <div className="absolute right-3 top-3 z-10 h-[75%] flex flex-col items-center space-y-2 w-fit overflow-y-auto p-2">
             <Select value={currentStyle} onValueChange={onStyleChange}>
                 <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-2xl text-black shadow-2xl border border-gray-200">
                     <SelectValue placeholder="Select map style" />
@@ -130,6 +134,7 @@ export default function MapControls({
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleMedicalLayer}>{medicalLayerVisible ? '医療機関を隠す' : '医療機関を表示'}</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl" onClick={toggleTouristLayer}>{touristLayerVisible ? '観光地を非表示' : '観光地を表示'}</Button>
             <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl" onClick={toggleRoadsideStationLayerVisible}>{roadsideStationLayerVisible ? '道の駅を非表示' : '道の駅を表示'}</Button>
+            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl" onClick={toggleAttractionLayer}>{attractionLayerVisible ? '集客施設レイヤーを非表示' : '集客施設レイヤーを表示'}</Button>
 
 
             <Select value={selectedMetric} onValueChange={onMetricChange}>

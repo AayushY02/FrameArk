@@ -25,6 +25,7 @@ import { toggleSchoolLayer } from './layers/schoolLandLayer';
 import { toggleMedicalLayer } from './layers/medicalInstituteLayer';
 import { toggleTouristLayer } from './layers/touristSpot';
 import { toggleRoadsideStationLayer } from './layers/roadsideStationLayer';
+import { toggleAttractionLayer } from './layers/attractionLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -54,6 +55,7 @@ export default function MapView() {
     const [busStopsVisible, setBusStopsVisible] = useState(false);
     const [boardingVisible, setBoardingVisible] = useState(false);
     const [alightingVisible, setAlightingVisible] = useState(false);
+    const [attractionLayerVisible, setAttractionLayerVisible] = useState(false);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -539,6 +541,42 @@ export default function MapView() {
 
             transportPopupRef.setLngLat(lngLat).setHTML(popupContent).addTo(map);
         });
+
+
+        map.on('mousemove', 'attraction-layer', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-72 text-xs">
+                    <div><strong>都道府県コード (P33_001):</strong> ${props.P33_001}</div>
+                    <div><strong>市区町村コード (P33_002):</strong> ${props.P33_002}</div>
+                    <div><strong>施設コード (P33_003):</strong> ${props.P33_003}</div>
+                    <div><strong>施設種別 (P33_004):</strong> ${props.P33_004}</div>
+                    <div><strong>施設名 (P33_005):</strong> ${props.P33_005}</div>
+                    <div><strong>郵便番号 (P33_006):</strong> ${props.P33_006}</div>
+                    <div><strong>住所 (P33_007):</strong> ${props.P33_007}</div>
+                    <div><strong>電話番号 (P33_008):</strong> ${props.P33_008}</div>
+                    <div><strong>備考 (P33_009):</strong> ${props.P33_009 ?? 'N/A'}</div>
+                    <div><strong>Webサイト (P33_010):</strong> 
+                        ${props.P33_010
+                            ? `<a href="${props.P33_010}" target="_blank" class="text-blue-500 underline">${props.P33_010}</a>`
+                            : 'N/A'}
+                    </div>
+                    <div><strong>分類 (P33_011):</strong> ${props.P33_011 ?? 'N/A'}</div>
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'attraction-layer', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
     }, []);
 
     const cardTitle = (() => {
@@ -549,6 +587,7 @@ export default function MapView() {
         if (medicalLayerVisible) return '医療機関_国土数値情報_2020年度';
         if (touristLayerVisible) return '観光施設_国土数値情報_2014年度';
         if (roadsideStationLayerVisible) return '道の駅_国土数値情報_2018年度';
+        if (attractionLayerVisible) return '集客施設_国土数値情報_2014年度';
         // you can add more cases here, e.g.:
         // if (adminVisible) return '行政界データ';
         // if (terrainEnabled) return '地形データ';
@@ -599,8 +638,10 @@ export default function MapView() {
                 toggleSchoolLayer={() => toggleSchoolLayer(mapRef.current!, schoolLayerVisible, setIsLoading, setSchoolLayerVisible)}
                 medicalLayerVisible={medicalLayerVisible}
                 toggleMedicalLayer={() => toggleMedicalLayer(mapRef.current!, medicalLayerVisible, setIsLoading, setMedicalLayerVisible)}
-                touristLayerVisible={medicalLayerVisible}
+                touristLayerVisible={touristLayerVisible}
                 toggleTouristLayer={() => toggleTouristLayer(mapRef.current!, touristLayerVisible, setIsLoading, setTouristLayerVisible)}
+                attractionLayerVisible={attractionLayerVisible}
+                toggleAttractionLayer={() => toggleAttractionLayer(mapRef.current!, attractionLayerVisible, setIsLoading, setAttractionLayerVisible)}
                 roadsideStationLayerVisible={roadsideStationLayerVisible}
                 toggleRoadsideStationLayerVisible={() => toggleRoadsideStationLayer(mapRef.current!, roadsideStationLayerVisible, setIsLoading, setRoadsideStationLayerVisible)}
                 busStopsVisible={busStopsVisible}
