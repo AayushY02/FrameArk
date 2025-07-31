@@ -19,7 +19,7 @@ import { useSetRecoilState } from 'recoil';
 import { selectedMeshIdState } from './state/meshSelection';
 import ChatPanel from './components/ChatPanel';
 import { AnimatePresence, motion } from 'framer-motion';
-import { toggleTransportationLayer } from './layers/transportationLayer';
+import { toggleAlightingLayer, toggleBoardingLayer, toggleBusStops, toggleTransportationLayer } from './layers/transportationLayer';
 import { togglePublicFacilityLayer } from './layers/publicFacilityLayer';
 import { toggleSchoolLayer } from './layers/schoolLandLayer';
 import { toggleMedicalLayer } from './layers/medicalInstituteLayer';
@@ -51,6 +51,9 @@ export default function MapView() {
     const [medicalLayerVisible, setMedicalLayerVisible] = useState(false);
     const [touristLayerVisible, setTouristLayerVisible] = useState(false);
     const [roadsideStationLayerVisible, setRoadsideStationLayerVisible] = useState(false);
+    const [busStopsVisible, setBusStopsVisible] = useState(false);
+    const [boardingVisible, setBoardingVisible] = useState(false);
+    const [alightingVisible, setAlightingVisible] = useState(false);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -92,7 +95,6 @@ export default function MapView() {
         if (!map) return;
         map.fitBounds([[139.935, 35.825], [140.05, 35.91]], { padding: 40, duration: 1000 });
     };
-
 
 
 
@@ -439,7 +441,7 @@ export default function MapView() {
             transportPopupRef.remove();
         });
 
-        map.on('mousemove', 'roadside-station', (e) => {
+        map.on('click', 'roadside-station', (e) => {
             const feature = e.features?.[0];
             if (!feature) return;
 
@@ -448,7 +450,7 @@ export default function MapView() {
             if (!props) return;
 
             const html = `
-    <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-80 text-xs">
+    <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-80 text-xs select-text">
       <div><strong>緯度 (P35_001):</strong> ${props.P35_001}</div>
       <div><strong>経度 (P35_002):</strong> ${props.P35_002}</div>
       <div><strong>都道府県 (P35_003):</strong> ${props.P35_003}</div>
@@ -473,13 +475,50 @@ export default function MapView() {
     </div>
   `;
 
+            transportPopupRef
+                .setLngLat(e.lngLat)
+                .setHTML(html)
+                .addTo(map);
+        });
+
+        // Clear popup if user clicks outside the feature
+        map.on('click', (e) => {
+            const features = map.queryRenderedFeatures(e.point, {
+                layers: ['roadside-station']
+            });
+            if (!features.length) {
+                transportPopupRef.remove();
+                map.getCanvas().style.cursor = '';
+            }
+        });
+
+        map.on('click', 'bus-stops', (e) => {
+            const feature = e.features?.[0];
+            if (!feature) return;
+
+            const props = feature.properties;
+            if (!props) return;
+
+            const html = `
+    <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-80 text-xs">
+      <div><strong>P11_001:</strong> ${props.P11_001 ?? 'N/A'}</div>
+      <div><strong>P11_002:</strong> ${props.P11_002 ?? 'N/A'}</div>
+      <div><strong>P11_003_01:</strong> ${props.P11_003_01 ?? 'N/A'}</div>
+      <div><strong>P11_003_02</strong>${props.P11_003_02 ?? 'N/A'}</div>
+    </div>
+    `;
+
             transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
         });
 
-
-        map.on('mouseleave', 'roadside-station', () => {
-            map.getCanvas().style.cursor = '';
-            transportPopupRef.remove();
+        map.on('click', (e) => {
+            const features = map.queryRenderedFeatures(e.point, {
+                layers: ['bus-stops']
+            });
+            if (!features.length) {
+                transportPopupRef.remove();
+                map.getCanvas().style.cursor = '';
+            }
         });
 
         map.on('click', 'facilities-circle', (e) => {
@@ -564,6 +603,14 @@ export default function MapView() {
                 toggleTouristLayer={() => toggleTouristLayer(mapRef.current!, touristLayerVisible, setIsLoading, setTouristLayerVisible)}
                 roadsideStationLayerVisible={roadsideStationLayerVisible}
                 toggleRoadsideStationLayerVisible={() => toggleRoadsideStationLayer(mapRef.current!, roadsideStationLayerVisible, setIsLoading, setRoadsideStationLayerVisible)}
+                busStopsVisible={busStopsVisible}
+                toggleBusStops={() =>
+                    toggleBusStops(mapRef.current!, busStopsVisible, setIsLoading, setBusStopsVisible)
+                }
+                boardingVisible={boardingVisible}
+                toggleBoarding={() => toggleBoardingLayer(mapRef.current!, setBoardingVisible)}
+                alightingVisible={alightingVisible}
+                toggleAlighting={() => toggleAlightingLayer(mapRef.current!, setAlightingVisible)}
             />
 
             <Legend selectedMetric={selectedMetric} />
