@@ -170,9 +170,9 @@ export const toggleBusStops = (
 
     const beforeId = map.getLayer('transportation-line-hover') ? 'transportation-line-hover' : undefined;
 
-    const labelLayerId = map.getStyle().layers?.find(
-        l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
-    )?.id;
+    // const labelLayerId = map.getStyle().layers?.find(
+    //     l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
+    // )?.id;
 
     if (!busStopsLayerVisible) {
         // Add vector source
