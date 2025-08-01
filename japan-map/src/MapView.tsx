@@ -280,7 +280,7 @@ export default function MapView() {
         id="ask-mirai-btn"
         class="inline-flex items-center w-full justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none"
       >
-        Ask Mirai AI
+       ミライに聞く
       </button>
     </div>
                         `,

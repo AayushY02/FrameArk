@@ -10,7 +10,7 @@ export default function Legend({ selectedMetric }: LegendProps) {
     const legend = getGradientLegendForMetric(selectedMetric);
 
     return (
-        <Card className="absolute bottom-10 right-3 z-10 bg-white p-3 rounded-2xl shadow-xl text-xs w-64">
+        <Card className="absolute bottom-6 right-3 z-10 bg-white/50 backdrop-blur-2xl p-3 rounded-2xl shadow-xl text-xs w-64">
             <div className='space-y-2'>
                 <CardHeader>
                     <CardTitle className="font-semibold text-center">{legend.title}</CardTitle>

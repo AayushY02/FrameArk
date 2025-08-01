@@ -13,8 +13,27 @@ import {
     AccordionItem,
     AccordionTrigger
 } from "@/components/ui/accordion";
+import {
+    Layers,
+    Mountain,
+    Ruler,
+    Landmark,
+    MapPin,
+    Building,
+    Bus,
+    School,
+    Hospital,
+    Users,
+    Hamburger,
+    X,
+    Menu,
+    BusFront,
+    MapPinCheckIcon
+} from 'lucide-react';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface MapControlsProps {
     currentStyle: string;
@@ -91,63 +110,130 @@ export default function MapControls({
     toggleAttractionLayer,
     attractionLayerVisible
 }: MapControlsProps) {
+
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
-        <div className="absolute right-3 top-3 z-10 h-[75%] flex flex-col items-center space-y-2 w-fit overflow-y-auto p-2">
-            <Select value={currentStyle} onValueChange={onStyleChange}>
-                <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-2xl text-black shadow-2xl border border-gray-200">
-                    <SelectValue placeholder="Select map style" />
-                </SelectTrigger>
-                <SelectContent>
-                    {Object.entries(styles).map(([label, url]) => (
-                        <SelectItem key={url} value={url}>{label}</SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
+        <div className="absolute right-3 top-3 z-10 max-h-screen w-fit flex flex-col items-end">
+            {/* Toggle Button */}
+            <Button
+                className="px-4 py-2 bg-white/50 backdrop-blur-2xl hover:bg-[#f2f2f2] cursor-pointer text-black rounded-full shadow-md text-sm mb-2 flex items-center gap-2"
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                {isOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </Button>
 
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleRoads}>{roadsVisible ? '道路を非表示' : '道路を表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleAdmin}>{adminVisible ? '行政界を非表示' : '行政界を表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleTerrain}>{terrainEnabled ? '地形を非表示' : '地形を表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={fitToBounds}>柏市にフォーカス</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleAgri}>{agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}</Button>
-            <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="transportation">
-                    <AccordionTrigger className="text-black bg-white  text-sm hover:bg-gray-50 rounded-2xl px-4 py-2">
-                        交通レイヤーの操作
-                    </AccordionTrigger>
-                    <AccordionContent className="flex flex-col space-y-2 bg-white rounded-2xl mt-2  px-4 py-2 ">
-                        {[
-                            { label: '交通レイヤー', checked: transportVisible, onChange: toggleTransport },
-                            { label: 'バス停', checked: busStopsVisible, onChange: toggleBusStops },
-                            { label: '乗車データ', checked: boardingVisible, onChange: toggleBoarding },
-                            { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting },
-                        ].map(({ label, checked, onChange }) => (
-                            <div key={label} className="flex items-center justify-between">
-                                <Label className="text-sm text-black">{label}</Label>
-                                <Switch checked={checked} onCheckedChange={onChange} />
-                            </div>
-                        ))}
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={togglePbFacility}>{pbFacilityVisible ? '公共施設を非表示' : '公共施設を表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleSchoolLayer}>{schoolLayerVisible ? '学校を隠す' : '学校を表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl  " onClick={toggleMedicalLayer}>{medicalLayerVisible ? '医療機関を隠す' : '医療機関を表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl" onClick={toggleTouristLayer}>{touristLayerVisible ? '観光地を非表示' : '観光地を表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl" onClick={toggleRoadsideStationLayerVisible}>{roadsideStationLayerVisible ? '道の駅を非表示' : '道の駅を表示'}</Button>
-            <Button className="w-full px-4 py-2 text-black bg-white shadow-xl hover:text-black cursor-pointer text-sm hover:bg-gray-50 rounded-2xl" onClick={toggleAttractionLayer}>{attractionLayerVisible ? '集客施設レイヤーを非表示' : '集客施設レイヤーを表示'}</Button>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        key="map-controls"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.1 }}
+                        className="overflow-y-auto px-4 py-4 flex flex-col space-y-3 bg-white/50 backdrop-blur-2xl rounded-2xl shadow-2xl w-72 sm:w-80 max-h-[75vh]"
+                    >
+                        {/* Map style selector */}
+                        <Select value={currentStyle} onValueChange={onStyleChange}>
+                            <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-xl text-black shadow border border-gray-200">
+                                <SelectValue placeholder="地図スタイルを選択" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.entries(styles).map(([label, url]) => (
+                                    <SelectItem key={url} value={url}>{label}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
 
+                        {/* Layer Toggles */}
+                        <Button className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer" onClick={fitToBounds}>
+                            <MapPinCheckIcon />
+                            柏市にフォーカス</Button>
 
-            <Select value={selectedMetric} onValueChange={onMetricChange}>
-                <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-2xl text-black shadow-2xl border border-gray-200">
-                    <SelectValue placeholder="Select Metric" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="PTN_2020">総人口（2020年）</SelectItem>
-                    <SelectItem value="PTC_2020">65歳以上の人口（2020年）</SelectItem>
-                    <SelectItem value="PTA_2020">0〜14歳の人口（2020年）</SelectItem>
-                    <SelectItem value="ELDERLY_RATIO">高齢者比率（65歳以上／総人口）</SelectItem>
-                </SelectContent>
-            </Select>
+                        <Button onClick={toggleRoads} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <Ruler size={16} />
+                            {roadsVisible ? '道路を非表示' : '道路を表示'}
+                        </Button>
+                        <Button onClick={toggleAdmin} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <Layers size={16} />
+                            {adminVisible ? '行政界を非表示' : '行政界を表示'}
+                        </Button>
+                        <Button onClick={toggleTerrain} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <Mountain size={16} />
+                            {terrainEnabled ? '地形を非表示' : '地形を表示'}
+                        </Button>
+                        <Button onClick={fitToBounds} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <MapPin size={16} />
+                            柏市にフォーカス
+                        </Button>
+                        <Button onClick={toggleAgri} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <Landmark size={16} />
+                            {agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}
+                        </Button>
+
+                        {/* Transport Accordion */}
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="transportation">
+                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
+                                    <BusFront size={16} />交通レイヤーの操作
+                                </AccordionTrigger>
+                                <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
+                                    {[
+                                        { label: '交通レイヤー', checked: transportVisible, onChange: toggleTransport, icon: <Bus size={16} /> },
+                                        { label: 'バス停', checked: busStopsVisible, onChange: toggleBusStops, icon: <MapPin size={16} /> },
+                                        { label: '乗車データ', checked: boardingVisible, onChange: toggleBoarding, icon: <Users size={16} /> },
+                                        { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
+                                    ].map(({ label, checked, onChange, icon }) => (
+                                        <div key={label} className="flex items-center justify-between">
+                                            <Label className="text-sm text-black flex items-center gap-2">{icon} {label}</Label>
+                                            <Switch checked={checked} onCheckedChange={onChange} />
+                                        </div>
+                                    ))}
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+
+                        {/* Other Layer Buttons */}
+                        <Button onClick={togglePbFacility} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <Building size={16} />
+                            {pbFacilityVisible ? '公共施設を非表示' : '公共施設を表示'}
+                        </Button>
+                        <Button onClick={toggleSchoolLayer} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <School size={16} />
+                            {schoolLayerVisible ? '学校を隠す' : '学校を表示'}
+                        </Button>
+                        <Button onClick={toggleMedicalLayer} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <Hospital size={16} />
+                            {medicalLayerVisible ? '医療機関を隠す' : '医療機関を表示'}
+                        </Button>
+                        <Button onClick={toggleTouristLayer} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <MapPin size={16} />
+                            {touristLayerVisible ? '観光地を非表示' : '観光地を表示'}
+                        </Button>
+                        <Button onClick={toggleRoadsideStationLayerVisible} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            <MapPin size={16} />
+                            {roadsideStationLayerVisible ? '道の駅を非表示' : '道の駅を表示'}
+                        </Button>
+                        <Button onClick={toggleAttractionLayer} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                            {/* <Attraction size={16} /> */}
+                            {attractionLayerVisible ? '集客施設レイヤーを非表示' : '集客施設レイヤーを表示'}
+                        </Button>
+
+                        {/* Metric Selector */}
+                        <Select value={selectedMetric} onValueChange={onMetricChange}>
+                            <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-xl text-black shadow border border-gray-200">
+                                <SelectValue placeholder="表示する人口指標" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="PTN_2020">総人口（2020年）</SelectItem>
+                                <SelectItem value="PTC_2020">65歳以上の人口（2020年）</SelectItem>
+                                <SelectItem value="PTA_2020">0〜14歳の人口（2020年）</SelectItem>
+                                <SelectItem value="ELDERLY_RATIO">高齢者比率（65歳以上／総人口）</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
