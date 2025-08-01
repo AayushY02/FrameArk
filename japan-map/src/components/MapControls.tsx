@@ -105,8 +105,6 @@ export default function MapControls({
     toggleRoadsideStationLayerVisible,
     busStopsVisible,
     toggleBusStops,
-    alightingVisible,
-    toggleAlighting,
     toggleAttractionLayer,
     attractionLayerVisible,
     busPickDropLayerVisible,
@@ -181,7 +179,7 @@ export default function MapControls({
                                         { label: '交通レイヤー', checked: transportVisible, onChange: toggleTransport, icon: <Bus size={16} /> },
                                         { label: 'バス停', checked: busStopsVisible, onChange: toggleBusStops, icon: <MapPin size={16} /> },
                                         { label: 'カシワニクル乗降場', checked: busPickDropLayerVisible, onChange: toggleBusPickDropLayerVisible, icon: <Users size={16} /> },
-                                        { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
+                                        // { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">{icon} {label}</Label>
