@@ -24,7 +24,6 @@ import {
     School,
     Hospital,
     Users,
-    Hamburger,
     X,
     Menu,
     BusFront,
