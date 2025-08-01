@@ -71,6 +71,9 @@ interface MapControlsProps {
 
     alightingVisible: boolean;
     toggleAlighting: () => void;
+
+    busPickDropLayerVisible: boolean;
+    toggleBusPickDropLayerVisible: () => void;
 }
 
 export default function MapControls({
@@ -102,12 +105,12 @@ export default function MapControls({
     toggleRoadsideStationLayerVisible,
     busStopsVisible,
     toggleBusStops,
-    boardingVisible,
-    toggleBoarding,
     alightingVisible,
     toggleAlighting,
     toggleAttractionLayer,
-    attractionLayerVisible
+    attractionLayerVisible,
+    busPickDropLayerVisible,
+    toggleBusPickDropLayerVisible,
 }: MapControlsProps) {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -161,7 +164,7 @@ export default function MapControls({
                             <Mountain size={16} />
                             {terrainEnabled ? '地形を非表示' : '地形を表示'}
                         </Button>
-                        
+
                         <Button onClick={toggleAgri} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <Landmark size={16} />
                             {agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}
@@ -177,7 +180,7 @@ export default function MapControls({
                                     {[
                                         { label: '交通レイヤー', checked: transportVisible, onChange: toggleTransport, icon: <Bus size={16} /> },
                                         { label: 'バス停', checked: busStopsVisible, onChange: toggleBusStops, icon: <MapPin size={16} /> },
-                                        { label: '乗車データ', checked: boardingVisible, onChange: toggleBoarding, icon: <Users size={16} /> },
+                                        { label: 'カシワニクル乗降場', checked: busPickDropLayerVisible, onChange: toggleBusPickDropLayerVisible, icon: <Users size={16} /> },
                                         { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">

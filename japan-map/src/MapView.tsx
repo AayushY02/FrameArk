@@ -26,6 +26,7 @@ import { toggleMedicalLayer } from './layers/medicalInstituteLayer';
 import { toggleTouristLayer } from './layers/touristSpot';
 import { toggleRoadsideStationLayer } from './layers/roadsideStationLayer';
 import { toggleAttractionLayer } from './layers/attractionLayer';
+import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -56,6 +57,7 @@ export default function MapView() {
     const [boardingVisible, setBoardingVisible] = useState(false);
     const [alightingVisible, setAlightingVisible] = useState(false);
     const [attractionLayerVisible, setAttractionLayerVisible] = useState(false);
+    const [busPickDropLayerVisible, setBusPickDropLayerVisible] = useState(false);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -577,6 +579,54 @@ export default function MapView() {
             map.getCanvas().style.cursor = '';
             transportPopupRef.remove();
         });
+
+        // POINT CIRCLE CLICK TOOLTIP
+        map.on('mousemove', 'bus-pick-drop-points', (e) => {
+            const feature = e.features?.[0];
+            if (!feature) return;
+
+            map.getCanvas().style.cursor = 'pointer';
+            const props = feature.properties || {};
+
+            const rows = Object.entries(props)
+                .map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`)
+                .join('');
+
+            transportPopupRef
+                .setLngLat(e.lngLat)
+                .setHTML(`
+      <div class="rounded-xl border bg-white p-3 shadow-md text-xs w-72">
+        ${rows}
+      </div>
+    `)
+                .addTo(map);
+        });
+
+        map.on('mouseleave', 'bus-pick-drop-points', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
+        // POLYGON HOVER TOOLTIP
+        map.on('click', 'bus-pick-drop-polygons', (e) => {
+            const feature = e.features?.[0];
+            if (!feature) return;
+
+            const props = feature.properties || {};
+
+            const rows = Object.entries(props)
+                .map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`)
+                .join('');
+
+            transportPopupRef
+                .setLngLat(e.lngLat)
+                .setHTML(`
+      <div class="rounded-xl border bg-white p-4 shadow-xl text-xs w-72">
+        ${rows}
+      </div>
+    `)
+                .addTo(map);
+        });
     }, []);
 
     const cardTitle = (() => {
@@ -652,6 +702,8 @@ export default function MapView() {
                 toggleBoarding={() => toggleBoardingLayer(mapRef.current!, setBoardingVisible)}
                 alightingVisible={alightingVisible}
                 toggleAlighting={() => toggleAlightingLayer(mapRef.current!, setAlightingVisible)}
+                busPickDropLayerVisible={busPickDropLayerVisible}
+                toggleBusPickDropLayerVisible={() => toggleBusPickDropLayer(mapRef.current!, busPickDropLayerVisible, setIsLoading, setBusPickDropLayerVisible)}
             />
 
             <Legend selectedMetric={selectedMetric} />
