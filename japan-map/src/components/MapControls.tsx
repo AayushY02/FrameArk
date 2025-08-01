@@ -161,10 +161,7 @@ export default function MapControls({
                             <Mountain size={16} />
                             {terrainEnabled ? '地形を非表示' : '地形を表示'}
                         </Button>
-                        <Button onClick={fitToBounds} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
-                            <MapPin size={16} />
-                            柏市にフォーカス
-                        </Button>
+                        
                         <Button onClick={toggleAgri} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <Landmark size={16} />
                             {agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}
