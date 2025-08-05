@@ -8,14 +8,14 @@ export const toggleAgriLayer = (
 ) => {
     setIsLoading(true);
 
-    // const sourceLayer = 'agriculture';
+    const sourceLayer = 'agriculture';
 
 
     if (!agriLayerVisible) {
         if (!map.getSource('kashiwa-agri')) {
             map.addSource('kashiwa-agri', {
                 type: 'vector',
-                tiles: ['https://aayushy02.github.io/FrameArk/agriculture-land-tile/{z}/{x}/{y}.pbf']
+                url: 'mapbox://frame-ark.agriculture-land'
             });
         }
 
@@ -24,18 +24,17 @@ export const toggleAgriLayer = (
                 id: 'agri-fill',
                 type: 'fill',
                 source: 'kashiwa-agri',
-                "source-layer": "layername",
+                'source-layer': sourceLayer,
                 paint: {
-                    // 'fill-color': [
-                    //     'match',
-                    //     ['get', 'KOUCHI'],
-                    //     '畑', '#8bc34a',
-                    //     '田', '#4caf50',
-                    //     '樹園地', '#aed581',
-                    //     'その他', '#c8e6c9',
-                    //     '#e0e0e0'
-                    // ],
-                    'fill-color': '#ff0000',
+                    'fill-color': [
+                        'match',
+                        ['get', 'KOUCHI'],
+                        '畑', '#8bc34a',
+                        '田', '#4caf50',
+                        '樹園地', '#aed581',
+                        'その他', '#c8e6c9',
+                        '#e0e0e0'
+                    ],
                     'fill-opacity': 0.6
                 }
             });
@@ -46,7 +45,7 @@ export const toggleAgriLayer = (
                 id: 'agri-outline',
                 type: 'line',
                 source: 'kashiwa-agri',
-                "source-layer": "layername",
+                'source-layer': sourceLayer,
                 paint: {
                     'line-color': '#2e7d32',
                     'line-width': 1
@@ -59,7 +58,7 @@ export const toggleAgriLayer = (
                 id: 'agri-labels',
                 type: 'symbol',
                 source: 'kashiwa-agri',
-                "source-layer": "layername",
+                 'source-layer': sourceLayer,
                 layout: {
                     'text-field': ['get', 'KOUCHI'],
                     'text-size': 11,

@@ -9,19 +9,17 @@ export const toggleAttractionLayer = (
     setIsLoading(true);
 
     const sourceId = 'attraction-layer';
-    // const tilesetUrl = 'mapbox://frame-ark.attraction-layer';
+    const tilesetUrl = 'mapbox://frame-ark.attraction-layer';
     const sourceLayer = 'attraction-layer';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
     )?.id;
 
-    //test
-
     if (!attractionLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', tiles: ['https://frame-ark.vercel.app/tiles/attraction-tile/{z}/{x}/{y}.pbf'] });
+            map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
         }
 
         // Add circle layer
