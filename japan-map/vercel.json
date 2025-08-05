@@ -1,0 +1,21 @@
+{
+  "headers": [
+    {
+      "source": "/tiles/attraction-tile/(.*)\\.pbf",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/x-protobuf"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ]
+}
