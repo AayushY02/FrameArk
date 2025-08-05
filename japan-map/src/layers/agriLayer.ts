@@ -26,15 +26,16 @@ export const toggleAgriLayer = (
                 source: 'kashiwa-agri',
                 "source-layer": "layername",
                 paint: {
-                    'fill-color': [
-                        'match',
-                        ['get', 'KOUCHI'],
-                        '畑', '#8bc34a',
-                        '田', '#4caf50',
-                        '樹園地', '#aed581',
-                        'その他', '#c8e6c9',
-                        '#e0e0e0'
-                    ],
+                    // 'fill-color': [
+                    //     'match',
+                    //     ['get', 'KOUCHI'],
+                    //     '畑', '#8bc34a',
+                    //     '田', '#4caf50',
+                    //     '樹園地', '#aed581',
+                    //     'その他', '#c8e6c9',
+                    //     '#e0e0e0'
+                    // ],
+                    'fill-color': '#ff0000',
                     'fill-opacity': 0.6
                 }
             });
