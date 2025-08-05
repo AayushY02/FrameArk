@@ -19,7 +19,7 @@ export const toggleAttractionLayer = (
     if (!attractionLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
+            map.addSource(sourceId, { type: 'vector', tiles: ['https://AayushY02.github.io/frame-ark/attraction/{z}/{x}/{y}.pbf'] });
         }
 
         // Add circle layer
