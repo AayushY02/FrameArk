@@ -15,7 +15,7 @@ export const toggleAgriLayer = (
         if (!map.getSource('kashiwa-agri')) {
             map.addSource('kashiwa-agri', {
                 type: 'vector',
-                url: 'mapbox://frame-ark.agriculture-land'
+                tiles: ['https://aayushy02.github.io/FrameArk/agriculture-land-tile/{z}/{x}/{y}.pbf']
             });
         }
 
@@ -24,7 +24,7 @@ export const toggleAgriLayer = (
                 id: 'agri-fill',
                 type: 'fill',
                 source: 'kashiwa-agri',
-                'source-layer': sourceLayer,
+                "source-layer": "layername",
                 paint: {
                     'fill-color': [
                         'match',
@@ -45,7 +45,7 @@ export const toggleAgriLayer = (
                 id: 'agri-outline',
                 type: 'line',
                 source: 'kashiwa-agri',
-                'source-layer': sourceLayer,
+                "source-layer": "layername",
                 paint: {
                     'line-color': '#2e7d32',
                     'line-width': 1
@@ -58,7 +58,7 @@ export const toggleAgriLayer = (
                 id: 'agri-labels',
                 type: 'symbol',
                 source: 'kashiwa-agri',
-                 'source-layer': sourceLayer,
+                "source-layer": "layername",
                 layout: {
                     'text-field': ['get', 'KOUCHI'],
                     'text-size': 11,
