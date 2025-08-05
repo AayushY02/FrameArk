@@ -9,7 +9,7 @@ export const toggleAttractionLayer = (
     setIsLoading(true);
 
     const sourceId = 'attraction-layer';
-    const tilesetUrl = 'mapbox://frame-ark.attraction-layer';
+    // const tilesetUrl = 'mapbox://frame-ark.attraction-layer';
     const sourceLayer = 'attraction-layer';
 
     const labelLayerId = map.getStyle().layers?.find(
