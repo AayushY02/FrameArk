@@ -8,7 +8,7 @@ export const toggleAgriLayer = (
 ) => {
     setIsLoading(true);
 
-    const sourceLayer = 'agriculture';
+    // const sourceLayer = 'agriculture';
 
 
     if (!agriLayerVisible) {
