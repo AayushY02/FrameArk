@@ -16,10 +16,12 @@ export const toggleAttractionLayer = (
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
     )?.id;
 
+    //test
+
     if (!attractionLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', tiles: ['https://AayushY02.github.io/frame-ark/attraction/{z}/{x}/{y}.pbf'] });
+            map.addSource(sourceId, { type: 'vector', tiles: ['https://frame-ark.vercel.app/tiles/attraction-tile/{z}/{x}/{y}.pbf'] });
         }
 
         // Add circle layer
