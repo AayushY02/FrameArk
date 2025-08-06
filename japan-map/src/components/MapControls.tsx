@@ -33,11 +33,11 @@ import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRecoilState } from 'recoil';
-import { masuoCourseDropLayerVisibleState } from '@/state/layers';
-import { toggleMasuoCourseRideLayer } from '@/layers/busPassengerLayer';
+// import { useRecoilState } from 'recoil';
+// import { masuoCourseDropLayerVisibleState } from '@/state/layers';
+// import { toggleMasuoCourseRideLayer } from '@/layers/busPassengerLayer';
 
-const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
+// const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
 
 interface MapControlsProps {
     currentStyle: string;

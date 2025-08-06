@@ -87,7 +87,7 @@ export const toggleBusPassengerLayer = (
 
 
 
-const SAKAE_LAYER_IDS = ['sakae-course-ride'];
+// const SAKAE_LAYER_IDS = ['sakae-course-ride'];
 
 export const toggleSakaeCourseRideLayer = (
     map: mapboxgl.Map,
