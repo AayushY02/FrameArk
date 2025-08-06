@@ -33,6 +33,11 @@ import { Label } from './ui/label';
 import { Switch } from './ui/switch';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRecoilState } from 'recoil';
+import { masuoCourseDropLayerVisibleState } from '@/state/layers';
+import { toggleMasuoCourseRideLayer } from '@/layers/busPassengerLayer';
+
+const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
 
 interface MapControlsProps {
     currentStyle: string;
@@ -74,6 +79,22 @@ interface MapControlsProps {
 
     busPickDropLayerVisible: boolean;
     toggleBusPickDropLayerVisible: () => void;
+    busPassengerLayerVisible: boolean;
+    toggleBusPassengerLayerVisible: () => void;
+    sakaeCourseRideLayerVisible: boolean;
+    toggleSakaeCourseRideLayerVisible: () => void;
+    sakaeCourseDropLayerVisible: boolean;
+    toggleSakaeCourseDropLayerVisible: () => void;
+    masuoCourseRideLayerVisible: boolean;
+    toggleMasuoCourseRideLayerVisible: () => void;
+    masuoCourseDropLayerVisible: boolean;
+    toggleMasuoCourseDropLayerVisible: () => void;
+
+    shonanCourseRideLayerVisible: boolean;
+    toggleShonanCourseRideLayerVisible: () => void;
+    shonanCourseDropLayerVisible: boolean;
+    toggleShonanCourseDropLayerVisible: () => void;
+    captureMapScreenshot: () => void
 }
 
 export default function MapControls({
@@ -109,6 +130,25 @@ export default function MapControls({
     attractionLayerVisible,
     busPickDropLayerVisible,
     toggleBusPickDropLayerVisible,
+    busPassengerLayerVisible,
+    toggleBusPassengerLayerVisible,
+    sakaeCourseRideLayerVisible,
+    toggleSakaeCourseRideLayerVisible,
+    sakaeCourseDropLayerVisible,
+    toggleSakaeCourseDropLayerVisible,
+
+    masuoCourseRideLayerVisible,
+    toggleMasuoCourseRideLayerVisible,
+    masuoCourseDropLayerVisible,
+    toggleMasuoCourseDropLayerVisible,
+
+    shonanCourseRideLayerVisible,
+    toggleShonanCourseRideLayerVisible,
+    shonanCourseDropLayerVisible,
+    toggleShonanCourseDropLayerVisible,
+    captureMapScreenshot
+
+
 }: MapControlsProps) {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -146,9 +186,25 @@ export default function MapControls({
                         </Select>
 
                         {/* Layer Toggles */}
+                        <Button className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer" onClick={captureMapScreenshot}>
+                            <MapPinCheckIcon />
+                            画像をエクスポート</Button>
                         <Button className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer" onClick={fitToBounds}>
                             <MapPinCheckIcon />
                             柏市にフォーカス</Button>
+                        {/* <div className="flex items-center justify-between absolute top-4 right-4 z-50">
+                            <Label className="text-sm text-black flex items-center gap-2">
+                                <MapPinCheckIcon /> 柏市にフォーカス
+                            </Label>
+                            <Switch
+                                checked={isKashiwaBounds}
+                                onCheckedChange={(checked) => {
+                                    setIsKashiwaBounds(checked);  // Update the state
+                                    fitToBounds(checked);          // Apply bounds change
+                                }}
+                                className="w-12 h-6 bg-gray-200 rounded-full" // Adjust styling as per your design
+                            />
+                        </div> */}
 
                         <Button onClick={toggleRoads} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <Ruler size={16} />
@@ -179,6 +235,7 @@ export default function MapControls({
                                         { label: '交通レイヤー', checked: transportVisible, onChange: toggleTransport, icon: <Bus size={16} /> },
                                         { label: 'バス停', checked: busStopsVisible, onChange: toggleBusStops, icon: <MapPin size={16} /> },
                                         { label: 'カシワニクル乗降場', checked: busPickDropLayerVisible, onChange: toggleBusPickDropLayerVisible, icon: <Users size={16} /> },
+                                        { label: 'バス乗降データ', checked: busPassengerLayerVisible, onChange: toggleBusPassengerLayerVisible, icon: <Users size={16} /> }
                                         // { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
@@ -216,6 +273,34 @@ export default function MapControls({
                             {attractionLayerVisible ? '集客施設レイヤーを非表示' : '集客施設レイヤーを表示'}
                         </Button>
 
+
+
+                        {/* Transport Accordion */}
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="transportation">
+                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
+                                    <BusFront size={16} />ワニバースとカシワニクルのバス停毎の乗車数/降車数
+                                </AccordionTrigger>
+                                <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
+                                    {[
+                                        { label: 'バス停レイヤー', checked: busPassengerLayerVisible, onChange: toggleBusPassengerLayerVisible, icon: <Bus size={16} /> },
+                                        { label: '逆井 コース - 乗車', checked: sakaeCourseRideLayerVisible, onChange: toggleSakaeCourseRideLayerVisible, icon: <MapPin size={16} /> },
+                                        { label: '逆井 コース - 降車', checked: sakaeCourseDropLayerVisible, onChange: toggleSakaeCourseDropLayerVisible, icon: <MapPin size={16} /> },
+                                        { label: '南増尾 コース - 乗車', checked: masuoCourseRideLayerVisible, onChange: toggleMasuoCourseRideLayerVisible, icon: <MapPin size={16} /> },
+                                        { label: '南増尾 コース - 降車', checked: masuoCourseDropLayerVisible, onChange: toggleMasuoCourseDropLayerVisible, icon: <MapPin size={16} /> },
+                                        { label: '沼南コース - 乗車', checked: shonanCourseRideLayerVisible, onChange: toggleShonanCourseRideLayerVisible, icon: <MapPin size={16} /> },
+                                        { label: '沼南コース - 降車', checked: shonanCourseDropLayerVisible, onChange: toggleShonanCourseDropLayerVisible, icon: <MapPin size={16} /> },
+                                        // { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
+                                    ].map(({ label, checked, onChange, icon }) => (
+                                        <div key={label} className="flex items-center justify-between">
+                                            <Label className="text-sm text-black flex items-center gap-2">{icon} {label}</Label>
+                                            <Switch checked={checked} onCheckedChange={onChange} />
+                                        </div>
+                                    ))}
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+
                         {/* Metric Selector */}
                         <Select value={selectedMetric} onValueChange={onMetricChange}>
                             <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-xl text-black shadow border border-gray-200">
@@ -228,6 +313,9 @@ export default function MapControls({
                                 <SelectItem value="ELDERLY_RATIO">高齢者比率（65歳以上／総人口）</SelectItem>
                             </SelectContent>
                         </Select>
+
+
+
                     </motion.div>
                 )}
             </AnimatePresence>

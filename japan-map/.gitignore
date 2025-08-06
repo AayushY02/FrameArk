@@ -29,4 +29,5 @@ dist-ssr
 
 .vercel
 /japan-map/public/data/12_chiba_250m_pop.geojson
-data
+/data/*
+!/data/final.geojson

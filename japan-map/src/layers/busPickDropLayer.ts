@@ -35,11 +35,16 @@ export const toggleBusPickDropLayer = (
                 minzoom: 5,
                 filter: ['==', '$type', 'Polygon'],
                 paint: {
-                    'fill-color': ['get', 'fill'],
+                    'fill-color': [
+                        'case',
+                        ['==', ['get', 'name'], 'Ｂ区域'], '#FFA500', // Orange for Ｂ区域
+                        ['==', ['get', 'name'], 'A 区域'], '#FFFF00', // Yellow for A 区域
+                        '#d42' // Default color if name is neither A nor B 区域
+                    ],
                     'fill-opacity': ['coalesce', ['get', 'fill-opacity'], 0.5],
                     'fill-outline-color': ['get', 'stroke']
                 }
-            }, labelLayerId);
+            });
         } else {
             map.setLayoutProperty('bus-pick-drop-polygons', 'visibility', 'visible');
         }

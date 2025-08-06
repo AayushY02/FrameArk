@@ -6,7 +6,7 @@ import './App.css';
 import { Card } from './components/ui/card';
 import 'ldrs/react/Grid.css';
 import { MAP_STYLES } from './constants/mapStyles';
-import { JAPAN_BOUNDS, CHIBA_BOUNDS } from './constants/bounds';
+import { JAPAN_BOUNDS, CHIBA_BOUNDS, KASHIWA_BOUNDS } from './constants/bounds';
 import { getColorExpression } from './utils/expressions';
 import { addMeshLayers } from './layers/meshLayers';
 import { toggleAdminBoundaries } from './layers/adminBoundaries';
@@ -27,6 +27,7 @@ import { toggleTouristLayer } from './layers/touristSpot';
 import { toggleRoadsideStationLayer } from './layers/roadsideStationLayer';
 import { toggleAttractionLayer } from './layers/attractionLayer';
 import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
+import { toggleBusPassengerLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -58,6 +59,15 @@ export default function MapView() {
     const [alightingVisible, setAlightingVisible] = useState(false);
     const [attractionLayerVisible, setAttractionLayerVisible] = useState(false);
     const [busPickDropLayerVisible, setBusPickDropLayerVisible] = useState(false);
+    const [busPassengerLayerVisible, setBusPassengerLayerVisible] = useState(false);
+    const [sakaeCourseRideLayerVisible, setSakaeCourseRideLayerVisible] = useState(false);
+    const [sakaeCourseDropLayerVisible, setSakaeCourseDropLayerVisible] = useState(false);
+    const [masuoCourseRideLayerVisible, setMasuoCourseRideLayerVisible] = useState(false);
+    const [masuoCourseDropLayerVisible, setMasuoCourseDropLayerVisible] = useState(false);
+    const [shonanCourseRideLayerVisible, setShonanCourseRideLayerVisible] = useState(false);
+    const [shonanCourseDropLayerVisible, setShonanCourseDropLayerVisible] = useState(false);
+    const [isKashiwaBounds, setIsKashiwaBounds] = useState(false); // Track the toggle stat
+
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -95,11 +105,57 @@ export default function MapView() {
     };
 
     const fitBoundsToKashiwa = () => {
+        // const map = mapRef.current;
+        // if (!map) return;
+        // map.fitBounds([[139.935, 35.825], [140.05, 35.91]], { padding: 40, duration: 1000 });
+
+        // map.setMaxBounds(KASHIWA_BOUNDS)
+
         const map = mapRef.current;
         if (!map) return;
-        map.fitBounds([[139.935, 35.825], [140.05, 35.91]], { padding: 40, duration: 1000 });
+
+        if (isKashiwaBounds) {
+            // Fit map to Kashiwa bounds
+            map.fitBounds(KASHIWA_BOUNDS, {
+                padding: { top: 50, bottom: 50, left: 50, right: 50 }, // Padding for better view
+                duration: 1000 // Smooth transition duration
+            });
+            map.setMaxBounds(KASHIWA_BOUNDS); // Limit panning to Kashiwa bounds
+        } else {
+            // Fit map to Chiba bounds
+            map.fitBounds(CHIBA_BOUNDS, {
+                padding: { top: 50, bottom: 50, left: 50, right: 50 }, // Padding for better view
+                duration: 1000 // Smooth transition duration
+            });
+            map.setMaxBounds(CHIBA_BOUNDS); // Limit panning to Chiba bounds
+        }
+
+        // Toggle the state for the next time
+        setIsKashiwaBounds(!isKashiwaBounds);
     };
 
+
+    function downloadMapScreenshot(map: mapboxgl.Map, fileName = 'map-screenshot.png') {
+        const canvas = map.getCanvas();
+
+        // Force a re-render to ensure everything is drawn
+        map.once('render', () => {
+            try {
+                const dataURL = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = dataURL;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } catch (e) {
+                console.error('Screenshot failed:', e);
+            }
+        });
+
+        // Trigger a render if needed
+        map.triggerRepaint();
+    }
 
 
     const handleStyleChange = (styleUrl: string) => {
@@ -154,8 +210,11 @@ export default function MapView() {
             minZoom: 4.5,
             maxZoom: 18,
             maxBounds: JAPAN_BOUNDS,
-            language: "ja"
+            language: "ja",
+            preserveDrawingBuffer: true,
         });
+
+
 
         const ensureHighlightLayer = () => {
             if (map.getSource('clicked-mesh')) return;   // already present
@@ -627,6 +686,135 @@ export default function MapView() {
     `)
                 .addTo(map);
         });
+
+        map.on('mousemove', 'sakae-course-ride', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.masuo_ride}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'sakae-course-ride', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+        map.on('mousemove', 'sakae-course-drop', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.sakae_drop}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'sakae-course-drop', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+        map.on('mousemove', 'masuo-course-ride', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.masuo_ride}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'masuo-course-ride', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+        map.on('mousemove', 'masuo-course-drop', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.masuo_drop}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'masuo-course-drop', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+        map.on('mousemove', 'shonan-course-ride', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.shonan_ride}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'shonan-course-ride', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+        map.on('mousemove', 'shonan-course-drop', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.shonan_drop}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'shonan-course-drop', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
+
     }, []);
 
     const cardTitle = (() => {
@@ -704,6 +892,25 @@ export default function MapView() {
                 toggleAlighting={() => toggleAlightingLayer(mapRef.current!, setAlightingVisible)}
                 busPickDropLayerVisible={busPickDropLayerVisible}
                 toggleBusPickDropLayerVisible={() => toggleBusPickDropLayer(mapRef.current!, busPickDropLayerVisible, setIsLoading, setBusPickDropLayerVisible)}
+                busPassengerLayerVisible={busPassengerLayerVisible}
+                toggleBusPassengerLayerVisible={() => toggleBusPassengerLayer(mapRef.current!, busPassengerLayerVisible, setIsLoading, setBusPassengerLayerVisible)}
+                sakaeCourseRideLayerVisible={sakaeCourseRideLayerVisible}
+                toggleSakaeCourseRideLayerVisible={() => toggleSakaeCourseRideLayer(mapRef.current!, sakaeCourseRideLayerVisible, setIsLoading, setSakaeCourseRideLayerVisible)}
+                sakaeCourseDropLayerVisible={sakaeCourseDropLayerVisible}
+                toggleSakaeCourseDropLayerVisible={() => toggleSakaeCourseDropLayer(mapRef.current!, sakaeCourseDropLayerVisible, setIsLoading, setSakaeCourseDropLayerVisible)}
+                masuoCourseRideLayerVisible={masuoCourseRideLayerVisible}
+                toggleMasuoCourseRideLayerVisible={() => toggleMasuoCourseRideLayer(mapRef.current!, masuoCourseRideLayerVisible, setIsLoading, setMasuoCourseRideLayerVisible)}
+                masuoCourseDropLayerVisible={masuoCourseDropLayerVisible}
+                toggleMasuoCourseDropLayerVisible={() => toggleSakaeCourseDropLayer(mapRef.current!, masuoCourseDropLayerVisible, setIsLoading, setMasuoCourseDropLayerVisible)}
+                shonanCourseRideLayerVisible={shonanCourseRideLayerVisible}
+                toggleShonanCourseRideLayerVisible={() => toggleShonanCourseRideLayer(mapRef.current!, shonanCourseRideLayerVisible, setIsLoading, setShonanCourseRideLayerVisible)}
+                shonanCourseDropLayerVisible={shonanCourseDropLayerVisible}
+                toggleShonanCourseDropLayerVisible={() => toggleShonanCourseDropLayer(mapRef.current!, shonanCourseDropLayerVisible, setIsLoading, setShonanCourseDropLayerVisible)}
+                captureMapScreenshot={() => {
+                    if (mapRef.current) {
+                        downloadMapScreenshot(mapRef.current);
+                    }
+                }}
             />
 
             <Legend selectedMetric={selectedMetric} />
