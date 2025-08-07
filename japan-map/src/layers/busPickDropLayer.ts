@@ -93,15 +93,15 @@ export const toggleBusPickDropLayer = (
         });
 
         // 🔁 Restore visibility of base mesh layers
-        [
-            'mesh-1km-fill', 'mesh-1km-outline',
-            'mesh-500m-fill', 'mesh-500m-outline',
-            'mesh-250m-fill', 'mesh-250m-outline'
-        ].forEach(id => {
-            if (map.getLayer(id)) {
-                map.setLayoutProperty(id, 'visibility', 'visible');
-            }
-        });
+        // [
+        //     'mesh-1km-fill', 'mesh-1km-outline',
+        //     'mesh-500m-fill', 'mesh-500m-outline',
+        //     'mesh-250m-fill', 'mesh-250m-outline'
+        // ].forEach(id => {
+        //     if (map.getLayer(id)) {
+        //         map.setLayoutProperty(id, 'visibility', 'visible');
+        //     }
+        // });
     }
 
     setBusPickDropLayerVisible(!busPickDropLayerVisible);
