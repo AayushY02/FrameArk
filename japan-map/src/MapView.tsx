@@ -29,6 +29,7 @@ import { toggleAttractionLayer } from './layers/attractionLayer';
 import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
 import { toggleBusPassengerLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
 import { toggleNewBusPassengerLayer, toggleNewKashiwakuruDropLayer, toggleNewKashiwakuruRideLayer } from './layers/newbusPassengerLayer';
+import { categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPublicFacilities';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -72,6 +73,24 @@ export default function MapView() {
     const [newBusLayerVisible, setNewBusLayerVisible] = useState(false);
     const [newKashiwakuruRideLayerVisible, setNewKashiwakuruRideLayerVisible] = useState(false);
     const [newKashiwakuruDropLayerVisible, setNewKashiwakuruDropLayerVisible] = useState(false);
+
+    const [kashiwaPublicFacilityVisible, setKashiwaPublicFacilityVisible] = useState(false);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+    const toggleKashiwaPublicFacilityVisible = (category: string) => {
+        // Toggle category selection
+        setSelectedCategories((prev) =>
+            prev.includes(category)
+                ? prev.filter((cat) => cat !== category)
+                : [...prev, category]
+        );
+    };
+
+    useEffect(() => {
+        if (mapRef.current) {
+            toggleKashiwaPublicFacilityLayer(mapRef.current, kashiwaPublicFacilityVisible, setIsLoading, setKashiwaPublicFacilityVisible, selectedCategories);
+        }
+    }, [selectedCategories]);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -910,7 +929,45 @@ export default function MapView() {
         });
 
 
+        const showPopup = (e: mapboxgl.MapMouseEvent) => {
+            const feature = e.features?.[0];
+            if (!feature) return;
+
+            map.getCanvas().style.cursor = 'pointer';
+
+            const properties = feature.properties ?? {};
+            const popupContent = `
+            <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-64">
+                <strong>施設名:</strong> ${properties?.名前 ?? '不明'}<br />
+                <strong>住所:</strong> ${properties?.住所 ?? '不明'}<br />
+                <strong>カテゴリ:</strong> ${properties?.カテゴリ ?? '不明'}
+            </div>
+        `;
+
+            transportPopupRef.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
+        };
+
+        const hidePopup = () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        };
+
+        // Add hover interaction for all layers (individual filters and subete layer)
+        const layers = [
+            'kashiwa-public-facility-subete', // Subete layer
+            ...categories.map(category => `kashiwa-public-facility-${category.label}`) // Individual filter layers
+        ];
+
+        layers.forEach(layerId => {
+            // Ensure the hover event is added for each layer
+            map.on('mousemove', layerId, showPopup);
+            map.on('mouseleave', layerId, hidePopup);
+        });
+
+
     }, []);
+
+
 
     const cardTitle = (() => {
         if (agriLayerVisible) return '柏市農地データ';
@@ -1016,6 +1073,11 @@ export default function MapView() {
                 newKashiwakuruDropLayerVisible={newKashiwakuruDropLayerVisible}
                 toggleNewKashiwakuruDropLayerVisible={() => toggleNewKashiwakuruDropLayer(mapRef.current!, newKashiwakuruDropLayerVisible, setIsLoading, setNewKashiwakuruDropLayerVisible)}
 
+                kashiwaPublicFacilityVisible={kashiwaPublicFacilityVisible}
+                toggleKashiwaPublicFacilityVisible={toggleKashiwaPublicFacilityVisible}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories}
+
             />
 
             <Legend selectedMetric={selectedMetric} />
@@ -1034,3 +1096,5 @@ export default function MapView() {
         </div>
     );
 }
+
+
