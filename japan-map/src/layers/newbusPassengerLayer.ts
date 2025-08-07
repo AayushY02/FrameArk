@@ -271,7 +271,7 @@ export const toggleNewKashiwakuruDropLayer = (
 
     } else {
         // Hide sakae layer
-        ['shonan-course-drop'].forEach(id => {
+        ['drop-data'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
