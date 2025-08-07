@@ -687,6 +687,27 @@ export default function MapView() {
                 .addTo(map);
         });
 
+        map.on('mousemove', 'bus-layer', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.P11_001}</strong> 
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'bus-layer', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
         map.on('mousemove', 'sakae-course-ride', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -695,7 +716,7 @@ export default function MapView() {
                 if (props) {
                     const html = `
                 <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
-                    <strong>${props.masuo_ride}</strong> 
+                    <strong>${props.sakae_ride}</strong> 
            
                 </div>
             `;
