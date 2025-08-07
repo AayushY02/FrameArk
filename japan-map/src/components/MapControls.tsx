@@ -95,6 +95,16 @@ interface MapControlsProps {
     shonanCourseDropLayerVisible: boolean;
     toggleShonanCourseDropLayerVisible: () => void;
     captureMapScreenshot: () => void
+
+    newbusLayerVisible: boolean;
+    toggleNewBusLayerVisible: () => void;
+
+    newKashiwakuruRideLayerVisible: boolean;
+    toggleNewKashiwakuruRideLayerVisible: () => void;
+
+    newKashiwakuruDropLayerVisible: boolean;
+    toggleNewKashiwakuruDropLayerVisible: () => void;
+
 }
 
 export default function MapControls({
@@ -146,7 +156,17 @@ export default function MapControls({
     toggleShonanCourseRideLayerVisible,
     shonanCourseDropLayerVisible,
     toggleShonanCourseDropLayerVisible,
-    captureMapScreenshot
+    captureMapScreenshot,
+
+
+    newbusLayerVisible,
+    toggleNewBusLayerVisible,
+
+    newKashiwakuruRideLayerVisible,
+    toggleNewKashiwakuruRideLayerVisible,
+
+    newKashiwakuruDropLayerVisible,
+    toggleNewKashiwakuruDropLayerVisible,
 
 
 }: MapControlsProps) {
@@ -291,6 +311,26 @@ export default function MapControls({
                                         { label: '沼南コース - 乗車', checked: shonanCourseRideLayerVisible, onChange: toggleShonanCourseRideLayerVisible, icon: <MapPin size={16} /> },
                                         { label: '沼南コース - 降車', checked: shonanCourseDropLayerVisible, onChange: toggleShonanCourseDropLayerVisible, icon: <MapPin size={16} /> },
                                         // { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
+                                    ].map(({ label, checked, onChange, icon }) => (
+                                        <div key={label} className="flex items-center justify-between">
+                                            <Label className="text-sm text-black flex items-center gap-2">{icon} {label}</Label>
+                                            <Switch checked={checked} onCheckedChange={onChange} />
+                                        </div>
+                                    ))}
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="transportation">
+                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
+                                    <BusFront size={16} />カシワニクル乗降場
+                                </AccordionTrigger>
+                                <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
+                                    {[
+                                        { label: 'バス停レイヤー', checked: newbusLayerVisible, onChange: toggleNewBusLayerVisible, icon: <Bus size={16} /> },
+                                        { label: 'カシワニクル乗車', checked: newKashiwakuruRideLayerVisible, onChange: toggleNewKashiwakuruRideLayerVisible, icon: <MapPin size={16} /> },
+                                        { label: 'カシワニクル降車', checked: newKashiwakuruDropLayerVisible, onChange: toggleNewKashiwakuruDropLayerVisible, icon: <MapPin size={16} /> },
+
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">{icon} {label}</Label>

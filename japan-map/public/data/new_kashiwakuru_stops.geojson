@@ -1,0 +1,9916 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0071504,
+          35.83967758
+        ]
+      },
+      "properties": {
+        "id": 1,
+        "name": "ひまわりプラザ（元沼南公民館）",
+        "表示番号": "A006",
+        "乗車数": 104,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0052434,
+          35.84979595
+        ]
+      },
+      "properties": {
+        "id": 2,
+        "name": "吉野酒店（大井）",
+        "表示番号": "A311",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.002618,
+          35.8275354
+        ]
+      },
+      "properties": {
+        "id": 3,
+        "name": "柏市塚崎",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0920022,
+          35.83569797
+        ]
+      },
+      "properties": {
+        "id": 4,
+        "name": "布瀬の大成工機前ごみ集積所",
+        "表示番号": "B413",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.997921,
+          35.83778978
+        ]
+      },
+      "properties": {
+        "id": 5,
+        "name": "大津ケ丘団地3－1－6入口",
+        "表示番号": "A486",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0157899,
+          35.85298308
+        ]
+      },
+      "properties": {
+        "id": 6,
+        "name": "大井2710番地ごみ集積所",
+        "表示番号": "A385",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0152698,
+          35.81227973
+        ]
+      },
+      "properties": {
+        "id": 7,
+        "name": "むこたま",
+        "表示番号": "A2102",
+        "乗車数": 38,
+        "降車数": 73
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.042789,
+          35.84988291
+        ]
+      },
+      "properties": {
+        "id": 8,
+        "name": "ラザロ霊園",
+        "表示番号": "A778",
+        "乗車数": 1,
+        "降車数": 78
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0323471,
+          35.8254882
+        ]
+      },
+      "properties": {
+        "id": 9,
+        "name": "金山のユタカ運輸前",
+        "表示番号": "A855",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0010755,
+          35.83795053
+        ]
+      },
+      "properties": {
+        "id": 10,
+        "name": "なないろリハビリ・進研ゼミ",
+        "表示番号": "A559",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0230589,
+          35.84157735
+        ]
+      },
+      "properties": {
+        "id": 11,
+        "name": "飛鳥山墓苑",
+        "表示番号": "A1147",
+        "乗車数": 8,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0041788,
+          35.84646721
+        ]
+      },
+      "properties": {
+        "id": 12,
+        "name": "ローソンスリーエフ大井店",
+        "表示番号": "A054",
+        "乗車数": 64,
+        "降車数": 40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0264624,
+          35.84296905
+        ]
+      },
+      "properties": {
+        "id": 13,
+        "name": "鵜澤工業",
+        "表示番号": "A785",
+        "乗車数": 5,
+        "降車数": 44
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0102136,
+          35.83373006
+        ]
+      },
+      "properties": {
+        "id": 14,
+        "name": "上笹医院",
+        "表示番号": "A808",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0023308,
+          35.82930898
+        ]
+      },
+      "properties": {
+        "id": 15,
+        "name": "アトリエ匠",
+        "表示番号": "A665",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0713438,
+          35.84396051
+        ]
+      },
+      "properties": {
+        "id": 16,
+        "name": "手賀の川村米店",
+        "表示番号": "B338",
+        "乗車数": 34,
+        "降車数": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0114181,
+          35.84245577
+        ]
+      },
+      "properties": {
+        "id": 17,
+        "name": "落合編み物教室",
+        "表示番号": "A760",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0045275,
+          35.84473438
+        ]
+      },
+      "properties": {
+        "id": 18,
+        "name": "沼南文化学園",
+        "表示番号": "A016",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0395813,
+          35.8306616
+        ]
+      },
+      "properties": {
+        "id": 19,
+        "name": "泉２２５９番地前ゴミ置場",
+        "表示番号": "B025",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0007149,
+          35.84871674
+        ]
+      },
+      "properties": {
+        "id": 20,
+        "name": "妙照寺（階段下）",
+        "表示番号": "A205",
+        "乗車数": 2,
+        "降車数": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0276399,
+          35.84764793
+        ]
+      },
+      "properties": {
+        "id": 21,
+        "name": "手賀の杜ヘアーサロンホンダ",
+        "表示番号": "A726",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0776901,
+          35.84424735
+        ]
+      },
+      "properties": {
+        "id": 22,
+        "name": "手賀興福院手前の集落交差点",
+        "表示番号": "B840",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0064346,
+          35.84226878
+        ]
+      },
+      "properties": {
+        "id": 23,
+        "name": "沼南消防署玄関",
+        "表示番号": "A022",
+        "乗車数": 2,
+        "降車数": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0177532,
+          35.82343957
+        ]
+      },
+      "properties": {
+        "id": 24,
+        "name": "宮後青年館",
+        "表示番号": "A861",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9929509,
+          35.84555638
+        ]
+      },
+      "properties": {
+        "id": 25,
+        "name": "大井116ごみ集積所",
+        "表示番号": "A413",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9929431,
+          35.84243837
+        ]
+      },
+      "properties": {
+        "id": 26,
+        "name": "大井、大津川付近下道自販機設置個所",
+        "表示番号": "A1201",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0387228,
+          35.84779577
+        ]
+      },
+      "properties": {
+        "id": 27,
+        "name": "鷲野谷青年館",
+        "表示番号": "A776",
+        "乗車数": 10,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0306278,
+          35.84913503
+        ]
+      },
+      "properties": {
+        "id": 28,
+        "name": "手賀の杜2丁目17番地ごみ集積所",
+        "表示番号": "A716",
+        "乗車数": 7,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0024086,
+          35.82760622
+        ]
+      },
+      "properties": {
+        "id": 29,
+        "name": "塚崎　田中商事を入って先のゴミステーション",
+        "表示番号": "A699",
+        "乗車数": 2,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0055977,
+          35.83883334
+        ]
+      },
+      "properties": {
+        "id": 30,
+        "name": "動物苑 大島田霊園",
+        "表示番号": "A1206",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0243568,
+          35.85673965
+        ]
+      },
+      "properties": {
+        "id": 31,
+        "name": "手賀沼観光リゾート満天の湯",
+        "表示番号": "A701",
+        "乗車数": 266,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.005812,
+          35.84465191
+        ]
+      },
+      "properties": {
+        "id": 32,
+        "name": "大津ケ丘1丁目11－5番地ごみ集積所",
+        "表示番号": "A015",
+        "乗車数": 17,
+        "降車数": 20
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0215673,
+          35.84179494
+        ]
+      },
+      "properties": {
+        "id": 33,
+        "name": "セブンイレブン下清水店",
+        "表示番号": "A811",
+        "乗車数": 29,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0054529,
+          35.8468303
+        ]
+      },
+      "properties": {
+        "id": 34,
+        "name": "カラオケ道場みなと",
+        "表示番号": "A111",
+        "乗車数": 39,
+        "降車数": 27
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0011879,
+          35.84001634
+        ]
+      },
+      "properties": {
+        "id": 35,
+        "name": "大津ケ丘2－31－9号棟前",
+        "表示番号": "A549",
+        "乗車数": 5,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9960974,
+          35.84853047
+        ]
+      },
+      "properties": {
+        "id": 36,
+        "name": "エリカマンション9号棟",
+        "表示番号": "A259",
+        "乗車数": 4,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9978566,
+          35.8396554
+        ]
+      },
+      "properties": {
+        "id": 37,
+        "name": "大津ケ丘3丁目ローソン",
+        "表示番号": "A461",
+        "乗車数": 5,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0082824,
+          35.83547183
+        ]
+      },
+      "properties": {
+        "id": 38,
+        "name": "弘洋電子機器横ごみ集積所",
+        "表示番号": "A806",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0936278,
+          35.8375113
+        ]
+      },
+      "properties": {
+        "id": 39,
+        "name": "観音堂入口",
+        "表示番号": "B452",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0453266,
+          35.83650672
+        ]
+      },
+      "properties": {
+        "id": 40,
+        "name": "龍泉院入口",
+        "表示番号": "B022",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0062871,
+          35.8449431
+        ]
+      },
+      "properties": {
+        "id": 41,
+        "name": "ムラカミ美容室",
+        "表示番号": "A056",
+        "乗車数": 24,
+        "降車数": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.994649,
+          35.84019992
+        ]
+      },
+      "properties": {
+        "id": 42,
+        "name": "香取会計事務所",
+        "表示番号": "A448",
+        "乗車数": 6,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0018156,
+          35.83599805
+        ]
+      },
+      "properties": {
+        "id": 43,
+        "name": "大津ケ丘4－5－7号棟",
+        "表示番号": "A577",
+        "乗車数": 87,
+        "降車数": 91
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0437573,
+          35.83683956
+        ]
+      },
+      "properties": {
+        "id": 44,
+        "name": "龍泉院",
+        "表示番号": "B021",
+        "乗車数": 2,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0014186,
+          35.82666908
+        ]
+      },
+      "properties": {
+        "id": 45,
+        "name": "塚崎運動場駐車場",
+        "表示番号": "A670",
+        "乗車数": 7,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0381649,
+          35.84898719
+        ]
+      },
+      "properties": {
+        "id": 46,
+        "name": "鷲野谷567番地ごみ集積所",
+        "表示番号": "A770",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.997009,
+          35.83875956
+        ]
+      },
+      "properties": {
+        "id": 47,
+        "name": "大津ケ丘団地3－1－10入口",
+        "表示番号": "A490",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0080939,
+          35.84142682
+        ]
+      },
+      "properties": {
+        "id": 48,
+        "name": "沼南庁舎玄関",
+        "表示番号": "A001",
+        "乗車数": 42,
+        "降車数": 27
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0053885,
+          35.84832176
+        ]
+      },
+      "properties": {
+        "id": 49,
+        "name": "咲保育園",
+        "表示番号": "A871",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.997168,
+          35.8380755
+        ]
+      },
+      "properties": {
+        "id": 50,
+        "name": "柏市大津ケ丘",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.998951,
+          35.84617385
+        ]
+      },
+      "properties": {
+        "id": 51,
+        "name": "大井団地（大井814－2番地）ごみ集積所",
+        "表示番号": "A213",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0468126,
+          35.83741998
+        ]
+      },
+      "properties": {
+        "id": 52,
+        "name": "フジワラ修理工場",
+        "表示番号": "B031",
+        "乗車数": 11,
+        "降車数": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0021642,
+          35.83567623
+        ]
+      },
+      "properties": {
+        "id": 53,
+        "name": "大津ケ丘4－5－8号棟横",
+        "表示番号": "A578",
+        "乗車数": 9,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0176301,
+          35.83698509
+        ]
+      },
+      "properties": {
+        "id": 54,
+        "name": "柏市片山",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0109673,
+          35.83792459
+        ]
+      },
+      "properties": {
+        "id": 55,
+        "name": "柏市南逆井",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0011182,
+          35.82682131
+        ]
+      },
+      "properties": {
+        "id": 56,
+        "name": "塚崎1453番地ごみ集積所",
+        "表示番号": "A637",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0139394,
+          35.84584757
+        ]
+      },
+      "properties": {
+        "id": 57,
+        "name": "ホテルエルの上の住宅地",
+        "表示番号": "A1154",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.99614,
+          35.83739404
+        ]
+      },
+      "properties": {
+        "id": 58,
+        "name": "大津ケ丘団地3－53－6横",
+        "表示番号": "A496",
+        "乗車数": 20,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0166323,
+          35.84993928
+        ]
+      },
+      "properties": {
+        "id": 59,
+        "name": "小林板金ゴミステーション",
+        "表示番号": "A365",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0060644,
+          35.81636882
+        ]
+      },
+      "properties": {
+        "id": 60,
+        "name": "スズキモータース",
+        "表示番号": "A1192",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0108334,
+          35.85771339
+        ]
+      },
+      "properties": {
+        "id": 61,
+        "name": "そば処花鴨跡",
+        "表示番号": "A356",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0470161,
+          35.8368613
+        ]
+      },
+      "properties": {
+        "id": 62,
+        "name": "泉ふるさとセンター(泉青年館)",
+        "表示番号": "B023",
+        "乗車数": 101,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.015468,
+          35.82881332
+        ]
+      },
+      "properties": {
+        "id": 63,
+        "name": "幸楽苑沼南店裏側",
+        "表示番号": "A825",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0036502,
+          35.82997022
+        ]
+      },
+      "properties": {
+        "id": 64,
+        "name": "塚崎けんちゃん床屋",
+        "表示番号": "A663",
+        "乗車数": 43,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0000429,
+          35.84537142
+        ]
+      },
+      "properties": {
+        "id": 65,
+        "name": "喫茶プレイス横",
+        "表示番号": "A053",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0108173,
+          35.84533011
+        ]
+      },
+      "properties": {
+        "id": 66,
+        "name": "中山美容室",
+        "表示番号": "A182",
+        "乗車数": 5,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0053081,
+          35.85103501
+        ]
+      },
+      "properties": {
+        "id": 67,
+        "name": "カーサ大井",
+        "表示番号": "A513",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0092399,
+          35.84755662
+        ]
+      },
+      "properties": {
+        "id": 68,
+        "name": "大井天神向原公園",
+        "表示番号": "A121",
+        "乗車数": 1,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.020076,
+          35.82355483
+        ]
+      },
+      "properties": {
+        "id": 69,
+        "name": "ローソン藤ケ谷十字路店",
+        "表示番号": "A863",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0064021,
+          35.83552401
+        ]
+      },
+      "properties": {
+        "id": 70,
+        "name": "大島田金子木工",
+        "表示番号": "A641",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9981251,
+          35.82778237
+        ]
+      },
+      "properties": {
+        "id": 71,
+        "name": "みやした橋",
+        "表示番号": "A510",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.014669,
+          35.84179478
+        ]
+      },
+      "properties": {
+        "id": 72,
+        "name": "ラプレ柏",
+        "表示番号": "A790",
+        "乗車数": 11,
+        "降車数": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0103343,
+          35.84262986
+        ]
+      },
+      "properties": {
+        "id": 73,
+        "name": "ランドローム沼南店（昔のいなげや）",
+        "表示番号": "A755",
+        "乗車数": 187,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0244803,
+          35.810614
+        ]
+      },
+      "properties": {
+        "id": 74,
+        "name": "柏市藤ヶ谷",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0159672,
+          35.84384729
+        ]
+      },
+      "properties": {
+        "id": 75,
+        "name": "鷲野谷コカコーラジャパン",
+        "表示番号": "A507",
+        "乗車数": 47,
+        "降車数": 31
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0528151,
+          35.8383399
+        ]
+      },
+      "properties": {
+        "id": 76,
+        "name": "柳戸の弘誓院",
+        "表示番号": "B066",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.013124,
+          35.81622092
+        ]
+      },
+      "properties": {
+        "id": 77,
+        "name": "ハイム沼南",
+        "表示番号": "A2109",
+        "乗車数": 46,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0693429,
+          35.83666343
+        ]
+      },
+      "properties": {
+        "id": 78,
+        "name": "手賀寿し入口角",
+        "表示番号": "B301",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.984619,
+          35.822863
+        ]
+      },
+      "properties": {
+        "id": 79,
+        "name": "逆井駅東口",
+        "表示番号": "Z001",
+        "乗車数": 285,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0040292,
+          35.8564513
+        ]
+      },
+      "properties": {
+        "id": 80,
+        "name": "A1167：大井の福万寺、東山霊園入口T字路",
+        "表示番号": "",
+        "乗車数": 16,
+        "降車数": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0727546,
+          35.84361263
+        ]
+      },
+      "properties": {
+        "id": 81,
+        "name": "手賀611番地寺田畜産前",
+        "表示番号": "B335",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0025321,
+          35.84309539
+        ]
+      },
+      "properties": {
+        "id": 82,
+        "name": "かしわ沼南みらいクリニック",
+        "表示番号": "A047",
+        "乗車数": 29,
+        "降車数": 45
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0239599,
+          35.84257768
+        ]
+      },
+      "properties": {
+        "id": 83,
+        "name": "長榮寺",
+        "表示番号": "A813",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0176301,
+          35.83698509
+        ]
+      },
+      "properties": {
+        "id": 84,
+        "name": "ゆで太郎柏大井店",
+        "表示番号": "A1172",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0044012,
+          35.85191568
+        ]
+      },
+      "properties": {
+        "id": 85,
+        "name": "大井青年館入口",
+        "表示番号": "A301",
+        "乗車数": 1,
+        "降車数": 37
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0176301,
+          35.83698509
+        ]
+      },
+      "properties": {
+        "id": 86,
+        "name": "かげ新-住所が違うので使用不可",
+        "表示番号": "",
+        "乗車数": 3,
+        "降車数": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0309661,
+          35.8070767
+        ]
+      },
+      "properties": {
+        "id": 87,
+        "name": "セブンイレブン沼南藤ヶ谷店",
+        "表示番号": "A2111",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0043049,
+          35.84217311
+        ]
+      },
+      "properties": {
+        "id": 88,
+        "name": "大津ケ丘団地1－54－3号棟",
+        "表示番号": "A033",
+        "乗車数": 2,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0028941,
+          35.84647808
+        ]
+      },
+      "properties": {
+        "id": 89,
+        "name": "おいはな会館",
+        "表示番号": "A201",
+        "乗車数": 2,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0031784,
+          35.81952685
+        ]
+      },
+      "properties": {
+        "id": 90,
+        "name": "わかたけ社会センター",
+        "表示番号": "A2112",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0550815,
+          35.83446287
+        ]
+      },
+      "properties": {
+        "id": 91,
+        "name": "金山落しのサクラ（名内橋入口）.",
+        "表示番号": "B077",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9991548,
+          35.8431256
+        ]
+      },
+      "properties": {
+        "id": 92,
+        "name": "沼南台歯科",
+        "表示番号": "A502",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0834459,
+          35.83406058
+        ]
+      },
+      "properties": {
+        "id": 93,
+        "name": "オートパーラーマスダ",
+        "表示番号": "B401",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0275865,
+          35.85275249
+        ]
+      },
+      "properties": {
+        "id": 94,
+        "name": "JA東葛ふたば東部支店",
+        "表示番号": "A703",
+        "乗車数": 3,
+        "降車数": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9989778,
+          35.83885306
+        ]
+      },
+      "properties": {
+        "id": 95,
+        "name": "大津ケ丘交番",
+        "表示番号": "A524",
+        "乗車数": 29,
+        "降車数": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0045027,
+          35.84249164
+        ]
+      },
+      "properties": {
+        "id": 96,
+        "name": "大津ケ丘団地1－54－8号棟",
+        "表示番号": "A038",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0227529,
+          35.85486791
+        ]
+      },
+      "properties": {
+        "id": 97,
+        "name": "箕輪431番地前ごみ集積所",
+        "表示番号": "A395",
+        "乗車数": 1,
+        "降車数": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0230857,
+          35.85575255
+        ]
+      },
+      "properties": {
+        "id": 98,
+        "name": "和風レストランみの太",
+        "表示番号": "A394",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9991042,
+          35.8311488
+        ]
+      },
+      "properties": {
+        "id": 99,
+        "name": "柏市塚崎",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0419414,
+          35.84460843
+        ]
+      },
+      "properties": {
+        "id": 100,
+        "name": "鷲野谷の山崎種苗商店",
+        "表示番号": "A780",
+        "乗車数": 1,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0154951,
+          35.82221499
+        ]
+      },
+      "properties": {
+        "id": 101,
+        "name": "ローソンスリーエフ柏藤ヶ谷店",
+        "表示番号": "A1161",
+        "乗車数": 5,
+        "降車数": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0049426,
+          35.84244381
+        ]
+      },
+      "properties": {
+        "id": 102,
+        "name": "大津ケ丘団地1－54－7号棟",
+        "表示番号": "A037",
+        "乗車数": 38,
+        "降車数": 37
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0108066,
+          35.83875941
+        ]
+      },
+      "properties": {
+        "id": 103,
+        "name": "沼南ゴルフ",
+        "表示番号": "A839",
+        "乗車数": 1,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9975113,
+          35.8382625
+        ]
+      },
+      "properties": {
+        "id": 104,
+        "name": "柏市A",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0033661,
+          35.84338201
+        ]
+      },
+      "properties": {
+        "id": 105,
+        "name": "大津ケ丘幼稚園横",
+        "表示番号": "A026",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9979371,
+          35.84401704
+        ]
+      },
+      "properties": {
+        "id": 106,
+        "name": "大津ケ丘中ノ橋公園",
+        "表示番号": "A412",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.039624,
+          35.84883065
+        ]
+      },
+      "properties": {
+        "id": 107,
+        "name": "鷲野谷の医王寺",
+        "表示番号": "A777",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.995872,
+          35.84865222
+        ]
+      },
+      "properties": {
+        "id": 108,
+        "name": "エリカマンション6号棟",
+        "表示番号": "A256",
+        "乗車数": 7,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0032535,
+          35.84252317
+        ]
+      },
+      "properties": {
+        "id": 109,
+        "name": "大津ケ丘ミネルバ横",
+        "表示番号": "A046",
+        "乗車数": 2,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0264865,
+          35.84861759
+        ]
+      },
+      "properties": {
+        "id": 110,
+        "name": "手賀の杜1丁目20番地ごみ集積所",
+        "表示番号": "A724",
+        "乗車数": 17,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0039846,
+          35.8349084
+        ]
+      },
+      "properties": {
+        "id": 111,
+        "name": "柏市塚崎",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0030413,
+          35.82782602
+        ]
+      },
+      "properties": {
+        "id": 112,
+        "name": "美容室リル（塚崎）",
+        "表示番号": "A669",
+        "乗車数": 39,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.001899,
+          35.84644547
+        ]
+      },
+      "properties": {
+        "id": 113,
+        "name": "大森獣医",
+        "表示番号": "A202",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0229353,
+          35.85559835
+        ]
+      },
+      "properties": {
+        "id": 114,
+        "name": "柏市箕輪",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0092024,
+          35.82553822
+        ]
+      },
+      "properties": {
+        "id": 115,
+        "name": "シーエーエー東京搬入口",
+        "表示番号": "A683",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9954212,
+          35.84801753
+        ]
+      },
+      "properties": {
+        "id": 116,
+        "name": "エリカ前（阪東バス）柏方面停留所下",
+        "表示番号": "A400",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0148809,
+          35.84364944
+        ]
+      },
+      "properties": {
+        "id": 117,
+        "name": "岩井水源地",
+        "表示番号": "Ａ924",
+        "乗車数": 2,
+        "降車数": 623
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0150871,
+          35.82824356
+        ]
+      },
+      "properties": {
+        "id": 118,
+        "name": "オートウェーブ本館前",
+        "表示番号": "A679",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0225922,
+          35.85765687
+        ]
+      },
+      "properties": {
+        "id": 119,
+        "name": "道の駅　てんと（新しい方）",
+        "表示番号": "A1170",
+        "乗車数": 51,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0158579,
+          35.8435078
+        ]
+      },
+      "properties": {
+        "id": 120,
+        "name": "岩井水源地",
+        "表示番号": "",
+        "乗車数": 2,
+        "降車数": 623
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0014561,
+          35.82406373
+        ]
+      },
+      "properties": {
+        "id": 121,
+        "name": "神明社（沼南の森）",
+        "表示番号": "A681",
+        "乗車数": 6,
+        "降車数": 354
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9959764,
+          35.84101653
+        ]
+      },
+      "properties": {
+        "id": 122,
+        "name": "大津ケ丘南田公園（西側）",
+        "表示番号": "A440",
+        "乗車数": 58,
+        "降車数": 52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0170657,
+          35.85087645
+        ]
+      },
+      "properties": {
+        "id": 123,
+        "name": "五條谷消防団器具置場",
+        "表示番号": "A372",
+        "乗車数": 18,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0232191,
+          35.85734827
+        ]
+      },
+      "properties": {
+        "id": 124,
+        "name": "道の駅しょうなん　つばさ（古い方）",
+        "表示番号": "A391",
+        "乗車数": 7,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.06915,
+          35.84561276
+        ]
+      },
+      "properties": {
+        "id": 125,
+        "name": "初瀬木工所入口　T字路",
+        "表示番号": "B117",
+        "乗車数": 12,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0494972,
+          35.8363677
+        ]
+      },
+      "properties": {
+        "id": 126,
+        "name": "手賀郵便局",
+        "表示番号": "B051",
+        "乗車数": 1,
+        "降車数": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0099268,
+          35.83449751
+        ]
+      },
+      "properties": {
+        "id": 127,
+        "name": "ホテル　ルートイン",
+        "表示番号": "A1169",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9947348,
+          35.84653461
+        ]
+      },
+      "properties": {
+        "id": 128,
+        "name": "ファミリーマート大井店（中の橋）",
+        "表示番号": "A401",
+        "乗車数": 17,
+        "降車数": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0176301,
+          35.83698509
+        ]
+      },
+      "properties": {
+        "id": 129,
+        "name": "B114：柏市片山1262-3",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.998447,
+          35.83524553
+        ]
+      },
+      "properties": {
+        "id": 130,
+        "name": "ランドリーふわふわの裏通り",
+        "表示番号": "A1159",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0061556,
+          35.84164693
+        ]
+      },
+      "properties": {
+        "id": 131,
+        "name": "カペリデアーテ",
+        "表示番号": "A1207",
+        "乗車数": 1,
+        "降車数": 31
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.999666,
+          35.83615195
+        ]
+      },
+      "properties": {
+        "id": 132,
+        "name": "大津ケ丘団地4-5-28",
+        "表示番号": "A1208",
+        "乗車数": 5,
+        "降車数": 11
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0126208,
+          35.84432034
+        ]
+      },
+      "properties": {
+        "id": 133,
+        "name": "五条谷丸山公園",
+        "表示番号": "A749",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0079659,
+          35.84710874
+        ]
+      },
+      "properties": {
+        "id": 134,
+        "name": "ストークマンション",
+        "表示番号": "A106",
+        "乗車数": 24,
+        "降車数": 13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0045195,
+          35.8397944
+        ]
+      },
+      "properties": {
+        "id": 135,
+        "name": "セカンドストリート柏沼南店",
+        "表示番号": "A1175",
+        "乗車数": 2,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0357938,
+          35.85208305
+        ]
+      },
+      "properties": {
+        "id": 136,
+        "name": "岩井青年館（将門神社）",
+        "表示番号": "A773",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9962115,
+          35.8434708
+        ]
+      },
+      "properties": {
+        "id": 137,
+        "name": "A438",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.007106,
+          35.843703
+        ]
+      },
+      "properties": {
+        "id": 138,
+        "name": "沼南大井郵便局",
+        "表示番号": "A061",
+        "乗車数": 18,
+        "降車数": 33
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9961936,
+          35.83671127
+        ]
+      },
+      "properties": {
+        "id": 139,
+        "name": "大津ケ丘団地3－53－3横",
+        "表示番号": "A493",
+        "乗車数": 2,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.078119,
+          35.8456477
+        ]
+      },
+      "properties": {
+        "id": 140,
+        "name": "興福院平和公園正門",
+        "表示番号": "B344",
+        "乗車数": 3,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0262478,
+          35.84692394
+        ]
+      },
+      "properties": {
+        "id": 141,
+        "name": "手賀の杜中央公園トイレ前",
+        "表示番号": "A731",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0032076,
+          35.83908354
+        ]
+      },
+      "properties": {
+        "id": 142,
+        "name": "大津ケ丘4丁目石戸第1ビル裏側",
+        "表示番号": "A552",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0080922,
+          35.84900443
+        ]
+      },
+      "properties": {
+        "id": 143,
+        "name": "緑台サンエトワール前交差点付近",
+        "表示番号": "A1199",
+        "乗車数": 1,
+        "降車数": 41
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0750079,
+          35.84505616
+        ]
+      },
+      "properties": {
+        "id": 144,
+        "name": "旧手賀教会",
+        "表示番号": "Ｂ340",
+        "乗車数": 1,
+        "降車数": 139
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0225437,
+          35.84477584
+        ]
+      },
+      "properties": {
+        "id": 145,
+        "name": "手賀の杜はばたき公園(西側)",
+        "表示番号": "A738",
+        "乗車数": 44,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.004082,
+          35.83249057
+        ]
+      },
+      "properties": {
+        "id": 146,
+        "name": "塚崎ガスト",
+        "表示番号": "A649",
+        "乗車数": 11,
+        "降車数": 18
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0018731,
+          35.835856
+        ]
+      },
+      "properties": {
+        "id": 147,
+        "name": "大津ヶ丘４－５－７",
+        "表示番号": "",
+        "乗車数": 6,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0256982,
+          35.80925192
+        ]
+      },
+      "properties": {
+        "id": 148,
+        "name": "藤ヶ谷　野島建設入口交差点",
+        "表示番号": "A1171",
+        "乗車数": 2,
+        "降車数": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0136234,
+          35.85680834
+        ]
+      },
+      "properties": {
+        "id": 149,
+        "name": "千葉・柏リハビリテーション病院",
+        "表示番号": "A382",
+        "乗車数": 310,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9962288,
+          35.83250347
+        ]
+      },
+      "properties": {
+        "id": 150,
+        "name": "塚崎レガーロ手前のゴミステーション",
+        "表示番号": "A1191",
+        "乗車数": 42,
+        "降車数": 60
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0287101,
+          35.8512243
+        ]
+      },
+      "properties": {
+        "id": 151,
+        "name": "手賀の杜みはらしの広場",
+        "表示番号": "A712",
+        "乗車数": 13,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0157094,
+          35.84165578
+        ]
+      },
+      "properties": {
+        "id": 152,
+        "name": "手賀の杜入口ミニストップ",
+        "表示番号": "A751",
+        "乗車数": 1,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0303972,
+          35.84691742
+        ]
+      },
+      "properties": {
+        "id": 153,
+        "name": "県立沼南高校北門",
+        "表示番号": "A782",
+        "乗車数": 105,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0068358,
+          35.8484918
+        ]
+      },
+      "properties": {
+        "id": 154,
+        "name": "A460：恩田コーポ",
+        "表示番号": "",
+        "乗車数": 80,
+        "降車数": 79
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0202104,
+          35.84377772
+        ]
+      },
+      "properties": {
+        "id": 155,
+        "name": "手賀の杜5丁目5-15ゴミステーション",
+        "表示番号": "A801",
+        "乗車数": 122,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0027758,
+          35.83671561
+        ]
+      },
+      "properties": {
+        "id": 156,
+        "name": "八木歯科医院",
+        "表示番号": "A557",
+        "乗車数": 65,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.997744,
+          35.8426603
+        ]
+      },
+      "properties": {
+        "id": 157,
+        "name": "大津ケ丘第2団地1号棟横",
+        "表示番号": "A431",
+        "乗車数": 60,
+        "降車数": 46
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0007751,
+          35.84371901
+        ]
+      },
+      "properties": {
+        "id": 158,
+        "name": "×なかじま接骨院(大津ヶ丘）移転前",
+        "表示番号": "A050",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0034251,
+          35.846552
+        ]
+      },
+      "properties": {
+        "id": 159,
+        "name": "なかじま接骨院(大井）",
+        "表示番号": "A051",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0029745,
+          35.83074858
+        ]
+      },
+      "properties": {
+        "id": 160,
+        "name": "だんらんの家　塚崎",
+        "表示番号": "A621",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0176301,
+          35.83698509
+        ]
+      },
+      "properties": {
+        "id": 161,
+        "name": "ニトリ家具",
+        "表示番号": "A674",
+        "乗車数": 4,
+        "降車数": 336
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0222486,
+          35.85303526
+        ]
+      },
+      "properties": {
+        "id": 162,
+        "name": "箕輪378番地ごみ集積所",
+        "表示番号": "A705",
+        "乗車数": 122,
+        "降車数": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0061395,
+          35.85433514
+        ]
+      },
+      "properties": {
+        "id": 163,
+        "name": "東山霊園",
+        "表示番号": "A303",
+        "乗車数": 8,
+        "降車数": 16
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0025988,
+          35.82997022
+        ]
+      },
+      "properties": {
+        "id": 164,
+        "name": "JA東葛ふたば風早支店",
+        "表示番号": "A620",
+        "乗車数": 1,
+        "降車数": 43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0219217,
+          35.81645582
+        ]
+      },
+      "properties": {
+        "id": 165,
+        "name": "協友リース",
+        "表示番号": "A872",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9981624,
+          35.83752015
+        ]
+      },
+      "properties": {
+        "id": 166,
+        "name": "大津ケ丘団地3－1－5入口",
+        "表示番号": "A485",
+        "乗車数": 11,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0640431,
+          35.84432563
+        ]
+      },
+      "properties": {
+        "id": 167,
+        "name": "手賀沼湖畔霊園",
+        "表示番号": "B455",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0038489,
+          35.84194264
+        ]
+      },
+      "properties": {
+        "id": 168,
+        "name": "大津ケ丘 居酒屋さくら横",
+        "表示番号": "A045",
+        "乗車数": 4,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0004908,
+          35.84198612
+        ]
+      },
+      "properties": {
+        "id": 169,
+        "name": "ルアナ大津ヶ丘",
+        "表示番号": "A506",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0024003,
+          35.83057042
+        ]
+      },
+      "properties": {
+        "id": 170,
+        "name": "和食処花鳥",
+        "表示番号": "A617",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0001365,
+          35.83979456
+        ]
+      },
+      "properties": {
+        "id": 171,
+        "name": "大津ケ丘団地2－17－1号棟ごみ集積所",
+        "表示番号": "A522",
+        "乗車数": 6,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9955016,
+          35.84063385
+        ]
+      },
+      "properties": {
+        "id": 172,
+        "name": "大津ケ丘3丁目46ごみ集積所",
+        "表示番号": "A444",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0417858,
+          35.8403338
+        ]
+      },
+      "properties": {
+        "id": 173,
+        "name": "泉駐在所",
+        "表示番号": "B001",
+        "乗車数": 2,
+        "降車数": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9961564,
+          35.83200984
+        ]
+      },
+      "properties": {
+        "id": 174,
+        "name": "レガーロ",
+        "表示番号": "A508",
+        "乗車数": 2,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0158579,
+          35.8435078
+        ]
+      },
+      "properties": {
+        "id": 175,
+        "name": "岩井水源地",
+        "表示番号": "",
+        "乗車数": 2,
+        "降車数": 623
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0244856,
+          35.82513807
+        ]
+      },
+      "properties": {
+        "id": 176,
+        "name": "ガーデン藤ケ谷ゴルフレンジ",
+        "表示番号": "A851",
+        "乗車数": 30,
+        "降車数": 82
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0087735,
+          35.84237314
+        ]
+      },
+      "properties": {
+        "id": 177,
+        "name": "東京ベイ信金沼南支店裏口",
+        "表示番号": "A005",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0288415,
+          35.84880456
+        ]
+      },
+      "properties": {
+        "id": 178,
+        "name": "手賀の杜プラザ前",
+        "表示番号": "A714",
+        "乗車数": 1,
+        "降車数": 271
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0082263,
+          35.82743007
+        ]
+      },
+      "properties": {
+        "id": 179,
+        "name": "動物愛護ふれあいセンター",
+        "表示番号": "A875",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0021374,
+          35.83666778
+        ]
+      },
+      "properties": {
+        "id": 180,
+        "name": "風早幼稚園",
+        "表示番号": "A591",
+        "乗車数": 19,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0051951,
+          35.83477599
+        ]
+      },
+      "properties": {
+        "id": 181,
+        "name": "コスモ柏東",
+        "表示番号": "A643",
+        "乗車数": 34,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0478613,
+          35.84902834
+        ]
+      },
+      "properties": {
+        "id": 182,
+        "name": "そのべ農園直売所",
+        "表示番号": "Ａ925",
+        "乗車数": 3,
+        "降車数": 43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0026712,
+          35.83769845
+        ]
+      },
+      "properties": {
+        "id": 183,
+        "name": "サロンドナミ",
+        "表示番号": "A563",
+        "乗車数": 24,
+        "降車数": 27
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9953997,
+          35.84292991
+        ]
+      },
+      "properties": {
+        "id": 184,
+        "name": "大津ケ丘3丁目第15ごみ集積所",
+        "表示番号": "A442",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.008108,
+          35.85329179
+        ]
+      },
+      "properties": {
+        "id": 185,
+        "name": "よしきり銅板彫刻工房",
+        "表示番号": "A331",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9979973,
+          35.8478908
+        ]
+      },
+      "properties": {
+        "id": 186,
+        "name": "大井団地川又建具",
+        "表示番号": "A204",
+        "乗車数": 94,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9977493,
+          35.83804201
+        ]
+      },
+      "properties": {
+        "id": 187,
+        "name": "大津ケ丘団地3－1－7入口",
+        "表示番号": "A487",
+        "乗車数": 36,
+        "降車数": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0024086,
+          35.82760622
+        ]
+      },
+      "properties": {
+        "id": 188,
+        "name": "田中商事（塚崎）を入って先のゴミステーション",
+        "表示番号": "A699",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9962115,
+          35.8434708
+        ]
+      },
+      "properties": {
+        "id": 189,
+        "name": "A438:大津ケ丘3丁目第14ごみ集積所",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0347104,
+          35.85109154
+        ]
+      },
+      "properties": {
+        "id": 190,
+        "name": "岩井将門通り十字路",
+        "表示番号": "A565",
+        "乗車数": 5,
+        "降車数": 171
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0137112,
+          35.84398008
+        ]
+      },
+      "properties": {
+        "id": 191,
+        "name": "東大津ケ丘住宅自治会館（新山公園）",
+        "表示番号": "A748",
+        "乗車数": 17,
+        "降車数": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9982753,
+          35.84353773
+        ]
+      },
+      "properties": {
+        "id": 192,
+        "name": "農家の集い",
+        "表示番号": "A411",
+        "乗車数": 40,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0081617,
+          35.8509482
+        ]
+      },
+      "properties": {
+        "id": 193,
+        "name": "大井の鰻正",
+        "表示番号": "A353",
+        "乗車数": 2,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.997862,
+          35.84226023
+        ]
+      },
+      "properties": {
+        "id": 194,
+        "name": "大津ケ丘2丁目ラーメン真真前",
+        "表示番号": "A516",
+        "乗車数": 1,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0043854,
+          35.83552821
+        ]
+      },
+      "properties": {
+        "id": 195,
+        "name": "サンモール沼南",
+        "表示番号": "A1200",
+        "乗車数": 12,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9982482,
+          35.83304508
+        ]
+      },
+      "properties": {
+        "id": 196,
+        "name": "塚崎くすの木公園（大津ケ丘パークヴィラ）",
+        "表示番号": "A611",
+        "乗車数": 3,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.996725,
+          35.84894355
+        ]
+      },
+      "properties": {
+        "id": 197,
+        "name": "エリカマンション10号棟",
+        "表示番号": "A260",
+        "乗車数": 1,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0048467,
+          35.84205135
+        ]
+      },
+      "properties": {
+        "id": 198,
+        "name": "大津ケ丘団地1－54－4号棟",
+        "表示番号": "A034",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9980363,
+          35.83895743
+        ]
+      },
+      "properties": {
+        "id": 199,
+        "name": "大津ケ丘歯科クリニック前",
+        "表示番号": "A465",
+        "乗車数": 29,
+        "降車数": 87
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0035805,
+          35.83650252
+        ]
+      },
+      "properties": {
+        "id": 200,
+        "name": "大津ヶ丘第二小学校駐車場入口",
+        "表示番号": "A592",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9960649,
+          35.84366916
+        ]
+      },
+      "properties": {
+        "id": 201,
+        "name": "大津ケ丘3丁目第14ごみ集積所",
+        "表示番号": "A438",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0081405,
+          35.84479091
+        ]
+      },
+      "properties": {
+        "id": 202,
+        "name": "洋食プロプル跡",
+        "表示番号": "A103",
+        "乗車数": 5,
+        "降車数": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0182846,
+          35.84449087
+        ]
+      },
+      "properties": {
+        "id": 203,
+        "name": "杜の葉とNONTERNE（ノンターン）",
+        "表示番号": "A746",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9995598,
+          35.82797172
+        ]
+      },
+      "properties": {
+        "id": 204,
+        "name": "塚崎寿量院南側入口",
+        "表示番号": "A629",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9961081,
+          35.84951751
+        ]
+      },
+      "properties": {
+        "id": 205,
+        "name": "エリカマンション5号棟",
+        "表示番号": "A255",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.011107,
+          35.84223834
+        ]
+      },
+      "properties": {
+        "id": 206,
+        "name": "安達鉄工",
+        "表示番号": "A802",
+        "乗車数": 1,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0009948,
+          35.82785212
+        ]
+      },
+      "properties": {
+        "id": 207,
+        "name": "塚崎878番地ごみ集積所",
+        "表示番号": "A635",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9963719,
+          35.8320525
+        ]
+      },
+      "properties": {
+        "id": 208,
+        "name": "大津ケ丘4丁目ショップカメヤマ",
+        "表示番号": "",
+        "乗車数": 122,
+        "降車数": 66
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0257194,
+          35.82748677
+        ]
+      },
+      "properties": {
+        "id": 209,
+        "name": "藤ケ谷カントリークラブ正門前",
+        "表示番号": "A837",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0234824,
+          35.82669953
+        ]
+      },
+      "properties": {
+        "id": 210,
+        "name": "東武バスイースト沼南車庫前",
+        "表示番号": "A843",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0183165,
+          35.85114387
+        ]
+      },
+      "properties": {
+        "id": 211,
+        "name": "パチンコVZONE",
+        "表示番号": "A371",
+        "乗車数": 307,
+        "降車数": 186
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0038114,
+          35.84034234
+        ]
+      },
+      "properties": {
+        "id": 212,
+        "name": "マクドナルド大津ケ丘店",
+        "表示番号": "A042",
+        "乗車数": 4,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9972719,
+          35.84838278
+        ]
+      },
+      "properties": {
+        "id": 213,
+        "name": "大井893－13番地ごみ集積所",
+        "表示番号": "A217",
+        "乗車数": 48,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0271678,
+          35.80825148
+        ]
+      },
+      "properties": {
+        "id": 214,
+        "name": "ケアハウス沼南の里",
+        "表示番号": "A999",
+        "乗車数": 190,
+        "降車数": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0249174,
+          35.84589773
+        ]
+      },
+      "properties": {
+        "id": 215,
+        "name": "手賀の杜3丁目28番地ごみ集積所",
+        "表示番号": "A734",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0087037,
+          35.81224493
+        ]
+      },
+      "properties": {
+        "id": 216,
+        "name": "高柳胃腸科外科前のマクドナルド高柳店",
+        "表示番号": "A2104",
+        "乗車数": 48,
+        "降車数": 13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0060859,
+          35.84374293
+        ]
+      },
+      "properties": {
+        "id": 217,
+        "name": "東京新聞",
+        "表示番号": "A1198",
+        "乗車数": 6,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9928248,
+          35.84343434
+        ]
+      },
+      "properties": {
+        "id": 218,
+        "name": "中の橋前湧水",
+        "表示番号": "A414",
+        "乗車数": 4,
+        "降車数": 334
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9975136,
+          35.84028146
+        ]
+      },
+      "properties": {
+        "id": 219,
+        "name": "風早接骨院",
+        "表示番号": "Ａ525",
+        "乗車数": 29,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9958935,
+          35.84983493
+        ]
+      },
+      "properties": {
+        "id": 220,
+        "name": "エリカマンション2号棟",
+        "表示番号": "A252",
+        "乗車数": 27,
+        "降車数": 49
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0174475,
+          35.83183603
+        ]
+      },
+      "properties": {
+        "id": 221,
+        "name": "川岸工業正門前",
+        "表示番号": "A821",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0010967,
+          35.84218631
+        ]
+      },
+      "properties": {
+        "id": 222,
+        "name": "大津ケ丘2丁目ブックオフ裏側ごみ集積所",
+        "表示番号": "A504",
+        "乗車数": 3,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0067833,
+          35.84626936
+        ]
+      },
+      "properties": {
+        "id": 223,
+        "name": "コーポグリーンヒル沼南",
+        "表示番号": "A098",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.007172,
+          35.8324524
+        ]
+      },
+      "properties": {
+        "id": 224,
+        "name": "A649：塚崎ガスト",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.005292,
+          35.83533251
+        ]
+      },
+      "properties": {
+        "id": 225,
+        "name": "太田米屋",
+        "表示番号": "A499",
+        "乗車数": 57,
+        "降車数": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0007051,
+          35.83868998
+        ]
+      },
+      "properties": {
+        "id": 226,
+        "name": "大津ケ丘2－31－2号棟",
+        "表示番号": "A542",
+        "乗車数": 148,
+        "降車数": 54
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0049372,
+          35.84283083
+        ]
+      },
+      "properties": {
+        "id": 227,
+        "name": "大津ケ丘団地1－54－11号棟",
+        "表示番号": "A041",
+        "乗車数": 22,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0097629,
+          35.84427795
+        ]
+      },
+      "properties": {
+        "id": 228,
+        "name": "ローソン柏大井店（五條谷）",
+        "表示番号": "A181",
+        "乗車数": 27,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0076024,
+          35.85540021
+        ]
+      },
+      "properties": {
+        "id": 229,
+        "name": "ロックドアアソシエイツ",
+        "表示番号": "A335",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0002599,
+          35.83027685
+        ]
+      },
+      "properties": {
+        "id": 230,
+        "name": "塚崎区民館",
+        "表示番号": "A615",
+        "乗車数": 73,
+        "降車数": 77
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.008752,
+          35.84181218
+        ]
+      },
+      "properties": {
+        "id": 231,
+        "name": "沼南タイヤ",
+        "表示番号": "A567",
+        "乗車数": 1,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0173619,
+          35.84396035
+        ]
+      },
+      "properties": {
+        "id": 232,
+        "name": "美容室ユメリ",
+        "表示番号": "A070",
+        "乗車数": 7,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0108278,
+          35.82749547
+        ]
+      },
+      "properties": {
+        "id": 233,
+        "name": "オートウェーブ車検クラブ",
+        "表示番号": "A677",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0026524,
+          35.83454985
+        ]
+      },
+      "properties": {
+        "id": 234,
+        "name": "塚崎2丁目5西側ごみ集積所",
+        "表示番号": "A596",
+        "乗車数": 5,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0019979,
+          35.83716355
+        ]
+      },
+      "properties": {
+        "id": 235,
+        "name": "亀井内科・耳鼻咽喉科",
+        "表示番号": "A556",
+        "乗車数": 131,
+        "降車数": 55
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.997009,
+          35.8371679
+        ]
+      },
+      "properties": {
+        "id": 236,
+        "name": "大津ケ丘団地3－53－5外の道路",
+        "表示番号": "A495",
+        "乗車数": 1,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0226255,
+          35.82156595
+        ]
+      },
+      "properties": {
+        "id": 237,
+        "name": "そば茶屋幸右衛門",
+        "表示番号": "A847",
+        "乗車数": 2,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0252903,
+          35.85512661
+        ]
+      },
+      "properties": {
+        "id": 238,
+        "name": "満天の湯そばのローソン",
+        "表示番号": "A702",
+        "乗車数": 5,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0053936,
+          35.83418888
+        ]
+      },
+      "properties": {
+        "id": 239,
+        "name": "塚崎中谷津公園",
+        "表示番号": "A645",
+        "乗車数": 3,
+        "降車数": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9928358,
+          35.84444738
+        ]
+      },
+      "properties": {
+        "id": 240,
+        "name": "大井田んぼ道Y字路",
+        "表示番号": "A1178",
+        "乗車数": 11,
+        "降車数": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0877321,
+          35.83525003
+        ]
+      },
+      "properties": {
+        "id": 241,
+        "name": "布瀬新堀バス停前ごみ集積所",
+        "表示番号": "B411",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0195134,
+          35.85404096
+        ]
+      },
+      "properties": {
+        "id": 242,
+        "name": "沼風苑本館入口",
+        "表示番号": "A373",
+        "乗車数": 29,
+        "降車数": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.997111,
+          35.83646338
+        ]
+      },
+      "properties": {
+        "id": 243,
+        "name": "大津ケ丘団地3－53－2前",
+        "表示番号": "A492",
+        "乗車数": 6,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9929431,
+          35.84243837
+        ]
+      },
+      "properties": {
+        "id": 244,
+        "name": "大井、大津川付近下道自販機設置個所",
+        "表示番号": "A1201",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.006386,
+          35.83183603
+        ]
+      },
+      "properties": {
+        "id": 245,
+        "name": "塚崎団地7号棟奥",
+        "表示番号": "A652",
+        "乗車数": 20,
+        "降車数": 193
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0291636,
+          35.81529872
+        ]
+      },
+      "properties": {
+        "id": 246,
+        "name": "16号千葉方面、藤ヶ谷歩道橋付近",
+        "表示番号": "A1162",
+        "乗車数": 213,
+        "降車数": 240
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0065251,
+          35.84748
+        ]
+      },
+      "properties": {
+        "id": 247,
+        "name": "ストークマンション",
+        "表示番号": "",
+        "乗車数": 24,
+        "降車数": 13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0065097,
+          35.83812014
+        ]
+      },
+      "properties": {
+        "id": 248,
+        "name": "大島田泉蔵寺",
+        "表示番号": "A009",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0117507,
+          35.8142982
+        ]
+      },
+      "properties": {
+        "id": 249,
+        "name": "藤ヶ谷霊園",
+        "表示番号": "A2106",
+        "乗車数": 1,
+        "降車数": 241
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0518522,
+          35.83842253
+        ]
+      },
+      "properties": {
+        "id": 250,
+        "name": "柏・ひがし聖地公苑",
+        "表示番号": "B067",
+        "乗車数": 1,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0048465,
+          35.83841601
+        ]
+      },
+      "properties": {
+        "id": 251,
+        "name": "大津ケ丘 道頓堀駐車場",
+        "表示番号": "A562",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9942946,
+          35.84182973
+        ]
+      },
+      "properties": {
+        "id": 252,
+        "name": "大津ケ丘3丁目第17ごみ集積所",
+        "表示番号": "A443",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0074375,
+          35.83217091
+        ]
+      },
+      "properties": {
+        "id": 253,
+        "name": "大島田ラフォーレ上ノ台A棟",
+        "表示番号": "A654",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0008018,
+          35.841765
+        ]
+      },
+      "properties": {
+        "id": 254,
+        "name": "沼南台サンパワーC棟横",
+        "表示番号": "",
+        "乗車数": 17,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0039846,
+          35.8349084
+        ]
+      },
+      "properties": {
+        "id": 255,
+        "name": "太田米屋",
+        "表示番号": "",
+        "乗車数": 57,
+        "降車数": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.018821,
+          35.85628298
+        ]
+      },
+      "properties": {
+        "id": 256,
+        "name": "手賀カフェ",
+        "表示番号": "A410",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0199406,
+          35.84647715
+        ]
+      },
+      "properties": {
+        "id": 257,
+        "name": "手賀の丘幼稚園",
+        "表示番号": "A735",
+        "乗車数": 1,
+        "降車数": 52
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0265294,
+          35.84068169
+        ]
+      },
+      "properties": {
+        "id": 258,
+        "name": "若白毛消防器具置場",
+        "表示番号": "A831",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9962937,
+          35.83883902
+        ]
+      },
+      "properties": {
+        "id": 259,
+        "name": "大津ケ丘第一小学校駐車場入口",
+        "表示番号": "A446",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0021055,
+          35.84247534
+        ]
+      },
+      "properties": {
+        "id": 260,
+        "name": "大津ケ丘飲食店あかね",
+        "表示番号": "A048",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0503316,
+          35.84359508
+        ]
+      },
+      "properties": {
+        "id": 261,
+        "name": "リトルグランド入り口",
+        "表示番号": "B105",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0094545,
+          35.85525704
+        ]
+      },
+      "properties": {
+        "id": 262,
+        "name": "山村工務店資材置場入口",
+        "表示番号": "A333",
+        "乗車数": 42,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0018102,
+          35.83806158
+        ]
+      },
+      "properties": {
+        "id": 263,
+        "name": "国田歯科医院",
+        "表示番号": "A553",
+        "乗車数": 42,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.997406,
+          35.8327363
+        ]
+      },
+      "properties": {
+        "id": 264,
+        "name": "塚崎宗賢寺",
+        "表示番号": "A621",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0140572,
+          35.84330388
+        ]
+      },
+      "properties": {
+        "id": 265,
+        "name": "手作りの店はる",
+        "表示番号": "A747",
+        "乗車数": 7,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0028777,
+          35.85439616
+        ]
+      },
+      "properties": {
+        "id": 266,
+        "name": "大井1690番地ごみ集積所",
+        "表示番号": "A228",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0533059,
+          35.8365634
+        ]
+      },
+      "properties": {
+        "id": 267,
+        "name": "柳戸の飯田酒店",
+        "表示番号": "B061",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0053137,
+          35.8407259
+        ]
+      },
+      "properties": {
+        "id": 268,
+        "name": "スーパーマルヤ沼南店（大島田）",
+        "表示番号": "A007",
+        "乗車数": 283,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9963227,
+          35.83287966
+        ]
+      },
+      "properties": {
+        "id": 269,
+        "name": "美空　塚崎訪問介護事業所",
+        "表示番号": "A1188",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0124264,
+          35.82874808
+        ]
+      },
+      "properties": {
+        "id": 270,
+        "name": "沼南商工会館",
+        "表示番号": "A676",
+        "乗車数": 1,
+        "降車数": 51
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0029314,
+          35.83701786
+        ]
+      },
+      "properties": {
+        "id": 271,
+        "name": "文寿司",
+        "表示番号": "A558",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0655717,
+          35.84280815
+        ]
+      },
+      "properties": {
+        "id": 272,
+        "name": "片山の消防器具置場",
+        "表示番号": "B113",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0003672,
+          35.85039164
+        ]
+      },
+      "properties": {
+        "id": 273,
+        "name": "三立エンジニアリングサービス",
+        "表示番号": "A223",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0399888,
+          35.84057949
+        ]
+      },
+      "properties": {
+        "id": 274,
+        "name": "鷲野谷939番地ごみ集積所",
+        "表示番号": "A789",
+        "乗車数": 5,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0119786,
+          35.8517559
+        ]
+      },
+      "properties": {
+        "id": 275,
+        "name": "二松学舎大学附属柏中学高等学校正門",
+        "表示番号": "A352",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0578311,
+          35.83768525
+        ]
+      },
+      "properties": {
+        "id": 276,
+        "name": "・・・",
+        "表示番号": "B453",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.045262,
+          35.84875673
+        ]
+      },
+      "properties": {
+        "id": 277,
+        "name": "城山聖地霊園",
+        "表示番号": "A779",
+        "乗車数": 25,
+        "降車数": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0032532,
+          35.85537444
+        ]
+      },
+      "properties": {
+        "id": 278,
+        "name": "大井グリーンヒル沼南",
+        "表示番号": "A229",
+        "乗車数": 10,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0706142,
+          35.84623038
+        ]
+      },
+      "properties": {
+        "id": 279,
+        "name": "手賀737番地前のごみ集積所",
+        "表示番号": "B342",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0030909,
+          35.83971846
+        ]
+      },
+      "properties": {
+        "id": 280,
+        "name": "大津ケ丘中央公園駐車場",
+        "表示番号": "A550",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0101453,
+          35.84767088
+        ]
+      },
+      "properties": {
+        "id": 281,
+        "name": "桜建装前",
+        "表示番号": "A110",
+        "乗車数": 2,
+        "降車数": 134
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0130594,
+          35.82984845
+        ]
+      },
+      "properties": {
+        "id": 282,
+        "name": "スポーツデポ玄関",
+        "表示番号": "A675",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9986237,
+          35.83704613
+        ]
+      },
+      "properties": {
+        "id": 283,
+        "name": "大津ケ丘団地3－1－3入口",
+        "表示番号": "A483",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0578311,
+          35.83768525
+        ]
+      },
+      "properties": {
+        "id": 284,
+        "name": "・・・",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9985328,
+          35.8422166
+        ]
+      },
+      "properties": {
+        "id": 285,
+        "name": "美容室フジタ脇",
+        "表示番号": "A512",
+        "乗車数": 1,
+        "降車数": 13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0046641,
+          35.83630682
+        ]
+      },
+      "properties": {
+        "id": 286,
+        "name": "大津ケ丘4丁目ショップカメヤマ",
+        "表示番号": "A593",
+        "乗車数": 122,
+        "降車数": 66
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0039846,
+          35.8349084
+        ]
+      },
+      "properties": {
+        "id": 287,
+        "name": "柏市塚崎",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0935793,
+          35.8428125
+        ]
+      },
+      "properties": {
+        "id": 288,
+        "name": "布瀬のヘアーサロンカワムラ",
+        "表示番号": "B433",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0085349,
+          35.84777322
+        ]
+      },
+      "properties": {
+        "id": 289,
+        "name": "緑台公園南側角",
+        "表示番号": "A108",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0675621,
+          35.84533446
+        ]
+      },
+      "properties": {
+        "id": 290,
+        "name": "片山Y字路先のゴミ置き場",
+        "表示番号": "B116",
+        "乗車数": 22,
+        "降車数": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0302818,
+          35.8535244
+        ]
+      },
+      "properties": {
+        "id": 291,
+        "name": "ハス群生地駐車場",
+        "表示番号": "A710",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9982589,
+          35.83581974
+        ]
+      },
+      "properties": {
+        "id": 292,
+        "name": "ファミリーマート大津ケ丘四丁目店",
+        "表示番号": "A601",
+        "乗車数": 18,
+        "降車数": 34
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.021224,
+          35.84602383
+        ]
+      },
+      "properties": {
+        "id": 293,
+        "name": "小野塚台団地入口",
+        "表示番号": "A736",
+        "乗車数": 29,
+        "降車数": 50
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0325429,
+          35.81503787
+        ]
+      },
+      "properties": {
+        "id": 294,
+        "name": "コスモグループ藤ケ谷寮",
+        "表示番号": "A921",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0450959,
+          35.84141211
+        ]
+      },
+      "properties": {
+        "id": 295,
+        "name": "手賀西小学校裏門",
+        "表示番号": "B012",
+        "乗車数": 12,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0051042,
+          35.83201419
+        ]
+      },
+      "properties": {
+        "id": 296,
+        "name": "塚崎団地3号棟",
+        "表示番号": "A1211",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0023254,
+          35.84211658
+        ]
+      },
+      "properties": {
+        "id": 297,
+        "name": "平崎床屋",
+        "表示番号": "A509",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0315988,
+          35.81787406
+        ]
+      },
+      "properties": {
+        "id": 298,
+        "name": "持法院",
+        "表示番号": "A915",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9979424,
+          35.84731311
+        ]
+      },
+      "properties": {
+        "id": 299,
+        "name": "大井団地（大井917－33番地）ごみ集積所",
+        "表示番号": "A215",
+        "乗車数": 51,
+        "降車数": 70
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0365498,
+          35.82211695
+        ]
+      },
+      "properties": {
+        "id": 300,
+        "name": "清遊湖",
+        "表示番号": "A1214",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0366092,
+          35.84069908
+        ]
+      },
+      "properties": {
+        "id": 301,
+        "name": "いづみ亭",
+        "表示番号": "A818",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0174477,
+          35.84446478
+        ]
+      },
+      "properties": {
+        "id": 302,
+        "name": "手賀の杜接骨院",
+        "表示番号": "A747",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0170937,
+          35.81140968
+        ]
+      },
+      "properties": {
+        "id": 303,
+        "name": "ファミリーマート柏藤ヶ谷店",
+        "表示番号": "A2103",
+        "乗車数": 7,
+        "降車数": 31
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0272858,
+          35.84955245
+        ]
+      },
+      "properties": {
+        "id": 304,
+        "name": "手賀の杜ひだまりの公園西側",
+        "表示番号": "A723",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0006464,
+          35.83435834
+        ]
+      },
+      "properties": {
+        "id": 305,
+        "name": "塚崎2丁目12番地のY字路ゴミステーション",
+        "表示番号": "A603",
+        "乗車数": 7,
+        "降車数": 171
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0035603,
+          35.83345933
+        ]
+      },
+      "properties": {
+        "id": 306,
+        "name": "塚崎1310番地ごみ集積所",
+        "表示番号": "A598",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0141777,
+          35.84709967
+        ]
+      },
+      "properties": {
+        "id": 307,
+        "name": "五條谷集会所（不動堂）",
+        "表示番号": "A361",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0010592,
+          35.84247114
+        ]
+      },
+      "properties": {
+        "id": 308,
+        "name": "大津ケ丘ブックオフ駐車場",
+        "表示番号": "A505",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0270605,
+          35.85028294
+        ]
+      },
+      "properties": {
+        "id": 309,
+        "name": "手賀の杜1丁目8番地ごみ集積所",
+        "表示番号": "A721",
+        "乗車数": 2,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.010415,
+          35.81784563
+        ]
+      },
+      "properties": {
+        "id": 310,
+        "name": "風早南部小学校入口バス停",
+        "表示番号": "A1210",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0908542,
+          35.83441503
+        ]
+      },
+      "properties": {
+        "id": 311,
+        "name": "布瀬の地蔵堂",
+        "表示番号": "B445",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9981251,
+          35.82778237
+        ]
+      },
+      "properties": {
+        "id": 312,
+        "name": "みやした橋",
+        "表示番号": "A510",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.004777,
+          35.8529438
+        ]
+      },
+      "properties": {
+        "id": 313,
+        "name": "福満寺",
+        "表示番号": "A302",
+        "乗車数": 3,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0277042,
+          35.82480751
+        ]
+      },
+      "properties": {
+        "id": 314,
+        "name": "BDSオークション会場正門前",
+        "表示番号": "A853",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9995571,
+          35.83555446
+        ]
+      },
+      "properties": {
+        "id": 315,
+        "name": "大津ケ丘団地4－5－26号棟",
+        "表示番号": "A586",
+        "乗車数": 441,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0003457,
+          35.8414514
+        ]
+      },
+      "properties": {
+        "id": 316,
+        "name": "大津ケ丘2丁目13ごみ集積所",
+        "表示番号": "A511",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0077298,
+          35.83712441
+        ]
+      },
+      "properties": {
+        "id": 317,
+        "name": "大島田消防器具置場",
+        "表示番号": "A805",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0001955,
+          35.83502823
+        ]
+      },
+      "properties": {
+        "id": 318,
+        "name": "大津ケ丘団地4－5－18号棟",
+        "表示番号": "A588",
+        "乗車数": 7,
+        "降車数": 37
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0381756,
+          35.85098733
+        ]
+      },
+      "properties": {
+        "id": 319,
+        "name": "うなぎや鳥善",
+        "表示番号": "A775",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0165248,
+          35.84410401
+        ]
+      },
+      "properties": {
+        "id": 320,
+        "name": "手賀の杜おしゃれ床屋",
+        "表示番号": "A745",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0050881,
+          35.84109466
+        ]
+      },
+      "properties": {
+        "id": 321,
+        "name": "千葉銀行沼南出張所",
+        "表示番号": "A021",
+        "乗車数": 15,
+        "降車数": 29
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0281468,
+          35.84587381
+        ]
+      },
+      "properties": {
+        "id": 322,
+        "name": "手賀の杜中央公園バスケットコート前",
+        "表示番号": "A732",
+        "乗車数": 1,
+        "降車数": 44
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0778347,
+          35.83974672
+        ]
+      },
+      "properties": {
+        "id": 323,
+        "name": "手賀東小学校駐車場入口",
+        "表示番号": "B361",
+        "乗車数": 129,
+        "降車数": 211
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0321031,
+          35.85119169
+        ]
+      },
+      "properties": {
+        "id": 324,
+        "name": "湖南聖地公苑",
+        "表示番号": "A771",
+        "乗車数": 3,
+        "降車数": 46
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0121799,
+          35.81210572
+        ]
+      },
+      "properties": {
+        "id": 325,
+        "name": "報恩寺",
+        "表示番号": "A2105",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0078025,
+          35.83512376
+        ]
+      },
+      "properties": {
+        "id": 326,
+        "name": "通所介護　なないろ　大島田",
+        "表示番号": "A878",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0016546,
+          35.83276674
+        ]
+      },
+      "properties": {
+        "id": 327,
+        "name": "塚崎3丁目7東ごみ集積所",
+        "表示番号": "A605",
+        "乗車数": 1,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0059837,
+          35.83306248
+        ]
+      },
+      "properties": {
+        "id": 328,
+        "name": "大島田いしだ美容室",
+        "表示番号": "A647",
+        "乗車数": 375,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0031137,
+          35.83229704
+        ]
+      },
+      "properties": {
+        "id": 329,
+        "name": "塚崎グループホーム風早の里",
+        "表示番号": "A608",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9951425,
+          35.84588671
+        ]
+      },
+      "properties": {
+        "id": 330,
+        "name": "沼南教職員住宅横",
+        "表示番号": "A403",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9984199,
+          35.83726792
+        ]
+      },
+      "properties": {
+        "id": 331,
+        "name": "大津ケ丘団地3－1－4入口",
+        "表示番号": "A484",
+        "乗車数": 34,
+        "降車数": 33
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.092442,
+          35.83932707
+        ]
+      },
+      "properties": {
+        "id": 332,
+        "name": "布瀬1663番地ごみ集積所",
+        "表示番号": "B426",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9996458,
+          35.8316487
+        ]
+      },
+      "properties": {
+        "id": 333,
+        "name": "アパート　リンスカイ駐車場",
+        "表示番号": "",
+        "乗車数": 21,
+        "降車数": 1194
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0284019,
+          35.82835649
+        ]
+      },
+      "properties": {
+        "id": 334,
+        "name": "わーくはぴねす農園　第二ファーム",
+        "表示番号": "A838",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0141269,
+          35.81724332
+        ]
+      },
+      "properties": {
+        "id": 335,
+        "name": "藤ケ谷新田近藤そろばん教室前",
+        "表示番号": "A867",
+        "乗車数": 5,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0072983,
+          35.84388208
+        ]
+      },
+      "properties": {
+        "id": 336,
+        "name": "風早北部小学校正門",
+        "表示番号": "A101",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0111499,
+          35.83454969
+        ]
+      },
+      "properties": {
+        "id": 337,
+        "name": "アリオ正面玄関",
+        "表示番号": "A824",
+        "乗車数": 1305,
+        "降車数": 151
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0450684,
+          35.84069424
+        ]
+      },
+      "properties": {
+        "id": 338,
+        "name": "手賀西小学校正門",
+        "表示番号": "B011",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.023984,
+          35.84655868
+        ]
+      },
+      "properties": {
+        "id": 339,
+        "name": "手賀の杜3丁目21番地ごみ集積所",
+        "表示番号": "A733",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0261703,
+          35.81189691
+        ]
+      },
+      "properties": {
+        "id": 340,
+        "name": "向台ポートリー",
+        "表示番号": "A2107",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0204891,
+          35.82378101
+        ]
+      },
+      "properties": {
+        "id": 341,
+        "name": "ラーメン珍来藤ケ谷店",
+        "表示番号": "A845",
+        "乗車数": 2,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0179088,
+          35.84406922
+        ]
+      },
+      "properties": {
+        "id": 342,
+        "name": "手賀の杜5丁目バス停奥のごみ集積所",
+        "表示番号": "A741",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9972538,
+          35.8411232
+        ]
+      },
+      "properties": {
+        "id": 343,
+        "name": "風早接骨院",
+        "表示番号": "",
+        "乗車数": 29,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0799054,
+          35.83558925
+        ]
+      },
+      "properties": {
+        "id": 344,
+        "name": "柏しょうなんゆめファーム",
+        "表示番号": "B365",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0636458,
+          35.84315821
+        ]
+      },
+      "properties": {
+        "id": 345,
+        "name": "食事処ひさご亭",
+        "表示番号": "B111",
+        "乗車数": 23,
+        "降車数": 115
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0933486,
+          35.83266236
+        ]
+      },
+      "properties": {
+        "id": 346,
+        "name": "布瀬2668番地ごみ集積所",
+        "表示番号": "B447",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9992487,
+          35.83801374
+        ]
+      },
+      "properties": {
+        "id": 347,
+        "name": "京葉銀行沼南支店駐車場入口",
+        "表示番号": "A471",
+        "乗車数": 19,
+        "降車数": 102
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9964085,
+          35.84921749
+        ]
+      },
+      "properties": {
+        "id": 348,
+        "name": "エリカマンション8号棟",
+        "表示番号": "A258",
+        "乗車数": 15,
+        "降車数": 13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9991991,
+          35.83920096
+        ]
+      },
+      "properties": {
+        "id": 349,
+        "name": "大津ケ丘郵便局裏",
+        "表示番号": "A523",
+        "乗車数": 12,
+        "降車数": 45
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0046694,
+          35.83415409
+        ]
+      },
+      "properties": {
+        "id": 350,
+        "name": "えのきど歯科医院",
+        "表示番号": "A594",
+        "乗車数": 35,
+        "降車数": 32
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.004262,
+          35.85226551
+        ]
+      },
+      "properties": {
+        "id": 351,
+        "name": "香取神社",
+        "表示番号": "A450",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0014258,
+          35.8442768
+        ]
+      },
+      "properties": {
+        "id": 352,
+        "name": "かげ新",
+        "表示番号": "A1141",
+        "乗車数": 12,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0570852,
+          35.83730923
+        ]
+      },
+      "properties": {
+        "id": 353,
+        "name": "木暮医院",
+        "表示番号": "B075",
+        "乗車数": 19,
+        "降車数": 12
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.005418,
+          35.83208378
+        ]
+      },
+      "properties": {
+        "id": 354,
+        "name": "塚崎団地4と6号棟の間",
+        "表示番号": "A653",
+        "乗車数": 30,
+        "降車数": 12
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0080064,
+          35.84320372
+        ]
+      },
+      "properties": {
+        "id": 355,
+        "name": "大木戸亭",
+        "表示番号": "A023",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0181448,
+          35.82184977
+        ]
+      },
+      "properties": {
+        "id": 356,
+        "name": "藤ケ谷新田139番地ごみ集積所",
+        "表示番号": "A865",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0298929,
+          35.85211348
+        ]
+      },
+      "properties": {
+        "id": 357,
+        "name": "ペット霊園安心院",
+        "表示番号": "A711",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0103774,
+          35.84431693
+        ]
+      },
+      "properties": {
+        "id": 358,
+        "name": "天来",
+        "表示番号": "A568",
+        "乗車数": 3,
+        "降車数": 43
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0008009,
+          35.8452607
+        ]
+      },
+      "properties": {
+        "id": 359,
+        "name": "りぼんくらぶ",
+        "表示番号": "A059",
+        "乗車数": 16,
+        "降車数": 42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.005764,
+          35.83167061
+        ]
+      },
+      "properties": {
+        "id": 360,
+        "name": "塚崎団地8.9号棟の間",
+        "表示番号": "A1177",
+        "乗車数": 57,
+        "降車数": 54
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0936278,
+          35.8375113
+        ]
+      },
+      "properties": {
+        "id": 361,
+        "name": "観音堂入口",
+        "表示番号": "B452",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0065633,
+          35.83415828
+        ]
+      },
+      "properties": {
+        "id": 362,
+        "name": "コーポ・サンフラワー",
+        "表示番号": "A646",
+        "乗車数": 47,
+        "降車数": 210
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9967998,
+          35.84471714
+        ]
+      },
+      "properties": {
+        "id": 363,
+        "name": "大津ケ丘3丁目 第10ごみ集積所",
+        "表示番号": "A406",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0042751,
+          35.83879652
+        ]
+      },
+      "properties": {
+        "id": 364,
+        "name": "大津ケ丘ココス玄関",
+        "表示番号": "A551",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0235146,
+          35.85198304
+        ]
+      },
+      "properties": {
+        "id": 365,
+        "name": "中村医院",
+        "表示番号": "A704",
+        "乗車数": 16,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0019228,
+          35.8393249
+        ]
+      },
+      "properties": {
+        "id": 366,
+        "name": "大津ケ丘2－31－6号棟横",
+        "表示番号": "A546",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0637212,
+          35.84451696
+        ]
+      },
+      "properties": {
+        "id": 367,
+        "name": "手賀沼湖畔霊園",
+        "表示番号": "B112",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0467911,
+          35.84787389
+        ]
+      },
+      "properties": {
+        "id": 368,
+        "name": "ウッドマンズビレッジ",
+        "表示番号": "A1149",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9967194,
+          35.83077483
+        ]
+      },
+      "properties": {
+        "id": 369,
+        "name": "塚崎709ごみ集積所",
+        "表示番号": "A623",
+        "乗車数": 19,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0046107,
+          35.83337546
+        ]
+      },
+      "properties": {
+        "id": 370,
+        "name": "中野モータース",
+        "表示番号": "A491",
+        "乗車数": 11,
+        "降車数": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.003977,
+          35.8426134
+        ]
+      },
+      "properties": {
+        "id": 371,
+        "name": "大津ケ丘団地1－54－9号棟",
+        "表示番号": "A039",
+        "乗車数": 56,
+        "降車数": 40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9981329,
+          35.83815073
+        ]
+      },
+      "properties": {
+        "id": 372,
+        "name": "大津ヶ丘ランドローム裏口（元の伊勢角）",
+        "表示番号": "A475",
+        "乗車数": 157,
+        "降車数": 114
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9959042,
+          35.84890007
+        ]
+      },
+      "properties": {
+        "id": 373,
+        "name": "エリカマンション7号棟",
+        "表示番号": "A257",
+        "乗車数": 65,
+        "降車数": 33
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0174821,
+          35.8472584
+        ]
+      },
+      "properties": {
+        "id": 374,
+        "name": "手賀の杜5丁目5-15ゴミステーション",
+        "表示番号": "",
+        "乗車数": 122,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0145509,
+          35.84489962
+        ]
+      },
+      "properties": {
+        "id": 375,
+        "name": "五条谷307ゴミステーション",
+        "表示番号": "A750",
+        "乗車数": 21,
+        "降車数": 40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.07379,
+          35.84416923
+        ]
+      },
+      "properties": {
+        "id": 376,
+        "name": "手賀の海老原商店",
+        "表示番号": "B339",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0056129,
+          35.8347817
+        ]
+      },
+      "properties": {
+        "id": 377,
+        "name": "柏市塚崎",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0345385,
+          35.81741297
+        ]
+      },
+      "properties": {
+        "id": 378,
+        "name": "藤ケ谷91番地 ごみ集積所",
+        "表示番号": "A923",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0113001,
+          35.84352551
+        ]
+      },
+      "properties": {
+        "id": 379,
+        "name": "柏東パークホームズ",
+        "表示番号": "Ａ756",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0641742,
+          35.84080128
+        ]
+      },
+      "properties": {
+        "id": 380,
+        "name": "片山143番地ごみ集積所",
+        "表示番号": "B118",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0022981,
+          35.8437563
+        ]
+      },
+      "properties": {
+        "id": 381,
+        "name": "大津ケ丘中学校正門前",
+        "表示番号": "A028",
+        "乗車数": 7,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0024217,
+          35.83526743
+        ]
+      },
+      "properties": {
+        "id": 382,
+        "name": "大津ケ丘4－5－10号棟",
+        "表示番号": "A580",
+        "乗車数": 16,
+        "降車数": 15
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0381219,
+          35.82236303
+        ]
+      },
+      "properties": {
+        "id": 383,
+        "name": "四季亭",
+        "表示番号": "A859",
+        "乗車数": 1,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0312287,
+          35.85040904
+        ]
+      },
+      "properties": {
+        "id": 384,
+        "name": "手賀の杜2丁目7番地ごみ集積所",
+        "表示番号": "A715",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9998082,
+          35.83172606
+        ]
+      },
+      "properties": {
+        "id": 385,
+        "name": "アパート　リンスカイ駐車場",
+        "表示番号": "A876",
+        "乗車数": 21,
+        "降車数": 1194
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0105649,
+          35.83273195
+        ]
+      },
+      "properties": {
+        "id": 386,
+        "name": "ヤマダ電機沼南店正面玄関",
+        "表示番号": "A671",
+        "乗車数": 14,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0159993,
+          35.82727784
+        ]
+      },
+      "properties": {
+        "id": 387,
+        "name": "バイク館",
+        "表示番号": "A1174",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9997073,
+          35.83787241
+        ]
+      },
+      "properties": {
+        "id": 388,
+        "name": "大津ケ丘団地3－1－1入口",
+        "表示番号": "A481",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0060215,
+          35.83562824
+        ]
+      },
+      "properties": {
+        "id": 389,
+        "name": "ライコランド",
+        "表示番号": "A500",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0054314,
+          35.84249056
+        ]
+      },
+      "properties": {
+        "id": 390,
+        "name": "大津ケ丘団地1－54－6号棟",
+        "表示番号": "A036",
+        "乗車数": 21,
+        "降車数": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0735378,
+          35.84206455
+        ]
+      },
+      "properties": {
+        "id": 391,
+        "name": "手賀バス停前ごみ集積所",
+        "表示番号": "B331",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0052273,
+          35.83219266
+        ]
+      },
+      "properties": {
+        "id": 392,
+        "name": "塚崎団地2号棟奥側",
+        "表示番号": "A651",
+        "乗車数": 181,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0290883,
+          35.8428125
+        ]
+      },
+      "properties": {
+        "id": 393,
+        "name": "若白毛103番地ごみ集積所（栄造園向かい）",
+        "表示番号": "A786",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0091565,
+          35.8363904
+        ]
+      },
+      "properties": {
+        "id": 394,
+        "name": "A805",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0315991,
+          35.81386319
+        ]
+      },
+      "properties": {
+        "id": 395,
+        "name": "かしわ安心館",
+        "表示番号": "A453",
+        "乗車数": 1,
+        "降車数": 142
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0056943,
+          35.84306021
+        ]
+      },
+      "properties": {
+        "id": 396,
+        "name": "牛しん（元のがんばり家）",
+        "表示番号": "A025",
+        "乗車数": 10,
+        "降車数": 153
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0752974,
+          35.84601296
+        ]
+      },
+      "properties": {
+        "id": 397,
+        "name": "興福院平和公園西門",
+        "表示番号": "B343",
+        "乗車数": 1,
+        "降車数": 14
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0043791,
+          35.83430474
+        ]
+      },
+      "properties": {
+        "id": 398,
+        "name": "塚崎2-2-1ゴミ集積所",
+        "表示番号": "A600",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.007172,
+          35.8324524
+        ]
+      },
+      "properties": {
+        "id": 399,
+        "name": "A649：塚崎ガスト",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9972531,
+          35.84298644
+        ]
+      },
+      "properties": {
+        "id": 400,
+        "name": "大津ケ丘グランシティ14号棟横",
+        "表示番号": "A432",
+        "乗車数": 14,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0652176,
+          35.8515265
+        ]
+      },
+      "properties": {
+        "id": 401,
+        "name": "手賀沼フィッシングセンター",
+        "表示番号": "B201",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0003296,
+          35.84294296
+        ]
+      },
+      "properties": {
+        "id": 402,
+        "name": "大津ケ丘2丁目住宅情報館裏側のごみ集積所",
+        "表示番号": "A503",
+        "乗車数": 5,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9980983,
+          35.84533881
+        ]
+      },
+      "properties": {
+        "id": 403,
+        "name": "ソフトバンク　柏沼南店",
+        "表示番号": "A800",
+        "乗車数": 2,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9973094,
+          35.84350826
+        ]
+      },
+      "properties": {
+        "id": 404,
+        "name": "大津ケ丘第2団地4号棟前",
+        "表示番号": "A433",
+        "乗車数": 43,
+        "降車数": 68
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.003865,
+          35.8564308
+        ]
+      },
+      "properties": {
+        "id": 405,
+        "name": "大井の福満寺、東山霊園入口T字路",
+        "表示番号": "A1167",
+        "乗車数": 2,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9947133,
+          35.8478478
+        ]
+      },
+      "properties": {
+        "id": 406,
+        "name": "葵の里　柏（16号そば）",
+        "表示番号": "A877",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0892531,
+          35.8382664
+        ]
+      },
+      "properties": {
+        "id": 407,
+        "name": "柏市布瀬",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0169218,
+          35.84276032
+        ]
+      },
+      "properties": {
+        "id": 408,
+        "name": "手賀の杜ふれあい広場東側",
+        "表示番号": "A742",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0271895,
+          35.8179174
+        ]
+      },
+      "properties": {
+        "id": 409,
+        "name": "福田建設資材置き場",
+        "表示番号": "A1203",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9995189,
+          35.8309195
+        ]
+      },
+      "properties": {
+        "id": 410,
+        "name": "A652:塚崎団地7号棟奥",
+        "表示番号": "",
+        "乗車数": 34,
+        "降車数": 32
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0668538,
+          35.84339085
+        ]
+      },
+      "properties": {
+        "id": 411,
+        "name": "片山青年館",
+        "表示番号": "B115",
+        "乗車数": 9,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.996832,
+          35.84211238
+        ]
+      },
+      "properties": {
+        "id": 412,
+        "name": "3丁目石戸ハイツ前駐車場",
+        "表示番号": "A441",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0064668,
+          35.84373858
+        ]
+      },
+      "properties": {
+        "id": 413,
+        "name": "大津ケ丘接骨院",
+        "表示番号": "A024",
+        "乗車数": 2,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0206127,
+          35.80992188
+        ]
+      },
+      "properties": {
+        "id": 414,
+        "name": "めん王",
+        "表示番号": "A2101",
+        "乗車数": 82,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0011504,
+          35.83089661
+        ]
+      },
+      "properties": {
+        "id": 415,
+        "name": "塚崎ツクイデイサービス",
+        "表示番号": "A613",
+        "乗車数": 62,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9988276,
+          35.84121657
+        ]
+      },
+      "properties": {
+        "id": 416,
+        "name": "桐友学園正門",
+        "表示番号": "A521",
+        "乗車数": 152,
+        "降車数": 61
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9953839,
+          35.84566059
+        ]
+      },
+      "properties": {
+        "id": 417,
+        "name": "沼南台サンパワーC棟横",
+        "表示番号": "A404",
+        "乗車数": 17,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0046053,
+          35.83748303
+        ]
+      },
+      "properties": {
+        "id": 418,
+        "name": "大津ヶ丘近藤そろばん塾",
+        "表示番号": "A879",
+        "乗車数": 1,
+        "降車数": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0002116,
+          35.8384421
+        ]
+      },
+      "properties": {
+        "id": 419,
+        "name": "大津ケ丘2－31－1号棟",
+        "表示番号": "A541",
+        "乗車数": 16,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0120348,
+          35.83059651
+        ]
+      },
+      "properties": {
+        "id": 420,
+        "name": "オートバックス立体駐車場玄関",
+        "表示番号": "A673",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0054878,
+          35.83251434
+        ]
+      },
+      "properties": {
+        "id": 421,
+        "name": "塚崎団地1号棟",
+        "表示番号": "A1212",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0045731,
+          35.84174695
+        ]
+      },
+      "properties": {
+        "id": 422,
+        "name": "大津ケ丘団地1－54－2号棟",
+        "表示番号": "A032",
+        "乗車数": 13,
+        "降車数": 24
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0575948,
+          35.83940752
+        ]
+      },
+      "properties": {
+        "id": 423,
+        "name": "手賀の丘公園バス回転場",
+        "表示番号": "B107",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9949062,
+          35.83946406
+        ]
+      },
+      "properties": {
+        "id": 424,
+        "name": "大津ケ丘第一小学校グランド下",
+        "表示番号": "A445",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0034034,
+          35.83521524
+        ]
+      },
+      "properties": {
+        "id": 425,
+        "name": "大津ケ丘4－5－12号棟",
+        "表示番号": "A582",
+        "乗車数": 19,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9975079,
+          35.8382638
+        ]
+      },
+      "properties": {
+        "id": 426,
+        "name": "大津ケ丘団地3－1－8入口",
+        "表示番号": "A488",
+        "乗車数": 28,
+        "降車数": 29
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0445163,
+          35.83421062
+        ]
+      },
+      "properties": {
+        "id": 427,
+        "name": "泉104番地ごみ集積所(ジャパンマーブル前)",
+        "表示番号": "B024",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.002116,
+          35.833991
+        ]
+      },
+      "properties": {
+        "id": 428,
+        "name": "塚崎2丁目白幡公園北側",
+        "表示番号": "A595",
+        "乗車数": 1,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.010195,
+          35.84160779
+        ]
+      },
+      "properties": {
+        "id": 429,
+        "name": "小高床屋",
+        "表示番号": "A761",
+        "乗車数": 11,
+        "降車数": 23
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0079366,
+          35.84541708
+        ]
+      },
+      "properties": {
+        "id": 430,
+        "name": "ビュー緑台",
+        "表示番号": "A104",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9985942,
+          35.82789126
+        ]
+      },
+      "properties": {
+        "id": 431,
+        "name": "塚崎843ごみ集積所",
+        "表示番号": "A627",
+        "乗車数": 18,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0473219,
+          35.8380681
+        ]
+      },
+      "properties": {
+        "id": 432,
+        "name": "泉の秋元製作所前",
+        "表示番号": "B015",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0598747,
+          35.84105132
+        ]
+      },
+      "properties": {
+        "id": 433,
+        "name": "手賀の丘公園運動場駐車場",
+        "表示番号": "B103",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0067082,
+          35.8401597
+        ]
+      },
+      "properties": {
+        "id": 434,
+        "name": "沼南公民館裏側駐車場入口",
+        "表示番号": "A010",
+        "乗車数": 6,
+        "降車数": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0056138,
+          35.84390817
+        ]
+      },
+      "properties": {
+        "id": 435,
+        "name": "ふくしあの郷デイサービスしょうなん",
+        "表示番号": "A648",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9991333,
+          35.83496735
+        ]
+      },
+      "properties": {
+        "id": 436,
+        "name": "セブンイレブン大津ケ丘店",
+        "表示番号": "A602",
+        "乗車数": 12,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.029059,
+          35.84938924
+        ]
+      },
+      "properties": {
+        "id": 437,
+        "name": "手賀の杜セブンイレブン",
+        "表示番号": "A1166",
+        "乗車数": 13,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0036126,
+          35.83160987
+        ]
+      },
+      "properties": {
+        "id": 438,
+        "name": "風早中学校駐車場入口",
+        "表示番号": "A661",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.020583,
+          35.84478454
+        ]
+      },
+      "properties": {
+        "id": 439,
+        "name": "手賀の杜けやき公園北側角",
+        "表示番号": "A739",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0006139,
+          35.83668517
+        ]
+      },
+      "properties": {
+        "id": 440,
+        "name": "大津ケ丘4－5－2号棟横",
+        "表示番号": "A572",
+        "乗車数": 129,
+        "降車数": 154
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9956038,
+          35.84917401
+        ]
+      },
+      "properties": {
+        "id": 441,
+        "name": "エリカマンション4号棟",
+        "表示番号": "A254",
+        "乗車数": 39,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0219431,
+          35.85635254
+        ]
+      },
+      "properties": {
+        "id": 442,
+        "name": "葵の園・沼南（リハビリテーションHP側）",
+        "表示番号": "A392",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9997073,
+          35.84719571
+        ]
+      },
+      "properties": {
+        "id": 443,
+        "name": "大井団地（大井910－5番地）ごみ集積所",
+        "表示番号": "A211",
+        "乗車数": 37,
+        "降車数": 66
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0015798,
+          35.84267537
+        ]
+      },
+      "properties": {
+        "id": 444,
+        "name": "中村順二美術館前",
+        "表示番号": "A049",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.089497,
+          35.83834425
+        ]
+      },
+      "properties": {
+        "id": 445,
+        "name": "布瀬バス停前ごみ集積所",
+        "表示番号": "B423",
+        "乗車数": 7,
+        "降車数": 76
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0806242,
+          35.83252319
+        ]
+      },
+      "properties": {
+        "id": 446,
+        "name": "老人ホームアネシス",
+        "表示番号": "B381",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9988976,
+          35.84312109
+        ]
+      },
+      "properties": {
+        "id": 447,
+        "name": "大津ケ丘診療所",
+        "表示番号": "A421",
+        "乗車数": 37,
+        "降車数": 58
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.025242,
+          35.8183482
+        ]
+      },
+      "properties": {
+        "id": 448,
+        "name": "アコーディアガーデンゴルフ信号西側",
+        "表示番号": "A868",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0170666,
+          35.82626458
+        ]
+      },
+      "properties": {
+        "id": 449,
+        "name": "イエローハット駐車場",
+        "表示番号": "A686",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0459113,
+          35.84635198
+        ]
+      },
+      "properties": {
+        "id": 450,
+        "name": "染井入新田T字路",
+        "表示番号": "B345",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0039846,
+          35.8349084
+        ]
+      },
+      "properties": {
+        "id": 451,
+        "name": "柏市塚崎",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0398922,
+          35.82557302
+        ]
+      },
+      "properties": {
+        "id": 452,
+        "name": "金山区民会館入口角",
+        "表示番号": "A857",
+        "乗車数": 155,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0799483,
+          35.84185582
+        ]
+      },
+      "properties": {
+        "id": 453,
+        "name": "手賀ハリストス正教会",
+        "表示番号": "B351",
+        "乗車数": 1,
+        "降車数": 30
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0449723,
+          35.83892481
+        ]
+      },
+      "properties": {
+        "id": 454,
+        "name": "泉の石イ石材店前",
+        "表示番号": "B013",
+        "乗車数": 2,
+        "降車数": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0128021,
+          35.85210463
+        ]
+      },
+      "properties": {
+        "id": 455,
+        "name": "二松学舎大学正門",
+        "表示番号": "A351",
+        "乗車数": 6,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0029474,
+          35.82878722
+        ]
+      },
+      "properties": {
+        "id": 456,
+        "name": "塚崎メゾンクレール",
+        "表示番号": "A664",
+        "乗車数": 2,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0264382,
+          35.83135762
+        ]
+      },
+      "properties": {
+        "id": 457,
+        "name": "ホテルレモン",
+        "表示番号": "A835",
+        "乗車数": 14,
+        "降車数": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.996655,
+          35.82973102
+        ]
+      },
+      "properties": {
+        "id": 458,
+        "name": "塚崎757ごみ集積所",
+        "表示番号": "A625",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0341147,
+          35.85023946
+        ]
+      },
+      "properties": {
+        "id": 459,
+        "name": "岩井入口",
+        "表示番号": "A772",
+        "乗車数": 7,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9926319,
+          35.84621283
+        ]
+      },
+      "properties": {
+        "id": 460,
+        "name": "ミニストップ　中の橋",
+        "表示番号": "A405",
+        "乗車数": 33,
+        "降車数": 21
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0385779,
+          35.84671305
+        ]
+      },
+      "properties": {
+        "id": 461,
+        "name": "鷲野谷の飯田商店",
+        "表示番号": "A774",
+        "乗車数": 24,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0214603,
+          35.85563081
+        ]
+      },
+      "properties": {
+        "id": 462,
+        "name": "ホテル沙羅入口",
+        "表示番号": "A393",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0010619,
+          35.83690262
+        ]
+      },
+      "properties": {
+        "id": 463,
+        "name": "東洋眼科・胃腸科・外科",
+        "表示番号": "A555",
+        "乗車数": 221,
+        "降車数": 113
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0055709,
+          35.84389948
+        ]
+      },
+      "properties": {
+        "id": 464,
+        "name": "東京新聞",
+        "表示番号": "A1146",
+        "乗車数": 6,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.000022,
+          35.84345738
+        ]
+      },
+      "properties": {
+        "id": 465,
+        "name": "ジェーソン沼南店（16号側入口）",
+        "表示番号": "A501",
+        "乗車数": 45,
+        "降車数": 39
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.023756,
+          35.85167868
+        ]
+      },
+      "properties": {
+        "id": 466,
+        "name": "箕輪区民館",
+        "表示番号": "A706",
+        "乗車数": 1,
+        "降車数": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0219724,
+          35.84671087
+        ]
+      },
+      "properties": {
+        "id": 467,
+        "name": "手賀の杜クリニック",
+        "表示番号": "A737",
+        "乗車数": 4,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0061922,
+          35.8426989
+        ]
+      },
+      "properties": {
+        "id": 468,
+        "name": "みずほ歯科医院",
+        "表示番号": "A027",
+        "乗車数": 52,
+        "降車数": 31
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0105009,
+          35.843523
+        ]
+      },
+      "properties": {
+        "id": 469,
+        "name": "ゆで太郎柏大井店",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0003672,
+          35.83270803
+        ]
+      },
+      "properties": {
+        "id": 470,
+        "name": "塚崎3丁目9ごみ集積所",
+        "表示番号": "A604",
+        "乗車数": 12,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9955448,
+          35.84896964
+        ]
+      },
+      "properties": {
+        "id": 471,
+        "name": "エリカマンション3号棟",
+        "表示番号": "A253",
+        "乗車数": 1,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0189122,
+          35.8446822
+        ]
+      },
+      "properties": {
+        "id": 472,
+        "name": "手賀の杜歯科医院",
+        "表示番号": "A1209",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0070569,
+          35.84145994
+        ]
+      },
+      "properties": {
+        "id": 473,
+        "name": "沼南保健センター",
+        "表示番号": "A002",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.009522,
+          35.8566148
+        ]
+      },
+      "properties": {
+        "id": 474,
+        "name": "柏市大井",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0027653,
+          35.84146864
+        ]
+      },
+      "properties": {
+        "id": 475,
+        "name": "宝来館",
+        "表示番号": "A044",
+        "乗車数": 25,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0424135,
+          35.83227529
+        ]
+      },
+      "properties": {
+        "id": 476,
+        "name": "泉の石井自動車前",
+        "表示番号": "B027",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0073302,
+          35.83887263
+        ]
+      },
+      "properties": {
+        "id": 477,
+        "name": "ドラッグストアコスモス",
+        "表示番号": "A803",
+        "乗車数": 83,
+        "降車数": 31
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0217017,
+          35.81544662
+        ]
+      },
+      "properties": {
+        "id": 478,
+        "name": "常盤土木の坂下",
+        "表示番号": "A874",
+        "乗車数": 12,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0504065,
+          35.8368526
+        ]
+      },
+      "properties": {
+        "id": 479,
+        "name": "手賀中学校裏門",
+        "表示番号": "B055",
+        "乗車数": 4,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9996832,
+          35.82928739
+        ]
+      },
+      "properties": {
+        "id": 480,
+        "name": "塚崎寿量院",
+        "表示番号": "A631",
+        "乗車数": 1,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0062654,
+          35.84839073
+        ]
+      },
+      "properties": {
+        "id": 481,
+        "name": "緑台集会所",
+        "表示番号": "A109",
+        "乗車数": 49,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9972719,
+          35.83850733
+        ]
+      },
+      "properties": {
+        "id": 482,
+        "name": "大津ケ丘団地3－1－9入口",
+        "表示番号": "A489",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0039846,
+          35.8349084
+        ]
+      },
+      "properties": {
+        "id": 483,
+        "name": "柏市塚崎",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.001553,
+          35.82766494
+        ]
+      },
+      "properties": {
+        "id": 484,
+        "name": "ソル　レヴェンテ2　ゴミステーション",
+        "表示番号": "A700",
+        "乗車数": 45,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9989241,
+          35.82880244
+        ]
+      },
+      "properties": {
+        "id": 485,
+        "name": "塚崎寿量院南側住宅金田公園前",
+        "表示番号": "A630",
+        "乗車数": 25,
+        "降車数": 64
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.030891,
+          35.84848264
+        ]
+      },
+      "properties": {
+        "id": 486,
+        "name": "岩井広報無線塔T字路",
+        "表示番号": "A1187",
+        "乗車数": 2,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0104257,
+          35.81572937
+        ]
+      },
+      "properties": {
+        "id": 487,
+        "name": "ニューオークボ",
+        "表示番号": "A2108",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.020543,
+          35.84792607
+        ]
+      },
+      "properties": {
+        "id": 488,
+        "name": "(有)ベスト　入口",
+        "表示番号": "A740",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0887245,
+          35.83788763
+        ]
+      },
+      "properties": {
+        "id": 489,
+        "name": "布瀬構造改善センター",
+        "表示番号": "B421",
+        "乗車数": 6,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9968857,
+          35.84012506
+        ]
+      },
+      "properties": {
+        "id": 490,
+        "name": "大津ケ丘第一小学校正門入口",
+        "表示番号": "A447",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0176301,
+          35.83698509
+        ]
+      },
+      "properties": {
+        "id": 491,
+        "name": "そば染",
+        "表示番号": "A1148",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0192877,
+          35.84491701
+        ]
+      },
+      "properties": {
+        "id": 492,
+        "name": "松栄軒",
+        "表示番号": "A514",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0022769,
+          35.83315816
+        ]
+      },
+      "properties": {
+        "id": 493,
+        "name": "永田歯科医院",
+        "表示番号": "A597",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0210202,
+          35.85271351
+        ]
+      },
+      "properties": {
+        "id": 494,
+        "name": "箕輪のいもむし",
+        "表示番号": "A707",
+        "乗車数": 47,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0067725,
+          35.84850438
+        ]
+      },
+      "properties": {
+        "id": 495,
+        "name": "恩田コーポ",
+        "表示番号": "A460",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0288576,
+          35.85110038
+        ]
+      },
+      "properties": {
+        "id": 496,
+        "name": "手賀の杜スポーツ広場",
+        "表示番号": "A713",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9975244,
+          35.841545
+        ]
+      },
+      "properties": {
+        "id": 497,
+        "name": "A1142グランドハウス",
+        "表示番号": "",
+        "乗車数": 14,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0114825,
+          35.85762209
+        ]
+      },
+      "properties": {
+        "id": 498,
+        "name": "ホテルウイル（Ｗｉｌｌ）前",
+        "表示番号": "A357",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0120723,
+          35.82633852
+        ]
+      },
+      "properties": {
+        "id": 499,
+        "name": "安田倉庫入口",
+        "表示番号": "A680",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0123513,
+          35.84209934
+        ]
+      },
+      "properties": {
+        "id": 500,
+        "name": "カラオケ波",
+        "表示番号": "A754",
+        "乗車数": 4,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.1033962,
+          35.83460638
+        ]
+      },
+      "properties": {
+        "id": 501,
+        "name": "南部亭",
+        "表示番号": "B451",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0029099,
+          35.84923069
+        ]
+      },
+      "properties": {
+        "id": 502,
+        "name": "大井1269番地ごみ集積所",
+        "表示番号": "A221",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.023767,
+          35.80970001
+        ]
+      },
+      "properties": {
+        "id": 503,
+        "name": "藤ヶ谷シードレーシング",
+        "表示番号": "A1165",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0007319,
+          35.83740708
+        ]
+      },
+      "properties": {
+        "id": 504,
+        "name": "小沼医院裏口",
+        "表示番号": "A554",
+        "乗車数": 116,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0758338,
+          35.83374093
+        ]
+      },
+      "properties": {
+        "id": 505,
+        "name": "オガワグランドロッジ入口",
+        "表示番号": "B371",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0052973,
+          35.84207309
+        ]
+      },
+      "properties": {
+        "id": 506,
+        "name": "大津ケ丘団地1－54－5号棟",
+        "表示番号": "A035",
+        "乗車数": 6,
+        "降車数": 11
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0096449,
+          35.83142503
+        ]
+      },
+      "properties": {
+        "id": 507,
+        "name": "沼南社会福祉センター",
+        "表示番号": "A672",
+        "乗車数": 21,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0321352,
+          35.84446493
+        ]
+      },
+      "properties": {
+        "id": 508,
+        "name": "県立沼南高校正門",
+        "表示番号": "A781",
+        "乗車数": 4,
+        "降車数": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0488779,
+          35.83529772
+        ]
+      },
+      "properties": {
+        "id": 509,
+        "name": "江口果樹園",
+        "表示番号": "B427",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0106025,
+          35.82478141
+        ]
+      },
+      "properties": {
+        "id": 510,
+        "name": "塚崎どうぶつセレモニー",
+        "表示番号": "A684",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9976638,
+          35.84155126
+        ]
+      },
+      "properties": {
+        "id": 511,
+        "name": "アパートグランドハウス",
+        "表示番号": "A1142",
+        "乗車数": 54,
+        "降車数": 69
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0021356,
+          35.84604917
+        ]
+      },
+      "properties": {
+        "id": 512,
+        "name": "ファミリーマート大津ケ丘店",
+        "表示番号": "A052",
+        "乗車数": 29,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.994649,
+          35.84621718
+        ]
+      },
+      "properties": {
+        "id": 513,
+        "name": "沼南台サンパワーA棟横",
+        "表示番号": "A402",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9962115,
+          35.8434708
+        ]
+      },
+      "properties": {
+        "id": 514,
+        "name": "柏市大津ケ丘",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0309926,
+          35.81541197
+        ]
+      },
+      "properties": {
+        "id": 515,
+        "name": "割烹濱田家",
+        "表示番号": "A913",
+        "乗車数": 46,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0176301,
+          35.83698509
+        ]
+      },
+      "properties": {
+        "id": 516,
+        "name": "元の能州や",
+        "表示番号": "A1140",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.020205,
+          35.84146429
+        ]
+      },
+      "properties": {
+        "id": 517,
+        "name": "丸勝の前T字路付近",
+        "表示番号": "A1097",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0042238,
+          35.84295259
+        ]
+      },
+      "properties": {
+        "id": 518,
+        "name": "大津ケ丘団地1－54－10号棟",
+        "表示番号": "A040",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0706893,
+          35.83944883
+        ]
+      },
+      "properties": {
+        "id": 519,
+        "name": "手賀駐在所",
+        "表示番号": "B311",
+        "乗車数": 33,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0014993,
+          35.83687637
+        ]
+      },
+      "properties": {
+        "id": 520,
+        "name": "つのだ接骨院",
+        "表示番号": "A560",
+        "乗車数": 5,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9953631,
+          35.8494966
+        ]
+      },
+      "properties": {
+        "id": 521,
+        "name": "エリカマンション1号棟",
+        "表示番号": "A251",
+        "乗車数": 59,
+        "降車数": 6
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0062817,
+          35.84548231
+        ]
+      },
+      "properties": {
+        "id": 522,
+        "name": "みなもと整体院",
+        "表示番号": "A561",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0564709,
+          35.8421276
+        ]
+      },
+      "properties": {
+        "id": 523,
+        "name": "手賀の丘少年自然の家",
+        "表示番号": "B101",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.091632,
+          35.84038163
+        ]
+      },
+      "properties": {
+        "id": 524,
+        "name": "湯浅商店",
+        "表示番号": "B431",
+        "乗車数": 5,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0845298,
+          35.83920733
+        ]
+      },
+      "properties": {
+        "id": 525,
+        "name": "御門工業",
+        "表示番号": "B405",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0768012,
+          35.8447768
+        ]
+      },
+      "properties": {
+        "id": 526,
+        "name": "B340:旧手賀教会",
+        "表示番号": "",
+        "乗車数": 8,
+        "降車数": 4
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0938824,
+          35.83560882
+        ]
+      },
+      "properties": {
+        "id": 527,
+        "name": "布瀬2478番地ごみ集積所",
+        "表示番号": "B415",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0113578,
+          35.8192887
+        ]
+      },
+      "properties": {
+        "id": 528,
+        "name": "(株)広宣　藤ヶ谷",
+        "表示番号": "A1213",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0032964,
+          35.84090332
+        ]
+      },
+      "properties": {
+        "id": 529,
+        "name": "ビックエー大津ケ丘店",
+        "表示番号": "A043",
+        "乗車数": 12,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0080732,
+          35.83006156
+        ]
+      },
+      "properties": {
+        "id": 530,
+        "name": "ひまわり園",
+        "表示番号": "A666",
+        "乗車数": 1,
+        "降車数": 41
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0656039,
+          35.84530418
+        ]
+      },
+      "properties": {
+        "id": 531,
+        "name": "片山1136番地ごみ集積所",
+        "表示番号": "B114",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9990478,
+          35.83606313
+        ]
+      },
+      "properties": {
+        "id": 532,
+        "name": "大津ケ丘団地4-5-27",
+        "表示番号": "A587",
+        "乗車数": 18,
+        "降車数": 374
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0303891,
+          35.8145039
+        ]
+      },
+      "properties": {
+        "id": 533,
+        "name": "旧藤ケ谷公民館",
+        "表示番号": "A911",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0073734,
+          35.8445474
+        ]
+      },
+      "properties": {
+        "id": 534,
+        "name": "風早北部小学校裏門",
+        "表示番号": "A102",
+        "乗車数": 1,
+        "降車数": 71
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0184882,
+          35.8304095
+        ]
+      },
+      "properties": {
+        "id": 535,
+        "name": "ランドポート1",
+        "表示番号": "A823",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0453534,
+          35.83772439
+        ]
+      },
+      "properties": {
+        "id": 536,
+        "name": "×",
+        "表示番号": "×031",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0965834,
+          35.83956842
+        ]
+      },
+      "properties": {
+        "id": 537,
+        "name": "ジャパンユアサファーム（布瀬2277番地）前ごみ集積所",
+        "表示番号": "B417",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.017142,
+          35.82007928
+        ]
+      },
+      "properties": {
+        "id": 538,
+        "name": "藤ヶ谷、高木電機近くの交差点",
+        "表示番号": "A1194",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.00328,
+          35.84561291
+        ]
+      },
+      "properties": {
+        "id": 539,
+        "name": "大津ケ丘1丁目29－13番地ごみ集積所",
+        "表示番号": "A017",
+        "乗車数": 1,
+        "降車数": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0555134,
+          35.83727662
+        ]
+      },
+      "properties": {
+        "id": 540,
+        "name": "手賀農協",
+        "表示番号": "B071",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0275809,
+          35.83501519
+        ]
+      },
+      "properties": {
+        "id": 541,
+        "name": "若白毛の東洋ユニオン（小川塗装あと）",
+        "表示番号": "A833",
+        "乗車数": 1,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0275007,
+          35.81059183
+        ]
+      },
+      "properties": {
+        "id": 542,
+        "name": "染原整骨院",
+        "表示番号": "A2110",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0060534,
+          35.8455129
+        ]
+      },
+      "properties": {
+        "id": 543,
+        "name": "えのき台接骨院",
+        "表示番号": "A057",
+        "乗車数": 7,
+        "降車数": 19
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0075021,
+          35.84193394
+        ]
+      },
+      "properties": {
+        "id": 544,
+        "name": "沼南庁舎バス乗継場",
+        "表示番号": "A003",
+        "乗車数": 9,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0723644,
+          35.84509002
+        ]
+      },
+      "properties": {
+        "id": 545,
+        "name": "手賀構造改善センター",
+        "表示番号": "B341",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0206557,
+          35.82294573
+        ]
+      },
+      "properties": {
+        "id": 546,
+        "name": "安楽亭",
+        "表示番号": "A864",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0045279,
+          35.84034212
+        ]
+      },
+      "properties": {
+        "id": 547,
+        "name": "ウエルシア薬局沼南店（大島田）",
+        "表示番号": "A008",
+        "乗車数": 103,
+        "降車数": 35
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0013062,
+          35.84708938
+        ]
+      },
+      "properties": {
+        "id": 548,
+        "name": "石戸歯科医院",
+        "表示番号": "A203",
+        "乗車数": 78,
+        "降車数": 26
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0184667,
+          35.81800455
+        ]
+      },
+      "properties": {
+        "id": 549,
+        "name": "風早南部小学校駐車場入口",
+        "表示番号": "A870",
+        "乗車数": 1,
+        "降車数": 7
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0050559,
+          35.8179348
+        ]
+      },
+      "properties": {
+        "id": 550,
+        "name": "ふなとりラーメン　",
+        "表示番号": "A2113",
+        "乗車数": 11,
+        "降車数": 13
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0198239,
+          35.82703878
+        ]
+      },
+      "properties": {
+        "id": 551,
+        "name": "沼南体育館",
+        "表示番号": "A841",
+        "乗車数": 15,
+        "降車数": 74
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0083566,
+          35.84268696
+        ]
+      },
+      "properties": {
+        "id": 552,
+        "name": "柏市【車庫】沼南タクシ",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0083628,
+          35.83021813
+        ]
+      },
+      "properties": {
+        "id": 553,
+        "name": "いこい荘",
+        "表示番号": "A655",
+        "乗車数": 52,
+        "降車数": 36
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0007319,
+          35.8393162
+        ]
+      },
+      "properties": {
+        "id": 554,
+        "name": "大津ケ丘2－31－7号棟横",
+        "表示番号": "A547",
+        "乗車数": 9,
+        "降車数": 29
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.009315,
+          35.84303645
+        ]
+      },
+      "properties": {
+        "id": 555,
+        "name": "塚原整形外科",
+        "表示番号": "A756",
+        "乗車数": 86,
+        "降車数": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0056138,
+          35.83605878
+        ]
+      },
+      "properties": {
+        "id": 556,
+        "name": "林鶏肉店",
+        "表示番号": "A590",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0894275,
+          35.83561084
+        ]
+      },
+      "properties": {
+        "id": 557,
+        "name": "村越製作所前",
+        "表示番号": "B1189",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0049808,
+          35.84173825
+        ]
+      },
+      "properties": {
+        "id": 558,
+        "name": "大津ケ丘団地1－54－1号棟",
+        "表示番号": "A031",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.003865,
+          35.84553449
+        ]
+      },
+      "properties": {
+        "id": 559,
+        "name": "ビューテラス大津ヶ丘",
+        "表示番号": "A058",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0352359,
+          35.84178624
+        ]
+      },
+      "properties": {
+        "id": 560,
+        "name": "和食瀧",
+        "表示番号": "A788",
+        "乗車数": 31,
+        "降車数": 17
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0153232,
+          35.82565131
+        ]
+      },
+      "properties": {
+        "id": 561,
+        "name": "オートウェーブラピット館",
+        "表示番号": "A685",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0079473,
+          35.84591714
+        ]
+      },
+      "properties": {
+        "id": 562,
+        "name": "エクセルみどり台",
+        "表示番号": "A105",
+        "乗車数": 39,
+        "降車数": 9
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0098249,
+          35.84624762
+        ]
+      },
+      "properties": {
+        "id": 563,
+        "name": "福田建設前",
+        "表示番号": "A107",
+        "乗車数": 15,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0176301,
+          35.83698509
+        ]
+      },
+      "properties": {
+        "id": 564,
+        "name": "かげ新-住所が違うので使用不可",
+        "表示番号": "A1141",
+        "乗車数": 3,
+        "降車数": 28
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0172332,
+          35.85552646
+        ]
+      },
+      "properties": {
+        "id": 565,
+        "name": "手賀沼病院",
+        "表示番号": "A381",
+        "乗車数": 40,
+        "降車数": 36
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0856453,
+          35.8334365
+        ]
+      },
+      "properties": {
+        "id": 566,
+        "name": "布瀬の薬師堂",
+        "表示番号": "B443",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0083566,
+          35.84268696
+        ]
+      },
+      "properties": {
+        "id": 567,
+        "name": "沼南タクシー",
+        "表示番号": "A004",
+        "乗車数": 46,
+        "降車数": 127
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0684954,
+          35.8454927
+        ]
+      },
+      "properties": {
+        "id": 568,
+        "name": "初瀬木工所入口　Ｔ字路",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0841379,
+          35.83191866
+        ]
+      },
+      "properties": {
+        "id": 569,
+        "name": "布瀬の丸増商事",
+        "表示番号": "B441",
+        "乗車数": 5,
+        "降車数": 5
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9973258,
+          35.83610227
+        ]
+      },
+      "properties": {
+        "id": 570,
+        "name": "大津ヶ丘団地3-53-1",
+        "表示番号": "A1176",
+        "乗車数": 2,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.004942,
+          35.846516
+        ]
+      },
+      "properties": {
+        "id": 571,
+        "name": "五味歯科医院",
+        "表示番号": "A055",
+        "乗車数": 36,
+        "降車数": 22
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0035214,
+          35.85360919
+        ]
+      },
+      "properties": {
+        "id": 572,
+        "name": "大井1699－2番地ごみ集積所",
+        "表示番号": "A227",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0633132,
+          35.83627638
+        ]
+      },
+      "properties": {
+        "id": 573,
+        "name": "一ツ井戸バス停の上のごみ集積所",
+        "表示番号": "B081",
+        "乗車数": 23,
+        "降車数": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0259984,
+          35.84330388
+        ]
+      },
+      "properties": {
+        "id": 574,
+        "name": "若白毛区民会館",
+        "表示番号": "A784",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0019658,
+          35.85124387
+        ]
+      },
+      "properties": {
+        "id": 575,
+        "name": "石原不動産",
+        "表示番号": "A225",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0575414,
+          35.8373156
+        ]
+      },
+      "properties": {
+        "id": 576,
+        "name": "手賀近隣センター",
+        "表示番号": "Ｂ454",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0011426,
+          35.8443586
+        ]
+      },
+      "properties": {
+        "id": 577,
+        "name": "かげ新",
+        "表示番号": "",
+        "乗車数": 12,
+        "降車数": 8
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0039846,
+          35.8349084
+        ]
+      },
+      "properties": {
+        "id": 578,
+        "name": "柏市塚崎",
+        "表示番号": "",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0063324,
+          35.82464657
+        ]
+      },
+      "properties": {
+        "id": 579,
+        "name": "柏南自動車教習所向かい",
+        "表示番号": "A682",
+        "乗車数": 1,
+        "降車数": 48
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.029335,
+          35.81596878
+        ]
+      },
+      "properties": {
+        "id": 580,
+        "name": "藤ケ谷西谷子供の遊び場",
+        "表示番号": "A917",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0034893,
+          35.83240576
+        ]
+      },
+      "properties": {
+        "id": 581,
+        "name": "塚崎カラオケふれあい",
+        "表示番号": "A599",
+        "乗車数": 2,
+        "降車数": 10
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9996458,
+          35.8316487
+        ]
+      },
+      "properties": {
+        "id": 582,
+        "name": "アパート　リンスカイ駐車場",
+        "表示番号": "",
+        "乗車数": 21,
+        "降車数": 1194
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.0133169,
+          35.84195149
+        ]
+      },
+      "properties": {
+        "id": 583,
+        "name": "アローペットクリニック",
+        "表示番号": "A753",
+        "乗車数": 0,
+        "降車数": 0
+      }
+    }
+  ]
+}

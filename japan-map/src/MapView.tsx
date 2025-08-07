@@ -28,6 +28,7 @@ import { toggleRoadsideStationLayer } from './layers/roadsideStationLayer';
 import { toggleAttractionLayer } from './layers/attractionLayer';
 import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
 import { toggleBusPassengerLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
+import { toggleNewBusPassengerLayer, toggleNewKashiwakuruDropLayer, toggleNewKashiwakuruRideLayer } from './layers/newbusPassengerLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -68,6 +69,9 @@ export default function MapView() {
     const [shonanCourseDropLayerVisible, setShonanCourseDropLayerVisible] = useState(false);
     const [isKashiwaBounds, setIsKashiwaBounds] = useState(false); // Track the toggle stat
 
+    const [newBusLayerVisible, setNewBusLayerVisible] = useState(false);
+    const [newKashiwakuruRideLayerVisible, setNewKashiwakuruRideLayerVisible] = useState(false);
+    const [newKashiwakuruDropLayerVisible, setNewKashiwakuruDropLayerVisible] = useState(false);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -835,6 +839,76 @@ export default function MapView() {
             transportPopupRef.remove();
         });
 
+        map.on('mousemove', 'new-bus-layer', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>表示番号: ${props.表示番号}</strong> 
+                    <strong>Name: ${props.name}</strong> 
+                    <strong>乗車数: ${props.乗車数}</strong> 
+                    <strong>降車数: ${props.降車数}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'new-bus-layer', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
+
+
+        map.on('mousemove', 'ride-data', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.乗車数}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'ride-data', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+        map.on('mousemove', 'drop-data', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.乗車数}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'drop-data', () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
 
     }, []);
 
@@ -932,6 +1006,16 @@ export default function MapView() {
                         downloadMapScreenshot(mapRef.current);
                     }
                 }}
+
+                newbusLayerVisible={newBusLayerVisible}
+                toggleNewBusLayerVisible={() => toggleNewBusPassengerLayer(mapRef.current!, newBusLayerVisible, setIsLoading, setNewBusLayerVisible)}
+
+                newKashiwakuruRideLayerVisible={newKashiwakuruRideLayerVisible}
+                toggleNewKashiwakuruRideLayerVisible={() => toggleNewKashiwakuruRideLayer(mapRef.current!, newKashiwakuruRideLayerVisible, setIsLoading, setNewKashiwakuruRideLayerVisible)}
+
+                newKashiwakuruDropLayerVisible={newKashiwakuruDropLayerVisible}
+                toggleNewKashiwakuruDropLayerVisible={() => toggleNewKashiwakuruDropLayer(mapRef.current!, newKashiwakuruDropLayerVisible, setIsLoading, setNewKashiwakuruDropLayerVisible)}
+
             />
 
             <Legend selectedMetric={selectedMetric} />
