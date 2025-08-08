@@ -32,7 +32,8 @@ import {
     Circle,
     ShoppingBasket,
     Store,
-    ShoppingBag
+    ShoppingBag,
+    NotepadTextDashed
 } from 'lucide-react';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
@@ -41,8 +42,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 // import { useRecoilState } from 'recoil';
 // import { masuoCourseDropLayerVisibleState } from '@/state/layers';
 // import { toggleMasuoCourseRideLayer } from '@/layers/busPassengerLayer';
-
+import { useRecoilState } from "recoil";
+import { globalVisibleLayersState } from '@/state/activeLayersAtom';
 // const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
+
+
 
 interface MapControlsProps {
     currentStyle: string;
@@ -118,6 +122,7 @@ interface MapControlsProps {
     toggleKashiwaShopsVisible: (category: string) => void;
     selectedShopCategories: string[];
 
+    downloadPpt: () => void;
 
 
 }
@@ -171,7 +176,7 @@ export default function MapControls({
     toggleShonanCourseRideLayerVisible,
     shonanCourseDropLayerVisible,
     toggleShonanCourseDropLayerVisible,
-    captureMapScreenshot,
+    downloadPpt,
 
 
     newbusLayerVisible,
@@ -189,10 +194,35 @@ export default function MapControls({
     toggleKashiwaShopsVisible,
     selectedShopCategories,
 
+    captureMapScreenshot
+
 
 }: MapControlsProps) {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [globalVisibleLayers, setGlobalVisibleLayers] = useRecoilState(globalVisibleLayersState);
+
+    function handleLayerToggle(
+        layerName: string,
+        layerCurrentState: boolean,
+        toggleFunction: () => void,
+    ) {
+        setGlobalVisibleLayers((prev) => {
+            if (!layerCurrentState) {
+                // Hidden → visible: add to array
+                if (!prev.includes(layerName)) {
+                    return [...prev, layerName];
+                }
+                return prev;
+            } else {
+                // Visible → hidden: remove from array
+                return prev.filter((name) => name !== layerName);
+            }
+        });
+
+        toggleFunction();
+    }
+
 
 
     return (
@@ -230,10 +260,17 @@ export default function MapControls({
                         {/* Layer Toggles */}
                         <Button className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer" onClick={captureMapScreenshot}>
                             <MapPinCheckIcon />
-                            画像をエクスポート</Button>
+                            画像をエクスポート
+                        </Button>
+                        <Button className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer" onClick={downloadPpt}>
+                            <NotepadTextDashed />
+                            パワーポイントにエクスポート
+                        </Button>
                         <Button className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer" onClick={fitToBounds}>
                             <MapPinCheckIcon />
-                            柏市にフォーカス</Button>
+                            柏市にフォーカス
+                        </Button>
+
                         {/* <div className="flex items-center justify-between absolute top-4 right-4 z-50">
                             <Label className="text-sm text-black flex items-center gap-2">
                                 <MapPinCheckIcon /> 柏市にフォーカス
@@ -248,23 +285,13 @@ export default function MapControls({
                             />
                         </div> */}
 
-                        <Button onClick={toggleRoads} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                        <Button onClick={() => handleLayerToggle('道路', roadsVisible, toggleRoads)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <Ruler size={16} />
                             {roadsVisible ? '道路を非表示' : '道路を表示'}
                         </Button>
-                        <Button onClick={toggleAdmin} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
-                            <Layers size={16} />
-                            {adminVisible ? '行政界を非表示' : '行政界を表示'}
-                        </Button>
-                        <Button onClick={toggleTerrain} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
-                            <Mountain size={16} />
-                            {terrainEnabled ? '地形を非表示' : '地形を表示'}
-                        </Button>
-
-                        <Button onClick={toggleAgri} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
-                            <Landmark size={16} />
-                            {agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}
-                        </Button>
+                        <Button onClick={() => handleLayerToggle('行政界', adminVisible, toggleAdmin)}><Layers />{adminVisible ? '行政界を非表示' : '行政界を表示'}</Button>
+                        <Button onClick={() => handleLayerToggle('地形', terrainEnabled, toggleTerrain)}><Mountain />{terrainEnabled ? '地形を非表示' : '地形を表示'}</Button>
+                        <Button onClick={() => handleLayerToggle('農業レイヤー', agriLayerVisible, toggleAgri)}><Landmark />{agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}</Button>
 
                         {/* Transport Accordion */}
                         <Accordion type="single" collapsible className="w-full">
@@ -274,10 +301,10 @@ export default function MapControls({
                                 </AccordionTrigger>
                                 <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
                                     {[
-                                        { label: '交通レイヤー', checked: transportVisible, onChange: toggleTransport, icon: <Bus size={16} /> },
-                                        { label: 'バス停', checked: busStopsVisible, onChange: toggleBusStops, icon: <MapPin size={16} /> },
-                                        { label: 'カシワニクル乗降場', checked: busPickDropLayerVisible, onChange: toggleBusPickDropLayerVisible, icon: <Users size={16} /> },
-                                        { label: 'バス乗降データ', checked: busPassengerLayerVisible, onChange: toggleBusPassengerLayerVisible, icon: <Users size={16} /> }
+                                        { label: '交通レイヤー', checked: transportVisible, onChange: () => handleLayerToggle('交通レイヤー', transportVisible, toggleTransport), icon: <Bus size={16} /> },
+                                        { label: 'バス停', checked: busStopsVisible, onChange: () => handleLayerToggle('バス停', busStopsVisible, toggleBusStops), icon: <MapPin size={16} /> },
+                                        { label: 'カシワニクル乗降場', checked: busPickDropLayerVisible, onChange: () => handleLayerToggle('カシワニクル乗降場', busPickDropLayerVisible, toggleBusPickDropLayerVisible), icon: <Users size={16} /> },
+                                        { label: 'バス乗降データ', checked: busPassengerLayerVisible, onChange: () => handleLayerToggle('バス乗降データ', busPassengerLayerVisible, toggleBusPassengerLayerVisible), icon: <Users size={16} /> }
                                         // { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
@@ -290,27 +317,27 @@ export default function MapControls({
                         </Accordion>
 
                         {/* Other Layer Buttons */}
-                        <Button onClick={togglePbFacility} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                        <Button onClick={() => handleLayerToggle('公共施設', pbFacilityVisible, togglePbFacility)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <Building size={16} />
                             {pbFacilityVisible ? '公共施設を非表示' : '公共施設を表示'}
                         </Button>
-                        <Button onClick={toggleSchoolLayer} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                        <Button onClick={() => handleLayerToggle('学校', schoolLayerVisible, toggleSchoolLayer)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <School size={16} />
                             {schoolLayerVisible ? '学校を隠す' : '学校を表示'}
                         </Button>
-                        <Button onClick={toggleMedicalLayer} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                        <Button onClick={() => handleLayerToggle('医療機関', medicalLayerVisible, toggleMedicalLayer)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <Hospital size={16} />
                             {medicalLayerVisible ? '医療機関を隠す' : '医療機関を表示'}
                         </Button>
-                        <Button onClick={toggleTouristLayer} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                        <Button onClick={() => handleLayerToggle('観光地', touristLayerVisible, toggleTouristLayer)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <MapPin size={16} />
                             {touristLayerVisible ? '観光地を非表示' : '観光地を表示'}
                         </Button>
-                        <Button onClick={toggleRoadsideStationLayerVisible} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                        <Button onClick={() => handleLayerToggle('道の駅', roadsideStationLayerVisible, toggleRoadsideStationLayerVisible)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <MapPin size={16} />
                             {roadsideStationLayerVisible ? '道の駅を非表示' : '道の駅を表示'}
                         </Button>
-                        <Button onClick={toggleAttractionLayer} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
+                        <Button onClick={() => handleLayerToggle('集客施設レイヤー', attractionLayerVisible, toggleAttractionLayer)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             {/* <Attraction size={16} /> */}
                             {attractionLayerVisible ? '集客施設レイヤーを非表示' : '集客施設レイヤーを表示'}
                         </Button>
@@ -325,13 +352,13 @@ export default function MapControls({
                                 </AccordionTrigger>
                                 <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
                                     {[
-                                        { label: 'バス停レイヤー', checked: busPassengerLayerVisible, onChange: toggleBusPassengerLayerVisible, icon: <Bus size={16} /> },
-                                        { label: '逆井 コース - 乗車', checked: sakaeCourseRideLayerVisible, onChange: toggleSakaeCourseRideLayerVisible, icon: <MapPin size={16} /> },
-                                        { label: '逆井 コース - 降車', checked: sakaeCourseDropLayerVisible, onChange: toggleSakaeCourseDropLayerVisible, icon: <MapPin size={16} /> },
-                                        { label: '南増尾 コース - 乗車', checked: masuoCourseRideLayerVisible, onChange: toggleMasuoCourseRideLayerVisible, icon: <MapPin size={16} /> },
-                                        { label: '南増尾 コース - 降車', checked: masuoCourseDropLayerVisible, onChange: toggleMasuoCourseDropLayerVisible, icon: <MapPin size={16} /> },
-                                        { label: '沼南コース - 乗車', checked: shonanCourseRideLayerVisible, onChange: toggleShonanCourseRideLayerVisible, icon: <MapPin size={16} /> },
-                                        { label: '沼南コース - 降車', checked: shonanCourseDropLayerVisible, onChange: toggleShonanCourseDropLayerVisible, icon: <MapPin size={16} /> },
+                                        { label: 'バス停レイヤー', checked: busPassengerLayerVisible, onChange: () => handleLayerToggle('バス停レイヤー', busPassengerLayerVisible, toggleBusPassengerLayerVisible), icon: <Bus size={16} /> },
+                                        { label: '逆井 コース - 乗車', checked: sakaeCourseRideLayerVisible, onChange: () => handleLayerToggle('逆井 コース - 乗車', sakaeCourseRideLayerVisible, toggleSakaeCourseRideLayerVisible), icon: <MapPin size={16} /> },
+                                        { label: '逆井 コース - 降車', checked: sakaeCourseDropLayerVisible, onChange: () => handleLayerToggle('逆井 コース - 降車', sakaeCourseDropLayerVisible, toggleSakaeCourseDropLayerVisible), icon: <MapPin size={16} /> },
+                                        { label: '南増尾 コース - 乗車', checked: masuoCourseRideLayerVisible, onChange: () => handleLayerToggle('南増尾 コース - 乗車', masuoCourseRideLayerVisible, toggleMasuoCourseRideLayerVisible), icon: <MapPin size={16} /> },
+                                        { label: '南増尾 コース - 降車', checked: masuoCourseDropLayerVisible, onChange: () => handleLayerToggle('南増尾 コース - 降車', masuoCourseDropLayerVisible, toggleMasuoCourseDropLayerVisible), icon: <MapPin size={16} /> },
+                                        { label: '沼南コース - 乗車', checked: shonanCourseRideLayerVisible, onChange: () => handleLayerToggle('沼南コース - 乗車', shonanCourseRideLayerVisible, toggleShonanCourseRideLayerVisible), icon: <MapPin size={16} /> },
+                                        { label: '沼南コース - 降車', checked: shonanCourseDropLayerVisible, onChange: () => handleLayerToggle('沼南コース - 降車', shonanCourseDropLayerVisible, toggleShonanCourseDropLayerVisible), icon: <MapPin size={16} /> },
                                         // { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
@@ -349,9 +376,9 @@ export default function MapControls({
                                 </AccordionTrigger>
                                 <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
                                     {[
-                                        { label: 'バス停レイヤー', checked: newbusLayerVisible, onChange: toggleNewBusLayerVisible, icon: <Bus size={16} /> },
-                                        { label: 'カシワニクル乗車', checked: newKashiwakuruRideLayerVisible, onChange: toggleNewKashiwakuruRideLayerVisible, icon: <MapPin size={16} /> },
-                                        { label: 'カシワニクル降車', checked: newKashiwakuruDropLayerVisible, onChange: toggleNewKashiwakuruDropLayerVisible, icon: <MapPin size={16} /> },
+                                        { label: 'バス停レイヤー', checked: newbusLayerVisible, onChange: () => handleLayerToggle('バス停レイヤー', newbusLayerVisible, toggleNewBusLayerVisible), icon: <Bus size={16} /> },
+                                        { label: 'カシワニクル乗車', checked: newKashiwakuruRideLayerVisible, onChange: () => handleLayerToggle('カシワニクル乗車', newKashiwakuruRideLayerVisible, toggleNewKashiwakuruRideLayerVisible), icon: <MapPin size={16} /> },
+                                        { label: 'カシワニクル降車', checked: newKashiwakuruDropLayerVisible, onChange: () => handleLayerToggle('カシワニクル降車', newKashiwakuruDropLayerVisible, toggleNewKashiwakuruDropLayerVisible), icon: <MapPin size={16} /> },
 
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
@@ -396,7 +423,7 @@ export default function MapControls({
                                             </Label>
                                             <Switch
                                                 checked={selectedCategories.includes(category)}
-                                                onCheckedChange={() => toggleKashiwaPublicFacilityVisible(category)}
+                                                onCheckedChange={() => handleLayerToggle(category, selectedCategories.includes(category), () => toggleKashiwaPublicFacilityVisible(category))}
                                             />
                                         </div>
                                     ))}
@@ -422,7 +449,7 @@ export default function MapControls({
                                             </Label>
                                             <Switch
                                                 checked={selectedShopCategories.includes(category)}
-                                                onCheckedChange={() => toggleKashiwaShopsVisible(category)}
+                                                onCheckedChange={() => handleLayerToggle(category, selectedShopCategories.includes(category), () => toggleKashiwaShopsVisible(category))}
                                             />
                                         </div>
                                     ))}

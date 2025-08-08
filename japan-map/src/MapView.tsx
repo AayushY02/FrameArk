@@ -15,7 +15,7 @@ import { toggleAgriLayer } from './layers/agriLayer';
 import LoadingOverlay from './components/LoadingOverlay';
 import MapControls from './components/MapControls';
 import Legend from './components/Legend';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { selectedMeshIdState } from './state/meshSelection';
 import ChatPanel from './components/ChatPanel';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -31,6 +31,8 @@ import { toggleBusPassengerLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseD
 import { toggleNewBusPassengerLayer, toggleNewKashiwakuruDropLayer, toggleNewKashiwakuruRideLayer } from './layers/newbusPassengerLayer';
 import { categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPublicFacilities';
 import { shopCategories, toggleKashiwaShopsLayer } from './layers/kashiwaBusStops';
+import PptxGenJS from "pptxgenjs";
+import { globalVisibleLayersState } from './state/activeLayersAtom';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -71,6 +73,8 @@ export default function MapView() {
     const [shonanCourseDropLayerVisible, setShonanCourseDropLayerVisible] = useState(false);
     const [isKashiwaBounds, setIsKashiwaBounds] = useState(false); // Track the toggle stat
 
+    const globalVisibleLayers = useRecoilValue(globalVisibleLayersState)
+
     const [newBusLayerVisible, setNewBusLayerVisible] = useState(false);
     const [newKashiwakuruRideLayerVisible, setNewKashiwakuruRideLayerVisible] = useState(false);
     const [newKashiwakuruDropLayerVisible, setNewKashiwakuruDropLayerVisible] = useState(false);
@@ -97,6 +101,128 @@ export default function MapView() {
                 : [...prev, category]
         );
     };
+
+        async function downloadPpt() {
+        const map = mapRef.current;
+        if (!map) {
+            console.warn("Map not ready");
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+
+            await new Promise<void>((resolve) => {
+                map.once("render", () => resolve());
+                map.triggerRepaint();
+                setTimeout(() => resolve(), 300);
+            });
+
+            const canvas = map.getCanvas();
+            const mapImageDataUrl = canvas.toDataURL("image/png");
+
+            const Layers = globalVisibleLayers.join(' | ');
+            const pptx = new PptxGenJS();
+            const slide = pptx.addSlide();
+
+            // --- Layout constants ---
+            const slideWidth = 10;
+            const slideHeight = 5.63;
+            const margin = 0.4;
+            const usableWidth = slideWidth - 2 * margin;
+
+            // --- Title ---
+            const titleY = margin - 0.4;
+            const titleHeight = 0.6;
+
+            slide.addText(`（対象地域）： ${Layers}`, {
+                x: margin,
+                y: titleY + 0.1,
+                w: usableWidth,
+                h: titleHeight,
+                fontSize: 18,
+                bold: true,
+                fontFace: "Arial",
+            });
+
+            // --- Blue bar below title ---
+            const barHeight = 0.03;
+            slide.addShape(pptx.ShapeType.rect, {
+                x: margin,
+                y: titleY + titleHeight + 0.05,
+                w: usableWidth,
+                h: barHeight,
+                fill: { color: "0070C0" }, // Blue
+            });
+
+            // --- Lead texts ---
+            const lead1Y = titleY + titleHeight + barHeight + 0.2;
+            slide.addText("リード文 1:", {
+                x: margin,
+                y: lead1Y,
+                w: usableWidth,
+                h: 0.4,
+                fontSize: 12,
+                fontFace: "Arial",
+            });
+
+            slide.addText("リード文 2:", {
+                x: margin,
+                y: lead1Y + 0.5,
+                w: usableWidth,
+                h: 0.4,
+                fontSize: 12,
+                fontFace: "Arial",
+            });
+
+            // --- Image (full width with aspect fit) ---
+            const imageTopY = lead1Y + 1.0;
+            const imageBottomY = slideHeight - margin - 0.2; // reserve 0.4 for footer
+            const imageMaxHeight = imageBottomY - imageTopY;
+
+            const imgOriginalWidth = canvas.width;
+            const imgOriginalHeight = canvas.height;
+            const imageAspect = imgOriginalWidth / imgOriginalHeight;
+
+            const imageWidth = usableWidth;
+            let imageHeight = imageWidth / imageAspect + 1;
+
+            if (imageHeight > imageMaxHeight) {
+                imageHeight = imageMaxHeight;
+            }
+
+            const imageX = margin;
+            const imageY = imageTopY;
+
+            slide.addImage({
+                data: mapImageDataUrl,
+                x: imageX,
+                y: imageY,
+                w: imageWidth,
+                h: imageHeight + 0.3,
+            });
+
+            // --- Footer ---
+            slide.addText("Mapbox / OpenStreetMap", {
+                x: margin,
+                y: slideHeight - margin - 0.2,
+                w: usableWidth,
+                h: 0.3,
+                fontSize: 10,
+                italic: true,
+                fontFace: "Arial",
+            });
+
+            await pptx.writeFile({ fileName: "Map_Export.pptx" });
+
+        } catch (err) {
+            console.error("Export to PPT failed:", err);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+
 
     useEffect(() => {
         if (mapRef.current) {
@@ -1134,6 +1260,8 @@ export default function MapView() {
 
                 toggleKashiwaShopsVisible={toggleKashiwaShopsVisible}
                 selectedShopCategories={selectedShopCategories}
+
+                downloadPpt={downloadPpt}
 
             />
 
