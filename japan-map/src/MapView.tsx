@@ -30,6 +30,7 @@ import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
 import { toggleBusPassengerLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
 import { toggleNewBusPassengerLayer, toggleNewKashiwakuruDropLayer, toggleNewKashiwakuruRideLayer } from './layers/newbusPassengerLayer';
 import { categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPublicFacilities';
+import { shopCategories, toggleKashiwaShopsLayer } from './layers/kashiwaBusStops';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -77,9 +78,20 @@ export default function MapView() {
     const [kashiwaPublicFacilityVisible, setKashiwaPublicFacilityVisible] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
+    const [kashiwaShopsVisible, setKashiwaShopsVisible] = useState(false);
+    const [selectedShopCategories, setSelectedShopCategories] = useState<string[]>([]);
+
     const toggleKashiwaPublicFacilityVisible = (category: string) => {
         // Toggle category selection
         setSelectedCategories((prev) =>
+            prev.includes(category)
+                ? prev.filter((cat) => cat !== category)
+                : [...prev, category]
+        );
+    };
+    const toggleKashiwaShopsVisible = (category: string) => {
+        // Toggle category selection
+        setSelectedShopCategories((prev) =>
             prev.includes(category)
                 ? prev.filter((cat) => cat !== category)
                 : [...prev, category]
@@ -91,6 +103,12 @@ export default function MapView() {
             toggleKashiwaPublicFacilityLayer(mapRef.current, kashiwaPublicFacilityVisible, setIsLoading, setKashiwaPublicFacilityVisible, selectedCategories);
         }
     }, [selectedCategories]);
+
+    useEffect(() => {
+        if (mapRef.current) {
+            toggleKashiwaShopsLayer(mapRef.current, kashiwaShopsVisible, setIsLoading, setKashiwaShopsVisible, selectedShopCategories);
+        }
+    }, [selectedShopCategories]);
 
     const ROAD_LAYER_IDS = [
         'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
@@ -929,7 +947,7 @@ export default function MapView() {
         });
 
 
-        const showPopup = (e: mapboxgl.MapMouseEvent) => {
+        const showKashiwaPublicFacilityPopup = (e: mapboxgl.MapMouseEvent) => {
             const feature = e.features?.[0];
             if (!feature) return;
 
@@ -947,7 +965,7 @@ export default function MapView() {
             transportPopupRef.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
         };
 
-        const hidePopup = () => {
+        const hideKashiwaPublicFacilityPopup = () => {
             map.getCanvas().style.cursor = '';
             transportPopupRef.remove();
         };
@@ -960,11 +978,47 @@ export default function MapView() {
 
         layers.forEach(layerId => {
             // Ensure the hover event is added for each layer
-            map.on('mousemove', layerId, showPopup);
-            map.on('mouseleave', layerId, hidePopup);
+            map.on('mousemove', layerId, showKashiwaPublicFacilityPopup);
+            map.on('mouseleave', layerId, hideKashiwaPublicFacilityPopup);
         });
 
 
+        const showKashiwaShopsPopup = (e: mapboxgl.MapMouseEvent) => {
+            const feature = e.features?.[0];
+            if (!feature) return;
+
+            map.getCanvas().style.cursor = 'pointer';
+
+            const properties = feature.properties ?? {};
+            const popupContent = `
+            <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-64">
+            <strong>カテゴリ:</strong> ${properties?.カテゴリ ?? '不明'}
+                <strong>店舗ブランド:</strong> ${properties?.店舗ブランド ?? '不明'}<br />
+                <strong>店舗名:</strong> ${properties?.店舗名 ?? '不明'}<br />
+                <strong>郵便番号:</strong> ${properties?.郵便番号 ?? '不明'}<br />
+                <strong>住所:</strong> ${properties?.住所 ?? '不明'}<br />
+            </div>
+        `;
+
+            transportPopupRef.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
+        };
+
+        const hideKashiwaShopsPopup = () => {
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        };
+
+        // Add hover interaction for all layers (individual filters and subete layer)
+        const kashiwaStopLayers = [
+            'kashiwa-shops-subete', // Subete layer
+            ...shopCategories.map(category => `kashiwa-shops-${category.label}`) // Individual filter layers
+        ];
+
+        kashiwaStopLayers.forEach(layerId => {
+            // Ensure the hover event is added for each layer
+            map.on('mousemove', layerId, showKashiwaShopsPopup);
+            map.on('mouseleave', layerId, hideKashiwaShopsPopup);
+        });
     }, []);
 
 
@@ -1077,6 +1131,9 @@ export default function MapView() {
                 toggleKashiwaPublicFacilityVisible={toggleKashiwaPublicFacilityVisible}
                 selectedCategories={selectedCategories}
                 setSelectedCategories={setSelectedCategories}
+
+                toggleKashiwaShopsVisible={toggleKashiwaShopsVisible}
+                selectedShopCategories={selectedShopCategories}
 
             />
 

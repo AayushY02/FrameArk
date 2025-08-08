@@ -29,7 +29,10 @@ import {
     BusFront,
     MapPinCheckIcon,
     User2,
-    Circle
+    Circle,
+    ShoppingBasket,
+    Store,
+    ShoppingBag
 } from 'lucide-react';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
@@ -112,6 +115,11 @@ interface MapControlsProps {
     selectedCategories: string[];
     setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 
+    toggleKashiwaShopsVisible: (category: string) => void;
+    selectedShopCategories: string[];
+
+
+
 }
 
 export default function MapControls({
@@ -177,6 +185,9 @@ export default function MapControls({
 
     toggleKashiwaPublicFacilityVisible,
     selectedCategories,
+
+    toggleKashiwaShopsVisible,
+    selectedShopCategories,
 
 
 }: MapControlsProps) {
@@ -386,6 +397,32 @@ export default function MapControls({
                                             <Switch
                                                 checked={selectedCategories.includes(category)}
                                                 onCheckedChange={() => toggleKashiwaPublicFacilityVisible(category)}
+                                            />
+                                        </div>
+                                    ))}
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="transportation">
+                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
+                                    <ShoppingBasket size={16} />柏市のお店
+                                </AccordionTrigger>
+                                <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
+                                    {[
+                                        { label: '全て', category: '', icon: <Store size={16} /> }, // All categories (subete)
+                                        { label: 'デパート・ショッピングモール', category: 'デパート・ショッピングモール', icon: <ShoppingBag size={16} /> }, // Shopping Mall
+                                        { label: 'スーパーマーケット', category: 'スーパーマーケット', icon: <Store size={16} /> } // Supermarket
+                                    ].map(({ label, category, icon }) => (
+                                        <div key={label} className="flex items-center justify-between">
+                                            <Label className="text-sm text-black flex items-center gap-2">
+                                                {icon}
+                                                {label}
+                                            </Label>
+                                            <Switch
+                                                checked={selectedShopCategories.includes(category)}
+                                                onCheckedChange={() => toggleKashiwaShopsVisible(category)}
                                             />
                                         </div>
                                     ))}
