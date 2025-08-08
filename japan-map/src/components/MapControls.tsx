@@ -42,7 +42,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 // import { useRecoilState } from 'recoil';
 // import { masuoCourseDropLayerVisibleState } from '@/state/layers';
 // import { toggleMasuoCourseRideLayer } from '@/layers/busPassengerLayer';
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { globalVisibleLayersState } from '@/state/activeLayersAtom';
 // const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
 
