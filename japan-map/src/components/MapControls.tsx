@@ -42,7 +42,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 // import { useRecoilState } from 'recoil';
 // import { masuoCourseDropLayerVisibleState } from '@/state/layers';
 // import { toggleMasuoCourseRideLayer } from '@/layers/busPassengerLayer';
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { globalVisibleLayersState } from '@/state/activeLayersAtom';
 // const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
 
@@ -200,7 +200,14 @@ export default function MapControls({
 }: MapControlsProps) {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [globalVisibleLayers, setGlobalVisibleLayers] = useRecoilState(globalVisibleLayersState);
+    const setGlobalVisibleLayers = useSetRecoilState(globalVisibleLayersState);
+
+    const metricLabels: Record<string, string> = {
+        PTN_2020: '総人口（2020年）',
+        PTC_2020: '65歳以上の人口（2020年）',
+        PTA_2020: '0〜14歳の人口（2020年）',
+        ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）',
+    };
 
     function handleLayerToggle(
         layerName: string,
@@ -289,9 +296,9 @@ export default function MapControls({
                             <Ruler size={16} />
                             {roadsVisible ? '道路を非表示' : '道路を表示'}
                         </Button>
-                        <Button onClick={() => handleLayerToggle('行政界', adminVisible, toggleAdmin)}><Layers />{adminVisible ? '行政界を非表示' : '行政界を表示'}</Button>
-                        <Button onClick={() => handleLayerToggle('地形', terrainEnabled, toggleTerrain)}><Mountain />{terrainEnabled ? '地形を非表示' : '地形を表示'}</Button>
-                        <Button onClick={() => handleLayerToggle('農業レイヤー', agriLayerVisible, toggleAgri)}><Landmark />{agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}</Button>
+                        <Button onClick={() => handleLayerToggle('行政界', adminVisible, toggleAdmin)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"><Layers />{adminVisible ? '行政界を非表示' : '行政界を表示'}</Button>
+                        <Button onClick={() => handleLayerToggle('地形', terrainEnabled, toggleTerrain)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"><Mountain />{terrainEnabled ? '地形を非表示' : '地形を表示'}</Button>
+                        <Button onClick={() => handleLayerToggle('農業レイヤー', agriLayerVisible, toggleAgri)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"><Landmark />{agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}</Button>
 
                         {/* Transport Accordion */}
                         <Accordion type="single" collapsible className="w-full">
@@ -423,7 +430,7 @@ export default function MapControls({
                                             </Label>
                                             <Switch
                                                 checked={selectedCategories.includes(category)}
-                                                onCheckedChange={() => handleLayerToggle(category, selectedCategories.includes(category), () => toggleKashiwaPublicFacilityVisible(category))}
+                                                onCheckedChange={() => handleLayerToggle(category === '' ? '柏市の公共施設-全て' : category, selectedCategories.includes(category), () => toggleKashiwaPublicFacilityVisible(category))}
                                             />
                                         </div>
                                     ))}
@@ -449,7 +456,7 @@ export default function MapControls({
                                             </Label>
                                             <Switch
                                                 checked={selectedShopCategories.includes(category)}
-                                                onCheckedChange={() => handleLayerToggle(category, selectedShopCategories.includes(category), () => toggleKashiwaShopsVisible(category))}
+                                                onCheckedChange={() => handleLayerToggle(category === '' ? "柏市のお店-全て" : category, selectedShopCategories.includes(category), () => toggleKashiwaShopsVisible(category))}
                                             />
                                         </div>
                                     ))}
@@ -458,7 +465,12 @@ export default function MapControls({
                         </Accordion>
 
                         {/* Metric Selector */}
-                        <Select value={selectedMetric} onValueChange={onMetricChange}>
+                        <Select value={selectedMetric} onValueChange={(value) => {
+                            const label = metricLabels[value];
+
+                            setGlobalVisibleLayers([label]); // Replace all layers with the new one
+                            onMetricChange(value);           // Call your metric change logic
+                        }}>
                             <SelectTrigger className="w-full px-4 py-2 text-sm bg-white rounded-xl text-black shadow border border-gray-200">
                                 <SelectValue placeholder="表示する人口指標" />
                             </SelectTrigger>

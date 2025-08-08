@@ -102,7 +102,7 @@ export default function MapView() {
         );
     };
 
-        async function downloadPpt() {
+    async function downloadPpt() {
         const map = mapRef.current;
         if (!map) {
             console.warn("Map not ready");
@@ -121,7 +121,12 @@ export default function MapView() {
             const canvas = map.getCanvas();
             const mapImageDataUrl = canvas.toDataURL("image/png");
 
-            const Layers = globalVisibleLayers.join(' | ');
+            let Layers = globalVisibleLayers.join(' | ');
+
+            if (Layers === '' && selectedMetric === 'PTN_2020') {
+                Layers = "総人口（2020年）"
+            } 
+
             const pptx = new PptxGenJS();
             const slide = pptx.addSlide();
 
@@ -301,29 +306,61 @@ export default function MapView() {
         setIsKashiwaBounds(!isKashiwaBounds);
     };
 
-
     function downloadMapScreenshot(map: mapboxgl.Map, fileName = 'map-screenshot.png') {
-        const canvas = map.getCanvas();
+        const originalCanvas = map.getCanvas();
 
-        // Force a re-render to ensure everything is drawn
         map.once('render', () => {
             try {
-                const dataURL = canvas.toDataURL('image/png');
+                // Create a new canvas to draw map + attribution
+                const exportCanvas = document.createElement('canvas');
+                exportCanvas.width = originalCanvas.width;
+                exportCanvas.height = originalCanvas.height;
+
+                const ctx = exportCanvas.getContext('2d');
+                if (!ctx) throw new Error('Canvas context not available');
+
+                // Draw the map first
+                ctx.drawImage(originalCanvas, 0, 0);
+
+                // Attribution text
+                const text = '© Mapbox © OpenStreetMap';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'bottom';
+
+                // Optional: background for readability
+                const padding = 4;
+                const metrics = ctx.measureText(text);
+                const textHeight = 16;
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.fillRect(
+                    exportCanvas.width - metrics.width - padding * 2 - 10,
+                    exportCanvas.height - textHeight - padding,
+                    metrics.width + padding * 2,
+                    textHeight + padding
+                );
+
+                // Draw text flush with the bottom edge
+                ctx.fillStyle = 'black';
+                ctx.fillText(text, exportCanvas.width - 10, exportCanvas.height - 2);
+
+                // Export image
+                const dataURL = exportCanvas.toDataURL('image/png');
                 const a = document.createElement('a');
                 a.href = dataURL;
                 a.download = fileName;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
+
             } catch (e) {
                 console.error('Screenshot failed:', e);
             }
         });
 
-        // Trigger a render if needed
         map.triggerRepaint();
     }
-
 
     const handleStyleChange = (styleUrl: string) => {
         const map = mapRef.current;
