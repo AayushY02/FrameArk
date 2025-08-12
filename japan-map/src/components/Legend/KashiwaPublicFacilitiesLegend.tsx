@@ -54,7 +54,7 @@ export default function KashiwaPublicFacilitiesLegend({
   if (visibleCats.length === 0) return null;
 
   return (
-    <Card className={clsx("bg-white backdrop-blur-2xl p-3 rounded-2xl shadow-xl text-xs", className)}>
+    <Card className={clsx("bg-white backdrop-blur-2xl p-3 rounded-2xl  text-xs", className)}>
       <div className="space-y-2">
         <CardHeader className="p-0">
           <CardTitle className="font-semibold text-center text-sm">柏市の公共施設（カテゴリ凡例）</CardTitle>

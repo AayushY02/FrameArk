@@ -192,7 +192,7 @@ export default function KashiwakuruStopsLegend({
     ];
 
     return (
-        <Card className={clsx("bg-white backdrop-blur-2xl p-3 rounded-2xl shadow-xl text-xs", className)}>
+        <Card className={clsx("bg-white  p-3 rounded-2xl text-xs", className)}>
             <div className="space-y-2">
                 <CardHeader className="p-0">
                     <CardTitle className="font-semibold text-center text-sm">カシワニクル乗降場</CardTitle>
