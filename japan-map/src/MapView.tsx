@@ -14,7 +14,6 @@ import { toggleTerrain } from './layers/terrain';
 import { toggleAgriLayer } from './layers/agriLayer';
 import LoadingOverlay from './components/LoadingOverlay';
 import MapControls from './components/MapControls';
-import Legend from './components/Legend/Legend';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { selectedMeshIdState } from './state/meshSelection';
 import ChatPanel from './components/ChatPanel';
@@ -34,7 +33,6 @@ import { shopCategories, toggleKashiwaShopsLayer } from './layers/kashiwaBusStop
 import PptxGenJS from "pptxgenjs";
 import { globalVisibleLayersState } from './state/activeLayersAtom';
 import BusPassengerLayerLegend from './components/Legend/BusPassengerLayerLegend';
-import clsx from 'clsx';
 import LegendsStack from './components/Legend/LegendsStack';
 import KashiwaPublicFacilitiesLegend, { facilityCategories } from './components/Legend/KashiwaPublicFacilitiesLegend';
 import KashiwakuruStopsLegend from './components/Legend/KashiwakuruStopsLegend';
