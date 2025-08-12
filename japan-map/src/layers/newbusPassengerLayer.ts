@@ -33,7 +33,7 @@ export const toggleNewBusPassengerLayer = (
                 source: sourceId,
                 paint: {
                     'circle-radius': 6,
-                    'circle-stroke-color': '#e11d48',
+                    'circle-stroke-color': '#299999',
                     'circle-opacity': 0.8,
                     'circle-stroke-width': 1,
                     "circle-color": "#fff"

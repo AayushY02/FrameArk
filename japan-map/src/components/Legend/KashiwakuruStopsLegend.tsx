@@ -166,7 +166,7 @@ export default function KashiwakuruStopsLegend({
             id: "new-bus",
             label: "バス停レイヤー",
             color: "#fff",
-            border: "#e11d48",
+            border: "#299999",
             stops: sharedStops,
             visible: newbusLayerVisible,
             opacity: 0.8,

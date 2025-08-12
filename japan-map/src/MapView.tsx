@@ -38,6 +38,7 @@ import clsx from 'clsx';
 import LegendsStack from './components/Legend/LegendsStack';
 import KashiwaPublicFacilitiesLegend, { facilityCategories } from './components/Legend/KashiwaPublicFacilitiesLegend';
 import KashiwakuruStopsLegend from './components/Legend/KashiwakuruStopsLegend';
+import KashiwaShopsLegend, { shopCategoriesLegend } from './components/Legend/KashiwaShopsLegend';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -1218,6 +1219,8 @@ export default function MapView() {
 
     const hasAnyFacilities = selectedCategories.length > 0;
     const hasAnyKashiwakuru = newBusLayerVisible || newKashiwakuruRideLayerVisible || newKashiwakuruDropLayerVisible;
+    const hasAnyShops = selectedShopCategories.includes("") ||
+        shopCategoriesLegend.some(c => c.category && selectedShopCategories.includes(c.category));
 
     return (
         <div className="relative w-screen h-screen">
@@ -1321,7 +1324,7 @@ export default function MapView() {
             />
 
             {/* <Legend selectedMetric={selectedMetric} /> */}
-            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru} width="w-80">
+            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops } width="w-80">
                 <AnimatePresence mode="popLayout">
                     {hasAnyBusLegend && (
                         <motion.div
@@ -1379,7 +1382,25 @@ export default function MapView() {
                                 newbusLayerVisible={newBusLayerVisible}
                                 newKashiwakuruRideLayerVisible={newKashiwakuruRideLayerVisible}
                                 newKashiwakuruDropLayerVisible={newKashiwakuruDropLayerVisible}
-                                
+
+                            />
+                        </motion.div>
+                    )}
+
+                    {hasAnyShops && (
+                        <motion.div
+                            key="legend-shops"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <KashiwaShopsLegend
+                                className="w-full"
+                                categories={shopCategoriesLegend}
+                                selectedCategories={selectedShopCategories}
                             />
                         </motion.div>
                     )}

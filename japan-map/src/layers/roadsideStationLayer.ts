@@ -73,16 +73,6 @@ export const toggleRoadsideStationLayer = (
                 }
             });
 
-        // Show mesh layers again
-        [
-            'mesh-1km-fill', 'mesh-1km-outline',
-            'mesh-500m-fill', 'mesh-500m-outline',
-            'mesh-250m-fill', 'mesh-250m-outline'
-        ].forEach(id => {
-            if (map.getLayer(id)) {
-                map.setLayoutProperty(id, 'visibility', 'visible');
-            }
-        });
     }
 
     setRoadsideStationLayerVisible(!roadsideStationLayerVisible);

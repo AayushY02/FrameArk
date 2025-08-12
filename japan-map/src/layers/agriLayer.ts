@@ -94,17 +94,6 @@ export const toggleAgriLayer = (
             map.removeSource('kashiwa-agri');
         }
 
-        const layersToShow = [
-            'mesh-1km-fill', 'mesh-1km-outline',
-            'mesh-500m-fill', 'mesh-500m-outline',
-            'mesh-250m-fill', 'mesh-250m-outline'
-        ];
-
-        layersToShow.forEach(id => {
-            if (map.getLayer(id)) {
-                map.setLayoutProperty(id, 'visibility', 'visible');
-            }
-        });
     }
 
     setAgriLayerVisible(!agriLayerVisible);
