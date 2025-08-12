@@ -50,7 +50,7 @@ const SizeLegendInline: React.FC<{
     const maxR = Math.max(...stops.map(([, r]) => r));
     const maxD = maxR * 2;
     return (
-        <div className="rounded-xl bg-white/90 p-3 shadow ring-1 ring-black/5">
+        <div className="rounded-xl bg-white/90 p-3 ">
             {(title || subtitle) && (
                 <div className="mb-2">
                     {title && <div className="text-sm font-semibold ">{title}</div>}
@@ -79,7 +79,7 @@ const SizeLegendInline: React.FC<{
                                 }}
                             />
                         </span>
-                        <span className="tabular-nums">{it.label}</span>
+                        <span className="tabular-nums font-mono">{it.label}</span>
                     </li>
                 ))}
             </ul>
@@ -118,14 +118,7 @@ const MultiLayerSizeLegend: React.FC<{
         <div className="space-y-4">
             {[...groups.values()].map((group, idx) => (
                 <div key={idx} className="space-y-3">
-                    <SizeLegendInline
-                        title={groups.size > 1 ? "サイズ凡例" : undefined}
-                        subtitle="円の大きさ＝人数"
-                        color={"#000" /* dummy color for size scale only; colors per-layer below */}
-                        strokeColor="#ffffff"
-                        opacity={0.25}
-                        stops={group.stops}
-                    />
+
                     {/* Layer color keys for this size scale */}
                     <div className="rounded-xl bg-white/90 p-3 shadow ring-1 ring-black/5">
                         <div className="text-xs font-semibold  mb-2">レイヤー</div>
@@ -138,6 +131,15 @@ const MultiLayerSizeLegend: React.FC<{
                             ))}
                         </ul>
                     </div>
+
+                    <SizeLegendInline
+                        title={groups.size > 1 ? "サイズ凡例" : undefined}
+                        subtitle="円の大きさ＝人数"
+                        color={"#000" /* dummy color for size scale only; colors per-layer below */}
+                        strokeColor="#ffffff"
+                        opacity={1}
+                        stops={group.stops}
+                    />
                 </div>
             ))}
         </div>
@@ -196,7 +198,7 @@ export default function BusPassengerLayerLegend(props: Props & { className?: str
     ]);
 
     return (
-        <Card className={clsx("bg-white/50 backdrop-blur-2xl p-3 rounded-2xl shadow-xl text-xs", props.className)}>
+        <Card className={clsx("bg-white backdrop-blur-2xl p-3 rounded-2xl border-0 text-xs", props.className)}>
             <div className="space-y-2">
                 <CardHeader className="p-0">
                     <CardTitle className="font-semibold text-center text-sm">ワニバースとカシワニクルのバス停毎の乗車数/降車数</CardTitle>

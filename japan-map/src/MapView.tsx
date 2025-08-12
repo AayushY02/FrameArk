@@ -36,6 +36,8 @@ import { globalVisibleLayersState } from './state/activeLayersAtom';
 import BusPassengerLayerLegend from './components/Legend/BusPassengerLayerLegend';
 import clsx from 'clsx';
 import LegendsStack from './components/Legend/LegendsStack';
+import KashiwaPublicFacilitiesLegend, { facilityCategories } from './components/Legend/KashiwaPublicFacilitiesLegend';
+import KashiwakuruStopsLegend from './components/Legend/KashiwakuruStopsLegend';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -1214,6 +1216,9 @@ export default function MapView() {
         return '2020年の人口推計データ';
     })();
 
+    const hasAnyFacilities = selectedCategories.length > 0;
+    const hasAnyKashiwakuru = newBusLayerVisible || newKashiwakuruRideLayerVisible || newKashiwakuruDropLayerVisible;
+
     return (
         <div className="relative w-screen h-screen">
             {isLoading && <LoadingOverlay />}
@@ -1316,21 +1321,70 @@ export default function MapView() {
             />
 
             {/* <Legend selectedMetric={selectedMetric} /> */}
-            <LegendsStack visible={hasAnyBusLegend} width="w-80">
-                {hasAnyBusLegend && (
-                    <BusPassengerLayerLegend
-                        className="w-full" // fills stack width
-                        busPassengerLayerVisible={busPassengerLayerVisible}
-                        sakaeCourseRideLayerVisible={sakaeCourseRideLayerVisible}
-                        sakaeCourseDropLayerVisible={sakaeCourseDropLayerVisible}
-                        masuoCourseRideLayerVisible={masuoCourseRideLayerVisible}
-                        masuoCourseDropLayerVisible={masuoCourseDropLayerVisible}
-                        shonanCourseRideLayerVisible={shonanCourseRideLayerVisible}
-                        shonanCourseDropLayerVisible={shonanCourseDropLayerVisible}
-                    />
-                )}
+            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru} width="w-80">
+                <AnimatePresence mode="popLayout">
+                    {hasAnyBusLegend && (
+                        <motion.div
+                            key="legend-bus"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <BusPassengerLayerLegend
+                                className="w-full" // fills stack width
+                                busPassengerLayerVisible={busPassengerLayerVisible}
+                                sakaeCourseRideLayerVisible={sakaeCourseRideLayerVisible}
+                                sakaeCourseDropLayerVisible={sakaeCourseDropLayerVisible}
+                                masuoCourseRideLayerVisible={masuoCourseRideLayerVisible}
+                                masuoCourseDropLayerVisible={masuoCourseDropLayerVisible}
+                                shonanCourseRideLayerVisible={shonanCourseRideLayerVisible}
+                                shonanCourseDropLayerVisible={shonanCourseDropLayerVisible}
+                            />
+                        </motion.div>
+                    )}
 
+                    {hasAnyFacilities && (
+                        <motion.div
+                            key="legend-facilities"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <KashiwaPublicFacilitiesLegend
+                                className="w-full"
+                                categories={facilityCategories}
+                                selectedCategories={selectedCategories}
+                            />
+                        </motion.div>
+                    )}
 
+                    {hasAnyKashiwakuru && (
+                        <motion.div
+                            key="legend-kashiwakuru"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <KashiwakuruStopsLegend
+                                className="w-full"
+                                newbusLayerVisible={newBusLayerVisible}
+                                newKashiwakuruRideLayerVisible={newKashiwakuruRideLayerVisible}
+                                newKashiwakuruDropLayerVisible={newKashiwakuruDropLayerVisible}
+                                
+                            />
+                        </motion.div>
+                    )}
+
+                </AnimatePresence>
             </LegendsStack>
 
 
