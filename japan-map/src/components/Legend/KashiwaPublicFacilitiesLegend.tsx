@@ -71,7 +71,7 @@ export default function KashiwaPublicFacilitiesLegend({
                   className="inline-block h-3 w-3 rounded-full"
                   style={{
                     backgroundColor: c.color,
-                    outline: `1px solid rgba(0,0,0,0.1)`,
+                    outline: `1px solid rgba(0,0,0,1)`,
                   }}
                 />
                 <span className="leading-none">{c.label}</span>
