@@ -16,7 +16,7 @@ export default function LegendsStack({
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.2 }}
       className={clsx(
-        "fixed bottom-8 left-3 z-50 pointer-events-auto rounded-2xl space-y-2",
+        "fixed bottom-8 left-3 z-30 pointer-events-auto rounded-2xl space-y-2",
         width, // 👈 fixed width applied here to the whole stack
         !visible && "pointer-events-none"
       )}

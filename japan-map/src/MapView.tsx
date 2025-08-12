@@ -242,6 +242,175 @@ export default function MapView() {
     //     }
     // }
 
+    // async function downloadPpt() {
+    //     const map = mapRef.current;
+    //     if (!map) {
+    //         console.warn("Map not ready");
+    //         return;
+    //     }
+
+    //     try {
+    //         setIsLoading(true);
+
+    //         // make sure the canvas is fresh
+    //         await new Promise<void>((resolve) => {
+    //             map.once("render", () => resolve());
+    //             map.triggerRepaint();
+    //             setTimeout(() => resolve(), 300);
+    //         });
+
+    //         const canvas = map.getCanvas();
+    //         const mapImageDataUrl = canvas.toDataURL("image/png");
+
+    //         // Build the layers text from your visible layers list
+    //         // (this is what previously blew up the title line) :contentReference[oaicite:1]{index=1}
+    //         const labels = [...globalVisibleLayers];
+    //         let layersText = labels.join(" | ");
+
+    //         if (!layersText && selectedMetric === "PTN_2020") {
+    //             layersText = "総人口（2020年）"; // your fallback :contentReference[oaicite:2]{index=2}
+    //         }
+
+    //         // --- PPT layout constants ---
+    //         const pptx = new PptxGenJS();
+    //         const slide = pptx.addSlide();
+
+    //         const slideWidth = 10;
+    //         const slideHeight = 5.63;
+    //         const margin = 0.4;
+    //         const usableWidth = slideWidth - 2 * margin;
+
+    //         // Title (kept short)
+    //         const titleY = margin - 0.4;
+    //         const titleHeight = 0.6;
+
+    //         slide.addText("（対象地域）：", {
+    //             x: margin,
+    //             y: titleY + 0.1,
+    //             w: usableWidth,
+    //             h: titleHeight,
+    //             fontSize: 18,
+    //             bold: true,
+    //             fontFace: "Arial",
+    //         });
+
+    //         // ===== NEW: wrap / truncate the long layers list into multiple lines =====
+    //         // Simple token-wrap by ' | ' with a max char count per line.
+    //         const TOKENS = layersText ? layersText.split(" | ") : [];
+    //         const MAX_CHARS_PER_LINE = 48; // tweak to taste
+    //         const MAX_LINES = 5;           // cap lines, then show "+N more"
+
+    //         function wrapTokens(tokens: string[], maxChars: number) {
+    //             const lines: string[] = [];
+    //             let curr = "";
+    //             for (const t of tokens) {
+    //                 const seg = curr ? curr + " | " + t : t;
+    //                 if (seg.length > maxChars) {
+    //                     if (curr) lines.push(curr);
+    //                     curr = t;
+    //                 } else {
+    //                     curr = seg;
+    //                 }
+    //             }
+    //             if (curr) lines.push(curr);
+    //             return lines;
+    //         }
+
+    //         let wrapped = wrapTokens(TOKENS, MAX_CHARS_PER_LINE);
+    //         let overflowCount = 0;
+    //         if (wrapped.length > MAX_LINES) {
+    //             overflowCount = TOKENS.length - wrapped.slice(0, MAX_LINES).join(" | ").split(" | ").length;
+    //             wrapped = wrapped.slice(0, MAX_LINES);
+    //             wrapped.push(`… +${overflowCount} more`);
+    //         }
+
+    //         // Estimate text box height based on lines and font size
+    //         const layersFontSize = 12;
+    //         const LINE_H = 0.28; // good visual line-height for 12pt in this deck
+    //         const layersBoxHeight = Math.max(LINE_H, wrapped.length * LINE_H);
+
+    //         // Add the wrapped layers list as its own text box under the title
+    //         const layersBoxY = titleY + 0.6; // a bit below the title
+    //         slide.addText(wrapped.join("\n"), {
+    //             x: margin,
+    //             y: layersBoxY,
+    //             w: usableWidth,
+    //             h: layersBoxHeight,
+    //             fontSize: layersFontSize,
+    //             fontFace: "Arial",
+    //             lineSpacingMultiple: 1.15,
+    //         });
+
+    //         // Blue separator bar goes below the wrapped list
+    //         const barY = layersBoxY + layersBoxHeight + 0.12;
+    //         const barHeight = 0.03;
+    //         slide.addShape(pptx.ShapeType.rect, {
+    //             x: margin,
+    //             y: barY,
+    //             w: usableWidth,
+    //             h: barHeight,
+    //             fill: { color: "0070C0" },
+    //         });
+
+    //         // Lead texts (shifted down)
+    //         const lead1Y = barY + 0.2;
+    //         slide.addText("リード文 1:", {
+    //             x: margin,
+    //             y: lead1Y,
+    //             w: usableWidth,
+    //             h: 0.4,
+    //             fontSize: 12,
+    //             fontFace: "Arial",
+    //         });
+    //         slide.addText("リード文 2:", {
+    //             x: margin,
+    //             y: lead1Y + 0.5,
+    //             w: usableWidth,
+    //             h: 0.4,
+    //             fontSize: 12,
+    //             fontFace: "Arial",
+    //         });
+
+    //         // Map image (adjusted top Y so it never overlaps with title/labels)
+    //         const imageTopY = lead1Y + 1.0;
+    //         const imageBottomY = slideHeight - margin - 0.2; // reserve for footer
+    //         const imageMaxHeight = imageBottomY - imageTopY;
+
+    //         const imgOriginalWidth = canvas.width;
+    //         const imgOriginalHeight = canvas.height;
+    //         const imageAspect = imgOriginalWidth / imgOriginalHeight;
+
+    //         const imageWidth = usableWidth;
+    //         let imageHeight = imageWidth / imageAspect + 1;
+    //         if (imageHeight > imageMaxHeight) imageHeight = imageMaxHeight;
+
+    //         slide.addImage({
+    //             data: mapImageDataUrl,
+    //             x: margin,
+    //             y: imageTopY,
+    //             w: imageWidth,
+    //             h: imageHeight + 0.3,
+    //         });
+
+    //         // Footer
+    //         slide.addText("Mapbox / OpenStreetMap", {
+    //             x: margin,
+    //             y: slideHeight - margin - 0.2,
+    //             w: usableWidth,
+    //             h: 0.3,
+    //             fontSize: 10,
+    //             italic: true,
+    //             fontFace: "Arial",
+    //         });
+
+    //         await pptx.writeFile({ fileName: "Map_Export.pptx" });
+    //     } catch (err) {
+    //         console.error("Export to PPT failed:", err);
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // }
+
     async function downloadPpt() {
         const map = mapRef.current;
         if (!map) {
@@ -252,7 +421,7 @@ export default function MapView() {
         try {
             setIsLoading(true);
 
-            // make sure the canvas is fresh
+            // Ensure the canvas is fresh
             await new Promise<void>((resolve) => {
                 map.once("render", () => resolve());
                 map.triggerRepaint();
@@ -263,12 +432,10 @@ export default function MapView() {
             const mapImageDataUrl = canvas.toDataURL("image/png");
 
             // Build the layers text from your visible layers list
-            // (this is what previously blew up the title line) :contentReference[oaicite:1]{index=1}
             const labels = [...globalVisibleLayers];
             let layersText = labels.join(" | ");
-
             if (!layersText && selectedMetric === "PTN_2020") {
-                layersText = "総人口（2020年）"; // your fallback :contentReference[oaicite:2]{index=2}
+                layersText = "総人口（2020年）";
             }
 
             // --- PPT layout constants ---
@@ -280,25 +447,31 @@ export default function MapView() {
             const margin = 0.4;
             const usableWidth = slideWidth - 2 * margin;
 
-            // Title (kept short)
+            // --- Title (heading + layers on the same line) ---
             const titleY = margin - 0.4;
             const titleHeight = 0.6;
 
+            // 1) Fixed-width heading (won’t wrap)
+            const headW = 2.6; // tweak if your font changes
             slide.addText("（対象地域）：", {
                 x: margin,
                 y: titleY + 0.1,
-                w: usableWidth,
+                w: headW,
                 h: titleHeight,
                 fontSize: 18,
                 bold: true,
                 fontFace: "Arial",
             });
 
-            // ===== NEW: wrap / truncate the long layers list into multiple lines =====
-            // Simple token-wrap by ' | ' with a max char count per line.
+            // 2) Layers text box starts on the same line and wraps
+            const layersFontSize = 12;
+            const layersX = margin + headW + 0.1;             // small gap after the colon
+            const layersW = usableWidth - headW - 0.1;
+
+            // Simple token-based wrapping so we can estimate height for layout below
             const TOKENS = layersText ? layersText.split(" | ") : [];
-            const MAX_CHARS_PER_LINE = 48; // tweak to taste
-            const MAX_LINES = 5;           // cap lines, then show "+N more"
+            const MAX_CHARS_PER_LINE = 48; // rough fit for layersW; adjust if needed
+            const LINE_H = 0.28;           // visual line-height for 12pt in this deck
 
             function wrapTokens(tokens: string[], maxChars: number) {
                 const lines: string[] = [];
@@ -316,34 +489,24 @@ export default function MapView() {
                 return lines;
             }
 
-            let wrapped = wrapTokens(TOKENS, MAX_CHARS_PER_LINE);
-            let overflowCount = 0;
-            if (wrapped.length > MAX_LINES) {
-                overflowCount = TOKENS.length - wrapped.slice(0, MAX_LINES).join(" | ").split(" | ").length;
-                wrapped = wrapped.slice(0, MAX_LINES);
-                wrapped.push(`… +${overflowCount} more`);
-            }
-
-            // Estimate text box height based on lines and font size
-            const layersFontSize = 12;
-            const LINE_H = 0.28; // good visual line-height for 12pt in this deck
+            const wrapped = TOKENS.length ? wrapTokens(TOKENS, MAX_CHARS_PER_LINE) : (layersText ? [layersText] : []);
             const layersBoxHeight = Math.max(LINE_H, wrapped.length * LINE_H);
 
-            // Add the wrapped layers list as its own text box under the title
-            const layersBoxY = titleY + 0.6; // a bit below the title
             slide.addText(wrapped.join("\n"), {
-                x: margin,
-                y: layersBoxY,
-                w: usableWidth,
-                h: layersBoxHeight,
+                x: layersX,
+                y: titleY + 0.1,     // same baseline as heading
+                w: layersW,
+                h: layersBoxHeight,  // tall enough for wrapped lines
                 fontSize: layersFontSize,
                 fontFace: "Arial",
                 lineSpacingMultiple: 1.15,
             });
 
-            // Blue separator bar goes below the wrapped list
-            const barY = layersBoxY + layersBoxHeight + 0.12;
+            // --- Blue bar placed after whichever is taller (heading vs wrapped layers) ---
+            const afterTitleH = Math.max(titleHeight, layersBoxHeight);
+            const barY = titleY + 0.1 + afterTitleH + 0.12;
             const barHeight = 0.03;
+
             slide.addShape(pptx.ShapeType.rect, {
                 x: margin,
                 y: barY,
@@ -352,7 +515,7 @@ export default function MapView() {
                 fill: { color: "0070C0" },
             });
 
-            // Lead texts (shifted down)
+            // --- Lead texts (shifted down) ---
             const lead1Y = barY + 0.2;
             slide.addText("リード文 1:", {
                 x: margin,
@@ -371,7 +534,7 @@ export default function MapView() {
                 fontFace: "Arial",
             });
 
-            // Map image (adjusted top Y so it never overlaps with title/labels)
+            // --- Map image (fits below lead text) ---
             const imageTopY = lead1Y + 1.0;
             const imageBottomY = slideHeight - margin - 0.2; // reserve for footer
             const imageMaxHeight = imageBottomY - imageTopY;
@@ -392,7 +555,7 @@ export default function MapView() {
                 h: imageHeight + 0.3,
             });
 
-            // Footer
+            // --- Footer ---
             slide.addText("Mapbox / OpenStreetMap", {
                 x: margin,
                 y: slideHeight - margin - 0.2,
@@ -410,8 +573,6 @@ export default function MapView() {
             setIsLoading(false);
         }
     }
-
-
 
     useEffect(() => {
         if (mapRef.current) {
@@ -1401,7 +1562,7 @@ export default function MapView() {
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -400, opacity: 1 }}
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                        className="absolute top-0 left-0 z-30 h-full w-[400px]"
+                        className="absolute top-0 left-0 z-40 h-full w-[400px]"
                     >
                         <ChatPanel meshId={chatMeshId} onClose={() => setChatOpen(false)} />
                     </motion.div>
