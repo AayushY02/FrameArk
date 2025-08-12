@@ -613,7 +613,7 @@ export const toggleShonanCourseRideLayer = (
                                 2000, 18,
                                 3000, 25
                             ],
-                            'circle-color': '#543553',
+                            'circle-color': '#10b981',
                             'circle-opacity': 0.8,
                             'circle-stroke-color': '#fff',
                             'circle-stroke-width': 1
@@ -737,7 +737,7 @@ export const toggleShonanCourseDropLayer = (
                                 2000, 18,
                                 3000, 25
                             ],
-                            'circle-color': '#d42',
+                            'circle-color': '#f97316',
                             'circle-opacity': 0.8,
                             'circle-stroke-color': '#fff',
                             'circle-stroke-width': 1

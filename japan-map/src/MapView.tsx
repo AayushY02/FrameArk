@@ -14,7 +14,7 @@ import { toggleTerrain } from './layers/terrain';
 import { toggleAgriLayer } from './layers/agriLayer';
 import LoadingOverlay from './components/LoadingOverlay';
 import MapControls from './components/MapControls';
-import Legend from './components/Legend';
+import Legend from './components/Legend/Legend';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { selectedMeshIdState } from './state/meshSelection';
 import ChatPanel from './components/ChatPanel';
@@ -33,6 +33,9 @@ import { categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPu
 import { shopCategories, toggleKashiwaShopsLayer } from './layers/kashiwaBusStops';
 import PptxGenJS from "pptxgenjs";
 import { globalVisibleLayersState } from './state/activeLayersAtom';
+import BusPassengerLayerLegend from './components/Legend/BusPassengerLayerLegend';
+import clsx from 'clsx';
+import LegendsStack from './components/Legend/LegendsStack';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -85,6 +88,17 @@ export default function MapView() {
     const [kashiwaShopsVisible, setKashiwaShopsVisible] = useState(false);
     const [selectedShopCategories, setSelectedShopCategories] = useState<string[]>([]);
 
+    const hasAnyBusLegend = [
+        busPassengerLayerVisible,
+        sakaeCourseRideLayerVisible,
+        sakaeCourseDropLayerVisible,
+        masuoCourseRideLayerVisible,
+        masuoCourseDropLayerVisible,
+        shonanCourseRideLayerVisible,
+        shonanCourseDropLayerVisible,
+    ].some(Boolean);
+    // const hasAnyOtherLegend = someOtherLegendVisible || anotherLegendVisible;
+
     const toggleKashiwaPublicFacilityVisible = (category: string) => {
         // Toggle category selection
         setSelectedCategories((prev) =>
@@ -125,7 +139,7 @@ export default function MapView() {
 
             if (Layers === '' && selectedMetric === 'PTN_2020') {
                 Layers = "総人口（2020年）"
-            } 
+            }
 
             const pptx = new PptxGenJS();
             const slide = pptx.addSlide();
@@ -575,7 +589,6 @@ export default function MapView() {
          * ===== Extra interactions for agricultural layer =====
          */
 
-
         map.on('mousemove', 'agri-fill', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -599,7 +612,6 @@ export default function MapView() {
             popupRef.remove();
         });
 
-
         map.on('mousemove', 'transportation-line-hover', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -618,7 +630,6 @@ export default function MapView() {
                 }
             }
         });
-
 
         map.on('mouseleave', 'transportation-line-hover', () => {
             map.getCanvas().style.cursor = '';
@@ -807,7 +818,6 @@ export default function MapView() {
             transportPopupRef.setLngLat(lngLat).setHTML(popupContent).addTo(map);
         });
 
-
         map.on('mousemove', 'attraction-layer', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -933,6 +943,7 @@ export default function MapView() {
             map.getCanvas().style.cursor = '';
             transportPopupRef.remove();
         });
+
         map.on('mousemove', 'sakae-course-drop', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -954,6 +965,7 @@ export default function MapView() {
             map.getCanvas().style.cursor = '';
             transportPopupRef.remove();
         });
+
         map.on('mousemove', 'masuo-course-ride', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -975,6 +987,7 @@ export default function MapView() {
             map.getCanvas().style.cursor = '';
             transportPopupRef.remove();
         });
+
         map.on('mousemove', 'masuo-course-drop', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -996,6 +1009,7 @@ export default function MapView() {
             map.getCanvas().style.cursor = '';
             transportPopupRef.remove();
         });
+
         map.on('mousemove', 'shonan-course-ride', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -1017,6 +1031,7 @@ export default function MapView() {
             map.getCanvas().style.cursor = '';
             transportPopupRef.remove();
         });
+
         map.on('mousemove', 'shonan-course-drop', (e) => {
             const feature = e.features?.[0];
             if (feature) {
@@ -1063,8 +1078,6 @@ export default function MapView() {
             map.getCanvas().style.cursor = '';
             transportPopupRef.remove();
         });
-
-
 
         map.on('mousemove', 'ride-data', (e) => {
             const feature = e.features?.[0];
@@ -1302,13 +1315,33 @@ export default function MapView() {
 
             />
 
-            <Legend selectedMetric={selectedMetric} />
+            {/* <Legend selectedMetric={selectedMetric} /> */}
+            <LegendsStack visible={hasAnyBusLegend} width="w-80">
+                {hasAnyBusLegend && (
+                    <BusPassengerLayerLegend
+                        className="w-full" // fills stack width
+                        busPassengerLayerVisible={busPassengerLayerVisible}
+                        sakaeCourseRideLayerVisible={sakaeCourseRideLayerVisible}
+                        sakaeCourseDropLayerVisible={sakaeCourseDropLayerVisible}
+                        masuoCourseRideLayerVisible={masuoCourseRideLayerVisible}
+                        masuoCourseDropLayerVisible={masuoCourseDropLayerVisible}
+                        shonanCourseRideLayerVisible={shonanCourseRideLayerVisible}
+                        shonanCourseDropLayerVisible={shonanCourseDropLayerVisible}
+                    />
+                )}
+
+
+            </LegendsStack>
+
+
+
+
 
             <h1 className={`absolute top-3 left-3 z-10 ${currentStyle === MAP_STYLES.ダーク ? "text-white" : "text-black"} text-lg font-mono rounded-2xl`}>
                 FrameArk 1.0 Beta
             </h1>
             {!chatOpen && !chatMeshId && (
-                <Card className='absolute bottom-10 left-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
+                <Card className='absolute bottom-10 right-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
                     <h1>{cardTitle}</h1>
                 </Card>
             )

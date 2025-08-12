@@ -6,8 +6,12 @@ interface LegendProps {
     selectedMetric: string;
 }
 
+
+
+
 export default function Legend({ selectedMetric }: LegendProps) {
     const legend = getGradientLegendForMetric(selectedMetric);
+
 
     return (
         <Card className="absolute bottom-6 right-3 z-10 bg-white/50 backdrop-blur-2xl p-3 rounded-2xl shadow-xl text-xs w-64">
@@ -24,5 +28,6 @@ export default function Legend({ selectedMetric }: LegendProps) {
                 </CardContent>
             </div>
         </Card>
+       
     );
 }
