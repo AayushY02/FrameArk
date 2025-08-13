@@ -304,8 +304,6 @@ export const toggleSakaeCourseDropLayer = (
                 }
             });
 
-        // Show mesh layers again
-       
 
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
@@ -422,15 +420,6 @@ export const toggleMasuoCourseRideLayer = (
                 }
             });
 
-        // Show mesh layers again
-        [
-            'bus-layer'
-        ].forEach(id => {
-            if (map.getLayer(id)) {
-                map.setLayoutProperty(id, 'visibility', 'visible');
-            }
-        });
-
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
     }
@@ -536,11 +525,6 @@ export const toggleMasuoCourseDropLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-
-        // Hide facility layers again
-     
-        // Show mesh layers again
-       
 
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
@@ -658,15 +642,6 @@ export const toggleShonanCourseRideLayer = (
                 }
             });
 
-        // Show mesh layers again
-        [
-            'bus-layer'
-        ].forEach(id => {
-            if (map.getLayer(id)) {
-                map.setLayoutProperty(id, 'visibility', 'visible');
-            }
-        });
-
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
     }
@@ -773,9 +748,6 @@ export const toggleShonanCourseDropLayer = (
             }
         });
 
-        // Hide facility layers again
-     
-        // Show mesh layers again
        
 
         setLayerVisible(false);
