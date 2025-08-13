@@ -465,7 +465,7 @@ export default function MapView() {
 
             // 2) Layers text box starts on the same line and wraps
             const layersFontSize = 12;
-            const layersX = margin + headW + 0.1;             // small gap after the colon
+            const layersX = margin + headW + 0.1 - 0.7;             // small gap after the colon
             const layersW = usableWidth - headW - 0.1;
 
             // Simple token-based wrapping so we can estimate height for layout below
@@ -494,7 +494,7 @@ export default function MapView() {
 
             slide.addText(wrapped.join("\n"), {
                 x: layersX,
-                y: titleY + 0.1,     // same baseline as heading
+                y: titleY + 0.1 + 0.12,     // same baseline as heading
                 w: layersW,
                 h: layersBoxHeight,  // tall enough for wrapped lines
                 fontSize: layersFontSize,
