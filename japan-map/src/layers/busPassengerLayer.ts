@@ -48,10 +48,6 @@ export const toggleBusPassengerLayer = (
             'mesh-1km-fill', 'mesh-1km-outline',
             'mesh-500m-fill', 'mesh-500m-outline',
             'mesh-250m-fill', 'mesh-250m-outline',
-            'agri-fill', 'agri-outline', 'agri-labels',
-            'transportation-line-hover', 'transportation-line',
-            'admin-fill', 'admin-line',
-            'facilities-circle', 'medical-layer'
         ].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
@@ -65,17 +61,6 @@ export const toggleBusPassengerLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-
-        // Hide facility layers again
-        ['agri-fill', 'agri-outline', 'agri-labels',
-            'transportation-line-hover', 'transportation-line',
-            'admin-fill', 'admin-line'].forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
-
-        // Show mesh layers again
        
     }
 
@@ -169,10 +154,6 @@ export const toggleSakaeCourseRideLayer = (
                     'mesh-1km-fill', 'mesh-1km-outline',
                     'mesh-500m-fill', 'mesh-500m-outline',
                     'mesh-250m-fill', 'mesh-250m-outline',
-                    'agri-fill', 'agri-outline', 'agri-labels',
-                    'transportation-line-hover', 'transportation-line',
-                    'admin-fill', 'admin-line',
-                    'facilities-circle', 'medical-layer'
                 ].forEach(id => {
                     if (map.getLayer(id)) {
                         map.setLayoutProperty(id, 'visibility', 'none');
@@ -194,6 +175,7 @@ export const toggleSakaeCourseRideLayer = (
         map.once('idle', () => setIsLoading(false));
     }
 };
+
 export const toggleSakaeCourseDropLayer = (
     map: mapboxgl.Map,
     layerVisible: boolean,
@@ -274,10 +256,6 @@ export const toggleSakaeCourseDropLayer = (
                     'mesh-1km-fill', 'mesh-1km-outline',
                     'mesh-500m-fill', 'mesh-500m-outline',
                     'mesh-250m-fill', 'mesh-250m-outline',
-                    'agri-fill', 'agri-outline', 'agri-labels',
-                    'transportation-line-hover', 'transportation-line',
-                    'admin-fill', 'admin-line',
-                    'facilities-circle', 'medical-layer'
                 ].forEach(id => {
                     if (map.getLayer(id)) {
                         map.setLayoutProperty(id, 'visibility', 'none');
@@ -294,16 +272,6 @@ export const toggleSakaeCourseDropLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-
-        // Hide facility layers again
-        ['agri-fill', 'agri-outline', 'agri-labels',
-            'transportation-line-hover', 'transportation-line',
-            'admin-fill', 'admin-line'].forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
-
 
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
@@ -390,10 +358,6 @@ export const toggleMasuoCourseRideLayer = (
                     'mesh-1km-fill', 'mesh-1km-outline',
                     'mesh-500m-fill', 'mesh-500m-outline',
                     'mesh-250m-fill', 'mesh-250m-outline',
-                    'agri-fill', 'agri-outline', 'agri-labels',
-                    'transportation-line-hover', 'transportation-line',
-                    'admin-fill', 'admin-line',
-                    'facilities-circle', 'medical-layer'
                 ].forEach(id => {
                     if (map.getLayer(id)) {
                         map.setLayoutProperty(id, 'visibility', 'none');
@@ -410,15 +374,6 @@ export const toggleMasuoCourseRideLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-
-        // Hide facility layers again
-        ['agri-fill', 'agri-outline', 'agri-labels',
-            'transportation-line-hover', 'transportation-line',
-            'admin-fill', 'admin-line'].forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
 
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
@@ -505,10 +460,6 @@ export const toggleMasuoCourseDropLayer = (
                     'mesh-1km-fill', 'mesh-1km-outline',
                     'mesh-500m-fill', 'mesh-500m-outline',
                     'mesh-250m-fill', 'mesh-250m-outline',
-                    'agri-fill', 'agri-outline', 'agri-labels',
-                    'transportation-line-hover', 'transportation-line',
-                    'admin-fill', 'admin-line',
-                    'facilities-circle', 'medical-layer'
                 ].forEach(id => {
                     if (map.getLayer(id)) {
                         map.setLayoutProperty(id, 'visibility', 'none');
@@ -525,7 +476,6 @@ export const toggleMasuoCourseDropLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
     }
@@ -612,10 +562,6 @@ export const toggleShonanCourseRideLayer = (
                     'mesh-1km-fill', 'mesh-1km-outline',
                     'mesh-500m-fill', 'mesh-500m-outline',
                     'mesh-250m-fill', 'mesh-250m-outline',
-                    'agri-fill', 'agri-outline', 'agri-labels',
-                    'transportation-line-hover', 'transportation-line',
-                    'admin-fill', 'admin-line',
-                    'facilities-circle', 'medical-layer'
                 ].forEach(id => {
                     if (map.getLayer(id)) {
                         map.setLayoutProperty(id, 'visibility', 'none');
@@ -632,15 +578,6 @@ export const toggleShonanCourseRideLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-
-        // Hide facility layers again
-        ['agri-fill', 'agri-outline', 'agri-labels',
-            'transportation-line-hover', 'transportation-line',
-            'admin-fill', 'admin-line'].forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
 
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
@@ -727,10 +664,6 @@ export const toggleShonanCourseDropLayer = (
                     'mesh-1km-fill', 'mesh-1km-outline',
                     'mesh-500m-fill', 'mesh-500m-outline',
                     'mesh-250m-fill', 'mesh-250m-outline',
-                    'agri-fill', 'agri-outline', 'agri-labels',
-                    'transportation-line-hover', 'transportation-line',
-                    'admin-fill', 'admin-line',
-                    'facilities-circle', 'medical-layer'
                 ].forEach(id => {
                     if (map.getLayer(id)) {
                         map.setLayoutProperty(id, 'visibility', 'none');
@@ -747,8 +680,6 @@ export const toggleShonanCourseDropLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-
-       
 
         setLayerVisible(false);
         map.once('idle', () => setIsLoading(false));
