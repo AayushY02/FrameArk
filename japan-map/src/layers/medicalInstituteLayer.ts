@@ -47,11 +47,6 @@ export const toggleMedicalLayer = (
             'mesh-1km-fill', 'mesh-1km-outline',
             'mesh-500m-fill', 'mesh-500m-outline',
             'mesh-250m-fill', 'mesh-250m-outline',
-            'agri-fill', 'agri-outline', 'agri-labels',
-            'transportation-line-hover', 'transportation-line',
-            'school-layer',
-            'admin-fill', 'admin-line',
-            'facilities-circle'
         ].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
@@ -65,13 +60,6 @@ export const toggleMedicalLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-        ['agri-fill', 'agri-outline', 'agri-labels',
-            'transportation-line-hover', 'transportation-line',
-            'admin-fill', 'admin-line'].forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
     }
 
     setMedicalLayerVisible(!medicalLayerVisible);

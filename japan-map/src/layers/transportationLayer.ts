@@ -122,10 +122,6 @@ export const toggleTransportationLayer = (
             'mesh-1km-fill', 'mesh-1km-outline',
             'mesh-500m-fill', 'mesh-500m-outline',
             'mesh-250m-fill', 'mesh-250m-outline',
-            'agri-fill', 'agri-outline', 'agri-labels',
-            'admin-fill', 'admin-line',
-            'school-layer', 'medical-layer', 'tourist-layer', 'roadside-station',
-            'facilities-circle'
         ].forEach(id => {
             if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
         });
@@ -135,17 +131,6 @@ export const toggleTransportationLayer = (
         TRANSPORT_LAYER_IDS.forEach(id => {
             if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', 'none');
         });
-
-        ['agri-fill', 'agri-outline', 'agri-labels',
-            'facilities-circle',
-            'admin-fill', 'admin-line'].forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
-
-        // show mesh layers again
-
     }
 
     setTransportVisible(!transportVisible);
@@ -209,9 +194,6 @@ export const toggleBusStops = (
             'mesh-1km-fill', 'mesh-1km-outline',
             'mesh-500m-fill', 'mesh-500m-outline',
             'mesh-250m-fill', 'mesh-250m-outline',
-            'agri-fill', 'agri-outline', 'agri-labels',
-            'admin-fill', 'admin-line',
-            'facilities-circle', 'medical-layer', 'school-layer'
 
         ].forEach(id => {
             if (map.getLayer(id)) {
@@ -226,14 +208,6 @@ export const toggleBusStops = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-        ['agri-fill', 'agri-outline', 'agri-labels',
-            'admin-fill', 'admin-line'].forEach(id => {
-                if (map.getLayer(id)) {
-                    map.setLayoutProperty(id, 'visibility', 'none');
-                }
-            });
-
-        // Show mesh layers again
     }
 
     setBusStopsLayerVisible(!busStopsLayerVisible);
