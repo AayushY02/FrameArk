@@ -100,6 +100,9 @@ export default function MapView() {
         masuoCourseDropLayerVisible,
         shonanCourseRideLayerVisible,
         shonanCourseDropLayerVisible,
+        sakaiRouteVisible,
+        masuoRouteVisible,
+        shonanRouteVisible,
     ].some(Boolean);
     // const hasAnyOtherLegend = someOtherLegendVisible || anotherLegendVisible;
 
@@ -1691,6 +1694,9 @@ export default function MapView() {
                                 masuoCourseDropLayerVisible={masuoCourseDropLayerVisible}
                                 shonanCourseRideLayerVisible={shonanCourseRideLayerVisible}
                                 shonanCourseDropLayerVisible={shonanCourseDropLayerVisible}
+                                sakaiRouteVisible={sakaiRouteVisible}
+                                masuoRouteVisible={masuoRouteVisible}
+                                shonanRouteVisible={shonanRouteVisible}
                             />
                         </motion.div>
                     )}

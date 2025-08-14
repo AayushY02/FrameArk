@@ -368,7 +368,7 @@ export default function MapControls({
 
 
                         {/* Transport Accordion */}
-                        <Accordion type="single" collapsible className="w-full">
+                        {/* <Accordion type="single" collapsible className="w-full">
                             <AccordionItem value="transportation">
                                 <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
                                     <BusFront size={16} />ワニバースとカシワニクルのバス停毎の乗車数/降車数
@@ -389,6 +389,88 @@ export default function MapControls({
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">{icon} {label}</Label>
+                                            <Switch checked={checked} onCheckedChange={onChange} />
+                                        </div>
+                                    ))}
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion> */}
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="transportation">
+                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
+                                    <BusFront size={16} />ワニバースとカシワニクルのバス停毎の乗車数/降車数
+                                </AccordionTrigger>
+
+                                <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
+                                    {[
+                                        {
+                                            label: 'バス停レイヤー',
+                                            checked: busPassengerLayerVisible,
+                                            onChange: () => handleLayerToggle('バス停レイヤー', busPassengerLayerVisible, toggleBusPassengerLayerVisible),
+                                            icon: <Bus size={16} />,
+                                        },
+
+                                        // ✅ Routes now use handleLayerToggle (fix)
+                                        {
+                                            label: '逆井コース（ルート）',
+                                            checked: sakaiRouteVisible,
+                                            onChange: () => handleLayerToggle('逆井コース（ルート）', sakaiRouteVisible, toggleSakaiRouteVisible),
+                                            icon: <Bus size={16} />,
+                                        },
+                                        {
+                                            label: '南増尾コース（ルート）',
+                                            checked: masuoRouteVisible,
+                                            onChange: () => handleLayerToggle('南増尾コース（ルート）', masuoRouteVisible, toggleMasuoRouteVisible),
+                                            icon: <Bus size={16} />,
+                                        },
+                                        {
+                                            label: '沼南コース（ルート）',
+                                            checked: shonanRouteVisible,
+                                            onChange: () => handleLayerToggle('沼南コース（ルート）', shonanRouteVisible, toggleShonanRouteVisible),
+                                            icon: <Bus size={16} />,
+                                        },
+
+                                        {
+                                            label: '逆井 コース - 乗車',
+                                            checked: sakaeCourseRideLayerVisible,
+                                            onChange: () => handleLayerToggle('逆井 コース - 乗車', sakaeCourseRideLayerVisible, toggleSakaeCourseRideLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                        {
+                                            label: '逆井 コース - 降車',
+                                            checked: sakaeCourseDropLayerVisible,
+                                            onChange: () => handleLayerToggle('逆井 コース - 降車', sakaeCourseDropLayerVisible, toggleSakaeCourseDropLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                        {
+                                            label: '南増尾 コース - 乗車',
+                                            checked: masuoCourseRideLayerVisible,
+                                            onChange: () => handleLayerToggle('南増尾 コース - 乗車', masuoCourseRideLayerVisible, toggleMasuoCourseRideLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                        {
+                                            label: '南増尾 コース - 降車',
+                                            checked: masuoCourseDropLayerVisible,
+                                            onChange: () => handleLayerToggle('南増尾 コース - 降車', masuoCourseDropLayerVisible, toggleMasuoCourseDropLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                        {
+                                            label: '沼南コース - 乗車',
+                                            checked: shonanCourseRideLayerVisible,
+                                            onChange: () => handleLayerToggle('沼南コース - 乗車', shonanCourseRideLayerVisible, toggleShonanCourseRideLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                        {
+                                            label: '沼南コース - 降車',
+                                            checked: shonanCourseDropLayerVisible,
+                                            onChange: () => handleLayerToggle('沼南コース - 降車', shonanCourseDropLayerVisible, toggleShonanCourseDropLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                    ].map(({ label, checked, onChange, icon }) => (
+                                        <div key={label} className="flex items-center justify-between">
+                                            <Label className="text-sm text-black flex items-center gap-2">
+                                                {icon} {label}
+                                            </Label>
                                             <Switch checked={checked} onCheckedChange={onChange} />
                                         </div>
                                     ))}
