@@ -39,6 +39,7 @@ import KashiwakuruStopsLegend from './components/Legend/KashiwakuruStopsLegend';
 import KashiwaShopsLegend, { shopCategoriesLegend } from './components/Legend/KashiwaShopsLegend';
 import { toggleMasuoRoute, toggleSakaiRoute, toggleShonanRoute } from './layers/busRouteLayer';
 import { clearOdEndpointFocus, setKashiwakuruOdFilter, setKashiwakuruOdHour, showAllKashiwakuruOd, toggleKashiwakuruOdLayer } from './layers/kashiwakuruOdLayer';
+import KashiwakuruOdLegend from './components/Legend/KashiwakuruOdLegend';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -1601,6 +1602,7 @@ export default function MapView() {
     const hasAnyKashiwakuru = newBusLayerVisible || newKashiwakuruRideLayerVisible || newKashiwakuruDropLayerVisible;
     const hasAnyShops = selectedShopCategories.includes("") ||
         shopCategoriesLegend.some(c => c.category && selectedShopCategories.includes(c.category));
+    const hasAnyOdLegend = kashiwakuruOdVisible;
 
     return (
         <div className="relative w-screen h-screen">
@@ -1743,7 +1745,7 @@ export default function MapView() {
             />
 
             {/* <Legend selectedMetric={selectedMetric} /> */}
-            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops} width="w-80">
+            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend} width="w-80">
                 <AnimatePresence mode="popLayout">
                     {hasAnyBusLegend && (
                         <motion.div
@@ -1823,6 +1825,27 @@ export default function MapView() {
                                 className="w-full"
                                 categories={shopCategoriesLegend}
                                 selectedCategories={selectedShopCategories}
+                            />
+                        </motion.div>
+                    )}
+
+
+                    { /* OD legend */}
+                    {kashiwakuruOdVisible && (
+                        <motion.div
+                            key="legend-od"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <KashiwakuruOdLegend
+                                className="w-full"
+                                visible={kashiwakuruOdVisible}
+                                filterOn={kashiwakuruOdFilterOn}
+                                hour={kashiwakuruOdHour}
                             />
                         </motion.div>
                     )}
