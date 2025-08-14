@@ -38,6 +38,7 @@ import KashiwaPublicFacilitiesLegend, { facilityCategories } from './components/
 import KashiwakuruStopsLegend from './components/Legend/KashiwakuruStopsLegend';
 import KashiwaShopsLegend, { shopCategoriesLegend } from './components/Legend/KashiwaShopsLegend';
 import { toggleMasuoRoute, toggleSakaiRoute, toggleShonanRoute } from './layers/busRouteLayer';
+import { clearOdEndpointFocus, setKashiwakuruOdFilter, setKashiwakuruOdHour, showAllKashiwakuruOd, toggleKashiwakuruOdLayer } from './layers/kashiwakuruOdLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -91,6 +92,11 @@ export default function MapView() {
 
     const [kashiwaShopsVisible, setKashiwaShopsVisible] = useState(false);
     const [selectedShopCategories, setSelectedShopCategories] = useState<string[]>([]);
+
+    // MapView.tsx (inside component state block)
+    const [kashiwakuruOdVisible, setKashiwakuruOdVisible] = useState(false); // ⬅ NEW
+    const [kashiwakuruOdHour, setKashiwakuruOdHourState] = useState(8);     // ⬅ NEW (default hour band)
+    const [kashiwakuruOdFilterOn, setKashiwakuruOdFilterOn] = useState(false);
 
     const hasAnyBusLegend = [
         busPassengerLayerVisible,
@@ -1459,6 +1465,27 @@ export default function MapView() {
             transportPopupRef.remove();
         });
 
+        map.on('mousemove', 'kashiwakuru-od-line', (e) => {                      // ⬅ NEW
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const p = feature.properties || {};
+                const html = `
+      <div class="rounded-xl border bg-white p-4 shadow-xl text-xs space-y-1 w-64">
+        <div><strong>O→D:</strong> ${p.origin} → ${p.destination}</div>
+        <div><strong>時間帯:</strong> ${p.timeband}</div>
+        <div><strong>トリップ数:</strong> ${p.count}</div>
+      </div>
+    `;
+                transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+            }
+        });
+
+        map.on('mouseleave', 'kashiwakuru-od-line', () => {                      // ⬅ NEW
+            map.getCanvas().style.cursor = '';
+            transportPopupRef.remove();
+        });
+
 
         const showKashiwaPublicFacilityPopup = (e: mapboxgl.MapMouseEvent) => {
             const feature = e.features?.[0];
@@ -1477,6 +1504,8 @@ export default function MapView() {
 
             transportPopupRef.setLngLat(e.lngLat).setHTML(popupContent).addTo(map);
         };
+
+
 
         const hideKashiwaPublicFacilityPopup = () => {
             map.getCanvas().style.cursor = '';
@@ -1534,6 +1563,23 @@ export default function MapView() {
         });
     }, []);
 
+    const onClearOdEndpointHighlight = () => {
+        if (mapRef.current) clearOdEndpointFocus(mapRef.current);
+    };
+
+    const onToggleKashiwakuruOdFilter = (enabled: boolean) => {
+        setKashiwakuruOdFilterOn(enabled);
+        if (!mapRef.current) return;
+        setKashiwakuruOdFilter(mapRef.current, enabled, kashiwakuruOdHour);
+    };
+
+    const onKashiwakuruOdHourChange = (h: number) => {
+        setKashiwakuruOdHourState(h);
+        if (!mapRef.current) return;
+        if (kashiwakuruOdFilterOn) {
+            setKashiwakuruOdHour(mapRef.current, h); // strict filter only when filter mode is enabled
+        }
+    };
 
 
     const cardTitle = (() => {
@@ -1667,6 +1713,30 @@ export default function MapView() {
                 toggleSakaiRouteVisible={() =>
                     toggleSakaiRoute(mapRef.current!, sakaiRouteVisible, setIsLoading, setSakaiRouteVisible)
                 }
+
+                kashiwakuruOdVisible={kashiwakuruOdVisible}
+                toggleKashiwakuruOdVisible={() => {
+                    toggleKashiwakuruOdLayer(
+                        mapRef.current!,
+                        kashiwakuruOdVisible,
+                        setIsLoading,
+                        setKashiwakuruOdVisible,
+                        kashiwakuruOdHour,
+                        transportPopupRef
+                    );
+
+                    // If we just turned the layer ON, force "show all" and turn filter mode OFF.
+                    const nowVisible = !kashiwakuruOdVisible;
+                    if (nowVisible && mapRef.current) {
+                        setKashiwakuruOdFilterOn(false);
+                        showAllKashiwakuruOd(mapRef.current);
+                    }
+                }}
+                kashiwakuruOdFilterOn={kashiwakuruOdFilterOn}                 // NEW
+                onToggleKashiwakuruOdFilter={onToggleKashiwakuruOdFilter}     // NEW
+                kashiwakuruOdHour={kashiwakuruOdHour}
+                onKashiwakuruOdHourChange={onKashiwakuruOdHourChange}         // UPDATED
+                onClearOdEndpointHighlight={onClearOdEndpointHighlight}
 
                 downloadPpt={downloadPpt}
 

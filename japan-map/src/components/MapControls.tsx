@@ -44,6 +44,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 // import { toggleMasuoCourseRideLayer } from '@/layers/busPassengerLayer';
 import { useSetRecoilState } from "recoil";
 import { globalVisibleLayersState } from '@/state/activeLayersAtom';
+import { Slider } from './ui/slider';
 // const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
 
 
@@ -131,7 +132,15 @@ interface MapControlsProps {
     sakaiRouteVisible: boolean;
     toggleSakaiRouteVisible: () => void;
 
+    kashiwakuruOdVisible: boolean;
+    toggleKashiwakuruOdVisible: () => void;
+    kashiwakuruOdHour: number;
+    onKashiwakuruOdHourChange: (h: number) => void;
+    onClearOdEndpointHighlight: () => void;
     downloadPpt: () => void;
+
+    kashiwakuruOdFilterOn: boolean;                   // NEW
+    onToggleKashiwakuruOdFilter: (on: boolean) => void;
 
 
 }
@@ -210,7 +219,14 @@ export default function MapControls({
     sakaiRouteVisible,
     toggleSakaiRouteVisible,
 
-    captureMapScreenshot
+    kashiwakuruOdVisible,
+    toggleKashiwakuruOdVisible,
+    kashiwakuruOdHour,
+    onKashiwakuruOdHourChange,
+    onClearOdEndpointHighlight,
+    captureMapScreenshot,
+    kashiwakuruOdFilterOn,             // NEW
+    onToggleKashiwakuruOdFilter,
 
 
 }: MapControlsProps) {
@@ -564,6 +580,112 @@ export default function MapControls({
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
+
+                        {/* <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="kashiwa-od">
+                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
+                                    <BusFront size={16} /> カシワニクル OD × 時間帯
+                                </AccordionTrigger>
+
+                                <AccordionContent className="flex flex-col space-y-3 bg-white rounded-xl mt-2 px-4 py-3">
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black flex items-center gap-2">
+                                            OD フロー（ライン）
+                                        </Label>
+                                        <Switch
+                                            checked={kashiwakuruOdVisible}
+                                            onCheckedChange={() =>
+                                                handleLayerToggle('カシワニクル OD', kashiwakuruOdVisible, toggleKashiwakuruOdVisible)
+                                            }
+                                        />
+                                    </div>
+
+                                    <div className="flex flex-col gap-1">
+                                        <Label className="text-sm text-black">
+                                            時間帯（開始）: {kashiwakuruOdHour}:00 – {kashiwakuruOdHour + 1}:00
+                                        </Label>
+                                        <input
+                                            type="range"
+                                            min={8}
+                                            max={19}
+                                            step={1}
+                                            value={kashiwakuruOdHour}
+                                            onChange={(e) => onKashiwakuruOdHourChange(parseInt(e.target.value, 10))}
+                                            className="w-full"
+                                        />
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion> */}
+
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="kashiwa-od">
+                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
+                                    <BusFront size={16} /> カシワニクル OD × 時間帯
+                                </AccordionTrigger>
+
+                                <AccordionContent className="flex flex-col space-y-3 bg-white rounded-xl mt-2 px-4 py-3">
+                                    {/* Toggle 1: show layer (all hours) */}
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black flex items-center gap-2">OD フロー（全データ）</Label>
+                                        <Switch checked={kashiwakuruOdVisible} onCheckedChange={toggleKashiwakuruOdVisible} />
+                                    </div>
+
+                                    {/* Toggle 2: enable hour filtering (slider becomes active) */}
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black flex items-center gap-2">時間帯でフィルター</Label>
+                                        <Switch
+                                            checked={kashiwakuruOdFilterOn}
+                                            onCheckedChange={onToggleKashiwakuruOdFilter}
+                                            disabled={!kashiwakuruOdVisible}
+                                        />
+                                    </div>
+
+                                    {/* Slider (disabled when filter is OFF) */}
+                                    <div className="flex flex-col gap-2">
+                                        {/* Label row with current hour display */}
+                                        <div className="flex items-center justify-between">
+                                            <Label className="text-sm text-black">時間帯（開始）</Label>
+                                            <span className="text-xs text-muted-foreground">
+                                                {kashiwakuruOdHour}:00 – {kashiwakuruOdHour + 1}:00
+                                            </span>
+                                        </div>
+
+                                        {/* Slider */}
+                                        <Slider
+                                            min={8}
+                                            max={19}
+                                            step={1}
+                                            value={[kashiwakuruOdHour]}
+                                            onValueChange={(vals) => onKashiwakuruOdHourChange(vals[0])}
+                                            className="w-full"
+                                            disabled={!kashiwakuruOdFilterOn || !kashiwakuruOdVisible}
+                                        />
+
+                                        {/* Hour markers */}
+                                        <div className="flex justify-between text-[10px] text-muted-foreground">
+                                            {Array.from({ length: 12 }, (_, i) => 8 + i).map((h) => (
+                                                <span key={h}>
+                                                    {h}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-end">
+                                        <button
+                                            onClick={onClearOdEndpointHighlight}
+                                            className="px-3 py-1 rounded-md text-xs bg-gray-100 hover:bg-gray-200"
+                                            disabled={!kashiwakuruOdVisible}
+                                        >
+                                            ハイライト解除
+                                        </button>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+
+
 
                         {/* Metric Selector */}
                         <Select value={selectedMetric} onValueChange={(value) => {
