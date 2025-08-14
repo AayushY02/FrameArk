@@ -122,6 +122,15 @@ interface MapControlsProps {
     toggleKashiwaShopsVisible: (category: string) => void;
     selectedShopCategories: string[];
 
+    shonanRouteVisible: boolean;
+    toggleShonanRouteVisible: () => void;
+
+    masuoRouteVisible: boolean;
+    toggleMasuoRouteVisible: () => void;
+
+    sakaiRouteVisible: boolean;
+    toggleSakaiRouteVisible: () => void;
+
     downloadPpt: () => void;
 
 
@@ -193,6 +202,13 @@ export default function MapControls({
 
     toggleKashiwaShopsVisible,
     selectedShopCategories,
+
+    shonanRouteVisible,
+    toggleShonanRouteVisible,
+    masuoRouteVisible,
+    toggleMasuoRouteVisible,
+    sakaiRouteVisible,
+    toggleSakaiRouteVisible,
 
     captureMapScreenshot
 
@@ -360,6 +376,9 @@ export default function MapControls({
                                 <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
                                     {[
                                         { label: 'バス停レイヤー', checked: busPassengerLayerVisible, onChange: () => handleLayerToggle('バス停レイヤー', busPassengerLayerVisible, toggleBusPassengerLayerVisible), icon: <Bus size={16} /> },
+                                        { label: '逆井コース（ルート）', checked: sakaiRouteVisible, onChange: toggleSakaiRouteVisible },
+                                        { label: '南増尾コース（ルート）', checked: masuoRouteVisible, onChange: toggleMasuoRouteVisible },
+                                        { label: '沼南コース（ルート）', checked: shonanRouteVisible, onChange: toggleShonanRouteVisible },
                                         { label: '逆井 コース - 乗車', checked: sakaeCourseRideLayerVisible, onChange: () => handleLayerToggle('逆井 コース - 乗車', sakaeCourseRideLayerVisible, toggleSakaeCourseRideLayerVisible), icon: <MapPin size={16} /> },
                                         { label: '逆井 コース - 降車', checked: sakaeCourseDropLayerVisible, onChange: () => handleLayerToggle('逆井 コース - 降車', sakaeCourseDropLayerVisible, toggleSakaeCourseDropLayerVisible), icon: <MapPin size={16} /> },
                                         { label: '南増尾 コース - 乗車', checked: masuoCourseRideLayerVisible, onChange: () => handleLayerToggle('南増尾 コース - 乗車', masuoCourseRideLayerVisible, toggleMasuoCourseRideLayerVisible), icon: <MapPin size={16} /> },

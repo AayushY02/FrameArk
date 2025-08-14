@@ -37,6 +37,7 @@ import LegendsStack from './components/Legend/LegendsStack';
 import KashiwaPublicFacilitiesLegend, { facilityCategories } from './components/Legend/KashiwaPublicFacilitiesLegend';
 import KashiwakuruStopsLegend from './components/Legend/KashiwakuruStopsLegend';
 import KashiwaShopsLegend, { shopCategoriesLegend } from './components/Legend/KashiwaShopsLegend';
+import { toggleMasuoRoute, toggleSakaiRoute, toggleShonanRoute } from './layers/busRouteLayer';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -76,7 +77,9 @@ export default function MapView() {
     const [shonanCourseRideLayerVisible, setShonanCourseRideLayerVisible] = useState(false);
     const [shonanCourseDropLayerVisible, setShonanCourseDropLayerVisible] = useState(false);
     const [isKashiwaBounds, setIsKashiwaBounds] = useState(false); // Track the toggle stat
-
+    const [shonanRouteVisible, setShonanRouteVisible] = useState(false);
+    const [masuoRouteVisible, setMasuoRouteVisible] = useState(false);
+    const [sakaiRouteVisible, setSakaiRouteVisible] = useState(false);
     const globalVisibleLayers = useRecoilValue(globalVisibleLayersState)
 
     const [newBusLayerVisible, setNewBusLayerVisible] = useState(false);
@@ -1646,6 +1649,21 @@ export default function MapView() {
 
                 toggleKashiwaShopsVisible={toggleKashiwaShopsVisible}
                 selectedShopCategories={selectedShopCategories}
+
+                shonanRouteVisible={shonanRouteVisible}
+                toggleShonanRouteVisible={() =>
+                    toggleShonanRoute(mapRef.current!, shonanRouteVisible, setIsLoading, setShonanRouteVisible)
+                }
+
+                masuoRouteVisible={masuoRouteVisible}
+                toggleMasuoRouteVisible={() =>
+                    toggleMasuoRoute(mapRef.current!, masuoRouteVisible, setIsLoading, setMasuoRouteVisible)
+                }
+
+                sakaiRouteVisible={sakaiRouteVisible}
+                toggleSakaiRouteVisible={() =>
+                    toggleSakaiRoute(mapRef.current!, sakaiRouteVisible, setIsLoading, setSakaiRouteVisible)
+                }
 
                 downloadPpt={downloadPpt}
 
