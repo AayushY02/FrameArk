@@ -1,5 +1,4 @@
 // components/Legend/KashiwakuruOdLegend.tsx
-import React from "react";
 import clsx from "clsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
