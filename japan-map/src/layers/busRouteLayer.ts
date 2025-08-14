@@ -180,10 +180,6 @@
 //     color: "#e31a1c", // red
 //   });
 
-
-// src/layers/busRouteLayer.ts
-import mapboxgl from "mapbox-gl";
-
 type RouteArgs = {
   id: "shonan" | "masuo" | "sakai";
   url: string;
