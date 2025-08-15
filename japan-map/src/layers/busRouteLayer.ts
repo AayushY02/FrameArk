@@ -193,6 +193,12 @@ const MESH_LAYER_IDS = [
   "mesh-250m-fill", "mesh-250m-outline",
 ];
 
+
+// Keep meshes hidden once we hide them
+let meshesForcedHidden = false;
+// Avoid attaching the style handler multiple times
+let meshHandlerAttached = false;
+
 // Track which routes are currently visible (so we can restore meshes only when none are left)
 const visibleRoutes = new Set<RouteArgs["id"]>();
 
@@ -200,15 +206,18 @@ const visibleRoutes = new Set<RouteArgs["id"]>();
 const meshPrevVisibility = new Map<string, "visible" | "none">();
 
 function hideMeshes(map: mapboxgl.Map) {
+  meshesForcedHidden = true; // ← NEW
   MESH_LAYER_IDS.forEach((id) => {
     if (!map.getLayer(id)) return;
     const prev =
       (map.getLayoutProperty(id, "visibility") as "visible" | "none") ?? "visible";
     if (!meshPrevVisibility.has(id)) meshPrevVisibility.set(id, prev);
-    map.setLayoutProperty(id, "visibility", "none");
+    if (prev !== "none") map.setLayoutProperty(id, "visibility", "none");
   });
 }
 
+// ❌ We will keep this function for potential future use,
+// but we WON'T call it from toggleRoute anymore.
 function restoreMeshes(map: mapboxgl.Map) {
   MESH_LAYER_IDS.forEach((id) => {
     if (!map.getLayer(id)) return;
@@ -217,7 +226,6 @@ function restoreMeshes(map: mapboxgl.Map) {
     meshPrevVisibility.delete(id);
   });
 }
-
 // Reusable: ensure source + (casing,line) exist
 function ensureRouteLayers(map: mapboxgl.Map, args: RouteArgs, beforeId?: string) {
   const srcId = `route-${args.id}-src`;
@@ -277,6 +285,48 @@ function setRouteVisibility(
   }
 }
 
+function attachMeshStyleGuard(map: mapboxgl.Map) {
+  if (meshHandlerAttached) return;
+  meshHandlerAttached = true;
+  map.on("style.load", () => {
+    if (meshesForcedHidden) {
+      // style changed; hide meshes again if present in the new style
+      hideMeshes(map);
+    }
+  });
+}
+
+// function addOrToggleRoute(
+//   map: mapboxgl.Map,
+//   routeVisible: boolean,
+//   setRouteVisible: (v: boolean) => void,
+//   args: RouteArgs
+// ) {
+//   // place routes under the first place label (same pattern you use elsewhere)
+//   const labelLayerId = map.getStyle().layers?.find(
+//     (l) => l.type === "symbol" && (l as any).layout?.["text-field"] && l.id.includes("place")
+//   )?.id;
+
+//   const ids = ensureRouteLayers(map, args, labelLayerId);
+//   const nextVisible = !routeVisible;
+
+//   if (nextVisible) {
+//     // If this is the first visible route, hide mesh layers
+//     if (visibleRoutes.size === 0) hideMeshes(map);
+
+//     visibleRoutes.add(args.id);
+//     setRouteVisibility(map, ids, "visible");
+//     setRouteVisible(true);
+//   } else {
+//     setRouteVisibility(map, ids, "none");
+//     visibleRoutes.delete(args.id);
+
+//     // If no routes remain, restore meshes
+//     if (visibleRoutes.size === 0) restoreMeshes(map);
+//     setRouteVisible(false);
+//   }
+// }
+
 function addOrToggleRoute(
   map: mapboxgl.Map,
   routeVisible: boolean,
@@ -292,9 +342,11 @@ function addOrToggleRoute(
   const nextVisible = !routeVisible;
 
   if (nextVisible) {
-    // If this is the first visible route, hide mesh layers
-    if (visibleRoutes.size === 0) hideMeshes(map);
-
+    // If this is the first visible route, hide mesh layers and set up guard
+    if (visibleRoutes.size === 0) {
+      hideMeshes(map);
+      attachMeshStyleGuard(map); // ← NEW: keep them hidden across style changes
+    }
     visibleRoutes.add(args.id);
     setRouteVisibility(map, ids, "visible");
     setRouteVisible(true);
@@ -302,8 +354,9 @@ function addOrToggleRoute(
     setRouteVisibility(map, ids, "none");
     visibleRoutes.delete(args.id);
 
-    // If no routes remain, restore meshes
-    if (visibleRoutes.size === 0) restoreMeshes(map);
+    // IMPORTANT: DO NOT RESTORE MESHES when last route turns off
+    // if (visibleRoutes.size === 0) restoreMeshes(map); // ← removed on purpose
+
     setRouteVisible(false);
   }
 }
