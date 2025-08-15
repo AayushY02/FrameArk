@@ -26,7 +26,7 @@ import { toggleTouristLayer } from './layers/touristSpot';
 import { toggleRoadsideStationLayer } from './layers/roadsideStationLayer';
 import { toggleAttractionLayer } from './layers/attractionLayer';
 import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
-import { toggleBusPassengerLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
+import { toggleBusPassengerLayer, toggleMasuoCourseDropLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
 import { toggleNewBusPassengerLayer, toggleNewKashiwakuruDropLayer, toggleNewKashiwakuruRideLayer } from './layers/newbusPassengerLayer';
 import { categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPublicFacilities';
 import { shopCategories, toggleKashiwaShopsLayer } from './layers/kashiwaBusStops';
@@ -1673,7 +1673,7 @@ export default function MapView() {
                 masuoCourseRideLayerVisible={masuoCourseRideLayerVisible}
                 toggleMasuoCourseRideLayerVisible={() => toggleMasuoCourseRideLayer(mapRef.current!, masuoCourseRideLayerVisible, setIsLoading, setMasuoCourseRideLayerVisible)}
                 masuoCourseDropLayerVisible={masuoCourseDropLayerVisible}
-                toggleMasuoCourseDropLayerVisible={() => toggleSakaeCourseDropLayer(mapRef.current!, masuoCourseDropLayerVisible, setIsLoading, setMasuoCourseDropLayerVisible)}
+                toggleMasuoCourseDropLayerVisible={() => toggleMasuoCourseDropLayer(mapRef.current!, masuoCourseDropLayerVisible, setIsLoading, setMasuoCourseDropLayerVisible)}
                 shonanCourseRideLayerVisible={shonanCourseRideLayerVisible}
                 toggleShonanCourseRideLayerVisible={() => toggleShonanCourseRideLayer(mapRef.current!, shonanCourseRideLayerVisible, setIsLoading, setShonanCourseRideLayerVisible)}
                 shonanCourseDropLayerVisible={shonanCourseDropLayerVisible}
