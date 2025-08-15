@@ -218,14 +218,14 @@ function hideMeshes(map: mapboxgl.Map) {
 
 // ❌ We will keep this function for potential future use,
 // but we WON'T call it from toggleRoute anymore.
-function restoreMeshes(map: mapboxgl.Map) {
-  MESH_LAYER_IDS.forEach((id) => {
-    if (!map.getLayer(id)) return;
-    const prev = meshPrevVisibility.get(id) ?? "visible";
-    map.setLayoutProperty(id, "visibility", prev);
-    meshPrevVisibility.delete(id);
-  });
-}
+// function restoreMeshes(map: mapboxgl.Map) {
+//   MESH_LAYER_IDS.forEach((id) => {
+//     if (!map.getLayer(id)) return;
+//     const prev = meshPrevVisibility.get(id) ?? "visible";
+//     map.setLayoutProperty(id, "visibility", prev);
+//     meshPrevVisibility.delete(id);
+//   });
+// }
 // Reusable: ensure source + (casing,line) exist
 function ensureRouteLayers(map: mapboxgl.Map, args: RouteArgs, beforeId?: string) {
   const srcId = `route-${args.id}-src`;
