@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
-import type mapboxgl from "mapbox-gl";
+import { useEffect, useMemo, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 

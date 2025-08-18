@@ -323,7 +323,6 @@
 
 
 // src/layers/kashiwaChomePopulationLayer.ts
-import mapboxgl from "mapbox-gl";
 
 /* -------------------- IDs & data -------------------- */
 export const KASHIWA_CHOME_SOURCE_ID = "kashiwa-chome-pop";

@@ -46,9 +46,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useSetRecoilState } from "recoil";
 import { globalVisibleLayersState } from '@/state/activeLayersAtom';
 import { Slider } from './ui/slider';
-import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { SlidersHorizontal, Paintbrush, Filter, Type } from 'lucide-react';
+import { SlidersHorizontal, Filter, Type } from 'lucide-react';
 import { Input } from './ui/input';
 
 // const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
