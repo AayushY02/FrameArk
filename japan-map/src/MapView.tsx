@@ -40,6 +40,8 @@ import KashiwaShopsLegend, { shopCategoriesLegend } from './components/Legend/Ka
 import { toggleMasuoRoute, toggleSakaiRoute, toggleShonanRoute } from './layers/busRouteLayer';
 import { clearOdEndpointFocus, setKashiwakuruOdFilter, setKashiwakuruOdHour, showAllKashiwakuruOd, toggleKashiwakuruOdLayer } from './layers/kashiwakuruOdLayer';
 import KashiwakuruOdLegend from './components/Legend/KashiwakuruOdLegend';
+import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwaChomeAgingLayer, toggleKashiwaChomeDensityLayer, toggleKashiwaChomeTotalLayer, updateKashiwaChomeStyle } from './layers/kashiwaChomePopulationLayer';
+import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopulationLegend';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -98,6 +100,10 @@ export default function MapView() {
     const [kashiwakuruOdVisible, setKashiwakuruOdVisible] = useState(false); // ⬅ NEW
     const [kashiwakuruOdHour, setKashiwakuruOdHourState] = useState(8);     // ⬅ NEW (default hour band)
     const [kashiwakuruOdFilterOn, setKashiwakuruOdFilterOn] = useState(false);
+
+    const [chomeTotalVisible, setChomeTotalVisible] = useState(false);
+    const [chomeAgingVisible, setChomeAgingVisible] = useState(false);
+    const [chomeDensityVisible, setChomeDensityVisible] = useState(false);
 
     const hasAnyBusLegend = [
         busPassengerLayerVisible,
@@ -740,6 +746,7 @@ export default function MapView() {
             updateMetricStyles();
         });
         map.once('idle', () => setIsLoading(false));
+
     };
 
     useEffect(() => {
@@ -827,6 +834,8 @@ export default function MapView() {
 
             ensureHighlightLayer();
             map.once('idle', () => setIsLoading(false));
+
+
         });
 
         map.on('style.load', () => {
@@ -1598,11 +1607,46 @@ export default function MapView() {
         return '2020年の人口推計データ';
     })();
 
+    // metric = "total" | "aging" | "density"
+    // opts = { palette?: "Blues"|"Greens"|"Oranges"|"Purples"; method?: "quantile"|"equal"|"jenks"; bins?: number; opacity?: number }
+    const onChomeStyleChange = (
+        metric: "total" | "aging" | "density",
+        opts: { palette?: "Blues" | "Greens" | "Oranges" | "Purples"; method?: "quantile" | "equal" | "jenks"; bins?: number; opacity?: number }
+    ) => {
+        const map = mapRef.current!;
+        updateKashiwaChomeStyle(map, metric, opts);
+    };
+
+    // Range filter: pass null for open-ended
+    const onChomeRangeChange = (
+        metric: "total" | "aging" | "density",
+        min: number | null,
+        max: number | null
+    ) => {
+        const map = mapRef.current!;
+        setKashiwaChomeRangeFilter(map, metric, min, max);
+    };
+
+    // Labels toggle: mode = "name" | "metric"; if metric labels, specify which metric
+    const onChomeLabelsChange = (
+        visible: boolean,
+        mode: "name" | "metric",
+        metric: "total" | "aging" | "density"
+    ) => {
+        const map = mapRef.current!;
+        setKashiwaChomeLabelsVisible(map, visible, mode, metric);
+    };
+
+
     const hasAnyFacilities = selectedCategories.length > 0;
     const hasAnyKashiwakuru = newBusLayerVisible || newKashiwakuruRideLayerVisible || newKashiwakuruDropLayerVisible;
     const hasAnyShops = selectedShopCategories.includes("") ||
         shopCategoriesLegend.some(c => c.category && selectedShopCategories.includes(c.category));
     const hasAnyOdLegend = kashiwakuruOdVisible;
+
+    const hasAnyChomeLegend =
+        chomeTotalVisible || chomeAgingVisible || chomeDensityVisible;
+
 
     return (
         <div className="relative w-screen h-screen">
@@ -1740,12 +1784,37 @@ export default function MapView() {
                 onKashiwakuruOdHourChange={onKashiwakuruOdHourChange}         // UPDATED
                 onClearOdEndpointHighlight={onClearOdEndpointHighlight}
 
+                chomeTotalVisible={chomeTotalVisible}
+                toggleChomeTotalVisible={() =>
+                    toggleKashiwaChomeTotalLayer(
+                        mapRef.current!, chomeTotalVisible, setIsLoading, setChomeTotalVisible, transportPopupRef
+                    )
+                }
+
+                chomeAgingVisible={chomeAgingVisible}
+                toggleChomeAgingVisible={() =>
+                    toggleKashiwaChomeAgingLayer(
+                        mapRef.current!, chomeAgingVisible, setIsLoading, setChomeAgingVisible, transportPopupRef
+                    )
+                }
+
+                chomeDensityVisible={chomeDensityVisible}
+                toggleChomeDensityVisible={() =>
+                    toggleKashiwaChomeDensityLayer(
+                        mapRef.current!, chomeDensityVisible, setIsLoading, setChomeDensityVisible, transportPopupRef
+                    )
+                }
+
+                onChomeStyleChange={onChomeStyleChange}
+                onChomeRangeChange={onChomeRangeChange}
+                onChomeLabelsChange={onChomeLabelsChange}
+
                 downloadPpt={downloadPpt}
 
             />
 
             {/* <Legend selectedMetric={selectedMetric} /> */}
-            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend} width="w-80">
+            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend || hasAnyChomeLegend} width="w-80">
                 <AnimatePresence mode="popLayout">
                     {hasAnyBusLegend && (
                         <motion.div
@@ -1846,6 +1915,25 @@ export default function MapView() {
                                 visible={kashiwakuruOdVisible}
                                 filterOn={kashiwakuruOdFilterOn}
                                 hour={kashiwakuruOdHour}
+                            />
+                        </motion.div>
+                    )}
+
+                    {hasAnyChomeLegend && (
+                        <motion.div
+                            key="legend-chome"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <KashiwaChomePopulationLegend
+                                map={mapRef.current || undefined}
+                                totalVisible={chomeTotalVisible}
+                                agingVisible={chomeAgingVisible}
+                                densityVisible={chomeDensityVisible}
                             />
                         </motion.div>
                     )}

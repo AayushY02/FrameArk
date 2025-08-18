@@ -33,11 +33,12 @@ import {
     ShoppingBasket,
     Store,
     ShoppingBag,
-    NotepadTextDashed
+    NotepadTextDashed,
+
 } from 'lucide-react';
 import { Label } from './ui/label';
 import { Switch } from './ui/switch';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 // import { useRecoilState } from 'recoil';
 // import { masuoCourseDropLayerVisibleState } from '@/state/layers';
@@ -45,6 +46,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useSetRecoilState } from "recoil";
 import { globalVisibleLayersState } from '@/state/activeLayersAtom';
 import { Slider } from './ui/slider';
+import { Card, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { SlidersHorizontal, Paintbrush, Filter, Type } from 'lucide-react';
+import { Input } from './ui/input';
+
 // const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
 
 
@@ -142,6 +148,30 @@ interface MapControlsProps {
     kashiwakuruOdFilterOn: boolean;                   // NEW
     onToggleKashiwakuruOdFilter: (on: boolean) => void;
 
+    chomeTotalVisible: boolean;
+    toggleChomeTotalVisible: () => void;
+    chomeAgingVisible: boolean;
+    toggleChomeAgingVisible: () => void;
+    chomeDensityVisible: boolean;
+    toggleChomeDensityVisible: () => void;
+
+    onChomeStyleChange: (
+        metric: "total" | "aging" | "density",
+        opts: { palette?: "Blues" | "Greens" | "Oranges" | "Purples"; method?: "quantile" | "equal" | "jenks"; bins?: number; opacity?: number }
+    ) => void;
+
+    onChomeRangeChange: (
+        metric: "total" | "aging" | "density",
+        min: number | null,
+        max: number | null
+    ) => void;
+
+    onChomeLabelsChange: (
+        visible: boolean,
+        mode: "name" | "metric",
+        metric: "total" | "aging" | "density"
+    ) => void;
+
 
 }
 
@@ -228,11 +258,102 @@ export default function MapControls({
     kashiwakuruOdFilterOn,             // NEW
     onToggleKashiwakuruOdFilter,
 
+    chomeTotalVisible,
+    toggleChomeTotalVisible,
+    chomeAgingVisible,
+    toggleChomeAgingVisible,
+    chomeDensityVisible,
+    toggleChomeDensityVisible,
+    onChomeStyleChange,
+
+    onChomeRangeChange,
+
+    onChomeLabelsChange
 
 }: MapControlsProps) {
 
     const [isOpen, setIsOpen] = useState(false);
     const setGlobalVisibleLayers = useSetRecoilState(globalVisibleLayersState);
+
+    // target metric whose style/filter you’re editing
+    const [chomeTarget, setChomeTarget] = useState<"total" | "aging" | "density">("total");
+
+    // style controls
+    const [chomePalette, setChomePalette] = useState<"Blues" | "Greens" | "Oranges" | "Purples">("Purples");
+    const [chomeMethod, setChomeMethod] = useState<"quantile" | "equal" | "jenks">("quantile");
+    const [chomeBins, setChomeBins] = useState<number>(5);       // 3–7 sensible
+    const [chomeOpacity, setChomeOpacity] = useState<number>(70); // 30–100 as percent
+
+    // range filter
+    const [chomeMin, setChomeMin] = useState<string>("");
+    const [chomeMax, setChomeMax] = useState<string>("");
+
+    // labels
+    const [chomeLabelsOn, setChomeLabelsOn] = useState<boolean>(false);
+    const [chomeLabelsMode, setChomeLabelsMode] = useState<"name" | "metric">("name");
+    const [chomeLabelsMetric, setChomeLabelsMetric] = useState<"total" | "aging" | "density">("total");
+    // 町丁目フィルターの開閉
+    const [chomeFiltersOpen, setChomeFiltersOpen] = useState(false);
+
+    function resetChomeUIAndLayers() {
+        // Reset UI state
+        setChomeTarget("total");
+        setChomePalette("Purples");
+        setChomeMethod("quantile");
+        setChomeBins(5);
+        setChomeOpacity(70);
+        setChomeMin("");
+        setChomeMax("");
+        setChomeLabelsOn(false);
+        setChomeLabelsMode("name");
+        setChomeLabelsMetric("total");
+
+        // Reset layers to defaults (safe regardless of visibility)
+        const defaults = {
+            total: { palette: "Purples" as const, method: "quantile" as const, bins: 5, opacity: 0.7 },
+            aging: { palette: "Greens" as const, method: "quantile" as const, bins: 5, opacity: 0.7 },
+            density: { palette: "Oranges" as const, method: "quantile" as const, bins: 5, opacity: 0.7 },
+        };
+
+        (["total", "aging", "density"] as const).forEach((metric) => {
+            onChomeStyleChange(metric, defaults[metric]);   // default palette/method/bins/opacity
+            onChomeRangeChange(metric, null, null);         // clear range filter
+        });
+
+        // Labels off
+        onChomeLabelsChange(false, "name", "total");
+    }
+
+    useEffect(() => {
+        if (!chomeFiltersOpen) return;
+        onChomeStyleChange(chomeTarget, {
+            palette: chomePalette,
+            method: chomeMethod,
+            bins: chomeBins,
+            opacity: chomeOpacity / 100,
+        });
+
+    }, [chomeFiltersOpen, chomeTarget, chomePalette, chomeMethod, chomeBins, chomeOpacity]);
+
+
+    useEffect(() => {
+        if (!chomeFiltersOpen) return;
+        const min = chomeMin === "" ? null : Number(chomeMin);
+        const max = chomeMax === "" ? null : Number(chomeMax);
+
+        const t = setTimeout(() => {
+            onChomeRangeChange(chomeTarget, min, max);
+        }, 200);
+        return () => clearTimeout(t);
+
+    }, [chomeFiltersOpen, chomeTarget, chomeMin, chomeMax]);
+
+
+    useEffect(() => {
+        if (!chomeFiltersOpen) return;
+        onChomeLabelsChange(chomeLabelsOn, chomeLabelsMode, chomeLabelsMetric);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chomeFiltersOpen, chomeLabelsOn, chomeLabelsMode, chomeLabelsMetric]);
 
     const metricLabels: Record<string, string> = {
         PTN_2020: '総人口（2020年）',
@@ -680,6 +801,268 @@ export default function MapControls({
                                         >
                                             ハイライト解除
                                         </button>
+                                    </div>
+                                </AccordionContent>
+                            </AccordionItem>
+                        </Accordion>
+
+                        <Accordion type="single" collapsible className="w-full">
+                            <AccordionItem value="kashiwa-chome">
+                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
+                                    町丁目人口（GeoJSON）
+                                </AccordionTrigger>
+                                <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
+                                    {[
+                                        { label: '町丁目：総数（G列）', checked: chomeTotalVisible, onChange: () => handleLayerToggle('町丁目：総数', chomeTotalVisible, toggleChomeTotalVisible) },
+                                        { label: '町丁目：高齢化率（K列）', checked: chomeAgingVisible, onChange: () => handleLayerToggle('町丁目：高齢化率', chomeAgingVisible, toggleChomeAgingVisible) },
+                                        { label: '町丁目：人口密度（L列）', checked: chomeDensityVisible, onChange: () => handleLayerToggle('町丁目：人口密度', chomeDensityVisible, toggleChomeDensityVisible) },
+                                    ].map(({ label, checked, onChange }) => (
+                                        <div key={label} className="flex items-center justify-between">
+                                            <Label className="text-sm text-black flex items-center gap-2">{label}</Label>
+                                            <Switch checked={checked} onCheckedChange={onChange} />
+                                        </div>
+                                    ))}
+
+                                    {/* --- 町丁目：Style & Filters --- */}
+
+
+
+                                    <div className="space-y-4">
+                                        {/* ヘッダー行：トグルだけ常時表示 */}
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2 text-sm font-medium">
+                                                <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
+                                                スタイルとフィルター
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <Switch
+                                                    checked={chomeFiltersOpen}
+                                                    onCheckedChange={(next) => {
+                                                        if (!next) resetChomeUIAndLayers(); // closing collapses + resets everything
+                                                        setChomeFiltersOpen(next);
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* 展開コンテンツ：閉じているときは非表示 */}
+                                        <AnimatePresence initial={false}>
+                                            {chomeFiltersOpen && (
+                                                <motion.div
+                                                    key="chome-filters"
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: "auto", opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    transition={{ duration: 0.15 }}
+                                                    className="overflow-hidden"
+                                                >
+                                                    <div className="space-y-4">
+                                                        {/* 対象 / パレット / 分類 */}
+                                                        <div className="grid grid-cols-12 gap-3">
+                                                            <Label className="col-span-4 text-xs text-muted-foreground whitespace-nowrap self-center">対象</Label>
+                                                            <div className="col-span-8">
+                                                                <Select value={chomeTarget} onValueChange={(v) => setChomeTarget(v as any)}>
+                                                                    <SelectTrigger className="h-8 text-xs rounded-lg w-full">
+                                                                        <SelectValue placeholder="対象を選択" />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="total">総数（G）</SelectItem>
+                                                                        <SelectItem value="aging">高齢化率（K）</SelectItem>
+                                                                        <SelectItem value="density">人口密度（L）</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            </div>
+
+                                                            <Label className="col-span-4 text-xs text-muted-foreground whitespace-nowrap self-center">パレット</Label>
+                                                            <div className="col-span-8">
+                                                                <Select value={chomePalette} onValueChange={(v) => setChomePalette(v as any)}>
+                                                                    <SelectTrigger className="h-8 text-xs rounded-lg w-full">
+                                                                        <SelectValue placeholder="色を選択" />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="Purples">パープル</SelectItem>
+                                                                        <SelectItem value="Greens">グリーン</SelectItem>
+                                                                        <SelectItem value="Oranges">オレンジ</SelectItem>
+                                                                        <SelectItem value="Blues">ブルー</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            </div>
+
+                                                            <Label className="col-span-4 text-xs text-muted-foreground whitespace-nowrap self-center">分類</Label>
+                                                            <div className="col-span-8">
+                                                                <Select value={chomeMethod} onValueChange={(v) => setChomeMethod(v as any)}>
+                                                                    <SelectTrigger className="h-8 text-xs rounded-lg w-full">
+                                                                        <SelectValue placeholder="分類を選択" />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="quantile">分位法</SelectItem>
+                                                                        <SelectItem value="equal">等間隔</SelectItem>
+                                                                        <SelectItem value="jenks">ジェンクス</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                            </div>
+                                                        </div>
+
+                                                        <Separator />
+
+                                                        {/* ビン数・不透明度 */}
+                                                        <div className="space-y-4">
+                                                            <div>
+                                                                <div className="flex items-center justify-between mb-1">
+                                                                    <Label className="text-xs">ビン数</Label>
+                                                                    <span className="text-xs text-muted-foreground">{chomeBins}</span>
+                                                                </div>
+                                                                <Slider
+                                                                    min={3}
+                                                                    max={7}
+                                                                    step={1}
+                                                                    value={[chomeBins]}
+                                                                    onValueChange={(v) => setChomeBins(v[0])}
+                                                                    className="px-1"
+                                                                />
+                                                            </div>
+
+                                                            <div>
+                                                                <div className="flex items-center justify-between mb-1">
+                                                                    <Label className="text-xs">不透明度</Label>
+                                                                    <span className="text-xs text-muted-foreground">{chomeOpacity}%</span>
+                                                                </div>
+                                                                <Slider
+                                                                    min={30}
+                                                                    max={100}
+                                                                    step={1}
+                                                                    value={[chomeOpacity]}
+                                                                    onValueChange={(v) => setChomeOpacity(v[0])}
+                                                                    className="px-1"
+                                                                />
+                                                            </div>
+                                                        </div>
+
+                                                        <Separator />
+
+                                                        {/* 範囲フィルター */}
+                                                        <div className="space-y-3">
+                                                            <div className="flex items-center gap-2 text-sm font-medium">
+                                                                <Filter className="h-4 w-4 text-muted-foreground" />
+                                                                範囲フィルター
+                                                            </div>
+
+                                                            <div className="grid grid-cols-12 gap-3">
+                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">最小</Label>
+                                                                <Input
+                                                                    inputMode="numeric"
+                                                                    type="number"
+                                                                    value={chomeMin}
+                                                                    onChange={(e) => setChomeMin(e.target.value)}
+                                                                    placeholder="例: 1000"
+                                                                    className="col-span-8 h-8 text-xs rounded-lg"
+                                                                />
+
+                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">最大</Label>
+                                                                <Input
+                                                                    inputMode="numeric"
+                                                                    type="number"
+                                                                    value={chomeMax}
+                                                                    onChange={(e) => setChomeMax(e.target.value)}
+                                                                    placeholder="例: 10000"
+                                                                    className="col-span-8 h-8 text-xs rounded-lg"
+                                                                />
+                                                            </div>
+
+                                                            <div className="flex gap-2">
+                                                                <button
+                                                                    className="h-8 rounded-lg flex-1 text-xs px-3 py-1 bg-gray-100 hover:bg-gray-200"
+                                                                    onClick={() => {
+                                                                        setChomeMin(''); setChomeMax('');
+                                                                        onChomeRangeChange(chomeTarget, null, null);
+                                                                    }}
+                                                                >
+                                                                    解除
+                                                                </button>
+                                                                <button
+                                                                    className="h-8 rounded-lg flex-1 text-xs px-3 py-1 bg-gray-100 hover:bg-gray-200"
+                                                                    onClick={() =>
+                                                                        onChomeRangeChange(
+                                                                            chomeTarget,
+                                                                            chomeMin === '' ? null : Number(chomeMin),
+                                                                            chomeMax === '' ? null : Number(chomeMax)
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    範囲を適用
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
+                                                        <Separator />
+
+                                                        {/* ラベル */}
+                                                        <div className="space-y-3">
+                                                            <div className="flex items-center gap-2 text-sm font-medium">
+                                                                <Type className="h-4 w-4 text-muted-foreground" />
+                                                                ラベル
+                                                            </div>
+
+                                                            <div className="flex items-center justify-between">
+                                                                <Label className="text-xs">ラベル表示</Label>
+                                                                <Switch
+                                                                    checked={chomeLabelsOn}
+                                                                    onCheckedChange={(next) => {
+                                                                        setChomeLabelsOn(next);
+                                                                        onChomeLabelsChange(next, chomeLabelsMode, chomeLabelsMetric);
+                                                                    }}
+                                                                />
+                                                            </div>
+
+                                                            <div className="grid grid-cols-12 gap-3">
+                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">内容</Label>
+                                                                <div className="col-span-8">
+                                                                    <Select
+                                                                        value={chomeLabelsMode}
+                                                                        onValueChange={(v) => {
+                                                                            const mode = v as 'name' | 'metric';
+                                                                            setChomeLabelsMode(mode);
+                                                                            onChomeLabelsChange(chomeLabelsOn, mode, chomeLabelsMetric);
+                                                                        }}
+                                                                    >
+                                                                        <SelectTrigger className="h-8 text-xs rounded-lg w-full">
+                                                                            <SelectValue />
+                                                                        </SelectTrigger>
+                                                                        <SelectContent>
+                                                                            <SelectItem value="name">町丁字名</SelectItem>
+                                                                            <SelectItem value="metric">数値</SelectItem>
+                                                                        </SelectContent>
+                                                                    </Select>
+                                                                </div>
+
+                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">指標</Label>
+                                                                <div className="col-span-8">
+                                                                    <Select
+                                                                        value={chomeLabelsMetric}
+                                                                        onValueChange={(v) => {
+                                                                            const m = v as 'total' | 'aging' | 'density';
+                                                                            setChomeLabelsMetric(m);
+                                                                            if (chomeLabelsMode === 'metric') {
+                                                                                onChomeLabelsChange(chomeLabelsOn, 'metric', m);
+                                                                            }
+                                                                        }}
+                                                                    >
+                                                                        <SelectTrigger className="h-8 text-xs rounded-lg w-full">
+                                                                            <SelectValue />
+                                                                        </SelectTrigger>
+                                                                        <SelectContent>
+                                                                            <SelectItem value="total">総数（G）</SelectItem>
+                                                                            <SelectItem value="aging">高齢化率（K）</SelectItem>
+                                                                            <SelectItem value="density">人口密度（L）</SelectItem>
+                                                                        </SelectContent>
+                                                                    </Select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
