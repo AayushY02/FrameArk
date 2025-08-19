@@ -40,7 +40,7 @@ import KashiwaShopsLegend, { shopCategoriesLegend } from './components/Legend/Ka
 import { toggleMasuoRoute, toggleSakaiRoute, toggleShonanRoute } from './layers/busRouteLayer';
 import { clearOdEndpointFocus, setKashiwakuruOdFilter, setKashiwakuruOdHour, showAllKashiwakuruOd, toggleKashiwakuruOdLayer } from './layers/kashiwakuruOdLayer';
 import KashiwakuruOdLegend from './components/Legend/KashiwakuruOdLegend';
-import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwaChomeAgingLayer, toggleKashiwaChomeDensityLayer, toggleKashiwaChomeTotalLayer, updateKashiwaChomeStyle } from './layers/kashiwaChomePopulationLayer';
+import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwaChomeAging2040Layer, toggleKashiwaChomeAgingLayer, toggleKashiwaChomeDensityLayer, toggleKashiwaChomeTotal2040Layer, toggleKashiwaChomeTotalLayer, updateKashiwaChomeStyle } from './layers/kashiwaChomePopulationLayer';
 import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopulationLegend';
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
@@ -104,7 +104,9 @@ export default function MapView() {
     const [chomeTotalVisible, setChomeTotalVisible] = useState(false);
     const [chomeAgingVisible, setChomeAgingVisible] = useState(false);
     const [chomeDensityVisible, setChomeDensityVisible] = useState(false);
-
+    const [chomeTotal2040Visible, setChomeTotal2040Visible] = useState(false);
+    const [chomeAging2040Visible, setChomeAging2040Visible] = useState(false);
+    type ChomeMetric = "total" | "aging" | "density" | "total_2040" | "aging_2040";
     const hasAnyBusLegend = [
         busPassengerLayerVisible,
         sakaeCourseRideLayerVisible,
@@ -1610,7 +1612,7 @@ export default function MapView() {
     // metric = "total" | "aging" | "density"
     // opts = { palette?: "Blues"|"Greens"|"Oranges"|"Purples"; method?: "quantile"|"equal"|"jenks"; bins?: number; opacity?: number }
     const onChomeStyleChange = (
-        metric: "total" | "aging" | "density",
+        metric: ChomeMetric,
         opts: { palette?: "Blues" | "Greens" | "Oranges" | "Purples"; method?: "quantile" | "equal" | "jenks"; bins?: number; opacity?: number }
     ) => {
         const map = mapRef.current!;
@@ -1619,7 +1621,7 @@ export default function MapView() {
 
     // Range filter: pass null for open-ended
     const onChomeRangeChange = (
-        metric: "total" | "aging" | "density",
+        metric: ChomeMetric,
         min: number | null,
         max: number | null
     ) => {
@@ -1631,7 +1633,7 @@ export default function MapView() {
     const onChomeLabelsChange = (
         visible: boolean,
         mode: "name" | "metric",
-        metric: "total" | "aging" | "density"
+        metric: ChomeMetric
     ) => {
         const map = mapRef.current!;
         setKashiwaChomeLabelsVisible(map, visible, mode, metric);
@@ -1645,7 +1647,7 @@ export default function MapView() {
     const hasAnyOdLegend = kashiwakuruOdVisible;
 
     const hasAnyChomeLegend =
-        chomeTotalVisible || chomeAgingVisible || chomeDensityVisible;
+        chomeTotalVisible || chomeAgingVisible || chomeDensityVisible || chomeTotal2040Visible || chomeAging2040Visible;
 
 
     return (
@@ -1805,10 +1807,22 @@ export default function MapView() {
                     )
                 }
 
+                chomeTotal2040Visible={chomeTotal2040Visible}
+                toggleChomeTotal2040Visible={() =>
+                    toggleKashiwaChomeTotal2040Layer(
+                        mapRef.current!, chomeTotal2040Visible, setIsLoading, setChomeTotal2040Visible, transportPopupRef
+                    )
+                }
+                chomeAging2040Visible={chomeAging2040Visible}
+                toggleChomeAging2040Visible={() =>
+                    toggleKashiwaChomeAging2040Layer(
+                        mapRef.current!, chomeAging2040Visible, setIsLoading, setChomeAging2040Visible, transportPopupRef
+                    )
+                }
+
                 onChomeStyleChange={onChomeStyleChange}
                 onChomeRangeChange={onChomeRangeChange}
                 onChomeLabelsChange={onChomeLabelsChange}
-
                 downloadPpt={downloadPpt}
 
             />
@@ -1934,6 +1948,8 @@ export default function MapView() {
                                 totalVisible={chomeTotalVisible}
                                 agingVisible={chomeAgingVisible}
                                 densityVisible={chomeDensityVisible}
+                                total2040Visible={chomeTotal2040Visible}
+                                aging2040Visible={chomeAging2040Visible}
                             />
                         </motion.div>
                     )}

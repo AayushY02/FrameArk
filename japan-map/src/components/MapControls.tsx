@@ -53,6 +53,7 @@ import { Input } from './ui/input';
 // const allCourses = ['逆井 コース', '南増尾 コース', '沼南コース'];
 
 
+type ChomeMetric = "total" | "aging" | "density" | "total_2040" | "aging_2040";
 
 interface MapControlsProps {
     currentStyle: string;
@@ -155,12 +156,12 @@ interface MapControlsProps {
     toggleChomeDensityVisible: () => void;
 
     onChomeStyleChange: (
-        metric: "total" | "aging" | "density",
+        metric: ChomeMetric,
         opts: { palette?: "Blues" | "Greens" | "Oranges" | "Purples"; method?: "quantile" | "equal" | "jenks"; bins?: number; opacity?: number }
     ) => void;
 
     onChomeRangeChange: (
-        metric: "total" | "aging" | "density",
+        metric: ChomeMetric,
         min: number | null,
         max: number | null
     ) => void;
@@ -168,9 +169,13 @@ interface MapControlsProps {
     onChomeLabelsChange: (
         visible: boolean,
         mode: "name" | "metric",
-        metric: "total" | "aging" | "density"
+        metric: ChomeMetric,
     ) => void;
 
+    chomeTotal2040Visible: boolean;
+    toggleChomeTotal2040Visible: () => void;
+    chomeAging2040Visible: boolean;
+    toggleChomeAging2040Visible: () => void;
 
 }
 
@@ -267,7 +272,11 @@ export default function MapControls({
 
     onChomeRangeChange,
 
-    onChomeLabelsChange
+    onChomeLabelsChange,
+    chomeTotal2040Visible,
+    toggleChomeTotal2040Visible,
+    chomeAging2040Visible,
+    toggleChomeAging2040Visible,
 
 }: MapControlsProps) {
 
@@ -275,7 +284,8 @@ export default function MapControls({
     const setGlobalVisibleLayers = useSetRecoilState(globalVisibleLayersState);
 
     // target metric whose style/filter you’re editing
-    const [chomeTarget, setChomeTarget] = useState<"total" | "aging" | "density">("total");
+    const [chomeTarget, setChomeTarget] = useState<ChomeMetric>("total");
+    const isAgingMetric = chomeTarget === "aging" || chomeTarget === "aging_2040";
 
     // style controls
     const [chomePalette, setChomePalette] = useState<"Blues" | "Greens" | "Oranges" | "Purples">("Purples");
@@ -290,7 +300,7 @@ export default function MapControls({
     // labels
     const [chomeLabelsOn, setChomeLabelsOn] = useState<boolean>(false);
     const [chomeLabelsMode, setChomeLabelsMode] = useState<"name" | "metric">("name");
-    const [chomeLabelsMetric, setChomeLabelsMetric] = useState<"total" | "aging" | "density">("total");
+    const [chomeLabelsMetric, setChomeLabelsMetric] = useState<ChomeMetric>("total");
     // 町丁目フィルターの開閉
     const [chomeFiltersOpen, setChomeFiltersOpen] = useState(false);
 
@@ -312,9 +322,11 @@ export default function MapControls({
             total: { palette: "Purples" as const, method: "quantile" as const, bins: 5, opacity: 0.7 },
             aging: { palette: "Greens" as const, method: "quantile" as const, bins: 5, opacity: 0.7 },
             density: { palette: "Oranges" as const, method: "quantile" as const, bins: 5, opacity: 0.7 },
+            total_2040: { palette: "Blues" as const, method: "quantile" as const, bins: 5, opacity: 0.7 },
+            aging_2040: { palette: "Greens" as const, method: "quantile" as const, bins: 5, opacity: 0.7 },
         };
 
-        (["total", "aging", "density"] as const).forEach((metric) => {
+        (["total", "aging", "density", "total_2040", "aging_2040"] as const).forEach((metric) => {
             onChomeStyleChange(metric, defaults[metric]);   // default palette/method/bins/opacity
             onChomeRangeChange(metric, null, null);         // clear range filter
         });
@@ -337,11 +349,12 @@ export default function MapControls({
 
     useEffect(() => {
         if (!chomeFiltersOpen) return;
-        const min = chomeMin === "" ? null : Number(chomeMin);
-        const max = chomeMax === "" ? null : Number(chomeMax);
+        const rawMin = chomeMin === "" ? null : Number(chomeMin);
+        const rawMax = chomeMax === "" ? null : Number(chomeMax);
+        const toProp = (v: number | null) => (v == null ? null : isAgingMetric ? v / 100 : v); // % → ratio for aging metrics
 
         const t = setTimeout(() => {
-            onChomeRangeChange(chomeTarget, min, max);
+            onChomeRangeChange(chomeTarget, toProp(rawMin), toProp(rawMax));
         }, 200);
         return () => clearTimeout(t);
 
@@ -381,7 +394,12 @@ export default function MapControls({
 
         toggleFunction();
     }
-
+    const anyChomeLayerOn =
+        chomeTotalVisible ||
+        chomeAgingVisible ||
+        chomeDensityVisible ||
+        chomeTotal2040Visible ||
+        chomeAging2040Visible;
 
 
     return (
@@ -701,43 +719,6 @@ export default function MapControls({
                             </AccordionItem>
                         </Accordion>
 
-                        {/* <Accordion type="single" collapsible className="w-full">
-                            <AccordionItem value="kashiwa-od">
-                                <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
-                                    <BusFront size={16} /> カシワニクル OD × 時間帯
-                                </AccordionTrigger>
-
-                                <AccordionContent className="flex flex-col space-y-3 bg-white rounded-xl mt-2 px-4 py-3">
-                                    <div className="flex items-center justify-between">
-                                        <Label className="text-sm text-black flex items-center gap-2">
-                                            OD フロー（ライン）
-                                        </Label>
-                                        <Switch
-                                            checked={kashiwakuruOdVisible}
-                                            onCheckedChange={() =>
-                                                handleLayerToggle('カシワニクル OD', kashiwakuruOdVisible, toggleKashiwakuruOdVisible)
-                                            }
-                                        />
-                                    </div>
-
-                                    <div className="flex flex-col gap-1">
-                                        <Label className="text-sm text-black">
-                                            時間帯（開始）: {kashiwakuruOdHour}:00 – {kashiwakuruOdHour + 1}:00
-                                        </Label>
-                                        <input
-                                            type="range"
-                                            min={8}
-                                            max={19}
-                                            step={1}
-                                            value={kashiwakuruOdHour}
-                                            onChange={(e) => onKashiwakuruOdHourChange(parseInt(e.target.value, 10))}
-                                            className="w-full"
-                                        />
-                                    </div>
-                                </AccordionContent>
-                            </AccordionItem>
-                        </Accordion> */}
-
                         <Accordion type="single" collapsible className="w-full">
                             <AccordionItem value="kashiwa-od">
                                 <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
@@ -815,6 +796,8 @@ export default function MapControls({
                                         { label: '町丁目：総数（G列）', checked: chomeTotalVisible, onChange: () => handleLayerToggle('町丁目：総数', chomeTotalVisible, toggleChomeTotalVisible) },
                                         { label: '町丁目：高齢化率（K列）', checked: chomeAgingVisible, onChange: () => handleLayerToggle('町丁目：高齢化率', chomeAgingVisible, toggleChomeAgingVisible) },
                                         { label: '町丁目：人口密度（L列）', checked: chomeDensityVisible, onChange: () => handleLayerToggle('町丁目：人口密度', chomeDensityVisible, toggleChomeDensityVisible) },
+                                        { label: '町丁目：総数（2040 推計）', checked: chomeTotal2040Visible, onChange: () => handleLayerToggle('町丁目：総数（2040 推計）', chomeTotal2040Visible, toggleChomeTotal2040Visible) },
+                                        { label: '町丁目：高齢化率（2040 推計）', checked: chomeAging2040Visible, onChange: () => handleLayerToggle('町丁目：高齢化率（2040 推計）', chomeAging2040Visible, toggleChomeAging2040Visible) },
                                     ].map(({ label, checked, onChange }) => (
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">{label}</Label>
@@ -836,6 +819,7 @@ export default function MapControls({
                                             <div className="flex items-center gap-2">
                                                 <Switch
                                                     checked={chomeFiltersOpen}
+                                                    disabled={!anyChomeLayerOn}
                                                     onCheckedChange={(next) => {
                                                         if (!next) resetChomeUIAndLayers(); // closing collapses + resets everything
                                                         setChomeFiltersOpen(next);
@@ -868,6 +852,11 @@ export default function MapControls({
                                                                         <SelectItem value="total">総数（G）</SelectItem>
                                                                         <SelectItem value="aging">高齢化率（K）</SelectItem>
                                                                         <SelectItem value="density">人口密度（L）</SelectItem>
+                                                                        <SelectItem value="total">総数（G）</SelectItem>
+                                                                        <SelectItem value="aging">高齢化率（K）</SelectItem>
+                                                                        <SelectItem value="density">人口密度（L）</SelectItem>
+                                                                        <SelectItem value="total_2040">総数（2040 推計）</SelectItem>
+                                                                        <SelectItem value="aging_2040">高齢化率（2040 推計）</SelectItem>
                                                                     </SelectContent>
                                                                 </Select>
                                                             </div>
@@ -947,23 +936,23 @@ export default function MapControls({
                                                             </div>
 
                                                             <div className="grid grid-cols-12 gap-3">
-                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">最小</Label>
+                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">最小{isAgingMetric ? "（%）" : ""}</Label>
                                                                 <Input
                                                                     inputMode="numeric"
                                                                     type="number"
                                                                     value={chomeMin}
                                                                     onChange={(e) => setChomeMin(e.target.value)}
-                                                                    placeholder="例: 1000"
+                                                                    placeholder={isAgingMetric ? "例: 25" : "例: 1000"}
                                                                     className="col-span-8 h-8 text-xs rounded-lg"
                                                                 />
 
-                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">最大</Label>
+                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">最大{isAgingMetric ? "（%）" : ""}</Label>
                                                                 <Input
                                                                     inputMode="numeric"
                                                                     type="number"
                                                                     value={chomeMax}
                                                                     onChange={(e) => setChomeMax(e.target.value)}
-                                                                    placeholder="例: 10000"
+                                                                    placeholder={isAgingMetric ? "例: 40" : "例: 10000"}
                                                                     className="col-span-8 h-8 text-xs rounded-lg"
                                                                 />
                                                             </div>
@@ -1039,7 +1028,7 @@ export default function MapControls({
                                                                     <Select
                                                                         value={chomeLabelsMetric}
                                                                         onValueChange={(v) => {
-                                                                            const m = v as 'total' | 'aging' | 'density';
+                                                                            const m = v as ChomeMetric;
                                                                             setChomeLabelsMetric(m);
                                                                             if (chomeLabelsMode === 'metric') {
                                                                                 onChomeLabelsChange(chomeLabelsOn, 'metric', m);
@@ -1053,6 +1042,8 @@ export default function MapControls({
                                                                             <SelectItem value="total">総数（G）</SelectItem>
                                                                             <SelectItem value="aging">高齢化率（K）</SelectItem>
                                                                             <SelectItem value="density">人口密度（L）</SelectItem>
+                                                                            <SelectItem value="total_2040">総数（2040 推計）</SelectItem>
+                                                                            <SelectItem value="aging_2040">高齢化率（2040 推計）</SelectItem>
                                                                         </SelectContent>
                                                                     </Select>
                                                                 </div>
