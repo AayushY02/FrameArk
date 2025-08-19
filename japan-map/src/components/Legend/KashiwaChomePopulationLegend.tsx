@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type JSX } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
+import type mapboxgl from "mapbox-gl";
 
 // 🔒 Single source of truth for layer IDs — import from the layer module
 import {
@@ -41,14 +42,16 @@ function parseStepExpression(expr: any): { breaks: number[]; colors: string[] } 
   return { breaks, colors };
 }
 
-/** Format numbers nicely; aging is percentage (0..1 → 0..100%) */
+/** Format numbers nicely; aging is percentage.
+ *  Auto-detect if breaks are already 0–100 (avoid double ×100). */
 function formatBucketLabel(
   idx: number,
   breaks: number[],
   metric: "total" | "aging" | "density"
 ) {
   const fmtNum = (n: number) => n.toLocaleString("ja-JP");
-  const fmtPct = (n: number) => `${(n * 100).toFixed(0)}%`;
+  const alreadyPercent = metric === "aging" && breaks.some((b) => b > 1);
+  const fmtPct = (n: number) => `${(alreadyPercent ? n : n * 100).toFixed(0)}%`;
   const format = (v: number) => (metric === "aging" ? fmtPct(v) : fmtNum(v));
 
   if (breaks.length === 0) return "すべて";
@@ -154,11 +157,7 @@ export default function KashiwaChomePopulationLegend({
   }, [map, refresh]);
 
   const showAny =
-    totalVisible ||
-    agingVisible ||
-    densityVisible ||
-    !!total2040Visible ||
-    !!aging2040Visible;
+    totalVisible || agingVisible || densityVisible || !!total2040Visible || !!aging2040Visible;
   if (!showAny) return null;
 
   const blocks: JSX.Element[] = [];
@@ -183,13 +182,25 @@ export default function KashiwaChomePopulationLegend({
   if (!!total2040Visible && total2040) {
     if (blocks.length) blocks.push(<Separator key="sep-3" />);
     blocks.push(
-      <SwatchRow key="row-total-2040" title="総数（2040年・推計）" colors={total2040.colors} breaks={total2040.breaks} metric="total" />
+      <SwatchRow
+        key="row-total-2040"
+        title="総数（2040年・推計）"
+        colors={total2040.colors}
+        breaks={total2040.breaks}
+        metric="total"
+      />
     );
   }
   if (!!aging2040Visible && aging2040) {
     if (blocks.length) blocks.push(<Separator key="sep-4" />);
     blocks.push(
-      <SwatchRow key="row-aging-2040" title="高齢化率（2040年・推計）" colors={aging2040.colors} breaks={aging2040.breaks} metric="aging" />
+      <SwatchRow
+        key="row-aging-2040"
+        title="高齢化率（2040年・推計）"
+        colors={aging2040.colors}
+        breaks={aging2040.breaks}
+        metric="aging"
+      />
     );
   }
 

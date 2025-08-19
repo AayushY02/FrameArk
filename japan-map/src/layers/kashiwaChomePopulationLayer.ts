@@ -543,12 +543,13 @@ const METRIC_PROP: Record<Metric, string> = {
     aging_2040: "aging_rate_2040",
 };
 
-type PaletteName = "Blues" | "Greens" | "Oranges" | "Purples";
+type PaletteName = "Blues" | "Greens" | "Oranges" | "Purples" | "OrangeRed";
 const PALETTES: Record<PaletteName, string[]> = {
     Blues: ["#f1eef6", "#bdc9e1", "#74a9cf", "#2b8cbe", "#045a8d"],
     Greens: ["#edf8e9", "#bae4b3", "#74c476", "#31a354", "#006d2c"],
     Oranges: ["#fff5eb", "#fdd0a2", "#f16913", "#d94801", "#7f2704"],
     Purples: ["#f2f0f7", "#cbc9e2", "#9e9ac8", "#756bb1", "#54278f"],
+    OrangeRed: ["#fee8c8", "#fdbb84", "#fc8d59", "#e34a33", "#b30000"],
 };
 
 /* -------------------- cached data -------------------- */
@@ -756,7 +757,7 @@ function addBaseLayers(map: mapboxgl.Map) {
     addFillLine(KASHIWA_CHOME_DENSITY_FILL, KASHIWA_CHOME_DENSITY_OUTLINE, defaultPaint( "density", "Oranges"), true);
     addFillLine(KASHIWA_CHOME_TOTAL_2040_FILL, KASHIWA_CHOME_TOTAL_2040_OUTLINE, defaultPaint( "total_2040", "Blues"), true);
     // FIX: aging_2040 uses aging anchors
-    addFillLine(KASHIWA_CHOME_AGING_2040_FILL, KASHIWA_CHOME_AGING_2040_OUTLINE, defaultPaint( "aging_2040", "Oranges"), true);
+    addFillLine(KASHIWA_CHOME_AGING_2040_FILL, KASHIWA_CHOME_AGING_2040_OUTLINE, defaultPaint( "aging_2040", "OrangeRed"), true);
 
     enforceLayerOrder(map);
 }
