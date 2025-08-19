@@ -715,7 +715,7 @@ function jenksBreaks(values: number[], bins = 5): number[] {
     return kclass;
 }
 
-function defaultPaint(map: mapboxgl.Map, metric: Metric, palette: PaletteName): mapboxgl.FillPaint {
+function defaultPaint(metric: Metric, palette: PaletteName): mapboxgl.FillPaint {
     const prop = METRIC_PROP[metric];
     const values = getValues(metric);
     const bins = 5;
@@ -751,12 +751,12 @@ function addBaseLayers(map: mapboxgl.Map) {
         }
     };
 
-    addFillLine(KASHIWA_CHOME_TOTAL_FILL, KASHIWA_CHOME_TOTAL_OUTLINE, defaultPaint(map, "total", "Purples"), true);
-    addFillLine(KASHIWA_CHOME_AGING_FILL, KASHIWA_CHOME_AGING_OUTLINE, defaultPaint(map, "aging", "Greens"), true);
-    addFillLine(KASHIWA_CHOME_DENSITY_FILL, KASHIWA_CHOME_DENSITY_OUTLINE, defaultPaint(map, "density", "Oranges"), true);
-    addFillLine(KASHIWA_CHOME_TOTAL_2040_FILL, KASHIWA_CHOME_TOTAL_2040_OUTLINE, defaultPaint(map, "total_2040", "Blues"), true);
+    addFillLine(KASHIWA_CHOME_TOTAL_FILL, KASHIWA_CHOME_TOTAL_OUTLINE, defaultPaint( "total", "Purples"), true);
+    addFillLine(KASHIWA_CHOME_AGING_FILL, KASHIWA_CHOME_AGING_OUTLINE, defaultPaint( "aging", "Greens"), true);
+    addFillLine(KASHIWA_CHOME_DENSITY_FILL, KASHIWA_CHOME_DENSITY_OUTLINE, defaultPaint( "density", "Oranges"), true);
+    addFillLine(KASHIWA_CHOME_TOTAL_2040_FILL, KASHIWA_CHOME_TOTAL_2040_OUTLINE, defaultPaint( "total_2040", "Blues"), true);
     // FIX: aging_2040 uses aging anchors
-    addFillLine(KASHIWA_CHOME_AGING_2040_FILL, KASHIWA_CHOME_AGING_2040_OUTLINE, defaultPaint(map, "aging_2040", "Oranges"), true);
+    addFillLine(KASHIWA_CHOME_AGING_2040_FILL, KASHIWA_CHOME_AGING_2040_OUTLINE, defaultPaint( "aging_2040", "Oranges"), true);
 
     enforceLayerOrder(map);
 }
