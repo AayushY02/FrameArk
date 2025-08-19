@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState, type JSX } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
-import type mapboxgl from "mapbox-gl";
 
 // 🔒 Single source of truth for layer IDs — import from the layer module
 import {
