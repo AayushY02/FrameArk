@@ -1,5 +1,39 @@
 const BUS_LAYER_IDS = ['bus-layer'];
 
+export function endLoadingWhenGeoJSONReady(
+    map: maplibregl.Map,
+    sourceId: string,
+    done: () => void,
+    timeoutMs = 800
+) {
+    let finished = false;
+
+    const finish = () => {
+        if (finished) return;
+        finished = true;
+        map.off("sourcedata", onSourceData as any);
+        done();
+    };
+
+    const onSourceData = (e: any) => {
+        if (e?.sourceId === sourceId) {
+            // For GeoJSON, the source becomes available very quickly.
+            // Either isSourceLoaded or just the source event is enough for UX.
+            if (e.isSourceLoaded || e.dataType === "source") {
+                // wait one render tick so the layer paints
+                map.once("render", finish);
+            }
+        }
+    };
+
+    map.on("sourcedata", onSourceData as any);
+
+    // Safety: stop spinner even if nothing fires (bad network, etc.)
+    const t = setTimeout(finish, timeoutMs);
+    // If we finished early, clear the timeout (optional, harmless if left)
+    map.once("render", () => { if (finished) clearTimeout(t); });
+}
+
 export const toggleBusPassengerLayer = (
     map: maplibregl.Map,
     busLayerVisible: boolean,
@@ -61,7 +95,7 @@ export const toggleBusPassengerLayer = (
                 map.setLayoutProperty(id, 'visibility', 'none');
             }
         });
-       
+
     }
 
     setBusLayerVisible(!busLayerVisible);
@@ -365,7 +399,8 @@ export const toggleMasuoCourseRideLayer = (
                 });
 
                 setLayerVisible(true);
-                map.once('idle', () => setIsLoading(false));
+                // map.once('idle', () => setIsLoading(false));
+                endLoadingWhenGeoJSONReady(map, sourceId, () => setIsLoading(false));
             });
     } else {
         // Hide sakae layer
@@ -376,7 +411,8 @@ export const toggleMasuoCourseRideLayer = (
         });
 
         setLayerVisible(false);
-        map.once('idle', () => setIsLoading(false));
+        // map.once('idle', () => setIsLoading(false));
+        setIsLoading(false);
     }
 };
 
