@@ -1,5 +1,5 @@
 // // // src/layers/kashiwakuruOdLayer.ts
-// // import mapboxgl from "mapbox-gl";
+// // import maplibregl from "mapbox-gl";
 
 // // export const KASHIWAKURU_OD_SOURCE_ID = "kashiwakuru-od";
 // // export const KASHIWAKURU_OD_LAYER_ID = "kashiwakuru-od-line";
@@ -11,7 +11,7 @@
 
 // // const DATA_URL = "/data/kashiwa_od_lines.geojson";
 
-// // export function setSelectedOdKey(map: mapboxgl.Map, key: string) {
+// // export function setSelectedOdKey(map: maplibregl.Map, key: string) {
 // //     if (!map.getLayer("od-selected-highlight")) {
 // //         map.addLayer({
 // //             id: "od-selected-highlight",
@@ -37,7 +37,7 @@
 
 
 // // /** Remove mesh layers/sources before showing OD */
-// // function removeMeshLayers(map: mapboxgl.Map) {
+// // function removeMeshLayers(map: maplibregl.Map) {
 // //     const meshLayers = [
 // //         "mesh-250m-fill", "mesh-500m-fill", "mesh-1km-fill",
 // //         "mesh-250m-outline", "mesh-500m-outline", "mesh-1km-outline",
@@ -47,7 +47,7 @@
 // // }
 
 // // /** Fetch data once and ensure all three sources (line + endpoints) exist */
-// // async function ensureOdSources(map: mapboxgl.Map) {
+// // async function ensureOdSources(map: maplibregl.Map) {
 // //     // Fetch the GeoJSON (also used to derive origins/dests)
 // //     const resp = await fetch(DATA_URL);
 // //     const data: GeoJSON.FeatureCollection = await resp.json();
@@ -81,7 +81,7 @@
 // //     if (!map.getSource(KASHIWAKURU_OD_SOURCE_ID)) {
 // //         map.addSource(KASHIWAKURU_OD_SOURCE_ID, { type: "geojson", data });
 // //     } else {
-// //         (map.getSource(KASHIWAKURU_OD_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(data);
+// //         (map.getSource(KASHIWAKURU_OD_SOURCE_ID) as maplibregl.GeoJSONSource).setData(data);
 // //     }
 
 // //     const originsFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: origins };
@@ -90,17 +90,17 @@
 // //     if (!map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID)) {
 // //         map.addSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID, { type: "geojson", data: originsFC });
 // //     } else {
-// //         (map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(originsFC);
+// //         (map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID) as maplibregl.GeoJSONSource).setData(originsFC);
 // //     }
 
 // //     if (!map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID)) {
 // //         map.addSource(KASHIWAKURU_OD_DESTS_SOURCE_ID, { type: "geojson", data: destsFC });
 // //     } else {
-// //         (map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(destsFC);
+// //         (map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID) as maplibregl.GeoJSONSource).setData(destsFC);
 // //     }
 // // }
 
-// // function addOdLineLayers(map: mapboxgl.Map, initialHour: number) {
+// // function addOdLineLayers(map: maplibregl.Map, initialHour: number) {
 // //     // Main visual line layer (hour-based opacity; keeps *all* lines clickable & visible)
 // //     if (!map.getLayer(KASHIWAKURU_OD_LAYER_ID)) {
 // //         map.addLayer({
@@ -142,7 +142,7 @@
 // //     }
 // // }
 
-// // function addEndpointCircleLayers(map: mapboxgl.Map) {
+// // function addEndpointCircleLayers(map: maplibregl.Map) {
 // //     // Origins (green)
 // //     if (!map.getLayer(KASHIWAKURU_OD_ORIGINS_LAYER_ID)) {
 // //         map.addLayer({
@@ -193,7 +193,7 @@
 // // }
 
 // // /** Register interactions: click (popup + button), hover cursor */
-// // function wireInteractions(map: mapboxgl.Map, popup: mapboxgl.Popup) {
+// // function wireInteractions(map: maplibregl.Map, popup: maplibregl.Popup) {
 // //     // Use the hit layer to guarantee easy click, regardless of hour/opacity
 // //     map.on("click", KASHIWAKURU_OD_HIT_LAYER_ID, (e) => {
 // //         const f = e.features?.[0];
@@ -232,12 +232,12 @@
 
 // // /** Public: toggle the OD layer */
 // // export async function toggleKashiwakuruOdLayer(
-// //     map: mapboxgl.Map,
+// //     map: maplibregl.Map,
 // //     visible: boolean,
 // //     setIsLoading: (b: boolean) => void,
 // //     setVisible: (b: boolean) => void,
 // //     selectedHour: number,
-// //     transportPopupRef?: mapboxgl.Popup // you already have a popup in MapView; pass it in for reuse
+// //     transportPopupRef?: maplibregl.Popup // you already have a popup in MapView; pass it in for reuse
 // // ) {
 // //     try {
 // //         setIsLoading(true);
@@ -257,7 +257,7 @@
 // //                 wireInteractions(map, transportPopupRef);
 // //             } else {
 // //                 // Fallback: create a lightweight popup if none was passed
-// //                 const tmp = new (mapboxgl as any).Popup({ closeButton: false, closeOnClick: true, className: "ai-popup" }) as mapboxgl.Popup;
+// //                 const tmp = new (maplibregl as any).Popup({ closeButton: false, closeOnClick: true, className: "ai-popup" }) as maplibregl.Popup;
 // //                 wireInteractions(map, tmp);
 // //             }
 
@@ -280,7 +280,7 @@
 // // }
 
 // // /** Public: hour change (no filtering; only opacity changes so all lines remain clickable) */
-// // export function setKashiwakuruOdHour(map: mapboxgl.Map, hour: number) {
+// // export function setKashiwakuruOdHour(map: maplibregl.Map, hour: number) {
 // //     if (!map.getLayer(KASHIWAKURU_OD_LAYER_ID)) return;
 // //     map.setPaintProperty(
 // //         KASHIWAKURU_OD_LAYER_ID,
@@ -291,7 +291,7 @@
 
 
 // // src/layers/kashiwakuruOdLayer.ts
-// // import type mapboxgl from "mapbox-gl";   
+// // import type maplibregl from "mapbox-gl";   
 
 // export const KASHIWAKURU_OD_SOURCE_ID = "kashiwakuru-od";
 // export const KASHIWAKURU_OD_LAYER_ID  = "kashiwakuru-od-line";
@@ -304,7 +304,7 @@
 // const DATA_URL = "/data/kashiwa_od_lines.geojson";
 
 // /** Remove mesh layers/sources before showing OD */
-// function removeMeshLayers(map: mapboxgl.Map) {
+// function removeMeshLayers(map: maplibregl.Map) {
 //   const mesh = [
 //     "mesh-250m-fill","mesh-500m-fill","mesh-1km-fill",
 //     "mesh-250m-outline","mesh-500m-outline","mesh-1km-outline",
@@ -314,7 +314,7 @@
 // }
 
 // /** Build endpoints and ensure sources exist */
-// async function ensureOdSources(map: mapboxgl.Map) {
+// async function ensureOdSources(map: maplibregl.Map) {
 //   const resp = await fetch(DATA_URL);
 //   const data: GeoJSON.FeatureCollection = await resp.json();
 
@@ -330,20 +330,20 @@
 //   }
 
 //   if (!map.getSource(KASHIWAKURU_OD_SOURCE_ID)) map.addSource(KASHIWAKURU_OD_SOURCE_ID, { type:"geojson", data });
-//   else (map.getSource(KASHIWAKURU_OD_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(data);
+//   else (map.getSource(KASHIWAKURU_OD_SOURCE_ID) as maplibregl.GeoJSONSource).setData(data);
 
 //   const originsFC: GeoJSON.FeatureCollection = { type:"FeatureCollection", features: origins };
 //   const destsFC: GeoJSON.FeatureCollection   = { type:"FeatureCollection", features: dests };
 
 //   if (!map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID)) map.addSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID, { type:"geojson", data: originsFC });
-//   else (map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(originsFC);
+//   else (map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID) as maplibregl.GeoJSONSource).setData(originsFC);
 
 //   if (!map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID)) map.addSource(KASHIWAKURU_OD_DESTS_SOURCE_ID, { type:"geojson", data: destsFC });
-//   else (map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(destsFC);
+//   else (map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID) as maplibregl.GeoJSONSource).setData(destsFC);
 // }
 
 // /** Add line + hit + endpoint circle layers (no hour filter here) */
-// function addOdLayers(map: mapboxgl.Map) {
+// function addOdLayers(map: maplibregl.Map) {
 //   if (!map.getLayer(KASHIWAKURU_OD_LAYER_ID)) {
 //     map.addLayer({
 //       id: KASHIWAKURU_OD_LAYER_ID,
@@ -403,7 +403,7 @@
 // }
 
 // /** Clear all time filters → show the complete dataset */
-// export function showAllKashiwakuruOd(map: mapboxgl.Map) {
+// export function showAllKashiwakuruOd(map: maplibregl.Map) {
 //   const ids = [
 //     KASHIWAKURU_OD_LAYER_ID,
 //     KASHIWAKURU_OD_HIT_LAYER_ID,
@@ -418,7 +418,7 @@
 // }
 
 // /** Strictly filter to a single hour across lines + endpoints */
-// export function setKashiwakuruOdHour(map: mapboxgl.Map, hour: number) {
+// export function setKashiwakuruOdHour(map: maplibregl.Map, hour: number) {
 //   const filt: any = ["==", ["get", "hour_start"], hour];
 //   [KASHIWAKURU_OD_LAYER_ID, KASHIWAKURU_OD_HIT_LAYER_ID].forEach(id => {
 //     if (map.getLayer(id)) map.setFilter(id, filt);
@@ -428,7 +428,7 @@
 // }
 
 // /** Optional: highlight a single OD line by unique key (keep if you already added it) */
-// export function setSelectedOdKey(map: mapboxgl.Map, key: string) {
+// export function setSelectedOdKey(map: maplibregl.Map, key: string) {
 //   const hiId = "od-selected-highlight";
 //   const filt: any = ["==", ["concat", ["get","origin"], "-", ["get","destination"], "-", ["get","hour_start"]], key];
 //   if (!map.getLayer(hiId)) {
@@ -442,7 +442,7 @@
 // }
 
 // /** Click → show popup and wire the “show all” button */
-// function wireInteractions(map: mapboxgl.Map, popup: mapboxgl.Popup) {
+// function wireInteractions(map: maplibregl.Map, popup: maplibregl.Popup) {
 //   map.on("click", KASHIWAKURU_OD_HIT_LAYER_ID, (e) => {
 //     const f = e.features?.[0];
 //     if (!f) return;
@@ -470,12 +470,12 @@
 
 // /** Public toggler */
 // export async function toggleKashiwakuruOdLayer(
-//   map: mapboxgl.Map,
+//   map: maplibregl.Map,
 //   visible: boolean,
 //   setIsLoading: (b: boolean) => void,
 //   setVisible: (b: boolean) => void,
 //   _selectedHour: number,                     // kept in signature for compatibility
-//   transportPopupRef?: mapboxgl.Popup        // reuse the popup from MapView
+//   transportPopupRef?: maplibregl.Popup        // reuse the popup from MapView
 // ) {
 //   try {
 //     setIsLoading(true);
@@ -518,7 +518,7 @@ export const KASHIWAKURU_OD_DESTS_LAYER_ID = "kashiwakuru-od-dests-circles";
 const DATA_URL = "/data/kashiwa_od_lines.geojson";
 
 /* -------------------- mesh cleanup -------------------- */
-function removeMeshLayers(map: mapboxgl.Map) {
+function removeMeshLayers(map: maplibregl.Map) {
     const mesh = [
         "mesh-250m-fill", "mesh-500m-fill", "mesh-1km-fill",
         "mesh-250m-outline", "mesh-500m-outline", "mesh-1km-outline",
@@ -528,7 +528,7 @@ function removeMeshLayers(map: mapboxgl.Map) {
 }
 
 /* -------------------- sources & layers -------------------- */
-async function ensureOdSources(map: mapboxgl.Map) {
+async function ensureOdSources(map: maplibregl.Map) {
     const resp = await fetch(DATA_URL);
     const data: GeoJSON.FeatureCollection = await resp.json();
 
@@ -557,7 +557,7 @@ async function ensureOdSources(map: mapboxgl.Map) {
     if (!map.getSource(KASHIWAKURU_OD_SOURCE_ID)) {
         map.addSource(KASHIWAKURU_OD_SOURCE_ID, { type: "geojson", data });
     } else {
-        (map.getSource(KASHIWAKURU_OD_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(data);
+        (map.getSource(KASHIWAKURU_OD_SOURCE_ID) as maplibregl.GeoJSONSource).setData(data);
     }
 
     const originsFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: origins };
@@ -566,17 +566,17 @@ async function ensureOdSources(map: mapboxgl.Map) {
     if (!map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID)) {
         map.addSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID, { type: "geojson", data: originsFC });
     } else {
-        (map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(originsFC);
+        (map.getSource(KASHIWAKURU_OD_ORIGINS_SOURCE_ID) as maplibregl.GeoJSONSource).setData(originsFC);
     }
 
     if (!map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID)) {
         map.addSource(KASHIWAKURU_OD_DESTS_SOURCE_ID, { type: "geojson", data: destsFC });
     } else {
-        (map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(destsFC);
+        (map.getSource(KASHIWAKURU_OD_DESTS_SOURCE_ID) as maplibregl.GeoJSONSource).setData(destsFC);
     }
 }
 
-function addOdLayers(map: mapboxgl.Map) {
+function addOdLayers(map: maplibregl.Map) {
     // main visual lines
     if (!map.getLayer(KASHIWAKURU_OD_LAYER_ID)) {
         map.addLayer({
@@ -637,7 +637,7 @@ function addOdLayers(map: mapboxgl.Map) {
 
 // ADD this export anywhere below your other exports
 export function setKashiwakuruOdFilter(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     enabled: boolean,
     hour: number
 ) {
@@ -650,7 +650,7 @@ export function setKashiwakuruOdFilter(
 
 
 /* -------------------- “show all hours” & hour filter -------------------- */
-export function showAllKashiwakuruOd(map: mapboxgl.Map) {
+export function showAllKashiwakuruOd(map: maplibregl.Map) {
     const ids = [
         KASHIWAKURU_OD_LAYER_ID,
         KASHIWAKURU_OD_HIT_LAYER_ID,
@@ -672,7 +672,7 @@ export function showAllKashiwakuruOd(map: mapboxgl.Map) {
     }
 }
 
-export function setKashiwakuruOdHour(map: mapboxgl.Map, hour: number) {
+export function setKashiwakuruOdHour(map: maplibregl.Map, hour: number) {
     const hourOnly: any = ["==", ["get", "hour_start"], hour];
 
     [KASHIWAKURU_OD_LAYER_ID, KASHIWAKURU_OD_HIT_LAYER_ID].forEach(id => {
@@ -694,14 +694,16 @@ export function setKashiwakuruOdHour(map: mapboxgl.Map, hour: number) {
 /* -------------------- endpoint focus (highlight by stop) -------------------- */
 let currentEndpointFocus: string | null = null;
 
-function endpointFilterForName(name: string): any[] {
+import type { FilterSpecification } from "maplibre-gl";
+
+function endpointFilterForName(name: string): FilterSpecification {
     return ["any",
         ["==", ["get", "origin"], name],
         ["==", ["get", "destination"], name]
     ];
 }
 
-export function setOdEndpointFocus(map: mapboxgl.Map, name: string) {
+export function setOdEndpointFocus(map: maplibregl.Map, name: string) {
     currentEndpointFocus = name;
 
     const highlightId = "od-endpoint-highlight";
@@ -710,13 +712,13 @@ export function setOdEndpointFocus(map: mapboxgl.Map, name: string) {
         type: "line" as const,
         source: KASHIWAKURU_OD_SOURCE_ID,
         paint: { "line-color": "#f59e0b", "line-width": 6 },
-        filter: endpointFilterForName(name)
+        filter: endpointFilterForName(name) as FilterSpecification
     };
 
     if (!map.getLayer(highlightId)) {
         map.addLayer(base);
     } else {
-        map.setFilter(highlightId, base.filter as any);
+        map.setFilter(highlightId, base.filter as FilterSpecification);
     }
 
     // Dim base layer for contrast
@@ -725,7 +727,7 @@ export function setOdEndpointFocus(map: mapboxgl.Map, name: string) {
     }
 }
 
-export function clearOdEndpointFocus(map: mapboxgl.Map) {
+export function clearOdEndpointFocus(map: maplibregl.Map) {
     // reset module state if you track it
     try {
         // If you kept a module-scoped variable:
@@ -778,7 +780,7 @@ function endpointPopupHtml(name: string, role: "origin" | "destination") {
   `;
 }
 
-function wireInteractions(map: mapboxgl.Map, popup: mapboxgl.Popup) {
+function wireInteractions(map: maplibregl.Map, popup: maplibregl.Popup) {
     // Lines: popup with "show all hours" button
     map.on("click", KASHIWAKURU_OD_HIT_LAYER_ID, (e) => {
         const f = e.features?.[0];
@@ -833,12 +835,12 @@ function wireInteractions(map: mapboxgl.Map, popup: mapboxgl.Popup) {
 
 /* -------------------- public API -------------------- */
 export async function toggleKashiwakuruOdLayer(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     visible: boolean,
     setIsLoading: (b: boolean) => void,
     setVisible: (b: boolean) => void,
     _selectedHour: number,                // kept for signature compatibility
-    transportPopupRef?: mapboxgl.Popup    // pass your existing popup instance from MapView
+    transportPopupRef?: maplibregl.Popup    // pass your existing popup instance from MapView
 ) {
     try {
         setIsLoading(true);

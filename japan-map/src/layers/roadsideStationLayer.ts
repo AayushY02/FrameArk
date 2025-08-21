@@ -1,7 +1,7 @@
 const SCHOOL_LAYER_IDS = ['roadside-station'];
 
 export const toggleRoadsideStationLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     roadsideStationLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setRoadsideStationLayerVisible: (v: boolean) => void
@@ -9,8 +9,8 @@ export const toggleRoadsideStationLayer = (
     setIsLoading(true);
 
     const sourceId = 'roadside-station';
-    const tilesetUrl = 'mapbox://frame-ark.roadside-station';
-    const sourceLayer = 'roadside-station';
+    // const tilesetUrl = 'mapbox://frame-ark.roadside-station';
+    // const sourceLayer = 'roadside-station';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
@@ -19,7 +19,7 @@ export const toggleRoadsideStationLayer = (
     if (!roadsideStationLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
+            map.addSource(sourceId, { type: 'geojson', data: "/data/roadside_station.geojson" });
         }
 
         // Add circle layer
@@ -28,7 +28,7 @@ export const toggleRoadsideStationLayer = (
                 id: 'roadside-station',
                 type: 'symbol',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 minzoom: 5,
                 layout: {
                     'icon-image': 'convenience',

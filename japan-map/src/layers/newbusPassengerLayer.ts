@@ -1,7 +1,7 @@
 const BUS_LAYER_IDS = ['new-bus-layer'];
 
 export const toggleNewBusPassengerLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     busLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setBusLayerVisible: (v: boolean) => void
@@ -76,7 +76,7 @@ export const toggleNewBusPassengerLayer = (
 
 
 export const toggleNewKashiwakuruRideLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setLayerVisible: (v: boolean) => void
@@ -101,7 +101,7 @@ export const toggleNewKashiwakuruRideLayer = (
                 data: geojsonUrl
             });
         } else {
-            (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(geojsonUrl);
+            (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(geojsonUrl);
         }
 
         // Add circle layer for 逆井 コース
@@ -161,7 +161,7 @@ export const toggleNewKashiwakuruRideLayer = (
 };
 
 export const toggleNewKashiwakuruDropLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setLayerVisible: (v: boolean) => void
@@ -187,7 +187,7 @@ export const toggleNewKashiwakuruDropLayer = (
                 data: geojsonUrl
             });
         } else {
-            (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(geojsonUrl);
+            (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(geojsonUrl);
         }
 
         // Add circle layer for 逆井 コース

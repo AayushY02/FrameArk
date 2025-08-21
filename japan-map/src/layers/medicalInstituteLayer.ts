@@ -1,7 +1,7 @@
 const SCHOOL_LAYER_IDS = ['medical-layer'];
 
 export const toggleMedicalLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     medicalLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setMedicalLayerVisible: (v: boolean) => void
@@ -9,8 +9,8 @@ export const toggleMedicalLayer = (
     setIsLoading(true);
 
     const sourceId = 'medical-institute-land';
-    const tilesetUrl = 'mapbox://frame-ark.medical-institute-land';
-    const sourceLayer = 'medical-institute-land';
+    // const tilesetUrl = 'mapbox://frame-ark.medical-institute-land';
+    // const sourceLayer = 'medical-institute-land';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
@@ -19,7 +19,7 @@ export const toggleMedicalLayer = (
     if (!medicalLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
+            map.addSource(sourceId, { type: 'geojson', data: "/data/medical_institute_land.geojson" });
         }
 
         // Add circle layer
@@ -28,7 +28,7 @@ export const toggleMedicalLayer = (
                 id: 'medical-layer',
                 type: 'symbol',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 minzoom: 5,
                 layout: {
                     'icon-image': 'hospital', // built-in Mapbox icon

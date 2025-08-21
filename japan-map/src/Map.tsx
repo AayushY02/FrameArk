@@ -18,12 +18,12 @@ import 'ldrs/react/Grid.css'
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 const MAP_STYLES = {
-    ストリート: 'mapbox://styles/mapbox/streets-v12',
-    ライト: 'mapbox://styles/mapbox/light-v11',
-    ダーク: 'mapbox://styles/mapbox/dark-v11',
-    衛星写真: 'mapbox://styles/mapbox/satellite-v9',
-    アウトドア: 'mapbox://styles/mapbox/outdoors-v12',
-    ナビゲーション: 'mapbox://styles/mapbox/navigation-day-v1'
+    ストリート: 'https://demotiles.maplibre.org/styles/streets-v11.json',
+    ライト: 'https://demotiles.maplibre.org/styles/light-v10.json',
+    ダーク: 'https://demotiles.maplibre.org/styles/dark-v10.json',
+    衛星写真: 'https://demotiles.maplibre.org/styles/satellite-v9.json',
+    アウトドア: 'https://demotiles.maplibre.org/styles/outdoors-v11.json',
+    ナビゲーション: 'https://demotiles.maplibre.org/styles/navigation-day-v1.json'
 };
 
 const getGradientLegendForMetric = (metric: string) => {
@@ -517,7 +517,7 @@ export default function JapanMap() {
             minZoom: 4.5,
             maxZoom: 18,
             maxBounds: JAPAN_BOUNDS,
-            language :"ja"
+            language: "ja"
         });
         mapRef.current = map;
 

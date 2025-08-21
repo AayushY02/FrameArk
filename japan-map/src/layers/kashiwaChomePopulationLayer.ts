@@ -34,7 +34,7 @@
 // };
 
 // /* -------------------- mesh cleanup -------------------- */
-// function removeAllMeshes(map: mapboxgl.Map) {
+// function removeAllMeshes(map: maplibregl.Map) {
 //     const L = [
 //         "mesh-1km-fill", "mesh-1km-outline", "1km-mesh-fill", "1km-mesh-line", "grid-1km",
 //         "mesh-500m-fill", "mesh-500m-outline", "grid-500m",
@@ -67,23 +67,23 @@
 // }
 
 // /* -------------------- source & base layers -------------------- */
-// async function ensureSource(map: mapboxgl.Map) {
+// async function ensureSource(map: maplibregl.Map) {
 //     const resp = await fetch(DATA_URL);
 //     const data: GeoJSON.FeatureCollection = await resp.json();
 
 //     if (!map.getSource(KASHIWA_CHOME_SOURCE_ID)) {
 //         map.addSource(KASHIWA_CHOME_SOURCE_ID, { type: "geojson", data, promoteId: "KEYCODE2" });
 //     } else {
-//         (map.getSource(KASHIWA_CHOME_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(data);
+//         (map.getSource(KASHIWA_CHOME_SOURCE_ID) as maplibregl.GeoJSONSource).setData(data);
 //     }
 // }
 
-// function addBaseLayers(map: mapboxgl.Map) {
+// function addBaseLayers(map: maplibregl.Map) {
 //     function addFillLine(
-//         map: mapboxgl.Map,
+//         map: maplibregl.Map,
 //         fillId: string,
 //         lineId: string,
-//         paint: mapboxgl.FillPaint,
+//         paint: maplibregl.FillPaint,
 //         hidden = false
 //     ) {
 //         if (!map.getLayer(fillId)) {
@@ -141,7 +141,7 @@
 //     enforceLayerOrder(map);
 // }
 
-// function defaultPaint(metric: Metric, palette: PaletteName): mapboxgl.FillPaint {
+// function defaultPaint(metric: Metric, palette: PaletteName): maplibregl.FillPaint {
 //     const prop = METRIC_PROP[metric];
 //     const colors = PALETTES[palette];
 //     const anchors = metric === "aging" ? [0, 0.15, 0.25, 0.35, 0.45] : [0, 1000, 5000, 10000, 20000];
@@ -159,8 +159,8 @@
 //     }
 //     return expr;
 // }
-// function getValuesFromSource(map: mapboxgl.Map, metric: Metric): number[] {
-//     const src = map.getSource(KASHIWA_CHOME_SOURCE_ID) as mapboxgl.GeoJSONSource;
+// function getValuesFromSource(map: maplibregl.Map, metric: Metric): number[] {
+//     const src = map.getSource(KASHIWA_CHOME_SOURCE_ID) as maplibregl.GeoJSONSource;
 //     const fc = (src as any)?._data as GeoJSON.FeatureCollection | undefined;
 //     const prop = METRIC_PROP[metric];
 //     if (!fc) return [];
@@ -211,7 +211,7 @@
 
 // /* -------------------- interactions & labels -------------------- */
 // let interactionsBound = false;
-// function bindInteractions(map: mapboxgl.Map, popup?: mapboxgl.Popup) {
+// function bindInteractions(map: maplibregl.Map, popup?: maplibregl.Popup) {
 //     if (interactionsBound || !popup) return;
 //     interactionsBound = true;
 
@@ -253,7 +253,7 @@
 //     });
 // }
 
-// function ensureLabels(map: mapboxgl.Map) {
+// function ensureLabels(map: maplibregl.Map) {
 //     if (map.getLayer(KASHIWA_CHOME_LABELS)) return;
 //     map.addLayer({
 //         id: KASHIWA_CHOME_LABELS,
@@ -265,7 +265,7 @@
 // }
 
 // /* -------------------- ordering & visibility -------------------- */
-// function enforceLayerOrder(map: mapboxgl.Map) {
+// function enforceLayerOrder(map: maplibregl.Map) {
 //     const order = [
 //         KASHIWA_CHOME_TOTAL_FILL,
 //         KASHIWA_CHOME_AGING_FILL,
@@ -285,7 +285,7 @@
 //     }
 // }
 
-// function setMetricVisibility(map: mapboxgl.Map, metric: Metric, visible: boolean) {
+// function setMetricVisibility(map: maplibregl.Map, metric: Metric, visible: boolean) {
 //     const ids = metric === "total"
 //         ? { fill: KASHIWA_CHOME_TOTAL_FILL, line: KASHIWA_CHOME_TOTAL_OUTLINE }
 //         : metric === "aging"
@@ -300,11 +300,11 @@
 
 // /* -------------------- public togglers (independent stacking) -------------------- */
 // export async function toggleKashiwaChomeTotalLayer(
-//     map: mapboxgl.Map,
+//     map: maplibregl.Map,
 //     visible: boolean,
 //     setIsLoading: (b: boolean) => void,
 //     setVisible: (b: boolean) => void,
-//     popup?: mapboxgl.Popup
+//     popup?: maplibregl.Popup
 // ) {
 //     try {
 //         setIsLoading(true);
@@ -324,11 +324,11 @@
 // }
 
 // export async function toggleKashiwaChomeAgingLayer(
-//     map: mapboxgl.Map,
+//     map: maplibregl.Map,
 //     visible: boolean,
 //     setIsLoading: (b: boolean) => void,
 //     setVisible: (b: boolean) => void,
-//     popup?: mapboxgl.Popup
+//     popup?: maplibregl.Popup
 // ) {
 //     try {
 //         setIsLoading(true);
@@ -348,11 +348,11 @@
 // }
 
 // export async function toggleKashiwaChomeDensityLayer(
-//     map: mapboxgl.Map,
+//     map: maplibregl.Map,
 //     visible: boolean,
 //     setIsLoading: (b: boolean) => void,
 //     setVisible: (b: boolean) => void,
-//     popup?: mapboxgl.Popup
+//     popup?: maplibregl.Popup
 // ) {
 //     try {
 //         setIsLoading(true);
@@ -372,11 +372,11 @@
 // }
 
 // export async function toggleKashiwaChomeTotal2040Layer(
-//     map: mapboxgl.Map,
+//     map: maplibregl.Map,
 //     visible: boolean,
 //     setIsLoading: (b: boolean) => void,
 //     setVisible: (b: boolean) => void,
-//     popup?: mapboxgl.Popup
+//     popup?: maplibregl.Popup
 // ) {
 //     try {
 //         setIsLoading(true);
@@ -396,11 +396,11 @@
 // }
 
 // export async function toggleKashiwaChomeAging2040Layer(
-//     map: mapboxgl.Map,
+//     map: maplibregl.Map,
 //     visible: boolean,
 //     setIsLoading: (b: boolean) => void,
 //     setVisible: (b: boolean) => void,
-//     popup?: mapboxgl.Popup
+//     popup?: maplibregl.Popup
 // ) {
 //     try {
 //         setIsLoading(true);
@@ -425,7 +425,7 @@
 
 // /** Update the choropleth palette / method / bin count / opacity for a metric. */
 // export function updateKashiwaChomeStyle(
-//     map: mapboxgl.Map,
+//     map: maplibregl.Map,
 //     metric: Metric,
 //     opts: { palette?: PaletteName; method?: Method; bins?: number; opacity?: number }
 // ) {
@@ -456,7 +456,7 @@
 
 // /** Optional: filter to a visible numeric range for any metric. */
 // export function setKashiwaChomeRangeFilter(
-//     map: mapboxgl.Map,
+//     map: maplibregl.Map,
 //     metric: Metric,
 //     min: number | null,
 //     max: number | null
@@ -482,7 +482,7 @@
 
 // /** Toggle labels (町丁字名 or the metric value). */
 // export function setKashiwaChomeLabelsVisible(
-//     map: mapboxgl.Map,
+//     map: maplibregl.Map,
 //     visible: boolean,
 //     mode: "name" | "metric" = "name",
 //     metric: Metric = "total"
@@ -582,7 +582,7 @@ function samplePalette(base: string[], bins: number): string[] {
 }
 
 /* -------------------- mesh cleanup -------------------- */
-function removeAllMeshes(map: mapboxgl.Map) {
+function removeAllMeshes(map: maplibregl.Map) {
     const L = [
         "mesh-1km-fill", "mesh-1km-outline", "1km-mesh-fill", "1km-mesh-line", "grid-1km",
         "mesh-500m-fill", "mesh-500m-outline", "grid-500m",
@@ -620,7 +620,7 @@ function removeAllMeshes(map: mapboxgl.Map) {
 }
 
 /* -------------------- source & base layers -------------------- */
-async function ensureSource(map: mapboxgl.Map) {
+async function ensureSource(map: maplibregl.Map) {
     // If we already have the source and cached data, we’re good
     const hasSource = !!map.getSource(KASHIWA_CHOME_SOURCE_ID);
     if (!CACHED_DATA) {
@@ -657,7 +657,7 @@ async function ensureSource(map: mapboxgl.Map) {
             promoteId: "KEYCODE2",
         } as any);
     } else {
-        (map.getSource(KASHIWA_CHOME_SOURCE_ID) as mapboxgl.GeoJSONSource).setData(CACHED_DATA);
+        (map.getSource(KASHIWA_CHOME_SOURCE_ID) as maplibregl.GeoJSONSource).setData(CACHED_DATA);
     }
 }
 
@@ -716,7 +716,7 @@ function jenksBreaks(values: number[], bins = 5): number[] {
     return kclass;
 }
 
-function defaultPaint(metric: Metric, palette: PaletteName): mapboxgl.FillPaint {
+function defaultPaint(metric: Metric, palette: PaletteName): { [key: string]: any } {
     const prop = METRIC_PROP[metric];
     const values = getValues(metric);
     const bins = 5;
@@ -728,11 +728,11 @@ function defaultPaint(metric: Metric, palette: PaletteName): mapboxgl.FillPaint 
     };
 }
 
-function addBaseLayers(map: mapboxgl.Map) {
+function addBaseLayers(map: maplibregl.Map) {
     const addFillLine = (
         fillId: string,
         lineId: string,
-        paint: mapboxgl.FillPaint,
+        paint: { [key: string]: any },
         hidden = false
     ) => {
         if (!map.getLayer(fillId)) {
@@ -752,19 +752,19 @@ function addBaseLayers(map: mapboxgl.Map) {
         }
     };
 
-    addFillLine(KASHIWA_CHOME_TOTAL_FILL, KASHIWA_CHOME_TOTAL_OUTLINE, defaultPaint( "total", "Purples"), true);
-    addFillLine(KASHIWA_CHOME_AGING_FILL, KASHIWA_CHOME_AGING_OUTLINE, defaultPaint( "aging", "Greens"), true);
-    addFillLine(KASHIWA_CHOME_DENSITY_FILL, KASHIWA_CHOME_DENSITY_OUTLINE, defaultPaint( "density", "Oranges"), true);
-    addFillLine(KASHIWA_CHOME_TOTAL_2040_FILL, KASHIWA_CHOME_TOTAL_2040_OUTLINE, defaultPaint( "total_2040", "Blues"), true);
+    addFillLine(KASHIWA_CHOME_TOTAL_FILL, KASHIWA_CHOME_TOTAL_OUTLINE, defaultPaint("total", "Purples"), true);
+    addFillLine(KASHIWA_CHOME_AGING_FILL, KASHIWA_CHOME_AGING_OUTLINE, defaultPaint("aging", "Greens"), true);
+    addFillLine(KASHIWA_CHOME_DENSITY_FILL, KASHIWA_CHOME_DENSITY_OUTLINE, defaultPaint("density", "Oranges"), true);
+    addFillLine(KASHIWA_CHOME_TOTAL_2040_FILL, KASHIWA_CHOME_TOTAL_2040_OUTLINE, defaultPaint("total_2040", "Blues"), true);
     // FIX: aging_2040 uses aging anchors
-    addFillLine(KASHIWA_CHOME_AGING_2040_FILL, KASHIWA_CHOME_AGING_2040_OUTLINE, defaultPaint( "aging_2040", "OrangeRed"), true);
+    addFillLine(KASHIWA_CHOME_AGING_2040_FILL, KASHIWA_CHOME_AGING_2040_OUTLINE, defaultPaint("aging_2040", "OrangeRed"), true);
 
     enforceLayerOrder(map);
 }
 
 /* -------------------- interactions & labels -------------------- */
-const boundMaps = new WeakSet<mapboxgl.Map>();
-function bindInteractions(map: mapboxgl.Map, popup?: mapboxgl.Popup) {
+const boundMaps = new WeakSet<maplibregl.Map>();
+function bindInteractions(map: maplibregl.Map, popup?: maplibregl.Popup) {
     if (!popup || boundMaps.has(map)) return;
     boundMaps.add(map);
 
@@ -828,7 +828,7 @@ function bindInteractions(map: mapboxgl.Map, popup?: mapboxgl.Popup) {
     });
 }
 
-function ensureLabels(map: mapboxgl.Map) {
+function ensureLabels(map: maplibregl.Map) {
     if (map.getLayer(KASHIWA_CHOME_LABELS)) return;
     map.addLayer({
         id: KASHIWA_CHOME_LABELS,
@@ -846,7 +846,7 @@ function ensureLabels(map: mapboxgl.Map) {
 }
 
 /* -------------------- ordering & visibility -------------------- */
-function enforceLayerOrder(map: mapboxgl.Map) {
+function enforceLayerOrder(map: maplibregl.Map) {
     const order = [
         // bottom -> top
         KASHIWA_CHOME_TOTAL_FILL,
@@ -871,7 +871,7 @@ function enforceLayerOrder(map: mapboxgl.Map) {
     }
 }
 
-function setMetricVisibility(map: mapboxgl.Map, metric: Metric, visible: boolean) {
+function setMetricVisibility(map: maplibregl.Map, metric: Metric, visible: boolean) {
     const ids = metric === "total"
         ? { fill: KASHIWA_CHOME_TOTAL_FILL, line: KASHIWA_CHOME_TOTAL_OUTLINE }
         : metric === "aging"
@@ -887,7 +887,7 @@ function setMetricVisibility(map: mapboxgl.Map, metric: Metric, visible: boolean
 }
 
 /* -------------------- public togglers (independent stacking) -------------------- */
-function clearLoadingSoon(map: mapboxgl.Map, setIsLoading: (b: boolean) => void) {
+function clearLoadingSoon(map: maplibregl.Map, setIsLoading: (b: boolean) => void) {
     const done = () => setIsLoading(false);
     let cleared = false;
     map.once("idle", () => { if (!cleared) { cleared = true; done(); } });
@@ -896,11 +896,11 @@ function clearLoadingSoon(map: mapboxgl.Map, setIsLoading: (b: boolean) => void)
 }
 
 export async function toggleKashiwaChomeTotalLayer(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     visible: boolean,
     setIsLoading: (b: boolean) => void,
     setVisible: (b: boolean) => void,
-    popup?: mapboxgl.Popup
+    popup?: maplibregl.Popup
 ) {
     try {
         setIsLoading(true);
@@ -920,11 +920,11 @@ export async function toggleKashiwaChomeTotalLayer(
 }
 
 export async function toggleKashiwaChomeAgingLayer(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     visible: boolean,
     setIsLoading: (b: boolean) => void,
     setVisible: (b: boolean) => void,
-    popup?: mapboxgl.Popup
+    popup?: maplibregl.Popup
 ) {
     try {
         setIsLoading(true);
@@ -944,11 +944,11 @@ export async function toggleKashiwaChomeAgingLayer(
 }
 
 export async function toggleKashiwaChomeDensityLayer(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     visible: boolean,
     setIsLoading: (b: boolean) => void,
     setVisible: (b: boolean) => void,
-    popup?: mapboxgl.Popup
+    popup?: maplibregl.Popup
 ) {
     try {
         setIsLoading(true);
@@ -968,11 +968,11 @@ export async function toggleKashiwaChomeDensityLayer(
 }
 
 export async function toggleKashiwaChomeTotal2040Layer(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     visible: boolean,
     setIsLoading: (b: boolean) => void,
     setVisible: (b: boolean) => void,
-    popup?: mapboxgl.Popup
+    popup?: maplibregl.Popup
 ) {
     try {
         setIsLoading(true);
@@ -992,11 +992,11 @@ export async function toggleKashiwaChomeTotal2040Layer(
 }
 
 export async function toggleKashiwaChomeAging2040Layer(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     visible: boolean,
     setIsLoading: (b: boolean) => void,
     setVisible: (b: boolean) => void,
-    popup?: mapboxgl.Popup
+    popup?: maplibregl.Popup
 ) {
     try {
         setIsLoading(true);
@@ -1020,7 +1020,7 @@ type Method = "quantile" | "equal" | "jenks";
 
 /** Update the choropleth palette / method / bin count / opacity for a metric. */
 export function updateKashiwaChomeStyle(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     metric: Metric,
     opts: { palette?: PaletteName; method?: Method; bins?: number; opacity?: number }
 ) {
@@ -1062,7 +1062,7 @@ export function updateKashiwaChomeStyle(
 
 /** Optional: filter to a visible numeric range for any metric. */
 export function setKashiwaChomeRangeFilter(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     metric: Metric,
     min: number | null,
     max: number | null
@@ -1088,7 +1088,7 @@ export function setKashiwaChomeRangeFilter(
 
 /** Toggle labels (町丁字名 or the metric value). */
 export function setKashiwaChomeLabelsVisible(
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     visible: boolean,
     mode: "name" | "metric" = "name",
     metric: Metric = "total"

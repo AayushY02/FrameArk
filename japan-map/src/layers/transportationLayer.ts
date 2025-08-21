@@ -3,7 +3,7 @@ const TRANSPORT_LAYER_IDS = ['transportation-line', 'transportation-line-hover']
 
 
 export const toggleBoardingLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     setVisible: (v: boolean) => void
 ) => {
     const layerId = 'boarding-layer';
@@ -14,7 +14,7 @@ export const toggleBoardingLayer = (
 };
 
 export const toggleAlightingLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     setVisible: (v: boolean) => void
 ) => {
     const layerId = 'alighting-layer';
@@ -24,7 +24,7 @@ export const toggleAlightingLayer = (
     setVisible(!isVisible);
 };
 export const toggleTransportationLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     transportVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setTransportVisible: (v: boolean) => void
@@ -32,8 +32,8 @@ export const toggleTransportationLayer = (
     setIsLoading(true);
 
     const sourceId = 'transportation-info-2022';
-    const tilesetUrl = 'mapbox://frame-ark.transportation';
-    const sourceLayer = 'transportation';
+    // const tilesetUrl = 'mapbox://frame-ark.transportation';
+    // const sourceLayer = 'transportation';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
@@ -41,13 +41,13 @@ export const toggleTransportationLayer = (
 
     const addVectorSource = (id: string, url: string) => {
         if (!map.getSource(id)) {
-            map.addSource(id, { type: 'vector', url });
+            map.addSource(id, { type: 'geojson', data: url });
         }
     };
 
     if (!transportVisible) {
         // add vector source once
-        addVectorSource(sourceId, tilesetUrl);
+        addVectorSource(sourceId, "/data/transportation.geojson");
         // addVectorSource('bus-flows', 'mapbox://frame-ark.bus-flows');
 
 
@@ -57,7 +57,7 @@ export const toggleTransportationLayer = (
                 type: 'line',
                 source: sourceId,
                 minzoom: 0,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 layout: { visibility: 'visible' },
                 paint: {
                     'line-color': ['get', 'Color'],
@@ -73,7 +73,7 @@ export const toggleTransportationLayer = (
                 id: 'transportation-line-hover',
                 type: 'line',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 layout: {},
                 paint: {
                     'line-color': '#000000',
@@ -142,7 +142,7 @@ export const toggleTransportationLayer = (
 const BUS_STOP_LAYER_IDS = ['bus-stops'];
 
 export const toggleBusStops = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     busStopsLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setBusStopsLayerVisible: (v: boolean) => void
@@ -150,8 +150,8 @@ export const toggleBusStops = (
     setIsLoading(true);
 
     const sourceId = 'bus-stops';
-    const tilesetUrl = 'mapbox://frame-ark.bus-stops';
-    const sourceLayer = 'bus-stops';
+    // const tilesetUrl = 'mapbox://frame-ark.bus-stops';
+    // const sourceLayer = 'bus-stops';
 
     const beforeId = map.getLayer('transportation-line-hover') ? 'transportation-line-hover' : undefined;
 
@@ -162,7 +162,7 @@ export const toggleBusStops = (
     if (!busStopsLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
+            map.addSource(sourceId, { type: 'geojson', data: "/data/bus-stops.geojson" });
         }
 
         // Add circle layer
@@ -171,7 +171,7 @@ export const toggleBusStops = (
                 id: 'bus-stops',
                 type: 'symbol',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 minzoom: 5,
                 layout: {
                     'icon-image': 'bus',

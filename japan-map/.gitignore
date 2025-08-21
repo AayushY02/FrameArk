@@ -32,3 +32,9 @@ dist-ssr
 /data/*
 
 !/data/final.geojson
+/public/data/tiles
+/public/data/tiles_old
+/public/tiles_old
+
+
+

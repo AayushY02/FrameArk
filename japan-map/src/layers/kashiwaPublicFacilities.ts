@@ -22,7 +22,7 @@ export const categories = [
 ];
 
 export const toggleKashiwaPublicFacilityLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     kashiwaPublicFacilityVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setKashiwaPublicFacilityVisible: (v: boolean) => void,
@@ -30,7 +30,7 @@ export const toggleKashiwaPublicFacilityLayer = (
 ) => {
     setIsLoading(true);
 
-    const addFacilityLayer = (map: mapboxgl.Map, selectedCategories: string[]) => {
+    const addFacilityLayer = (map: maplibregl.Map, selectedCategories: string[]) => {
         const sourceId = 'kashiwa-public-facility';
         const geojsonUrl = '/data/kashiwa_public_facility.geojson';
 

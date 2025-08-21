@@ -1,5 +1,5 @@
 // utils/expressions.ts
-import type { ExpressionSpecification } from 'mapbox-gl';
+import type { ExpressionSpecification } from 'maplibre-gl';
 
 export const getColorExpression = (metric: string): ExpressionSpecification => {
     let field: any;

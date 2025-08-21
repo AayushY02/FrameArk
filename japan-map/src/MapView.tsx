@@ -1,8 +1,8 @@
 // MapView.tsx
 import { useEffect, useRef, useState } from 'react';
-import mapboxgl, { Map } from 'mapbox-gl';
-import { PmTilesSource } from "mapbox-pmtiles";
-import 'mapbox-gl/dist/mapbox-gl.css';
+import maplibregl, { Map } from 'maplibre-gl';
+import { Protocol } from 'pmtiles'
+import 'maplibre-gl/dist/maplibre-gl.css';
 import './App.css';
 import { Card } from './components/ui/card';
 import 'ldrs/react/Grid.css';
@@ -11,12 +11,12 @@ import { JAPAN_BOUNDS, CHIBA_BOUNDS, KASHIWA_BOUNDS } from './constants/bounds';
 import { getColorExpression } from './utils/expressions';
 import { addMeshLayers } from './layers/meshLayers';
 import { toggleAdminBoundaries } from './layers/adminBoundaries';
-import { toggleTerrain } from './layers/terrain';
+// import { toggleTerrain } from './layers/terrain';
 import { toggleAgriLayer } from './layers/agriLayer';
 import LoadingOverlay from './components/LoadingOverlay';
 import MapControls from './components/MapControls';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { selectedMeshIdState } from './state/meshSelection';
+import { useRecoilValue } from 'recoil';
+// import { selectedMeshIdState } from './state/meshSelection';
 import ChatPanel from './components/ChatPanel';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toggleAlightingLayer, toggleBoardingLayer, toggleBusStops, toggleTransportationLayer } from './layers/transportationLayer';
@@ -43,26 +43,26 @@ import { clearOdEndpointFocus, setKashiwakuruOdFilter, setKashiwakuruOdHour, sho
 import KashiwakuruOdLegend from './components/Legend/KashiwakuruOdLegend';
 import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwaChomeAging2040Layer, toggleKashiwaChomeAgingLayer, toggleKashiwaChomeDensityLayer, toggleKashiwaChomeTotal2040Layer, toggleKashiwaChomeTotalLayer, updateKashiwaChomeStyle } from './layers/kashiwaChomePopulationLayer';
 import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopulationLegend';
-mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+// mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
     const mapRef = useRef<Map | null>(null);
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
-    const popupRef = new mapboxgl.Popup({ closeButton: false, closeOnClick: false });
-    const transportPopupRef = new mapboxgl.Popup({ closeButton: false, closeOnClick: true, className: "ai-popup" });
+    const popupRef = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
+    const transportPopupRef = new maplibregl.Popup({ closeButton: false, closeOnClick: true, className: "ai-popup" });
 
     const [roadsVisible, setRoadsVisible] = useState(false);
     const [adminVisible, setAdminVisible] = useState(false);
-    const [terrainEnabled, setTerrainEnabled] = useState(false);
+    // const [terrainEnabled, setTerrainEnabled] = useState(false);
     const [currentStyle, setCurrentStyle] = useState(MAP_STYLES.ストリート);
     const [selectedMetric, setSelectedMetric] = useState('PTN_2020');
     const selectedMetricRef = useRef(selectedMetric);
     const [agriLayerVisible, setAgriLayerVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const setSelectedMeshId = useSetRecoilState(selectedMeshIdState);
+    // const setSelectedMeshId = useSetRecoilState(selectedMeshIdState);
     const [chatOpen, setChatOpen] = useState(false);
     const [chatMeshId, setChatMeshId] = useState<string | null>(null);
-    const selectionPopupRef = useRef<mapboxgl.Popup | null>(null);
+    // const selectionPopupRef = useRef<maplibregl.Popup | null>(null);
     const [transportVisible, setTransportVisible] = useState(false);
     const [pbFacilityVisible, setPbFacilityVisible] = useState(false);
     const [schoolLayerVisible, setSchoolLayerVisible] = useState(false);
@@ -138,6 +138,21 @@ export default function MapView() {
                 : [...prev, category]
         );
     };
+
+    // const GH_BASE = "https://aayushy02.github.io/map-data";
+
+    // Helper: add the vector source once if it doesn't exist
+    // function ensurePmtilesVectorSource(
+    //     map: maplibregl.Map,
+    //     id: string,
+    //     pmtilesFilename: string
+    // ) {
+    //     if (map.getSource(id)) return;
+    //     map.addSource(id, {
+    //         type: "vector",
+    //         url: `pmtiles://${GH_BASE}/${pmtilesFilename}`,
+    //     });
+    // }
 
     async function downloadPpt() {
         const map = mapRef.current;
@@ -379,7 +394,7 @@ export default function MapView() {
         setIsKashiwaBounds(!isKashiwaBounds);
     };
 
-    function downloadMapScreenshot(map: mapboxgl.Map, fileName = 'map-screenshot.png') {
+    function downloadMapScreenshot(map: maplibregl.Map, fileName = 'map-screenshot.png') {
         const originalCanvas = map.getCanvas();
 
         map.once('render', () => {
@@ -442,7 +457,7 @@ export default function MapView() {
         setIsLoading(true);
         setCurrentStyle(styleUrl);
         setSelectedMetric('PTN_2020');
-        setTerrainEnabled(false);
+        // setTerrainEnabled(false);
         setAgriLayerVisible(false);
         setTransportVisible(false)
         setPbFacilityVisible(false)
@@ -479,8 +494,11 @@ export default function MapView() {
 
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
-        (mapboxgl.Style as any).setSourceType(PmTilesSource.SOURCE_TYPE, PmTilesSource);
-        const map = new mapboxgl.Map({
+
+        let protocol = new Protocol();
+        maplibregl.addProtocol('pmtiles', protocol.tile)
+
+        const map = new maplibregl.Map({
             container: mapContainerRef.current,
             style: currentStyle,
             center: [139.9797, 35.8676],
@@ -488,33 +506,31 @@ export default function MapView() {
             minZoom: 4.5,
             maxZoom: 18,
             maxBounds: JAPAN_BOUNDS,
-            language: "ja",
-            preserveDrawingBuffer: true,
         });
 
 
 
-        const ensureHighlightLayer = () => {
-            if (map.getSource('clicked-mesh')) return;   // already present
+        // const ensureHighlightLayer = () => {
+        //     if (map.getSource('clicked-mesh')) return;   // already present
 
-            map.addSource('clicked-mesh', {
-                type: 'geojson',
-                data: { type: 'FeatureCollection', features: [] },
-            });
+        //     map.addSource('clicked-mesh', {
+        //         type: 'geojson',
+        //         data: { type: 'FeatureCollection', features: [] },
+        //     });
 
-            map.addLayer({
-                id: 'clicked-mesh-fill',
-                type: 'fill',
-                source: 'clicked-mesh',
-                paint: { 'fill-color': '#ff0000', 'fill-opacity': 0.65 },
-            });
-            map.addLayer({
-                id: 'clicked-mesh-line',
-                type: 'line',
-                source: 'clicked-mesh',
-                paint: { 'line-color': '#ff0000', 'line-width': 2 },
-            });
-        };
+        //     map.addLayer({
+        //         id: 'clicked-mesh-fill',
+        //         type: 'fill',
+        //         source: 'clicked-mesh',
+        //         paint: { 'fill-color': '#ff0000', 'fill-opacity': 0.65 },
+        //     });
+        //     map.addLayer({
+        //         id: 'clicked-mesh-line',
+        //         type: 'line',
+        //         source: 'clicked-mesh',
+        //         paint: { 'line-color': '#ff0000', 'line-width': 2 },
+        //     });
+        // };
 
         mapRef.current = map;
 
@@ -539,17 +555,17 @@ export default function MapView() {
                 }
             });
 
-            addMeshLayers(map, selectedMetric);
+            // addMeshLayers(map, selectedMetric);
 
-            ensureHighlightLayer();
+            // ensureHighlightLayer();
             map.once('idle', () => setIsLoading(false));
 
 
         });
 
         map.on('style.load', () => {
-            addMeshLayers(map, selectedMetric);
-            ensureHighlightLayer();
+            // addMeshLayers(map, selectedMetric);
+            // ensureHighlightLayer();
         });
 
         // const showPopup = (e: mapboxgl.MapMouseEvent) => {
@@ -581,71 +597,71 @@ export default function MapView() {
         //     });
         // });
 
-        ['mesh-250m-fill', 'mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
-            map.on('click', layer, e => {
-                const feature = e.features?.[0];
-                if (!feature) return;
+    //     ['mesh-250m-fill', 'mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
+    //         map.on('click', layer, e => {
+    //             const feature = e.features?.[0];
+    //             if (!feature) return;
 
-                const meshId = feature.properties?.MESH_ID as string | undefined;
-                if (!meshId) return;
+    //             const meshId = feature.properties?.MESH_ID as string | undefined;
+    //             if (!meshId) return;
 
-                // 1️⃣ Update global state (Recoil)
-                setSelectedMeshId(meshId);
+    //             // 1️⃣ Update global state (Recoil)
+    //             setSelectedMeshId(meshId);
 
-                // 2️⃣ Highlight the clicked mesh
-                ensureHighlightLayer();
-                const geojson: GeoJSON.FeatureCollection = {
-                    type: 'FeatureCollection',
-                    features: [
-                        {
-                            ...(feature.toJSON ? feature.toJSON() : (feature as any)),
-                            id: meshId,
-                        },
-                    ],
-                };
-                (map.getSource('clicked-mesh') as mapboxgl.GeoJSONSource).setData(geojson);
+    //             // 2️⃣ Highlight the clicked mesh
+    //             ensureHighlightLayer();
+    //             const geojson: GeoJSON.FeatureCollection = {
+    //                 type: 'FeatureCollection',
+    //                 features: [
+    //                     {
+    //                         ...(feature.toJSON ? feature.toJSON() : (feature as any)),
+    //                         id: meshId,
+    //                     },
+    //                 ],
+    //             };
+    //             (map.getSource('clicked-mesh') as maplibregl.GeoJSONSource).setData(geojson);
 
-                // 3️⃣ Show / update the *selection* popup with the "Ask Mirai AI" button
-                if (selectionPopupRef.current) {
-                    selectionPopupRef.current.remove();
-                }
+    //             // 3️⃣ Show / update the *selection* popup with the "Ask Mirai AI" button
+    //             if (selectionPopupRef.current) {
+    //                 selectionPopupRef.current.remove();
+    //             }
 
-                const selectionPopup = new mapboxgl.Popup({ closeButton: false, offset: 0, className: "ai-popup" })
-                    .setLngLat(e.lngLat)
-                    .setHTML(
-                        `
-                        <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-40">
-      <div class="text-sm font-semibold text-gray-900">Mesh ID : <span class="text-base text-muted-foreground">${meshId}</span> </div>
+    //             const selectionPopup = new maplibregl.Popup({ closeButton: false, offset: 0, className: "ai-popup" })
+    //                 .setLngLat(e.lngLat)
+    //                 .setHTML(
+    //                     `
+    //                     <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-40">
+    //   <div class="text-sm font-semibold text-gray-900">Mesh ID : <span class="text-base text-muted-foreground">${meshId}</span> </div>
       
-      <button
-        id="ask-mirai-btn"
-        class="inline-flex items-center w-full justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none"
-      >
-       ミライに聞く
-      </button>
-    </div>
-                        `,
-                    )
-                    .addTo(map);
+    //   <button
+    //     id="ask-mirai-btn"
+    //     class="inline-flex items-center w-full justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none"
+    //   >
+    //    ミライに聞く
+    //   </button>
+    // </div>
+    //                     `,
+    //                 )
+    //                 .addTo(map);
 
-                selectionPopupRef.current = selectionPopup;
+    //             selectionPopupRef.current = selectionPopup;
 
-                // Optional: wire up an event handler for the button
-                const popupElement = selectionPopup.getElement();
-                const askBtn = popupElement?.querySelector<HTMLButtonElement>('#ask-mirai-btn');
+    //             // Optional: wire up an event handler for the button
+    //             const popupElement = selectionPopup.getElement();
+    //             const askBtn = popupElement?.querySelector<HTMLButtonElement>('#ask-mirai-btn');
 
-                askBtn?.addEventListener('click', () => {
-                    window.dispatchEvent(
-                        new CustomEvent('mirai:ask', {
-                            detail: { meshId },
-                        }),
-                    );
-                    // optionally close popup
-                    selectionPopupRef.current?.remove();
-                });
+    //             askBtn?.addEventListener('click', () => {
+    //                 window.dispatchEvent(
+    //                     new CustomEvent('mirai:ask', {
+    //                         detail: { meshId },
+    //                     }),
+    //                 );
+    //                 // optionally close popup
+    //                 selectionPopupRef.current?.remove();
+    //             });
 
-            });
-        });
+    //         });
+    //     });
 
         /**
          * ===== Extra interactions for agricultural layer =====
@@ -1206,8 +1222,11 @@ export default function MapView() {
         });
 
 
-        const showKashiwaPublicFacilityPopup = (e: mapboxgl.MapMouseEvent) => {
-            const feature = e.features?.[0];
+        const showKashiwaPublicFacilityPopup = (e: maplibregl.MapMouseEvent) => {
+            const features = map.queryRenderedFeatures(e.point);
+            if (!features.length) return; // No features found
+
+            const feature = features[0];
             if (!feature) return;
 
             map.getCanvas().style.cursor = 'pointer';
@@ -1244,8 +1263,12 @@ export default function MapView() {
         });
 
 
-        const showKashiwaShopsPopup = (e: mapboxgl.MapMouseEvent) => {
-            const feature = e.features?.[0];
+        const showKashiwaShopsPopup = (e: maplibregl.MapMouseEvent) => {
+            const features = map.queryRenderedFeatures(e.point);
+
+            if (!features.length) return; // No features found
+
+            const feature = features[0];
             if (!feature) return;
 
             map.getCanvas().style.cursor = 'pointer';
@@ -1280,6 +1303,10 @@ export default function MapView() {
             map.on('mousemove', layerId, showKashiwaShopsPopup);
             map.on('mouseleave', layerId, hideKashiwaShopsPopup);
         });
+
+        return () => {
+            maplibregl.removeProtocol('pmtiles');
+        };
 
     }, []);
 
@@ -1383,8 +1410,8 @@ export default function MapView() {
                 toggleRoads={toggleRoads}
                 adminVisible={adminVisible}
                 toggleAdmin={() => toggleAdminBoundaries(mapRef.current!, adminVisible, setAdminVisible)}
-                terrainEnabled={terrainEnabled}
-                toggleTerrain={() => toggleTerrain(mapRef.current!, terrainEnabled, setTerrainEnabled)}
+                // terrainEnabled={terrainEnabled}
+                // toggleTerrain={() => toggleTerrain(mapRef.current!, terrainEnabled, setTerrainEnabled)}
                 fitToBounds={fitBoundsToKashiwa}
                 agriLayerVisible={agriLayerVisible}
                 toggleAgri={() => toggleAgriLayer(mapRef.current!, agriLayerVisible, setIsLoading, setAgriLayerVisible)}

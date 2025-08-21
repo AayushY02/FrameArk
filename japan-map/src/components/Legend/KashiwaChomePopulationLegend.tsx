@@ -12,7 +12,7 @@ import {
 } from "@/layers/kashiwaChomePopulationLayer";
 
 type Props = {
-  map?: mapboxgl.Map | null;
+  map?: maplibregl.Map | null;
   totalVisible: boolean;
   agingVisible: boolean;
   densityVisible: boolean;

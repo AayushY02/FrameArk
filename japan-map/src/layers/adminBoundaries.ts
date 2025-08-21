@@ -1,7 +1,7 @@
 // layers/adminBoundaries.ts
 
 export const toggleAdminBoundaries = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     adminVisible: boolean,
     setAdminVisible: (v: boolean) => void
 ) => {

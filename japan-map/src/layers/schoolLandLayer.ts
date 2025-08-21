@@ -1,7 +1,7 @@
 const SCHOOL_LAYER_IDS = ['school-layer'];
 
 export const toggleSchoolLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     schoolLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setSchoolLayerVisible: (v: boolean) => void

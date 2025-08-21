@@ -1,7 +1,7 @@
 const TOURIST_LAYER_IDS = ['tourist-layer'];
 
 export const toggleTouristLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     touristLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setTouristLayerVisible: (v: boolean) => void
@@ -9,8 +9,8 @@ export const toggleTouristLayer = (
     setIsLoading(true);
 
     const sourceId = 'tourist-spots';
-    const tilesetUrl = 'mapbox://frame-ark.tourist-spots';
-    const sourceLayer = 'tourist-spots';
+    // const tilesetUrl = 'mapbox://frame-ark.tourist-spots';
+    // const sourceLayer = 'tourist-spots';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
@@ -19,7 +19,7 @@ export const toggleTouristLayer = (
     if (!touristLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
+            map.addSource(sourceId, { type: 'geojson', data: "/data/touristSpot.ts" });
         }
 
         // Add circle layer
@@ -28,7 +28,7 @@ export const toggleTouristLayer = (
                 id: 'tourist-layer',
                 type: 'symbol',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 minzoom: 5,
                 layout: {
                     'icon-image': ['get', 'marker-icon'],

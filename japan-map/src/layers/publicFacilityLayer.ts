@@ -1,7 +1,7 @@
 const PB_FACILITY_LAYER_IDS = ['facilities-circle'];
 
 export const togglePublicFacilityLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     pbFacilityVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setPbFacilityVisibleVisible: (v: boolean) => void
@@ -9,8 +9,8 @@ export const togglePublicFacilityLayer = (
     setIsLoading(true);
 
     const sourceId = 'public-facilities';
-    const tilesetUrl = 'mapbox://frame-ark.public-facilities';
-    const sourceLayer = 'public-facilities';
+    // const tilesetUrl = 'mapbox://frame-ark.public-facilities';
+    // const sourceLayer = 'public-facilities';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
@@ -19,7 +19,7 @@ export const togglePublicFacilityLayer = (
     if (!pbFacilityVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
+            map.addSource(sourceId, { type: 'geojson', data: "/data/KS_PublicFacility_enriched.geojson" });
         }
 
         // Add circle layer
@@ -28,7 +28,7 @@ export const togglePublicFacilityLayer = (
                 id: 'facilities-circle',
                 type: 'circle',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 minzoom: 5,
                 layout: { visibility: 'visible' },
                 paint: {

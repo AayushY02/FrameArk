@@ -16,7 +16,7 @@
 // // keep previous mesh visibility so we can restore exactly
 // const meshPrevVisibility = new Map<string, "visible" | "none">();
 
-// function hideMeshes(map: mapboxgl.Map) {
+// function hideMeshes(map: maplibregl.Map) {
 //   MESH_LAYER_IDS.forEach((id) => {
 //     if (!map.getLayer(id)) return;
 //     const prev =
@@ -27,7 +27,7 @@
 //   });
 // }
 
-// function restoreMeshes(map: mapboxgl.Map) {
+// function restoreMeshes(map: maplibregl.Map) {
 //   MESH_LAYER_IDS.forEach((id) => {
 //     if (!map.getLayer(id)) return;
 //     const prev = meshPrevVisibility.get(id) ?? "visible";
@@ -36,7 +36,7 @@
 //   });
 // }
 
-// function ensureRouteScaffolding(map: mapboxgl.Map, args: RouteArgs) {
+// function ensureRouteScaffolding(map: maplibregl.Map, args: RouteArgs) {
 //   const srcId = `route-${args.id}-src`;
 //   const lineId = `route-${args.id}-line`;
 //   const casingId = `route-${args.id}-casing`;
@@ -83,7 +83,7 @@
 // }
 
 // function setRouteVisibility(
-//   map: mapboxgl.Map,
+//   map: maplibregl.Map,
 //   ids: { lineId: string; casingId: string },
 //   vis: "visible" | "none"
 // ) {
@@ -96,7 +96,7 @@
 // }
 
 // const addRouteLayer = (
-//   map: mapboxgl.Map,
+//   map: maplibregl.Map,
 //   routeVisible: boolean,
 //   setRouteVisible: (v: boolean) => void,
 //   args: RouteArgs
@@ -121,7 +121,7 @@
 // };
 
 // async function toggleRoute(
-//   map: mapboxgl.Map,
+//   map: maplibregl.Map,
 //   routeVisible: boolean,
 //   setIsLoading: (v: boolean) => void,
 //   setRouteVisible: (v: boolean) => void,
@@ -145,7 +145,7 @@
 // // --- Public helpers (wired exactly like MapView/MapControls import) -------
 
 // export const toggleShonanRoute = (
-//   map: mapboxgl.Map,
+//   map: maplibregl.Map,
 //   shonanRouteVisible: boolean,
 //   setIsLoading: (v: boolean) => void,
 //   setShonanRouteVisible: (v: boolean) => void
@@ -157,7 +157,7 @@
 //   });
 
 // export const toggleMasuoRoute = (
-//   map: mapboxgl.Map,
+//   map: maplibregl.Map,
 //   masuoRouteVisible: boolean,
 //   setIsLoading: (v: boolean) => void,
 //   setMasuoRouteVisible: (v: boolean) => void
@@ -169,7 +169,7 @@
 //   });
 
 // export const toggleSakaiRoute = (
-//   map: mapboxgl.Map,
+//   map: maplibregl.Map,
 //   sakaiRouteVisible: boolean,
 //   setIsLoading: (v: boolean) => void,
 //   setSakaiRouteVisible: (v: boolean) => void
@@ -205,7 +205,7 @@ const visibleRoutes = new Set<RouteArgs["id"]>();
 // keep previous mesh visibility so we can restore exactly
 const meshPrevVisibility = new Map<string, "visible" | "none">();
 
-function hideMeshes(map: mapboxgl.Map) {
+function hideMeshes(map: maplibregl.Map) {
   meshesForcedHidden = true; // ← NEW
   MESH_LAYER_IDS.forEach((id) => {
     if (!map.getLayer(id)) return;
@@ -218,7 +218,7 @@ function hideMeshes(map: mapboxgl.Map) {
 
 // ❌ We will keep this function for potential future use,
 // but we WON'T call it from toggleRoute anymore.
-// function restoreMeshes(map: mapboxgl.Map) {
+// function restoreMeshes(map: maplibregl.Map) {
 //   MESH_LAYER_IDS.forEach((id) => {
 //     if (!map.getLayer(id)) return;
 //     const prev = meshPrevVisibility.get(id) ?? "visible";
@@ -227,7 +227,7 @@ function hideMeshes(map: mapboxgl.Map) {
 //   });
 // }
 // Reusable: ensure source + (casing,line) exist
-function ensureRouteLayers(map: mapboxgl.Map, args: RouteArgs, beforeId?: string) {
+function ensureRouteLayers(map: maplibregl.Map, args: RouteArgs, beforeId?: string) {
   const srcId = `route-${args.id}-src`;
   const lineId = `route-${args.id}-line`;
   const casingId = `route-${args.id}-casing`;
@@ -273,7 +273,7 @@ function ensureRouteLayers(map: mapboxgl.Map, args: RouteArgs, beforeId?: string
 }
 
 function setRouteVisibility(
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   ids: { lineId: string; casingId: string },
   vis: "visible" | "none"
 ) {
@@ -285,7 +285,7 @@ function setRouteVisibility(
   }
 }
 
-function attachMeshStyleGuard(map: mapboxgl.Map) {
+function attachMeshStyleGuard(map: maplibregl.Map) {
   if (meshHandlerAttached) return;
   meshHandlerAttached = true;
   map.on("style.load", () => {
@@ -297,7 +297,7 @@ function attachMeshStyleGuard(map: mapboxgl.Map) {
 }
 
 // function addOrToggleRoute(
-//   map: mapboxgl.Map,
+//   map: maplibregl.Map,
 //   routeVisible: boolean,
 //   setRouteVisible: (v: boolean) => void,
 //   args: RouteArgs
@@ -328,7 +328,7 @@ function attachMeshStyleGuard(map: mapboxgl.Map) {
 // }
 
 function addOrToggleRoute(
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   routeVisible: boolean,
   setRouteVisible: (v: boolean) => void,
   args: RouteArgs
@@ -362,7 +362,7 @@ function addOrToggleRoute(
 }
 
 function runWithStyleReady(
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   fn: () => void
 ) {
   if (map.isStyleLoaded()) {
@@ -373,7 +373,7 @@ function runWithStyleReady(
 }
 
 function toggleRoute(
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   routeVisible: boolean,
   setIsLoading: (v: boolean) => void,
   setRouteVisible: (v: boolean) => void,
@@ -392,7 +392,7 @@ function toggleRoute(
 // ---- Public helpers (same signature you already call from MapControls) ----
 
 export const toggleShonanRoute = (
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   shonanRouteVisible: boolean,
   setIsLoading: (v: boolean) => void,
   setShonanRouteVisible: (v: boolean) => void
@@ -404,7 +404,7 @@ export const toggleShonanRoute = (
   });
 
 export const toggleMasuoRoute = (
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   masuoRouteVisible: boolean,
   setIsLoading: (v: boolean) => void,
   setMasuoRouteVisible: (v: boolean) => void
@@ -416,7 +416,7 @@ export const toggleMasuoRoute = (
   });
 
 export const toggleSakaiRoute = (
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   sakaiRouteVisible: boolean,
   setIsLoading: (v: boolean) => void,
   setSakaiRouteVisible: (v: boolean) => void

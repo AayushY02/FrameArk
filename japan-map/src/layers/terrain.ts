@@ -1,6 +1,6 @@
 // layers/terrain.ts
 export const toggleTerrain = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     terrainEnabled: boolean,
     setTerrainEnabled: (v: boolean) => void
 ) => {

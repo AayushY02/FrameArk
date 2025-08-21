@@ -1,21 +1,21 @@
 // layers/agriLayer.ts
 
 export const toggleAgriLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     agriLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setAgriLayerVisible: (v: boolean) => void
 ) => {
     setIsLoading(true);
 
-    const sourceLayer = 'agriculture';
+    // const sourceLayer = 'agriculture';
 
 
     if (!agriLayerVisible) {
         if (!map.getSource('kashiwa-agri')) {
             map.addSource('kashiwa-agri', {
-                type: 'vector',
-                url: 'mapbox://frame-ark.agriculture-land'
+                type: 'geojson',
+                data: '/data/agriculture-land.geojson'
             });
         }
 
@@ -24,7 +24,7 @@ export const toggleAgriLayer = (
                 id: 'agri-fill',
                 type: 'fill',
                 source: 'kashiwa-agri',
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 paint: {
                     'fill-color': [
                         'match',
@@ -45,7 +45,7 @@ export const toggleAgriLayer = (
                 id: 'agri-outline',
                 type: 'line',
                 source: 'kashiwa-agri',
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 paint: {
                     'line-color': '#2e7d32',
                     'line-width': 1
@@ -58,7 +58,7 @@ export const toggleAgriLayer = (
                 id: 'agri-labels',
                 type: 'symbol',
                 source: 'kashiwa-agri',
-                 'source-layer': sourceLayer,
+                //  'source-layer': sourceLayer,
                 layout: {
                     'text-field': ['get', 'KOUCHI'],
                     'text-size': 11,

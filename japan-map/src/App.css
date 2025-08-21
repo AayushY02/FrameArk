@@ -36,7 +36,7 @@
   cursor: pointer;
 
 }
-.ai-popup .mapboxgl-popup-content {
+.ai-popup .maplibregl-popup-content {
   background-color: green;
   padding: 0;
   border-radius: 4rem;

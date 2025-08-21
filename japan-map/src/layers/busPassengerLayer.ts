@@ -1,7 +1,7 @@
 const BUS_LAYER_IDS = ['bus-layer'];
 
 export const toggleBusPassengerLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     busLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setBusLayerVisible: (v: boolean) => void
@@ -75,7 +75,7 @@ export const toggleBusPassengerLayer = (
 // const SAKAE_LAYER_IDS = ['sakae-course-ride'];
 
 export const toggleSakaeCourseRideLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setLayerVisible: (v: boolean) => void
@@ -120,7 +120,7 @@ export const toggleSakaeCourseRideLayer = (
                         data: filteredGeoJson
                     });
                 } else {
-                    (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(filteredGeoJson);
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(filteredGeoJson);
                 }
 
                 // Add circle layer for 逆井 コース
@@ -177,7 +177,7 @@ export const toggleSakaeCourseRideLayer = (
 };
 
 export const toggleSakaeCourseDropLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setLayerVisible: (v: boolean) => void
@@ -222,7 +222,7 @@ export const toggleSakaeCourseDropLayer = (
                         data: filteredGeoJson
                     });
                 } else {
-                    (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(filteredGeoJson);
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(filteredGeoJson);
                 }
 
                 // Add circle layer for 逆井 コース
@@ -279,7 +279,7 @@ export const toggleSakaeCourseDropLayer = (
 };
 
 export const toggleMasuoCourseRideLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setLayerVisible: (v: boolean) => void
@@ -324,7 +324,7 @@ export const toggleMasuoCourseRideLayer = (
                         data: filteredGeoJson
                     });
                 } else {
-                    (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(filteredGeoJson);
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(filteredGeoJson);
                 }
 
                 // Add circle layer for 逆井 コース
@@ -381,7 +381,7 @@ export const toggleMasuoCourseRideLayer = (
 };
 
 export const toggleMasuoCourseDropLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setLayerVisible: (v: boolean) => void
@@ -426,7 +426,7 @@ export const toggleMasuoCourseDropLayer = (
                         data: filteredGeoJson
                     });
                 } else {
-                    (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(filteredGeoJson);
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(filteredGeoJson);
                 }
 
                 // Add circle layer for 逆井 コース
@@ -483,7 +483,7 @@ export const toggleMasuoCourseDropLayer = (
 
 
 export const toggleShonanCourseRideLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setLayerVisible: (v: boolean) => void
@@ -528,7 +528,7 @@ export const toggleShonanCourseRideLayer = (
                         data: filteredGeoJson
                     });
                 } else {
-                    (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(filteredGeoJson);
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(filteredGeoJson);
                 }
 
                 // Add circle layer for 逆井 コース
@@ -585,7 +585,7 @@ export const toggleShonanCourseRideLayer = (
 };
 
 export const toggleShonanCourseDropLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setLayerVisible: (v: boolean) => void
@@ -630,7 +630,7 @@ export const toggleShonanCourseDropLayer = (
                         data: filteredGeoJson
                     });
                 } else {
-                    (map.getSource(sourceId) as mapboxgl.GeoJSONSource).setData(filteredGeoJson);
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(filteredGeoJson);
                 }
 
                 // Add circle layer for 逆井 コース

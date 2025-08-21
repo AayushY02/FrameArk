@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/accordion";
 import {
     Layers,
-    Mountain,
+    // Mountain,
     Ruler,
     Landmark,
     MapPin,
@@ -62,8 +62,8 @@ interface MapControlsProps {
     toggleRoads: () => void;
     adminVisible: boolean;
     toggleAdmin: () => void;
-    terrainEnabled: boolean;
-    toggleTerrain: () => void;
+    // terrainEnabled: boolean;
+    // toggleTerrain: () => void;
     fitToBounds: () => void;
     agriLayerVisible: boolean;
     toggleAgri: () => void;
@@ -186,8 +186,8 @@ export default function MapControls({
     toggleRoads,
     adminVisible,
     toggleAdmin,
-    terrainEnabled,
-    toggleTerrain,
+    // terrainEnabled,
+    // toggleTerrain,
     fitToBounds,
     agriLayerVisible,
     toggleAgri,
@@ -467,7 +467,7 @@ export default function MapControls({
                             {roadsVisible ? '道路を非表示' : '道路を表示'}
                         </Button>
                         <Button onClick={() => handleLayerToggle('行政界', adminVisible, toggleAdmin)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"><Layers />{adminVisible ? '行政界を非表示' : '行政界を表示'}</Button>
-                        <Button onClick={() => handleLayerToggle('地形', terrainEnabled, toggleTerrain)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"><Mountain />{terrainEnabled ? '地形を非表示' : '地形を表示'}</Button>
+                        {/* <Button onClick={() => handleLayerToggle('地形', terrainEnabled, toggleTerrain)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"><Mountain />{terrainEnabled ? '地形を非表示' : '地形を表示'}</Button> */}
                         <Button onClick={() => handleLayerToggle('農業レイヤー', agriLayerVisible, toggleAgri)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"><Landmark />{agriLayerVisible ? '農業レイヤーを非表示' : '農業レイヤーを表示'}</Button>
 
                         {/* Transport Accordion */}

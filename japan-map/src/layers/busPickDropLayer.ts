@@ -1,7 +1,7 @@
 const BUS_PICK_DROP_LAYER_IDS = ['bus-pick-drop-polygons', 'bus-pick-drop-points'];
 
 export const toggleBusPickDropLayer = (
-    map: mapboxgl.Map,
+    map: maplibregl.Map,
     busPickDropLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
     setBusPickDropLayerVisible: (v: boolean) => void
@@ -9,8 +9,8 @@ export const toggleBusPickDropLayer = (
     setIsLoading(true);
 
     const sourceId = 'bus-pick-drop-source';
-    const tilesetUrl = 'mapbox://frame-ark.bus-pick-drop';
-    const sourceLayer = 'bus-pick-drop-layer';
+    // const tilesetUrl = 'mapbox://frame-ark.bus-pick-drop';
+    // const sourceLayer = 'bus-pick-drop-layer';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
@@ -20,8 +20,9 @@ export const toggleBusPickDropLayer = (
         // Add vector source if not already present
         if (!map.getSource(sourceId)) {
             map.addSource(sourceId, {
-                type: 'vector',
-                url: tilesetUrl
+                type: 'geojson',
+                // url: tilesetUrl
+                data: "/data/bus-pick-drop.geojson"
             });
         }
 
@@ -31,7 +32,7 @@ export const toggleBusPickDropLayer = (
                 id: 'bus-pick-drop-polygons',
                 type: 'fill',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 minzoom: 5,
                 filter: ['==', '$type', 'Polygon'],
                 paint: {
@@ -54,7 +55,7 @@ export const toggleBusPickDropLayer = (
                 id: 'bus-pick-drop-points',
                 type: 'circle',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 minzoom: 5,
                 filter: ['==', '$type', 'Point'],
                 paint: {
@@ -68,13 +69,13 @@ export const toggleBusPickDropLayer = (
         } else {
             map.setLayoutProperty('bus-pick-drop-points', 'visibility', 'visible');
         }
-        
+
         // 🔧 Hide background layers for clarity
         [
             'mesh-1km-fill', 'mesh-1km-outline',
             'mesh-500m-fill', 'mesh-500m-outline',
             'mesh-250m-fill', 'mesh-250m-outline',
-            
+
         ].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
