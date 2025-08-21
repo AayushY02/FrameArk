@@ -9,8 +9,8 @@ export const toggleSchoolLayer = (
     setIsLoading(true);
 
     const sourceId = 'school-national-land';
-    const tilesetUrl = 'mapbox://frame-ark.school-national-land';
-    const sourceLayer = 'school-national-land';
+    // const tilesetUrl = 'mapbox://frame-ark.school-national-land';
+    // const sourceLayer = 'school-national-land';
 
     const labelLayerId = map.getStyle().layers?.find(
         l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
@@ -19,7 +19,7 @@ export const toggleSchoolLayer = (
     if (!schoolLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'vector', url: tilesetUrl });
+            map.addSource(sourceId, { type: 'geojson', data: "/data/school_national_land.geojson" });
         }
 
         // Add circle layer
@@ -28,7 +28,7 @@ export const toggleSchoolLayer = (
                 id: 'school-layer',
                 type: 'symbol',
                 source: sourceId,
-                'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,
                 minzoom: 5,
                 layout: {
                     'icon-image': 'school',

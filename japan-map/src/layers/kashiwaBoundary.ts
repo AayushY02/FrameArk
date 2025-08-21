@@ -1,7 +1,7 @@
 const KASHIWA_LAYER_IDS = ['kashiwa-mask', 'kashiwa-outline'];
 
 export const toggleKashiwaMaskLayer = (
-  map: mapboxgl.Map,
+  map: maplibregl.Map,
   kashiwaMaskVisible: boolean,
   setIsLoading: (v: boolean) => void,
   setKashiwaMaskVisible: (v: boolean) => void

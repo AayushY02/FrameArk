@@ -481,7 +481,7 @@ export default function MapControls({
                                         { label: '交通レイヤー', checked: transportVisible, onChange: () => handleLayerToggle('交通レイヤー', transportVisible, toggleTransport), icon: <Bus size={16} /> },
                                         { label: 'バス停', checked: busStopsVisible, onChange: () => handleLayerToggle('バス停', busStopsVisible, toggleBusStops), icon: <MapPin size={16} /> },
                                         { label: 'カシワニクル乗降場', checked: busPickDropLayerVisible, onChange: () => handleLayerToggle('カシワニクル乗降場', busPickDropLayerVisible, toggleBusPickDropLayerVisible), icon: <Users size={16} /> },
-                                        { label: 'バス乗降データ', checked: busPassengerLayerVisible, onChange: () => handleLayerToggle('バス乗降データ', busPassengerLayerVisible, toggleBusPassengerLayerVisible), icon: <Users size={16} /> }
+                                        // { label: 'バス乗降データ', checked: busPassengerLayerVisible, onChange: () => handleLayerToggle('バス乗降データ', busPassengerLayerVisible, toggleBusPassengerLayerVisible), icon: <Users size={16} /> }
                                         // { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
