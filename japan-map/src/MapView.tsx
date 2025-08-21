@@ -27,7 +27,7 @@ import { toggleTouristLayer } from './layers/touristSpot';
 import { toggleRoadsideStationLayer } from './layers/roadsideStationLayer';
 import { toggleAttractionLayer } from './layers/attractionLayer';
 import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
-import { toggleBusPassengerLayer, toggleMasuoCourseDropLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
+import { setAllPassengerLabelsVisible, toggleBusPassengerLayer, toggleMasuoCourseDropLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
 import { toggleNewBusPassengerLayer, toggleNewKashiwakuruDropLayer, toggleNewKashiwakuruRideLayer } from './layers/newbusPassengerLayer';
 import { categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPublicFacilities';
 import { shopCategories, toggleKashiwaShopsLayer } from './layers/kashiwaBusStops';
@@ -110,6 +110,9 @@ export default function MapView() {
     const [chomeDensityVisible, setChomeDensityVisible] = useState(false);
     const [chomeTotal2040Visible, setChomeTotal2040Visible] = useState(false);
     const [chomeAging2040Visible, setChomeAging2040Visible] = useState(false);
+
+    const [passengerLabelsVisible, setPassengerLabelsVisible] = useState(false);
+
     type ChomeMetric = "total" | "aging" | "density" | "total_2040" | "aging_2040";
     const hasAnyBusLegend = [
         busPassengerLayerVisible,
@@ -617,6 +620,13 @@ export default function MapView() {
         });
 
         setRoadsVisible(!roadsVisible);
+    };
+
+    const onTogglePassengerLabels = () => {
+        if (!mapRef.current) return;
+        const next = !passengerLabelsVisible;
+        setAllPassengerLabelsVisible(mapRef.current, next); // updates all currently visible circles
+        setPassengerLabelsVisible(next);
     };
 
     const updateMetricStyles = () => {
@@ -1752,17 +1762,17 @@ export default function MapView() {
                 busPassengerLayerVisible={busPassengerLayerVisible}
                 toggleBusPassengerLayerVisible={() => toggleBusPassengerLayer(mapRef.current!, busPassengerLayerVisible, setIsLoading, setBusPassengerLayerVisible)}
                 sakaeCourseRideLayerVisible={sakaeCourseRideLayerVisible}
-                toggleSakaeCourseRideLayerVisible={() => toggleSakaeCourseRideLayer(mapRef.current!, sakaeCourseRideLayerVisible, setIsLoading, setSakaeCourseRideLayerVisible)}
+                toggleSakaeCourseRideLayerVisible={() => toggleSakaeCourseRideLayer(mapRef.current!, sakaeCourseRideLayerVisible, setIsLoading, setSakaeCourseRideLayerVisible, passengerLabelsVisible)}
                 sakaeCourseDropLayerVisible={sakaeCourseDropLayerVisible}
-                toggleSakaeCourseDropLayerVisible={() => toggleSakaeCourseDropLayer(mapRef.current!, sakaeCourseDropLayerVisible, setIsLoading, setSakaeCourseDropLayerVisible)}
+                toggleSakaeCourseDropLayerVisible={() => toggleSakaeCourseDropLayer(mapRef.current!, sakaeCourseDropLayerVisible, setIsLoading, setSakaeCourseDropLayerVisible, passengerLabelsVisible)}
                 masuoCourseRideLayerVisible={masuoCourseRideLayerVisible}
-                toggleMasuoCourseRideLayerVisible={() => toggleMasuoCourseRideLayer(mapRef.current!, masuoCourseRideLayerVisible, setIsLoading, setMasuoCourseRideLayerVisible)}
+                toggleMasuoCourseRideLayerVisible={() => toggleMasuoCourseRideLayer(mapRef.current!, masuoCourseRideLayerVisible, setIsLoading, setMasuoCourseRideLayerVisible, passengerLabelsVisible)}
                 masuoCourseDropLayerVisible={masuoCourseDropLayerVisible}
-                toggleMasuoCourseDropLayerVisible={() => toggleMasuoCourseDropLayer(mapRef.current!, masuoCourseDropLayerVisible, setIsLoading, setMasuoCourseDropLayerVisible)}
+                toggleMasuoCourseDropLayerVisible={() => toggleMasuoCourseDropLayer(mapRef.current!, masuoCourseDropLayerVisible, setIsLoading, setMasuoCourseDropLayerVisible, passengerLabelsVisible)}
                 shonanCourseRideLayerVisible={shonanCourseRideLayerVisible}
-                toggleShonanCourseRideLayerVisible={() => toggleShonanCourseRideLayer(mapRef.current!, shonanCourseRideLayerVisible, setIsLoading, setShonanCourseRideLayerVisible)}
+                toggleShonanCourseRideLayerVisible={() => toggleShonanCourseRideLayer(mapRef.current!, shonanCourseRideLayerVisible, setIsLoading, setShonanCourseRideLayerVisible, passengerLabelsVisible)}
                 shonanCourseDropLayerVisible={shonanCourseDropLayerVisible}
-                toggleShonanCourseDropLayerVisible={() => toggleShonanCourseDropLayer(mapRef.current!, shonanCourseDropLayerVisible, setIsLoading, setShonanCourseDropLayerVisible)}
+                toggleShonanCourseDropLayerVisible={() => toggleShonanCourseDropLayer(mapRef.current!, shonanCourseDropLayerVisible, setIsLoading, setShonanCourseDropLayerVisible, passengerLabelsVisible)}
                 captureMapScreenshot={() => {
                     if (mapRef.current) {
                         downloadMapScreenshot(mapRef.current);
@@ -1869,6 +1879,9 @@ export default function MapView() {
 
                 terrainEnabled={terrainEnabled}
                 toggleTerrain={toggleTerrain}
+
+                passengerLabelsVisible={passengerLabelsVisible}
+                togglePassengerLabelsVisible={onTogglePassengerLabels }
 
             />
 

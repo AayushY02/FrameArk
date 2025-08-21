@@ -38,7 +38,8 @@ export const toggleBusPassengerLayer = (
     map: maplibregl.Map,
     busLayerVisible: boolean,
     setIsLoading: (v: boolean) => void,
-    setBusLayerVisible: (v: boolean) => void
+    setBusLayerVisible: (v: boolean) => void,
+
 ) => {
     setIsLoading(true);
 
@@ -112,7 +113,8 @@ export const toggleSakaeCourseRideLayer = (
     map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
-    setLayerVisible: (v: boolean) => void
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
 ) => {
     setIsLoading(true);
 
@@ -183,6 +185,8 @@ export const toggleSakaeCourseRideLayer = (
                     map.setLayoutProperty(layerId, 'visibility', 'visible');
                 }
 
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+
                 // Hide conflicting layers
                 [
                     'mesh-1km-fill', 'mesh-1km-outline',
@@ -202,6 +206,7 @@ export const toggleSakaeCourseRideLayer = (
         ['sakae-course-ride'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
             }
         });
 
@@ -214,7 +219,8 @@ export const toggleSakaeCourseDropLayer = (
     map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
-    setLayerVisible: (v: boolean) => void
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
 ) => {
     setIsLoading(true);
 
@@ -285,6 +291,8 @@ export const toggleSakaeCourseDropLayer = (
                     map.setLayoutProperty(layerId, 'visibility', 'visible');
                 }
 
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+
                 // Hide conflicting layers
                 [
                     'mesh-1km-fill', 'mesh-1km-outline',
@@ -304,6 +312,7 @@ export const toggleSakaeCourseDropLayer = (
         ['sakae-course-drop'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
             }
         });
 
@@ -316,7 +325,8 @@ export const toggleMasuoCourseRideLayer = (
     map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
-    setLayerVisible: (v: boolean) => void
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
 ) => {
     setIsLoading(true);
 
@@ -387,6 +397,8 @@ export const toggleMasuoCourseRideLayer = (
                     map.setLayoutProperty(layerId, 'visibility', 'visible');
                 }
 
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+
                 // Hide conflicting layers
                 [
                     'mesh-1km-fill', 'mesh-1km-outline',
@@ -407,6 +419,7 @@ export const toggleMasuoCourseRideLayer = (
         ['masuo-course-ride'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
             }
         });
 
@@ -420,7 +433,8 @@ export const toggleMasuoCourseDropLayer = (
     map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
-    setLayerVisible: (v: boolean) => void
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
 ) => {
     setIsLoading(true);
 
@@ -491,6 +505,8 @@ export const toggleMasuoCourseDropLayer = (
                     map.setLayoutProperty(layerId, 'visibility', 'visible');
                 }
 
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+
                 // Hide conflicting layers
                 [
                     'mesh-1km-fill', 'mesh-1km-outline',
@@ -510,6 +526,7 @@ export const toggleMasuoCourseDropLayer = (
         ['masuo-course-drop'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
             }
         });
         setLayerVisible(false);
@@ -522,7 +539,8 @@ export const toggleShonanCourseRideLayer = (
     map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
-    setLayerVisible: (v: boolean) => void
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
 ) => {
     setIsLoading(true);
 
@@ -593,6 +611,8 @@ export const toggleShonanCourseRideLayer = (
                     map.setLayoutProperty(layerId, 'visibility', 'visible');
                 }
 
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+
                 // Hide conflicting layers
                 [
                     'mesh-1km-fill', 'mesh-1km-outline',
@@ -612,6 +632,7 @@ export const toggleShonanCourseRideLayer = (
         ['shonan-course-ride'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
             }
         });
 
@@ -624,7 +645,8 @@ export const toggleShonanCourseDropLayer = (
     map: maplibregl.Map,
     layerVisible: boolean,
     setIsLoading: (v: boolean) => void,
-    setLayerVisible: (v: boolean) => void
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
 ) => {
     setIsLoading(true);
 
@@ -695,6 +717,8 @@ export const toggleShonanCourseDropLayer = (
                     map.setLayoutProperty(layerId, 'visibility', 'visible');
                 }
 
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+
                 // Hide conflicting layers
                 [
                     'mesh-1km-fill', 'mesh-1km-outline',
@@ -714,6 +738,7 @@ export const toggleShonanCourseDropLayer = (
         ['shonan-course-drop'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', 'none');
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
             }
         });
 
@@ -721,3 +746,114 @@ export const toggleShonanCourseDropLayer = (
         map.once('idle', () => setIsLoading(false));
     }
 };
+export const PASSENGER_CIRCLE_LAYER_IDS = [
+    "sakae-course-ride",
+    "sakae-course-drop",
+    "masuo-course-ride",
+    "masuo-course-drop",
+    "shonan-course-ride",
+    "shonan-course-drop",
+] as const;
+export type CircleLayerId = typeof PASSENGER_CIRCLE_LAYER_IDS[number];
+
+const TEXT_PROP_BY_LAYER: Record<CircleLayerId, string> = {
+    "sakae-course-ride": "sakae_ride",
+    "sakae-course-drop": "sakae_drop",
+    "masuo-course-ride": "masuo_ride",
+    "masuo-course-drop": "masuo_drop",
+    "shonan-course-ride": "shonan_ride",
+    "shonan-course-drop": "shonan_drop",
+};
+
+// Push label (and optionally its circle) to the very top of the stack
+function bringLabelAboveCircle(map: maplibregl.Map, circleId: CircleLayerId) {
+    const labelId = `${circleId}-label`;
+    if (map.getLayer(circleId)) {
+        try { map.moveLayer(circleId); } catch { }
+    }
+    if (map.getLayer(labelId)) {
+        try { map.moveLayer(labelId); } catch { }
+    }
+}
+
+/** Create the label layer once with readable styling and correct z-order. */
+function ensureLabelForCircle(map: maplibregl.Map, circleId: CircleLayerId) {
+    const labelId = `${circleId}-label`;
+    if (map.getLayer(labelId)) return;
+
+    const circle = map.getLayer(circleId) as any;
+    if (!circle) return; // circle not present yet
+
+    const source = circle.source;
+    const sourceLayer = circle["source-layer"];
+    const filter = circle.filter ?? undefined;
+    const textProp = TEXT_PROP_BY_LAYER[circleId];
+
+    // Readable style:
+    // - bold-ish, slightly larger text
+    // - strong white halo (like a pill) so it pops over any line/terrain
+    // - offset to the right of the circle
+    map.addLayer({
+        id: labelId,
+        type: "symbol",
+        source,
+        ...(sourceLayer ? { "source-layer": sourceLayer } : {}),
+        ...(filter ? { filter } : {}),
+        layout: {
+            "text-field": ["to-string", ["get", textProp]],
+            "text-size": 13,                     // a touch larger
+            "text-font": ["Noto Sans Regular"],  // use whatever your style supports; safe default
+            "text-anchor": "left",
+            "text-offset": [1.2, 0],             // push text away from the circle
+            "text-allow-overlap": true,          // always draw for screenshots
+            "text-keep-upright": true,
+            "symbol-placement": "point",
+            "visibility": "none",                // default hidden (global toggle decides)
+        },
+        paint: {
+            "text-color": "#111111",
+            "text-halo-color": "rgba(255,255,255,0.98)", // near-opaque halo
+            "text-halo-width": 3,                        // thicker halo -> "pill" effect
+            "text-halo-blur": 0.3,                       // crisp edges
+        },
+    });
+
+    // Always ensure label is above its circle (and above routes)
+    bringLabelAboveCircle(map, circleId);
+}
+
+/** Global button handler: show labels only for circles that are currently visible. */
+export function setAllPassengerLabelsVisible(map: maplibregl.Map, globalOn: boolean) {
+    for (const id of PASSENGER_CIRCLE_LAYER_IDS) {
+        if (!map.getLayer(id)) continue;
+
+        const circleVisible = map.getLayoutProperty(id, "visibility") !== "none";
+        ensureLabelForCircle(map, id);
+
+        const labelId = `${id}-label`;
+        if (!map.getLayer(labelId)) continue;
+
+        const shouldShow = globalOn && circleVisible;
+        map.setLayoutProperty(labelId, "visibility", shouldShow ? "visible" : "none");
+
+        // When showing, bring label above circle so it never hides under it
+        if (shouldShow) bringLabelAboveCircle(map, id);
+    }
+}
+
+/** Call this right after you show/hide ONE circle layer to keep its label aligned with the global toggle. */
+export function syncPassengerLabelForCircle(map: maplibregl.Map, circleId: CircleLayerId, globalOn: boolean) {
+    if (!map.getLayer(circleId)) return;
+
+    const circleVisible = map.getLayoutProperty(circleId, "visibility") !== "none";
+    ensureLabelForCircle(map, circleId);
+
+    const labelId = `${circleId}-label`;
+    if (!map.getLayer(labelId)) return;
+
+    const shouldShow = globalOn && circleVisible;
+    map.setLayoutProperty(labelId, "visibility", shouldShow ? "visible" : "none");
+
+    if (shouldShow) bringLabelAboveCircle(map, circleId);
+}
+// === end labels =========================================

@@ -184,6 +184,9 @@ interface MapControlsProps {
     terrainEnabled: boolean;
     toggleTerrain: () => void;
 
+    passengerLabelsVisible: boolean;
+    togglePassengerLabelsVisible: () => void;
+
 }
 
 export default function MapControls({
@@ -289,7 +292,10 @@ export default function MapControls({
     toggleMesh,
 
     terrainEnabled,
-    toggleTerrain
+    toggleTerrain,
+
+    passengerLabelsVisible,
+    togglePassengerLabelsVisible,
 
 }: MapControlsProps) {
 
@@ -413,6 +419,14 @@ export default function MapControls({
         chomeDensityVisible ||
         chomeTotal2040Visible ||
         chomeAging2040Visible;
+
+    const anyPassengerCircleOn =
+        sakaeCourseRideLayerVisible ||
+        sakaeCourseDropLayerVisible ||
+        masuoCourseRideLayerVisible ||
+        masuoCourseDropLayerVisible ||
+        shonanCourseRideLayerVisible ||
+        shonanCourseDropLayerVisible;
 
 
     return (
@@ -658,6 +672,17 @@ export default function MapControls({
                                             <Switch checked={checked} onCheckedChange={onChange} />
                                         </div>
                                     ))}
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black flex items-center gap-2">
+                                            <Type className="h-4 w-4 text-muted-foreground" />
+                                            バス停の数値ラベルを表示
+                                        </Label>
+                                        <Switch
+                                            checked={passengerLabelsVisible}
+                                            onCheckedChange={togglePassengerLabelsVisible}
+                                            disabled={!anyPassengerCircleOn}            // ← disabled unless at least one passenger layer is ON
+                                        />
+                                    </div>
                                 </AccordionContent>
                             </AccordionItem>
                         </Accordion>
