@@ -19,7 +19,7 @@ export const toggleTouristLayer = (
     if (!touristLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'geojson', data: "/data/touristSpot.ts" });
+            map.addSource(sourceId, { type: 'geojson', data: "/data/tourist_spots.geojson" });
         }
 
         // Add circle layer
