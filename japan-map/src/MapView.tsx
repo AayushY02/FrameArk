@@ -15,8 +15,8 @@ import { toggleAdminBoundaries } from './layers/adminBoundaries';
 import { toggleAgriLayer } from './layers/agriLayer';
 import LoadingOverlay from './components/LoadingOverlay';
 import MapControls from './components/MapControls';
-import { useRecoilValue } from 'recoil';
-// import { selectedMeshIdState } from './state/meshSelection';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { selectedMeshIdState } from './state/meshSelection';
 import ChatPanel from './components/ChatPanel';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toggleAlightingLayer, toggleBoardingLayer, toggleBusStops, toggleTransportationLayer } from './layers/transportationLayer';
@@ -59,10 +59,10 @@ export default function MapView() {
     const selectedMetricRef = useRef(selectedMetric);
     const [agriLayerVisible, setAgriLayerVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    // const setSelectedMeshId = useSetRecoilState(selectedMeshIdState);
+    const setSelectedMeshId = useSetRecoilState(selectedMeshIdState);
     const [chatOpen, setChatOpen] = useState(false);
     const [chatMeshId, setChatMeshId] = useState<string | null>(null);
-    // const selectionPopupRef = useRef<maplibregl.Popup | null>(null);
+    const selectionPopupRef = useRef<maplibregl.Popup | null>(null);
     const [transportVisible, setTransportVisible] = useState(false);
     const [pbFacilityVisible, setPbFacilityVisible] = useState(false);
     const [schoolLayerVisible, setSchoolLayerVisible] = useState(false);
@@ -510,27 +510,27 @@ export default function MapView() {
 
 
 
-        // const ensureHighlightLayer = () => {
-        //     if (map.getSource('clicked-mesh')) return;   // already present
+        const ensureHighlightLayer = () => {
+            if (map.getSource('clicked-mesh')) return;   // already present
 
-        //     map.addSource('clicked-mesh', {
-        //         type: 'geojson',
-        //         data: { type: 'FeatureCollection', features: [] },
-        //     });
+            map.addSource('clicked-mesh', {
+                type: 'geojson',
+                data: { type: 'FeatureCollection', features: [] },
+            });
 
-        //     map.addLayer({
-        //         id: 'clicked-mesh-fill',
-        //         type: 'fill',
-        //         source: 'clicked-mesh',
-        //         paint: { 'fill-color': '#ff0000', 'fill-opacity': 0.65 },
-        //     });
-        //     map.addLayer({
-        //         id: 'clicked-mesh-line',
-        //         type: 'line',
-        //         source: 'clicked-mesh',
-        //         paint: { 'line-color': '#ff0000', 'line-width': 2 },
-        //     });
-        // };
+            map.addLayer({
+                id: 'clicked-mesh-fill',
+                type: 'fill',
+                source: 'clicked-mesh',
+                paint: { 'fill-color': '#ff0000', 'fill-opacity': 0.65 },
+            });
+            map.addLayer({
+                id: 'clicked-mesh-line',
+                type: 'line',
+                source: 'clicked-mesh',
+                paint: { 'line-color': '#ff0000', 'line-width': 2 },
+            });
+        };
 
         mapRef.current = map;
 
@@ -555,113 +555,113 @@ export default function MapView() {
                 }
             });
 
-            // addMeshLayers(map, selectedMetric);
+            addMeshLayers(map, selectedMetric);
 
-            // ensureHighlightLayer();
+            ensureHighlightLayer();
             map.once('idle', () => setIsLoading(false));
 
 
         });
 
         map.on('style.load', () => {
-            // addMeshLayers(map, selectedMetric);
-            // ensureHighlightLayer();
+            addMeshLayers(map, selectedMetric);
+            ensureHighlightLayer();
         });
 
-        // const showPopup = (e: mapboxgl.MapMouseEvent) => {
-        //     const feature = e.features?.[0];
-        //     if (!feature) return;
+        const showPopup = (e: mapboxgl.MapMouseEvent) => {
+            const feature = e.features?.[0];
+            if (!feature) return;
 
-        //     map.getCanvas().style.cursor = 'pointer';
-        //     const metric = selectedMetricRef.current;
+            map.getCanvas().style.cursor = 'pointer';
+            const metric = selectedMetricRef.current;
 
-        //     const value = metric === 'ELDERLY_RATIO'
-        //         ? ((feature.properties?.PTC_2020 / feature.properties?.PTN_2020) * 100).toFixed(1) + '%'
-        //         : feature.properties?.[metric] ?? 'N/A';
+            const value = metric === 'ELDERLY_RATIO'
+                ? ((feature.properties?.PTC_2020 / feature.properties?.PTN_2020) * 100).toFixed(1) + '%'
+                : feature.properties?.[metric] ?? 'N/A';
 
-        //     const label = {
-        //         PTN_2020: '総人口（2020年）',
-        //         PTA_2020: '0〜14歳の人口（2020年）',
-        //         PTC_2020: '65歳以上の人口（2020年）',
-        //         ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
-        //     }[metric];
+            const label = {
+                PTN_2020: '総人口（2020年）',
+                PTA_2020: '0〜14歳の人口（2020年）',
+                PTC_2020: '65歳以上の人口（2020年）',
+                ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
+            }[metric];
 
-        //     popupRef.setLngLat(e.lngLat).setHTML(`<strong>${label}:</strong> ${value}`).addTo(map);
-        // };
+            popupRef.setLngLat(e.lngLat).setHTML(`<strong>${label}:</strong> ${value}`).addTo(map);
+        };
 
-        // ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(layer => {
-        //     map.on('mousemove', layer, showPopup);
-        //     map.on('mouseleave', layer, () => {
-        //         map.getCanvas().style.cursor = '';
-        //         popupRef.remove();
-        //     });
-        // });
+        ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(layer => {
+            map.on('mousemove', layer, showPopup);
+            map.on('mouseleave', layer, () => {
+                map.getCanvas().style.cursor = '';
+                popupRef.remove();
+            });
+        });
 
-    //     ['mesh-250m-fill', 'mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
-    //         map.on('click', layer, e => {
-    //             const feature = e.features?.[0];
-    //             if (!feature) return;
+        ['mesh-250m-fill', 'mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
+            map.on('click', layer, e => {
+                const feature = e.features?.[0];
+                if (!feature) return;
 
-    //             const meshId = feature.properties?.MESH_ID as string | undefined;
-    //             if (!meshId) return;
+                const meshId = feature.properties?.MESH_ID as string | undefined;
+                if (!meshId) return;
 
-    //             // 1️⃣ Update global state (Recoil)
-    //             setSelectedMeshId(meshId);
+                // 1️⃣ Update global state (Recoil)
+                setSelectedMeshId(meshId);
 
-    //             // 2️⃣ Highlight the clicked mesh
-    //             ensureHighlightLayer();
-    //             const geojson: GeoJSON.FeatureCollection = {
-    //                 type: 'FeatureCollection',
-    //                 features: [
-    //                     {
-    //                         ...(feature.toJSON ? feature.toJSON() : (feature as any)),
-    //                         id: meshId,
-    //                     },
-    //                 ],
-    //             };
-    //             (map.getSource('clicked-mesh') as maplibregl.GeoJSONSource).setData(geojson);
+                // 2️⃣ Highlight the clicked mesh
+                ensureHighlightLayer();
+                const geojson: GeoJSON.FeatureCollection = {
+                    type: 'FeatureCollection',
+                    features: [
+                        {
+                            ...(feature.toJSON ? feature.toJSON() : (feature as any)),
+                            id: meshId,
+                        },
+                    ],
+                };
+                (map.getSource('clicked-mesh') as maplibregl.GeoJSONSource).setData(geojson);
 
-    //             // 3️⃣ Show / update the *selection* popup with the "Ask Mirai AI" button
-    //             if (selectionPopupRef.current) {
-    //                 selectionPopupRef.current.remove();
-    //             }
+                // 3️⃣ Show / update the *selection* popup with the "Ask Mirai AI" button
+                if (selectionPopupRef.current) {
+                    selectionPopupRef.current.remove();
+                }
 
-    //             const selectionPopup = new maplibregl.Popup({ closeButton: false, offset: 0, className: "ai-popup" })
-    //                 .setLngLat(e.lngLat)
-    //                 .setHTML(
-    //                     `
-    //                     <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-40">
-    //   <div class="text-sm font-semibold text-gray-900">Mesh ID : <span class="text-base text-muted-foreground">${meshId}</span> </div>
+                const selectionPopup = new maplibregl.Popup({ closeButton: false, offset: 0, className: "ai-popup" })
+                    .setLngLat(e.lngLat)
+                    .setHTML(
+                        `
+                        <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-40">
+      <div class="text-sm font-semibold text-gray-900">Mesh ID : <span class="text-base text-muted-foreground">${meshId}</span> </div>
       
-    //   <button
-    //     id="ask-mirai-btn"
-    //     class="inline-flex items-center w-full justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none"
-    //   >
-    //    ミライに聞く
-    //   </button>
-    // </div>
-    //                     `,
-    //                 )
-    //                 .addTo(map);
+      <button
+        id="ask-mirai-btn"
+        class="inline-flex items-center w-full justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus:outline-none"
+      >
+       ミライに聞く
+      </button>
+    </div>
+                        `,
+                    )
+                    .addTo(map);
 
-    //             selectionPopupRef.current = selectionPopup;
+                selectionPopupRef.current = selectionPopup;
 
-    //             // Optional: wire up an event handler for the button
-    //             const popupElement = selectionPopup.getElement();
-    //             const askBtn = popupElement?.querySelector<HTMLButtonElement>('#ask-mirai-btn');
+                // Optional: wire up an event handler for the button
+                const popupElement = selectionPopup.getElement();
+                const askBtn = popupElement?.querySelector<HTMLButtonElement>('#ask-mirai-btn');
 
-    //             askBtn?.addEventListener('click', () => {
-    //                 window.dispatchEvent(
-    //                     new CustomEvent('mirai:ask', {
-    //                         detail: { meshId },
-    //                     }),
-    //                 );
-    //                 // optionally close popup
-    //                 selectionPopupRef.current?.remove();
-    //             });
+                askBtn?.addEventListener('click', () => {
+                    window.dispatchEvent(
+                        new CustomEvent('mirai:ask', {
+                            detail: { meshId },
+                        }),
+                    );
+                    // optionally close popup
+                    selectionPopupRef.current?.remove();
+                });
 
-    //         });
-    //     });
+            });
+        });
 
         /**
          * ===== Extra interactions for agricultural layer =====

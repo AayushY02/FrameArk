@@ -24,7 +24,7 @@ export const addMeshLayers = (map: maplibregl.Map, metric: string) => {
             // data: '/data/12_chiba_1km_pop.geojson'
 
             type: "vector",
-            tiles: ["http://localhost:9000/data/12_chiba_1km_pop/{z}/{x}/{y}.pbf"]
+           url:"https://api.maptiler.com/tiles/0198ca6f-2730-7e7b-99ae-799c197f5ad1/tiles.json?key=HCoMhdrImqEq1BdoYmms"
         });
     }
 

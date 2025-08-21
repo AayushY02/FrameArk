@@ -162,23 +162,47 @@ export const toggleBusStops = (
     if (!busStopsLayerVisible) {
         // Add vector source
         if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, { type: 'geojson', data: "/data/bus-stops.geojson" });
+            map.addSource(sourceId, { type: 'geojson', data: "/data/bus_stops.geojson" });
         }
 
         // Add circle layer
+        // if (!map.getLayer('bus-stops')) {
+        //     map.addLayer({
+        //         id: 'bus-stops',
+        //         type: 'symbol',
+        //         source: sourceId,
+        //         // 'source-layer': sourceLayer,
+        //         minzoom: 5,
+        //         layout: {
+        //             'icon-image': 'bus-15',
+        //             'icon-size': 1,
+        //             'icon-allow-overlap': true,
+        //             'icon-anchor': 'bottom',
+        //             visibility: 'visible'
+        //         }
+        //     }, beforeId);
+
         if (!map.getLayer('bus-stops')) {
             map.addLayer({
                 id: 'bus-stops',
                 type: 'symbol',
                 source: sourceId,
-                // 'source-layer': sourceLayer,
+                // 'source-layer': sourceLayer,   // REQUIRED for vector/pmtiles
                 minzoom: 5,
                 layout: {
-                    'icon-image': 'bus',
+                    'icon-image': 'bus-15',      // ✅ built-in Maki icon
                     'icon-size': 1,
                     'icon-allow-overlap': true,
                     'icon-anchor': 'bottom',
-                    visibility: 'visible'
+                    'visibility': 'visible',
+                    'text-field': ['get', 'stop_name'], // optional: label from your data
+                    'text-size': 11,
+                    'text-offset': [0, 0.6],
+                    'text-optional': true
+                },
+                paint: {
+                    'text-halo-width': 1,
+                    'text-halo-color': '#ffffff'
                 }
             }, beforeId);
 
