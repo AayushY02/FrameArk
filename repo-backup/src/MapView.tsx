@@ -168,7 +168,7 @@ export default function MapView() {
             popupRef.setLngLat(e.lngLat).setHTML(`<strong>${label}:</strong> ${value}`).addTo(map);
         };
 
-        ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(layer => {
+        ['mesh-1km-fill', 'mesh-500m-fill'].forEach(layer => {
             map.on('mousemove', layer, showPopup);
             map.on('mouseleave', layer, () => {
                 map.getCanvas().style.cursor = '';

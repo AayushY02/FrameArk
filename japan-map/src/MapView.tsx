@@ -122,7 +122,7 @@ export default function MapView() {
     ].some(Boolean);
     // const hasAnyOtherLegend = someOtherLegendVisible || anotherLegendVisible;
 
-    
+
 
     const toggleKashiwaPublicFacilityVisible = (category: string) => {
         // Toggle category selection
@@ -331,20 +331,69 @@ export default function MapView() {
         }
     }, [selectedShopCategories]);
 
-    const ROAD_LAYER_IDS = [
-        'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
-        'road-primary', 'road-trunk', 'road-motorway', 'road-rail', 'road-path', 'road-network'
-    ];
+    // const ROAD_LAYER_IDS = [
+    //     'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
+    //     'road-primary', 'road-trunk', 'road-motorway', 'road-rail', 'road-path', 'road-network'
+    // ];
 
+    // const toggleRoads = () => {
+    //     const map = mapRef.current;
+    //     if (!map) return;
+    //     const visibility = roadsVisible ? 'none' : 'visible';
+    //     ROAD_LAYER_IDS.forEach(id => {
+    //         if (map.getLayer(id)) {
+    //             map.setLayoutProperty(id, 'visibility', visibility);
+    //         }
+    //     });
+    //     setRoadsVisible(!roadsVisible);
+    // };
+
+
+    // Detect road layers (strokes + optional labels) from the *current* style
+    function getRoadLayerIds(map: maplibregl.Map) {
+        const layers = map.getStyle().layers ?? [];
+        const strokeIds: string[] = [];
+        const labelIds: string[] = [];
+
+        for (const layer of layers) {
+            const id = layer.id;
+            const type = (layer as any).type;
+            const sourceLayer = (layer as any)['source-layer'];
+
+            // Road strokes in MapTiler styles use source-layer "transportation" (type usually "line")
+            if (sourceLayer === 'transportation' && (type === 'line' || type === 'fill')) {
+                strokeIds.push(id);
+                continue;
+            }
+            // Road labels use "transportation_name" (type "symbol")
+            if (sourceLayer === 'transportation_name' && type === 'symbol') {
+                labelIds.push(id);
+                continue;
+            }
+
+            // Fallback: match common id patterns if source-layer isn’t present (rare)
+            if (/road|transport|street|bridge|tunnel/i.test(id)) {
+                if (type === 'symbol') labelIds.push(id);
+                else strokeIds.push(id);
+            }
+        }
+        return { strokeIds, labelIds };
+    }
+
+    // Toggle roads (strokes + labels). If you want to keep labels, remove the labelIds loop.
     const toggleRoads = () => {
         const map = mapRef.current;
         if (!map) return;
+
         const visibility = roadsVisible ? 'none' : 'visible';
-        ROAD_LAYER_IDS.forEach(id => {
+        const { strokeIds, labelIds } = getRoadLayerIds(map);
+
+        [...strokeIds, ...labelIds].forEach((id) => {
             if (map.getLayer(id)) {
                 map.setLayoutProperty(id, 'visibility', visibility);
             }
         });
+
         setRoadsVisible(!roadsVisible);
     };
 

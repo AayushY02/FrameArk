@@ -111,34 +111,34 @@ export const addMeshLayers = (map: maplibregl.Map, metric: string) => {
     //     paint: { 'line-color': '#0099cc', 'line-width': 0.75 }
     // });
 
-    // map.addSource('admin-tiles', {
-    //     type: 'vector',
-    //     url: 'mapbox://frame-ark.5l5v468c'
-    // });
+    map.addSource('admin-tiles', {
+        type: 'geojson',
+        data: '/data/japan.geojson'
+    });
 
-    // map.addLayer({
-    //     id: 'admin-fill',
-    //     type: 'fill',
-    //     source: 'admin-tiles',
-    //     'source-layer': 'japan-2ix0gj',
-    //     layout: { visibility: 'none' },
-    //     paint: {
-    //         'fill-color': '#cccccc',
-    //         'fill-opacity': 0.4
-    //     }
-    // }, labelLayerId);
+    map.addLayer({
+        id: 'admin-fill',
+        type: 'fill',
+        source: 'admin-tiles',
+        // 'source-layer': 'japan-2ix0gj',
+        layout: { visibility: 'none' },
+        paint: {
+            'fill-color': '#cccccc',
+            'fill-opacity': 0.4
+        }
+    }, labelLayerId);
 
-    // map.addLayer({
-    //     id: 'admin-line',
-    //     type: 'line',
-    //     source: 'admin-tiles',
-    //     'source-layer': 'japan-2ix0gj',
-    //     layout: { visibility: 'none' },
-    //     paint: {
-    //         'line-color': '#444444',
-    //         'line-width': 1.2
-    //     }
-    // }, labelLayerId);
+    map.addLayer({
+        id: 'admin-line',
+        type: 'line',
+        source: 'admin-tiles',
+        // 'source-layer': 'japan-2ix0gj',
+        layout: { visibility: 'none' },
+        paint: {
+            'line-color': '#444444',
+            'line-width': 1.2
+        }
+    }, labelLayerId);
 
 
 };
