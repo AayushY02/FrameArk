@@ -473,6 +473,47 @@ export default function MapView() {
         }
     }, [selectedShopCategories]);
 
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!map) return;
+
+        // List every circle layer that should be above the routes.
+        // Include the generic 'bus-layer' if you want that on top, too.
+        const PASSENGER_CIRCLE_LAYER_IDS = [
+            "sakae-course-ride",
+            "sakae-course-drop",
+            "masuo-course-ride",
+            "masuo-course-drop",
+            "shonan-course-ride",
+            "shonan-course-drop",
+            // optionally:
+            "bus-layer",
+        ] as const;
+
+        const bumpCirclesToTop = () => {
+            // Move each existing circle layer to the very top (in given order)
+            for (const id of PASSENGER_CIRCLE_LAYER_IDS) {
+                if (map.getLayer(id)) {
+                    try { map.moveLayer(id); } catch { /* ignore if layer is missing during reflow */ }
+                }
+            }
+        };
+
+        // Run once now (in case layers are already present)
+        bumpCirclesToTop();
+
+        // Re-run whenever the style/layers change or settle
+        map.on("load", bumpCirclesToTop);
+        map.on("styledata", bumpCirclesToTop);
+        map.on("idle", bumpCirclesToTop);
+
+        return () => {
+            map.off("load", bumpCirclesToTop);
+            map.off("styledata", bumpCirclesToTop);
+            map.off("idle", bumpCirclesToTop);
+        };
+    }, []);
+
     // const ROAD_LAYER_IDS = [
     //     'road', 'road-street', 'road-street-low', 'road-secondary-tertiary',
     //     'road-primary', 'road-trunk', 'road-motorway', 'road-rail', 'road-path', 'road-network'
