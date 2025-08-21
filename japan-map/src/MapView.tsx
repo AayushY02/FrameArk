@@ -122,6 +122,8 @@ export default function MapView() {
     ].some(Boolean);
     // const hasAnyOtherLegend = someOtherLegendVisible || anotherLegendVisible;
 
+    
+
     const toggleKashiwaPublicFacilityVisible = (category: string) => {
         // Toggle category selection
         setSelectedCategories((prev) =>
@@ -351,13 +353,13 @@ export default function MapView() {
         if (!map) return;
         const color = getColorExpression(selectedMetric);
 
-        ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(id => {
+        ['mesh-1km-fill', 'mesh-500m-fill'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setPaintProperty(id, 'fill-color', color);
             }
         });
 
-        ['mesh-1km-outline', 'mesh-500m-outline', 'mesh-250m-outline'].forEach(id => {
+        ['mesh-1km-outline', 'mesh-500m-outline'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setPaintProperty(id, 'line-color', color);
             }
@@ -420,7 +422,7 @@ export default function MapView() {
                 ctx.drawImage(originalCanvas, 0, 0);
 
                 // Attribution text
-                const text = '© Mapbox © OpenStreetMap';
+                const text = '© MaplibreGL © OpenStreetMap';
                 ctx.font = '14px Arial';
                 ctx.textAlign = 'right';
                 ctx.textBaseline = 'bottom';
@@ -634,7 +636,7 @@ export default function MapView() {
         //     });
         // });
 
-        ['mesh-250m-fill', 'mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
+        ['mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
             map.on('click', layer, e => {
                 const feature = e.features?.[0];
                 if (!feature) return;
