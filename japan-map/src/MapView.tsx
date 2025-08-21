@@ -477,9 +477,8 @@ export default function MapView() {
         const map = mapRef.current;
         if (!map) return;
 
-        // List every circle layer that should be above the routes.
-        // Include the generic 'bus-layer' if you want that on top, too.
-        const PASSENGER_CIRCLE_LAYER_IDS = [
+        // circle layers that must sit above routes
+        const CIRCLE_IDS = [
             "sakae-course-ride",
             "sakae-course-drop",
             "masuo-course-ride",
@@ -490,27 +489,67 @@ export default function MapView() {
             "bus-layer",
         ] as const;
 
-        const bumpCirclesToTop = () => {
-            // Move each existing circle layer to the very top (in given order)
-            for (const id of PASSENGER_CIRCLE_LAYER_IDS) {
-                if (map.getLayer(id)) {
-                    try { map.moveLayer(id); } catch { /* ignore if layer is missing during reflow */ }
+        // Internal trackers stored on the map instance (persist through re-renders)
+        const M = map as any;
+        if (!M.__circleBump) {
+            M.__circleBump = {
+                bumped: new Set<string>(),
+                lastLayerCount: -1,
+                bumpAll: () => {
+                    // move every existing circle to the very top (order in CIRCLE_IDS decides final top order)
+                    for (const id of CIRCLE_IDS) {
+                        if (map.getLayer(id)) {
+                            try { map.moveLayer(id); } catch { }
+                        }
+                    }
+                },
+                bumpNewOnes: () => {
+                    // only move circles we haven't bumped yet (cheap)
+                    for (const id of CIRCLE_IDS) {
+                        if (map.getLayer(id) && !M.__circleBump.bumped.has(id)) {
+                            try { map.moveLayer(id); } catch { }
+                            M.__circleBump.bumped.add(id);
+                        }
+                    }
                 }
+            };
+        }
+
+        // run once now
+        M.__circleBump.bumpNewOnes();
+
+        // When the style definition itself changes (style reload),
+        // reset our cache so we bump once again for newly recreated layers.
+        const onStyleData = (e: any) => {
+            if (e?.dataType === "style") {
+                M.__circleBump.bumped.clear();
+                M.__circleBump.lastLayerCount = -1;
             }
         };
 
-        // Run once now (in case layers are already present)
-        bumpCirclesToTop();
+        // On idle, only bump if the layer count changed since last time.
+        const onIdle = () => {
+            const layers = map.getStyle()?.layers ?? [];
+            const count = layers.length;
+            if (count !== M.__circleBump.lastLayerCount) {
+                // Layer stack changed (someone added/removed a layer)
+                M.__circleBump.lastLayerCount = count;
 
-        // Re-run whenever the style/layers change or settle
-        map.on("load", bumpCirclesToTop);
-        map.on("styledata", bumpCirclesToTop);
-        map.on("idle", bumpCirclesToTop);
+                // Bring any newly seen circle to top once
+                M.__circleBump.bumpNewOnes();
+
+                // Also reassert circle top order once after any stack change,
+                // so circles remain above any newly added route lines.
+                M.__circleBump.bumpAll();
+            }
+        };
+
+        map.on("styledata", onStyleData);
+        map.on("idle", onIdle);
 
         return () => {
-            map.off("load", bumpCirclesToTop);
-            map.off("styledata", bumpCirclesToTop);
-            map.off("idle", bumpCirclesToTop);
+            map.off("styledata", onStyleData);
+            map.off("idle", onIdle);
         };
     }, []);
 
