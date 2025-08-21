@@ -1,5 +1,5 @@
 // MapView.tsx
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import maplibregl, { Map } from 'maplibre-gl';
 import { Protocol } from 'pmtiles'
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -44,6 +44,11 @@ import KashiwakuruOdLegend from './components/Legend/KashiwakuruOdLegend';
 import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwaChomeAging2040Layer, toggleKashiwaChomeAgingLayer, toggleKashiwaChomeDensityLayer, toggleKashiwaChomeTotal2040Layer, toggleKashiwaChomeTotalLayer, updateKashiwaChomeStyle } from './layers/kashiwaChomePopulationLayer';
 import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopulationLegend';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+const MESH_LAYER_IDS = [
+    'mesh-1km-fill', 'mesh-1km-outline',
+    'mesh-500m-fill', 'mesh-500m-outline',
+
+]; // include whichever you actually add in addMeshLayers
 
 export default function MapView() {
     const mapRef = useRef<Map | null>(null);
@@ -53,6 +58,7 @@ export default function MapView() {
     const clampRef = useRef<maplibregl.LngLatBoundsLike | null>(JAPAN_BOUNDS);
     const [roadsVisible, setRoadsVisible] = useState(false);
     const [adminVisible, setAdminVisible] = useState(false);
+    const [meshVisible, setMeshVisible] = useState(true);
     // const [terrainEnabled, setTerrainEnabled] = useState(false);
     const [currentStyle, setCurrentStyle] = useState(MAP_STYLES.ストリート);
     const [selectedMetric, setSelectedMetric] = useState('PTN_2020');
@@ -122,6 +128,54 @@ export default function MapView() {
     ].some(Boolean);
     // const hasAnyOtherLegend = someOtherLegendVisible || anotherLegendVisible;
 
+    const getMeshLayerIds = useCallback((map: maplibregl.Map) => {
+        const layers = map.getStyle()?.layers ?? [];
+        return layers.map(l => l.id).filter(id => id.startsWith('mesh-'));
+    }, []);
+
+    // NEW — apply visibility to *all* mesh layers
+    const applyMeshVisibility = useCallback((visible: boolean) => {
+        const map = mapRef.current;
+        if (!map) return;
+        const v = visible ? 'visible' : 'none';
+        getMeshLayerIds(map).forEach(id => {
+            if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', v);
+        });
+    }, [getMeshLayerIds]);
+
+    // NEW — (re)build mesh layers, recolor by metric, then apply current toggle
+    const rebuildMeshLayers = useCallback(() => {
+        const map = mapRef.current;
+        if (!map) return;
+
+        // Only re-add if they don't exist in this style yet
+        if (getMeshLayerIds(map).length === 0) {
+            addMeshLayers(map, selectedMetric);
+        }
+
+        // recolor to match current metric (your existing util)
+        updateMetricStyles();
+
+        // and finally respect the toggle
+        applyMeshVisibility(meshVisible);
+    }, [applyMeshVisibility, getMeshLayerIds, meshVisible, selectedMetric]);
+
+    const toggleMesh = () => {
+        const map = mapRef.current;
+        if (!map) return;
+
+        const next = !meshVisible;
+
+        // if layers were lost (e.g., after style change) and user is turning ON,
+        // ensure they exist before making them visible
+        if (next && getMeshLayerIds(map).length === 0) {
+            addMeshLayers(map, selectedMetric);
+            updateMetricStyles();
+        }
+
+        applyMeshVisibility(next);
+        setMeshVisible(next);
+    };
 
 
     const toggleKashiwaPublicFacilityVisible = (category: string) => {
@@ -515,8 +569,8 @@ export default function MapView() {
         if (!map) return;
 
         setIsLoading(true);
-        setCurrentStyle(styleUrl);
-        setSelectedMetric('PTN_2020');
+        const nextMetric = 'PTN_2020';
+        setSelectedMetric(nextMetric);
         // setTerrainEnabled(false);
         setAgriLayerVisible(false);
         setTransportVisible(false)
@@ -525,10 +579,7 @@ export default function MapView() {
         setMedicalLayerVisible(false)
 
         map.setStyle(styleUrl);
-        map.once('style.load', () => {
-            addMeshLayers(map, selectedMetric);
-            updateMetricStyles();
-        });
+        
         map.once('idle', () => setIsLoading(false));
 
     };
@@ -640,16 +691,16 @@ export default function MapView() {
                 }
             });
 
-            addMeshLayers(map, selectedMetric);
-
+            rebuildMeshLayers();                 // ← replace addMeshLayers + manual color with this
             ensureHighlightLayer();
+
             map.once('idle', () => setIsLoading(false));
 
 
         });
 
         map.on('style.load', () => {
-            addMeshLayers(map, selectedMetric);
+            rebuildMeshLayers();                 // ← guarantees meshes come back for the new style
             ensureHighlightLayer();
             if (clampRef.current) {
                 map.setMaxBounds(clampRef.current);
@@ -1647,6 +1698,9 @@ export default function MapView() {
                 onChomeRangeChange={onChomeRangeChange}
                 onChomeLabelsChange={onChomeLabelsChange}
                 downloadPpt={downloadPpt}
+
+                meshVisible={meshVisible}            // NEW
+                toggleMesh={toggleMesh}
 
             />
 

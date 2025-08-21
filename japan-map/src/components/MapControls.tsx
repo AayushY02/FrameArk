@@ -177,6 +177,9 @@ interface MapControlsProps {
     chomeAging2040Visible: boolean;
     toggleChomeAging2040Visible: () => void;
 
+    meshVisible: boolean;
+    toggleMesh: () => void;
+
 }
 
 export default function MapControls({
@@ -277,6 +280,9 @@ export default function MapControls({
     toggleChomeTotal2040Visible,
     chomeAging2040Visible,
     toggleChomeAging2040Visible,
+
+    meshVisible,            // NEW
+    toggleMesh,
 
 }: MapControlsProps) {
 
@@ -461,6 +467,14 @@ export default function MapControls({
                                 className="w-12 h-6 bg-gray-200 rounded-full" // Adjust styling as per your design
                             />
                         </div> */}
+
+                        <Button
+                            onClick={() => handleLayerToggle('メッシュ', meshVisible, toggleMesh)}
+                            className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"
+                        >
+                            <Layers size={16} />
+                            {meshVisible ? 'メッシュを非表示' : 'メッシュを表示'}
+                        </Button>
 
                         <Button onClick={() => handleLayerToggle('道路', roadsVisible, toggleRoads)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
                             <Ruler size={16} />
