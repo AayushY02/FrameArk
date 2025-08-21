@@ -18,13 +18,13 @@ export const addMeshLayers = (map: maplibregl.Map, metric: string) => {
     const labelLayerId = getLabelLayerId(map);
 
     if (!map.getSource('chiba-1km-mesh')) {
-        
+
         map.addSource('chiba-1km-mesh', {
             // type: 'geojson',
             // data: '/data/12_chiba_1km_pop.geojson'
 
             type: "vector",
-           url:"https://api.maptiler.com/tiles/0198ca6f-2730-7e7b-99ae-799c197f5ad1/tiles.json?key=HCoMhdrImqEq1BdoYmms"
+            url: "https://api.maptiler.com/tiles/0198ca6f-2730-7e7b-99ae-799c197f5ad1/tiles.json?key=HCoMhdrImqEq1BdoYmms"
         });
     }
 
@@ -83,33 +83,33 @@ export const addMeshLayers = (map: maplibregl.Map, metric: string) => {
         }
     }, labelLayerId);
 
-    // if (!map.getSource('chiba-250m-mesh')) {
-    //     map.addSource('chiba-250m-mesh', {
-    //         type: 'geojson',
-    //         data: '/data/12_chiba_250m_pop.geojson'
-    //     });
-    // }
+    if (!map.getSource('chiba-250m-mesh')) {
+        map.addSource('chiba-250m-mesh', {
+            type: 'geojson',
+            data: '/data/12_chiba_250m_pop_new.geojson'
+        });
+    }
 
-    // map.addLayer({
-    //     id: 'mesh-250m-fill',
-    //     type: 'fill',
-    //     source: 'chiba-250m-mesh',
-    //     // "source-layer": "mesh-250",
-    //     minzoom: 13.5,
-    //     paint: {
-    //         'fill-color': getColorExpression(metric),
-    //         'fill-opacity': 0.6
-    //     }
-    // }, labelLayerId);
+    map.addLayer({
+        id: 'mesh-250m-fill',
+        type: 'fill',
+        source: 'chiba-250m-mesh',
+        // "source-layer": "mesh-250",
+        minzoom: 13.5,
+        paint: {
+            'fill-color': getColorExpression(metric),
+            'fill-opacity': 0.6
+        }
+    }, labelLayerId);
 
-    // map.addLayer({
-    //     id: 'mesh-250m-outline',
-    //     type: 'line',
-    //     source: 'chiba-250m-mesh',
-    //     // "source-layer": "mesh-250",
-    //     minzoom: 13.5,
-    //     paint: { 'line-color': '#0099cc', 'line-width': 0.75 }
-    // });
+    map.addLayer({
+        id: 'mesh-250m-outline',
+        type: 'line',
+        source: 'chiba-250m-mesh',
+        // "source-layer": "mesh-250",
+        minzoom: 13.5,
+        paint: { 'line-color': '#0099cc', 'line-width': 0.75 }
+    });
 
     map.addSource('admin-tiles', {
         type: 'geojson',

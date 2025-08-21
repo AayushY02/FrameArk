@@ -44,11 +44,6 @@ import KashiwakuruOdLegend from './components/Legend/KashiwakuruOdLegend';
 import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwaChomeAging2040Layer, toggleKashiwaChomeAgingLayer, toggleKashiwaChomeDensityLayer, toggleKashiwaChomeTotal2040Layer, toggleKashiwaChomeTotalLayer, updateKashiwaChomeStyle } from './layers/kashiwaChomePopulationLayer';
 import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopulationLegend';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-const MESH_LAYER_IDS = [
-    'mesh-1km-fill', 'mesh-1km-outline',
-    'mesh-500m-fill', 'mesh-500m-outline',
-
-]; // include whichever you actually add in addMeshLayers
 
 export default function MapView() {
     const mapRef = useRef<Map | null>(null);
@@ -60,7 +55,7 @@ export default function MapView() {
     const [adminVisible, setAdminVisible] = useState(false);
     const [meshVisible, setMeshVisible] = useState(true);
     // const [terrainEnabled, setTerrainEnabled] = useState(false);
-    const [currentStyle, setCurrentStyle] = useState(MAP_STYLES.ストリート);
+    const [currentStyle, ] = useState(MAP_STYLES.ストリート);
     const [selectedMetric, setSelectedMetric] = useState('PTN_2020');
     const selectedMetricRef = useRef(selectedMetric);
     const [agriLayerVisible, setAgriLayerVisible] = useState(false);
@@ -456,13 +451,13 @@ export default function MapView() {
         if (!map) return;
         const color = getColorExpression(selectedMetric);
 
-        ['mesh-1km-fill', 'mesh-500m-fill'].forEach(id => {
+        ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setPaintProperty(id, 'fill-color', color);
             }
         });
 
-        ['mesh-1km-outline', 'mesh-500m-outline'].forEach(id => {
+        ['mesh-1km-outline', 'mesh-500m-outline', 'mesh-250m-outline'].forEach(id => {
             if (map.getLayer(id)) {
                 map.setPaintProperty(id, 'line-color', color);
             }
@@ -736,7 +731,7 @@ export default function MapView() {
         //     });
         // });
 
-        ['mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
+        ['mesh-500m-fill', 'mesh-1km-fill', 'mesh-250m-fill'].forEach(layer => {
             map.on('click', layer, e => {
                 const feature = e.features?.[0];
                 if (!feature) return;
