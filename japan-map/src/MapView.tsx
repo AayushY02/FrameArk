@@ -43,6 +43,7 @@ import { clearOdEndpointFocus, setKashiwakuruOdFilter, setKashiwakuruOdHour, sho
 import KashiwakuruOdLegend from './components/Legend/KashiwakuruOdLegend';
 import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwaChomeAging2040Layer, toggleKashiwaChomeAgingLayer, toggleKashiwaChomeDensityLayer, toggleKashiwaChomeTotal2040Layer, toggleKashiwaChomeTotalLayer, updateKashiwaChomeStyle } from './layers/kashiwaChomePopulationLayer';
 import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopulationLegend';
+import { toggleTerrainLayer } from './layers/terrain';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -87,6 +88,7 @@ export default function MapView() {
     const [masuoRouteVisible, setMasuoRouteVisible] = useState(false);
     const [sakaiRouteVisible, setSakaiRouteVisible] = useState(false);
     const globalVisibleLayers = useRecoilValue(globalVisibleLayersState)
+    const [terrainEnabled, setTerrainEnabled] = useState(false);
 
     const [newBusLayerVisible, setNewBusLayerVisible] = useState(false);
     const [newKashiwakuruRideLayerVisible, setNewKashiwakuruRideLayerVisible] = useState(false);
@@ -251,6 +253,18 @@ export default function MapView() {
         });
     };
 
+
+    const toggleTerrain = () => {
+        const map = mapRef.current;
+        if (!map) return;
+        toggleTerrainLayer(
+            map,
+            terrainEnabled,
+            setIsLoading,
+            setTerrainEnabled,
+            { exaggeration: 1.5 }                  // optional
+        );
+    };
 
     const toggleKashiwaPublicFacilityVisible = (category: string) => {
         // Toggle category selection
@@ -648,7 +662,7 @@ export default function MapView() {
 
         setAllLayersVisibility(false);
         setChatOpen(false);
-        
+
         map.setStyle(styleUrl);
 
         map.once('idle', () => setIsLoading(false));
@@ -1772,6 +1786,9 @@ export default function MapView() {
 
                 meshVisible={meshVisible}            // NEW
                 toggleMesh={toggleMesh}
+
+                terrainEnabled={terrainEnabled}
+                toggleTerrain={toggleTerrain}
 
             />
 

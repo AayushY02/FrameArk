@@ -34,6 +34,7 @@ import {
     Store,
     ShoppingBag,
     NotepadTextDashed,
+    Mountain,
 
 } from 'lucide-react';
 import { Label } from './ui/label';
@@ -180,6 +181,9 @@ interface MapControlsProps {
     meshVisible: boolean;
     toggleMesh: () => void;
 
+    terrainEnabled: boolean;
+    toggleTerrain: () => void;
+
 }
 
 export default function MapControls({
@@ -262,7 +266,7 @@ export default function MapControls({
     onKashiwakuruOdHourChange,
     onClearOdEndpointHighlight,
     captureMapScreenshot,
-    kashiwakuruOdFilterOn,             // NEW
+    kashiwakuruOdFilterOn,
     onToggleKashiwakuruOdFilter,
 
     chomeTotalVisible,
@@ -281,8 +285,11 @@ export default function MapControls({
     chomeAging2040Visible,
     toggleChomeAging2040Visible,
 
-    meshVisible,            // NEW
+    meshVisible,
     toggleMesh,
+
+    terrainEnabled,
+    toggleTerrain
 
 }: MapControlsProps) {
 
@@ -474,6 +481,15 @@ export default function MapControls({
                         >
                             <Layers size={16} />
                             {meshVisible ? 'メッシュを非表示' : 'メッシュを表示'}
+                        </Button>
+
+                        <Button
+                            onClick={toggleTerrain}
+                            className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"
+                            aria-pressed={terrainEnabled}
+                        >
+                            <Mountain size={16} />
+                            {terrainEnabled ? '3D地形を無効化' : '3D地形を有効化'}
                         </Button>
 
                         <Button onClick={() => handleLayerToggle('道路', roadsVisible, toggleRoads)} className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer">
