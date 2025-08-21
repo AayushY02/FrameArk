@@ -55,7 +55,7 @@ export default function MapView() {
     const [adminVisible, setAdminVisible] = useState(false);
     const [meshVisible, setMeshVisible] = useState(true);
     // const [terrainEnabled, setTerrainEnabled] = useState(false);
-    const [currentStyle, ] = useState(MAP_STYLES.ストリート);
+    const [currentStyle,] = useState(MAP_STYLES.ストリート);
     const [selectedMetric, setSelectedMetric] = useState('PTN_2020');
     const selectedMetricRef = useRef(selectedMetric);
     const [agriLayerVisible, setAgriLayerVisible] = useState(false);
@@ -123,6 +123,61 @@ export default function MapView() {
     ].some(Boolean);
     // const hasAnyOtherLegend = someOtherLegendVisible || anotherLegendVisible;
 
+    type BoolSetter = React.Dispatch<React.SetStateAction<boolean>>;
+
+    // Keep only *layer* visibility setters here (no UI flags like chatOpen/isLoading)
+    const LAYER_SETTERS: BoolSetter[] = [
+        setRoadsVisible,
+        setAdminVisible,
+        setMeshVisible,
+
+        setAgriLayerVisible,
+        setTransportVisible,
+        setPbFacilityVisible,
+        setSchoolLayerVisible,
+        setMedicalLayerVisible,
+        setTouristLayerVisible,
+        setRoadsideStationLayerVisible,
+
+        setBusStopsVisible,
+        setBoardingVisible,
+        setAlightingVisible,
+        setAttractionLayerVisible,
+        setBusPickDropLayerVisible,
+        setBusPassengerLayerVisible,
+
+        setSakaeCourseRideLayerVisible,
+        setSakaeCourseDropLayerVisible,
+        setMasuoCourseRideLayerVisible,
+        setMasuoCourseDropLayerVisible,
+        setShonanCourseRideLayerVisible,
+        setShonanCourseDropLayerVisible,
+
+        setShonanRouteVisible,
+        setMasuoRouteVisible,
+        setSakaiRouteVisible,
+
+        setNewBusLayerVisible,
+        setNewKashiwakuruRideLayerVisible,
+        setNewKashiwakuruDropLayerVisible,
+
+        setKashiwaPublicFacilityVisible,
+        setKashiwaShopsVisible,
+
+        setKashiwakuruOdVisible,
+
+        setChomeTotalVisible,
+        setChomeAgingVisible,
+        setChomeDensityVisible,
+        setChomeTotal2040Visible,
+        setChomeAging2040Visible,
+    ];
+
+    // Flip all at once
+    const setAllLayersVisibility = (visible: boolean) => {
+        LAYER_SETTERS.forEach(setter => setter(visible));
+    };
+
     const getMeshLayerIds = useCallback((map: maplibregl.Map) => {
         const layers = map.getStyle()?.layers ?? [];
         return layers.map(l => l.id).filter(id => id.startsWith('mesh-'));
@@ -161,15 +216,39 @@ export default function MapView() {
 
         const next = !meshVisible;
 
-        // if layers were lost (e.g., after style change) and user is turning ON,
-        // ensure they exist before making them visible
-        if (next && getMeshLayerIds(map).length === 0) {
-            addMeshLayers(map, selectedMetric);
-            updateMetricStyles();
-        }
+        setIsLoading(true);
 
-        applyMeshVisibility(next);
-        setMeshVisible(next);
+        // // if layers were lost (e.g., after style change) and user is turning ON,
+        // // ensure they exist before making them visible
+        // if (next && getMeshLayerIds(map).length === 0) {
+        //     addMeshLayers(map, selectedMetric);
+        //     updateMetricStyles();
+        // }
+
+        // applyMeshVisibility(next);
+        // setMeshVisible(next);
+
+        requestAnimationFrame(() => {
+            if (next && getMeshLayerIds(map).length === 0) {
+                // レイヤーが消えていて、ON にする場合は再追加
+                addMeshLayers(map, selectedMetric);
+                updateMetricStyles();
+
+                // 新しいレイヤーが描画完了したら idle イベントで OFF
+                map.once("idle", () => {
+                    applyMeshVisibility(next);
+                    setMeshVisible(next);
+                    setIsLoading(false);
+                });
+            } else {
+                // 既存レイヤーの可視状態だけ変える場合
+                applyMeshVisibility(next);
+                setMeshVisible(next);
+
+                // 少し遅延させてローディング OFF (描画反映待ち)
+                map.once("idle", () => setIsLoading(false));
+            }
+        });
     };
 
 
@@ -566,15 +645,12 @@ export default function MapView() {
         setIsLoading(true);
         const nextMetric = 'PTN_2020';
         setSelectedMetric(nextMetric);
-        // setTerrainEnabled(false);
-        setAgriLayerVisible(false);
-        setTransportVisible(false)
-        setPbFacilityVisible(false)
-        setSchoolLayerVisible(false)
-        setMedicalLayerVisible(false)
 
-        map.setStyle(styleUrl);
+        setAllLayersVisibility(false);
+        setChatOpen(false);
         
+        map.setStyle(styleUrl);
+
         map.once('idle', () => setIsLoading(false));
 
     };
