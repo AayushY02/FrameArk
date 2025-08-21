@@ -50,7 +50,7 @@ export default function MapView() {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const popupRef = new maplibregl.Popup({ closeButton: false, closeOnClick: false });
     const transportPopupRef = new maplibregl.Popup({ closeButton: false, closeOnClick: true, className: "ai-popup" });
-
+    const clampRef = useRef<maplibregl.LngLatBoundsLike | null>(JAPAN_BOUNDS);
     const [roadsVisible, setRoadsVisible] = useState(false);
     const [adminVisible, setAdminVisible] = useState(false);
     // const [terrainEnabled, setTerrainEnabled] = useState(false);
@@ -374,24 +374,33 @@ export default function MapView() {
         const map = mapRef.current;
         if (!map) return;
 
-        if (isKashiwaBounds) {
-            // Fit map to Kashiwa bounds
-            map.fitBounds(KASHIWA_BOUNDS, {
-                padding: { top: 50, bottom: 50, left: 50, right: 50 }, // Padding for better view
-                duration: 1000 // Smooth transition duration
-            });
-            map.setMaxBounds(KASHIWA_BOUNDS); // Limit panning to Kashiwa bounds
-        } else {
-            // Fit map to Chiba bounds
-            map.fitBounds(CHIBA_BOUNDS, {
-                padding: { top: 50, bottom: 50, left: 50, right: 50 }, // Padding for better view
-                duration: 1000 // Smooth transition duration
-            });
-            map.setMaxBounds(CHIBA_BOUNDS); // Limit panning to Chiba bounds
-        }
+        // if (isKashiwaBounds) {
+        //     // Fit map to Kashiwa bounds
+        //     map.fitBounds(KASHIWA_BOUNDS, {
+        //         padding: { top: 50, bottom: 50, left: 50, right: 50 }, // Padding for better view
+        //         duration: 1000 // Smooth transition duration
+        //     });
+        //     map.setMaxBounds(KASHIWA_BOUNDS); // Limit panning to Kashiwa bounds
+        // } else {
+        //     // Fit map to Chiba bounds
+        //     map.fitBounds(CHIBA_BOUNDS, {
+        //         padding: { top: 50, bottom: 50, left: 50, right: 50 }, // Padding for better view
+        //         duration: 1000 // Smooth transition duration
+        //     });
+        //     map.setMaxBounds(CHIBA_BOUNDS); // Limit panning to Chiba bounds
+        // }
 
-        // Toggle the state for the next time
+        // // Toggle the state for the next time
+        // setIsKashiwaBounds(!isKashiwaBounds);
+
+
+        // If we're NOT in Kashiwa mode yet, go TO Kashiwa and clamp to it.
+        // Next click: go TO Chiba and clamp to it. (Toggles back and forth.)
+        const target = !isKashiwaBounds ? KASHIWA_BOUNDS : CHIBA_BOUNDS;
+        fitAndClamp(map, target, true);
+
         setIsKashiwaBounds(!isKashiwaBounds);
+
     };
 
     function downloadMapScreenshot(map: maplibregl.Map, fileName = 'map-screenshot.png') {
@@ -473,6 +482,25 @@ export default function MapView() {
 
     };
 
+    function fitAndClamp(
+        map: maplibregl.Map,
+        bounds: maplibregl.LngLatBoundsLike,
+        clampAfter: boolean
+    ) {
+        map.setMaxBounds(null); // free the camera to animate
+        map.fitBounds(bounds, {
+            padding: { top: 50, bottom: 50, left: 50, right: 50 },
+            duration: 800
+        });
+        map.once('moveend', () => {
+            if (clampAfter) {
+                map.setMaxBounds(bounds);
+                clampRef.current = bounds;     // <-- remember active clamp
+            } else {
+                clampRef.current = null;       // <-- no clamp
+            }
+        });
+    }
     useEffect(() => {
         selectedMetricRef.current = selectedMetric;
     }, [selectedMetric]);
@@ -537,16 +565,22 @@ export default function MapView() {
 
 
         map.on('load', () => {
-            map.flyTo({
-                center: [139.9797, 35.8676],
-                zoom: 10,
-                speed: 1.2,
-                curve: 1,
-                essential: true
-            });
+            // map.flyTo({
+            //     center: [139.9797, 35.8676],
+            //     zoom: 10,
+            //     speed: 1.2,
+            //     curve: 1,
+            //     essential: true
+            // });
 
-            map.once('moveend', () => {
-                map.setMaxBounds(CHIBA_BOUNDS);
+            // map.once('moveend', () => {
+            //     map.setMaxBounds(CHIBA_BOUNDS);
+            // });
+
+            // Show Japan first (constructor uses maxBounds: JAPAN_BOUNDS),
+            // then fly to Chiba once the map idles and CLAMP to Chiba.
+            map.once('idle', () => {
+                fitAndClamp(map, CHIBA_BOUNDS, true);
             });
 
             map.getStyle().layers?.forEach(layer => {
@@ -566,36 +600,39 @@ export default function MapView() {
         map.on('style.load', () => {
             addMeshLayers(map, selectedMetric);
             ensureHighlightLayer();
+            if (clampRef.current) {
+                map.setMaxBounds(clampRef.current);
+            }
         });
 
-        const showPopup = (e: mapboxgl.MapMouseEvent) => {
-            const feature = e.features?.[0];
-            if (!feature) return;
+        // const showPopup = (e: maplibregl.MapMouseEvent) => {
+        //     const feature = e.features?.[0];
+        //     if (!feature) return;
 
-            map.getCanvas().style.cursor = 'pointer';
-            const metric = selectedMetricRef.current;
+        //     map.getCanvas().style.cursor = 'pointer';
+        //     const metric = selectedMetricRef.current;
 
-            const value = metric === 'ELDERLY_RATIO'
-                ? ((feature.properties?.PTC_2020 / feature.properties?.PTN_2020) * 100).toFixed(1) + '%'
-                : feature.properties?.[metric] ?? 'N/A';
+        //     const value = metric === 'ELDERLY_RATIO'
+        //         ? ((feature.properties?.PTC_2020 / feature.properties?.PTN_2020) * 100).toFixed(1) + '%'
+        //         : feature.properties?.[metric] ?? 'N/A';
 
-            const label = {
-                PTN_2020: '総人口（2020年）',
-                PTA_2020: '0〜14歳の人口（2020年）',
-                PTC_2020: '65歳以上の人口（2020年）',
-                ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
-            }[metric];
+        //     const label = {
+        //         PTN_2020: '総人口（2020年）',
+        //         PTA_2020: '0〜14歳の人口（2020年）',
+        //         PTC_2020: '65歳以上の人口（2020年）',
+        //         ELDERLY_RATIO: '高齢者比率（65歳以上／総人口）'
+        //     }[metric];
 
-            popupRef.setLngLat(e.lngLat).setHTML(`<strong>${label}:</strong> ${value}`).addTo(map);
-        };
+        //     popupRef.setLngLat(e.lngLat).setHTML(`<strong>${label}:</strong> ${value}`).addTo(map);
+        // };
 
-        ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(layer => {
-            map.on('mousemove', layer, showPopup);
-            map.on('mouseleave', layer, () => {
-                map.getCanvas().style.cursor = '';
-                popupRef.remove();
-            });
-        });
+        // ['mesh-1km-fill', 'mesh-500m-fill', 'mesh-250m-fill'].forEach(layer => {
+        //     map.on('mousemove', layer, showPopup);
+        //     map.on('mouseleave', layer, () => {
+        //         map.getCanvas().style.cursor = '';
+        //         popupRef.remove();
+        //     });
+        // });
 
         ['mesh-250m-fill', 'mesh-500m-fill', 'mesh-1km-fill'].forEach(layer => {
             map.on('click', layer, e => {

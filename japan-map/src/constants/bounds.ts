@@ -5,12 +5,12 @@ export const JAPAN_BOUNDS: maplibregl.LngLatBoundsLike = [
 ];
 
 export const CHIBA_BOUNDS: maplibregl.LngLatBoundsLike = [
-  [139.544, 34.856],
-  [140.974, 35.898]
+  [139.50, 34.70],   // Southwest (slightly lower to include southern tip)
+  [141.00, 36.20]    // Northeast (higher to include full northern edge)
 ];
 
 
 export const KASHIWA_BOUNDS: maplibregl.LngLatBoundsLike = [
-  [139.9, 35.8],  // Southwest corner [longitude, latitude]
-  [140.1, 35.95]
+  [139.80, 35.75],
+  [140.20, 36.00]
 ];
