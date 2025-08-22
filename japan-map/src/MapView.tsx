@@ -45,6 +45,7 @@ import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwa
 import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopulationLegend';
 import { toggleTerrainLayer } from './layers/terrain';
 import { clearOdGridFocus, clearSingleOdSelection, toggleKashiwakuruOdGridLayer, updateKashiwakuruOdGridLayer } from './layers/kashiwakuruOdGridLayer';
+import KashiwakuruOdGridLegend from './components/Legend/KashiwakuruOdGridLegend';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -1837,7 +1838,7 @@ export default function MapView() {
     const hasAnyKashiwakuru = newBusLayerVisible || newKashiwakuruRideLayerVisible || newKashiwakuruDropLayerVisible;
     const hasAnyShops = selectedShopCategories.includes("") ||
         shopCategoriesLegend.some(c => c.category && selectedShopCategories.includes(c.category));
-    const hasAnyOdLegend = kashiwakuruOdVisible || odGridVisible;
+    const hasAnyOdLegend = kashiwakuruOdVisible;
 
     const hasAnyChomeLegend =
         chomeTotalVisible || chomeAgingVisible || chomeDensityVisible || chomeTotal2040Visible || chomeAging2040Visible;
@@ -2050,7 +2051,7 @@ export default function MapView() {
             />
 
             {/* <Legend selectedMetric={selectedMetric} /> */}
-            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend || hasAnyChomeLegend} width="w-80">
+            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend || hasAnyChomeLegend || odGridVisible} width="w-80">
                 <AnimatePresence mode="popLayout">
                     {hasAnyBusLegend && (
                         <motion.div
@@ -2112,6 +2113,31 @@ export default function MapView() {
                                 newKashiwakuruRideLayerVisible={newKashiwakuruRideLayerVisible}
                                 newKashiwakuruDropLayerVisible={newKashiwakuruDropLayerVisible}
 
+                            />
+                        </motion.div>
+                    )}
+
+                    {odGridVisible && (
+                        <motion.div
+                            key="legend-od-grid"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <KashiwakuruOdGridLegend
+                                className="w-full"
+                                visible={odGridVisible}
+                                options={{
+                                    filterOn: odGridFilterOn,
+                                    hour: odGridHour,
+                                    showGrid: odGridShowGrid,
+                                    undirected: odGridUndirected,
+                                    minVol: odGridMinVol,
+                                    showStops: odGridShowStops,
+                                }}
                             />
                         </motion.div>
                     )}
