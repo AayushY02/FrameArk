@@ -79,10 +79,10 @@ export default function KashiwaPublicFacilitiesLegend({
               >
                 {/* fixed swatch cell -> labels align vertically */}
                 <span
-                  className="inline-block h-3 w-3 rounded-full"
+                  className="inline-block h-4 w-4 rounded-full"
                   style={{
                     backgroundColor: c.color,
-                    outline: `1px solid rgba(0,0,0,1)`,
+                    outline: `1px solid rgba(255,255,255,1)`,
                   }}
                 />
                 <span className="leading-none">{c.label}</span>
