@@ -21,6 +21,15 @@ export const categories = [
     { label: 'その他', color: '#808080' }
 ];
 
+export const categoriesNew = [
+    { label: '保育園・幼稚園など', color: '#0072B2' },
+    { label: '児童・保育・子育て施設', color: '#E69F00' },
+    { label: '図書館', color: '#009E73' },
+    { label: '市民サービス施設', color: '#D55E00' },
+    { label: '教育施設', color: '#CC79A7' },
+    { label: '病院・薬局', color: '#56B4E9' },
+];
+
 export const toggleKashiwaPublicFacilityLayer = (
     map: maplibregl.Map,
     kashiwaPublicFacilityVisible: boolean,
@@ -32,7 +41,7 @@ export const toggleKashiwaPublicFacilityLayer = (
 
     const addFacilityLayer = (map: maplibregl.Map, selectedCategories: string[]) => {
         const sourceId = 'kashiwa-public-facility';
-        const geojsonUrl = '/data/kashiwa_public_facility.geojson';
+        const geojsonUrl = '/data/kashiwa_public_facility_cat6.geojson';
 
         // Add the source if it's not already present
         if (!map.getSource(sourceId)) {
@@ -64,40 +73,50 @@ export const toggleKashiwaPublicFacilityLayer = (
                     type: 'circle',
                     source: sourceId,
                     paint: {
-                        'circle-radius': 6,
+                        'circle-radius': 10,
                         'circle-opacity': 0.8,
-                        'circle-stroke-width': 1,
-                        
+                        'circle-stroke-color': '#FFFFFF',
+                        'circle-stroke-width': 2,
+
                         'circle-color': [
                             'match',
-                            ['get', 'カテゴリ'],
-                            '公立保育園', '#FF5733',  // 1
-                            '私立認可保育園', '#33FF57',   // 2
-                            '小規模保育施設', '#DDD92A',  // 3
-                            '私立幼稚園', '#313715',  // 4
-                            '認定こども園', '#91E5F6',  // 5
-                            '児童センター', '#FF1053',  // 6    
-                            '地域子育て支援拠点', '#725AC1', // 7
-                            'こどもルーム', '#A1EF8B',  // 8
-                            'こどもルーム発達センター・キッズルーム', '#95C623', // 9  
-                            'こども図書館', '#5D737E',  // 10
-                            '市役所・支所・出張所', '#FF9000', // 11
-                            '近隣センター', '#031926', // 12
-                            '図書館', '#13070C',  // 13
-                            '薬局', '#7fc6a4',  // 14
-                            '市立小学校', '#3357FF', // 15
-                            '市内中学校', '#B1740F',  // 16
-                            '高等学校', '#23022E',  // 17
-                            '大学・大学校', '#764134',  // 18
-                            '特別支援学校', '#BD2D87',  // 19
-                            '#808080'  // Default color for others
+                            // ['get', 'カテゴリ'],
+                            // '公立保育園', '#FF5733',  // 1
+                            // '私立認可保育園', '#33FF57',   // 2
+                            // '小規模保育施設', '#DDD92A',  // 3
+                            // '私立幼稚園', '#313715',  // 4
+                            // '認定こども園', '#91E5F6',  // 5
+                            // '児童センター', '#FF1053',  // 6    
+                            // '地域子育て支援拠点', '#725AC1', // 7
+                            // 'こどもルーム', '#A1EF8B',  // 8
+                            // 'こどもルーム発達センター・キッズルーム', '#95C623', // 9  
+                            // 'こども図書館', '#5D737E',  // 10
+                            // '市役所・支所・出張所', '#FF9000', // 11
+                            // '近隣センター', '#031926', // 12
+                            // '図書館', '#13070C',  // 13
+                            // '薬局', '#7fc6a4',  // 14
+                            // '市立小学校', '#3357FF', // 15
+                            // '市内中学校', '#B1740F',  // 16
+                            // '高等学校', '#23022E',  // 17
+                            // '大学・大学校', '#764134',  // 18
+                            // '特別支援学校', '#BD2D87',  // 19
+                            // '#808080'  // Default color for others
+
+                            ['get', 'category6'],
+                            '保育園・幼稚園など', '#0072B2',
+                            '児童・保育・子育て施設', '#E69F00',
+                            '図書館', '#009E73',
+                            '市民サービス施設', '#D55E00',
+                            '教育施設', '#CC79A7',
+                            '病院・薬局', '#56B4E9',
+              /* default */ '#9E9E9E'
                         ]
                     }
                 });
             }
         } else {
             // Add layers for selected categories if "subete" is not selected
-            categories.forEach((category) => {
+            categoriesNew.forEach((category) => {
                 const layerId = `kashiwa-public-facility-${category.label}`;
 
                 // Remove individual layer if it exists before adding a new one
@@ -111,19 +130,20 @@ export const toggleKashiwaPublicFacilityLayer = (
                         id: layerId,
                         type: 'circle',
                         source: sourceId,
-                        filter: ['==', ['get', 'カテゴリ'], category.label], // Apply filter by category
+                        filter: ['==', ['get', 'category6'], category.label], // Apply filter by category
                         paint: {
-                            'circle-radius': 6,
+                            'circle-radius': 10,
                             'circle-opacity': 0.8,
-                            'circle-stroke-width': 1,
-                        
+                            'circle-stroke-color': '#FFFFFF',
+                            'circle-stroke-width': 2,
+
                             'circle-color': category.color // Set the color based on the category
                         }
                     });
                 }
             });
 
-            
+
         }
 
         // Mark layer visibility state as updated

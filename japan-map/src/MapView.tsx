@@ -29,13 +29,13 @@ import { toggleAttractionLayer } from './layers/attractionLayer';
 import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
 import { setAllPassengerLabelsVisible, toggleBusPassengerLayer, toggleMasuoCourseDropLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
 import { toggleNewBusPassengerLayer, toggleNewKashiwakuruDropLayer, toggleNewKashiwakuruRideLayer } from './layers/newbusPassengerLayer';
-import { categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPublicFacilities';
+import { categoriesNew as categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPublicFacilities';
 import { shopCategories, toggleKashiwaShopsLayer } from './layers/kashiwaBusStops';
 import PptxGenJS from "pptxgenjs";
 import { globalVisibleLayersState } from './state/activeLayersAtom';
 import BusPassengerLayerLegend from './components/Legend/BusPassengerLayerLegend';
 import LegendsStack from './components/Legend/LegendsStack';
-import KashiwaPublicFacilitiesLegend, { facilityCategories } from './components/Legend/KashiwaPublicFacilitiesLegend';
+import KashiwaPublicFacilitiesLegend, { facilityCategoriesNew as facilityCategories  } from './components/Legend/KashiwaPublicFacilitiesLegend';
 import KashiwakuruStopsLegend from './components/Legend/KashiwakuruStopsLegend';
 import KashiwaShopsLegend, { shopCategoriesLegend } from './components/Legend/KashiwaShopsLegend';
 import { toggleMasuoRoute, toggleSakaiRoute, toggleShonanRoute } from './layers/busRouteLayer';
@@ -1550,7 +1550,8 @@ export default function MapView() {
             <div class="rounded-xl border bg-white p-4 shadow-xl space-y-2 w-64">
                 <strong>施設名:</strong> ${properties?.名前 ?? '不明'}<br />
                 <strong>住所:</strong> ${properties?.住所 ?? '不明'}<br />
-                <strong>カテゴリ:</strong> ${properties?.カテゴリ ?? '不明'}
+                <strong>カテゴリ:</strong> ${properties?.カテゴリ ?? '不明'}<br />
+                <strong>地図用のカテゴリ:</strong> ${properties?.category6 ?? '不明'}
             </div>
         `;
 
@@ -1966,6 +1967,7 @@ export default function MapView() {
                                 className="w-full"
                                 categories={shopCategoriesLegend}
                                 selectedCategories={selectedShopCategories}
+                    
                             />
                         </motion.div>
                     )}

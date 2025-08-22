@@ -29,6 +29,17 @@ export const facilityCategories = [
   { label: "特別支援学校", category: "特別支援学校", color: "#BD2D87" },
 ];
 
+
+export const facilityCategoriesNew: FacilityCategory[] = [
+  { label: "全て", category: "", color: "#808080" },
+  { label: "保育園・幼稚園など", category: "保育園・幼稚園など", color: "#0072B2" },
+  { label: "児童・保育・子育て施設", category: "児童・保育・子育て施設", color: "#E69F00" },
+  { label: "図書館", category: "図書館", color: "#009E73" },
+  { label: "市民サービス施設", category: "市民サービス施設", color: "#D55E00" },
+  { label: "教育施設", category: "教育施設", color: "#CC79A7" },
+  { label: "病院・薬局", category: "病院・薬局", color: "#56B4E9" },
+];
+
 type Props = {
   className?: string;
   /** The full catalog of categories (same list you use in the Accordion). */
