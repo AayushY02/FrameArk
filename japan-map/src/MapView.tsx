@@ -125,14 +125,14 @@ export default function MapView() {
     const [odGridShowStops, setOdGridShowStops] = useState<boolean>(true);  // show/hide bus stop circles
     const [odGridSingleOD, setOdGridSingleOD] = useState<boolean>(false);
 
-    const opts = {
-        timeBand: odGridFilterOn ? [odGridHour, odGridHour + 1] as [number, number] : null,
-        showGrid: odGridShowGrid,
-        undirected: odGridUndirected,
-        minVolThreshold: odGridMinVol,  // keep existing
-        focusMode: odGridFocusMode,     // keep existing
-        showStops: odGridShowStops,     // <-- NEW
-    };
+    // const opts = {
+    //     timeBand: odGridFilterOn ? [odGridHour, odGridHour + 1] as [number, number] : null,
+    //     showGrid: odGridShowGrid,
+    //     undirected: odGridUndirected,
+    //     minVolThreshold: odGridMinVol,  // keep existing
+    //     focusMode: odGridFocusMode,     // keep existing
+    //     showStops: odGridShowStops,     // <-- NEW
+    // };
 
     type ChomeMetric = "total" | "aging" | "density" | "total_2040" | "aging_2040";
     const hasAnyBusLegend = [
