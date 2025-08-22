@@ -4141,6 +4141,14 @@ function clearPopup() {
   }
 }
 
+const lineOpacityZoom: any = [
+  "interpolate", ["linear"], ["zoom"],
+  10, 0.40,   // far: most transparent
+  12, 0.50,
+  14, 0.62,
+  16, 0.70    // near: still translucent
+];
+
 // ---------- Remove / Add ----------
 function removeAggregatedLayers(map: maplibregl.Map) {
   [
@@ -4285,7 +4293,7 @@ function addAggregatedODLayers(
     type: "line",
     source: IDS.srcLines,
     layout: { "line-cap": "round", "line-join": "round", "line-sort-key": ["get", "vol"] },
-    paint: { "line-color": color, "line-opacity": 0.9, "line-blur": 0.2, "line-width": lineWidthZoom },
+    paint: { "line-color": color, "line-opacity": lineOpacityZoom, "line-blur": 0.15, "line-width": lineWidthZoom },
   });
   map.addLayer({
     id: IDS.layerLinesHL,
