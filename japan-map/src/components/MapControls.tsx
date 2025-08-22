@@ -787,7 +787,7 @@ export default function MapControls({
                                     ].map(({ label, category, color }) => (
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">
-                                                <Circle fill={color} size={16} />
+                                                <Circle className='text-white' fill={color} size={20} />
                                                 {label}
                                             </Label>
                                             <Switch
@@ -808,12 +808,17 @@ export default function MapControls({
                                 <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
                                     {[
                                         { label: '全て', category: '', icon: <Store size={16} /> }, // All categories (subete)
-                                        { label: 'デパート・ショッピングモール', category: 'デパート・ショッピングモール', icon: <ShoppingBag size={16} /> }, // Shopping Mall
-                                        { label: 'スーパーマーケット', category: 'スーパーマーケット', icon: <Store size={16} /> } // Supermarket
-                                    ].map(({ label, category, icon }) => (
+                                        { label: 'デパート・ショッピングモール', category: 'デパート・ショッピングモール', icon: <ShoppingBag size={16} />, color: "#FF5733" }, // Shopping Mall
+                                        { label: 'スーパーマーケット', category: 'スーパーマーケット', icon: <Store size={16} />, color: "#33FF57" } // Supermarket
+                                    ].map(({ label, category, color }) => (
+
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">
-                                                {icon}
+                                                {/* {icon} */}
+                                                <div
+                                                    className="w-4 h-4  border-2"
+                                                    style={{ backgroundColor: color, borderColor: "white" }}
+                                                />
                                                 {label}
                                             </Label>
                                             <Switch
