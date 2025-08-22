@@ -35,7 +35,7 @@ import PptxGenJS from "pptxgenjs";
 import { globalVisibleLayersState } from './state/activeLayersAtom';
 import BusPassengerLayerLegend from './components/Legend/BusPassengerLayerLegend';
 import LegendsStack from './components/Legend/LegendsStack';
-import KashiwaPublicFacilitiesLegend, { facilityCategoriesNew as facilityCategories  } from './components/Legend/KashiwaPublicFacilitiesLegend';
+import KashiwaPublicFacilitiesLegend, { facilityCategoriesNew as facilityCategories } from './components/Legend/KashiwaPublicFacilitiesLegend';
 import KashiwakuruStopsLegend from './components/Legend/KashiwakuruStopsLegend';
 import KashiwaShopsLegend, { shopCategoriesLegend } from './components/Legend/KashiwaShopsLegend';
 import { toggleMasuoRoute, toggleSakaiRoute, toggleShonanRoute } from './layers/busRouteLayer';
@@ -44,6 +44,7 @@ import KashiwakuruOdLegend from './components/Legend/KashiwakuruOdLegend';
 import { setKashiwaChomeLabelsVisible, setKashiwaChomeRangeFilter, toggleKashiwaChomeAging2040Layer, toggleKashiwaChomeAgingLayer, toggleKashiwaChomeDensityLayer, toggleKashiwaChomeTotal2040Layer, toggleKashiwaChomeTotalLayer, updateKashiwaChomeStyle } from './layers/kashiwaChomePopulationLayer';
 import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopulationLegend';
 import { toggleTerrainLayer } from './layers/terrain';
+import { clearOdGridFocus, clearSingleOdSelection, toggleKashiwakuruOdGridLayer, updateKashiwakuruOdGridLayer } from './layers/kashiwakuruOdGridLayer';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -112,6 +113,25 @@ export default function MapView() {
     const [chomeAging2040Visible, setChomeAging2040Visible] = useState(false);
 
     const [passengerLabelsVisible, setPassengerLabelsVisible] = useState(false);
+
+    const [odGridVisible, setOdGridVisible] = useState(false);
+    const [odGridFilterOn, setOdGridFilterOn] = useState(false);
+    const [odGridHour, setOdGridHour] = useState(8);
+    const [odGridShowGrid, setOdGridShowGrid] = useState(false);
+    const [odGridUndirected, setOdGridUndirected] = useState(false);
+    const [odGridMinVol, setOdGridMinVol] = useState(1);
+    const [odGridFocusMode, setOdGridFocusMode] = useState<"all" | "out" | "in">("all");
+    const [odGridShowStops, setOdGridShowStops] = useState<boolean>(true);  // show/hide bus stop circles
+    const [odGridSingleOD, setOdGridSingleOD] = useState<boolean>(false);
+
+    const opts = {
+        timeBand: odGridFilterOn ? [odGridHour, odGridHour + 1] as [number, number] : null,
+        showGrid: odGridShowGrid,
+        undirected: odGridUndirected,
+        minVolThreshold: odGridMinVol,  // keep existing
+        focusMode: odGridFocusMode,     // keep existing
+        showStops: odGridShowStops,     // <-- NEW
+    };
 
     type ChomeMetric = "total" | "aging" | "density" | "total_2040" | "aging_2040";
     const hasAnyBusLegend = [
@@ -1625,6 +1645,41 @@ export default function MapView() {
 
     }, []);
 
+    useEffect(() => {
+        if (!odGridVisible) return;
+        const map = mapRef.current!;
+        updateKashiwakuruOdGridLayer(map, setIsLoading, {
+            timeBand: odGridFilterOn ? ([odGridHour, odGridHour + 1] as [number, number]) : null,
+            showGrid: odGridShowGrid,
+            undirected: odGridUndirected,
+            minVolThreshold: odGridMinVol,
+            focusMode: odGridFocusMode,
+        });
+    }, [
+        odGridVisible,
+        odGridFilterOn,
+        odGridHour,
+        odGridShowGrid,
+        odGridUndirected,
+        odGridMinVol,         // NEW
+        odGridFocusMode,      // NEW
+    ]);
+
+    useEffect(() => {
+        const map = mapRef.current;
+        if (!map) return;
+
+        // @ts-ignore custom event from the layer
+        const handler = (e: any) => setOdGridSingleOD(!!e?.active);
+
+        // @ts-ignore
+        map.on("odgrid:single-od", handler);
+        return () => {
+            // @ts-ignore
+            map.off("odgrid:single-od", handler);
+        };
+    }, []);
+
     const onClearOdEndpointHighlight = () => {
         if (mapRef.current) clearOdEndpointFocus(mapRef.current);
     };
@@ -1689,15 +1744,104 @@ export default function MapView() {
         setKashiwaChomeLabelsVisible(map, visible, mode, metric);
     };
 
+    // Rebuild with current UI options (hide → show)
+    // const refreshOdGridLayer = () => {
+    //     const map = mapRef.current;
+    //     if (!map || !odGridVisible) return;
+
+    //     const opts = {
+    //         timeBand: odGridFilterOn ? [odGridHour, odGridHour + 1] as [number, number] : null,
+    //         showGrid: odGridShowGrid,
+    //         undirected: odGridUndirected,
+    //     };
+
+    //     // toggle OFF
+    //     toggleKashiwakuruOdGridLayer(map, true, setIsLoading, setOdGridVisible, opts);
+    //     // toggle ON with new options
+    //     toggleKashiwakuruOdGridLayer(map, false, setIsLoading, setOdGridVisible, opts);
+    // };
+    const refreshOdGridLayer = () => {
+        const map = mapRef.current;
+        if (!map || !odGridVisible) return;
+
+        const opts = {
+            timeBand: odGridFilterOn ? ([odGridHour, odGridHour + 1] as [number, number]) : null,
+            showGrid: odGridShowGrid,
+            undirected: odGridUndirected,
+            minVolThreshold: odGridMinVol,    // <-- already in your code? keep it here
+            focusMode: odGridFocusMode,       // <-- already in your code? keep it here
+            showStops: odGridShowStops,       // <-- NEW
+        };
+
+        // toggle OFF / ON (no await, same as your style)
+        toggleKashiwakuruOdGridLayer(map, true, setIsLoading, setOdGridVisible, opts);
+        toggleKashiwakuruOdGridLayer(map, false, setIsLoading, setOdGridVisible, opts);
+    };
+
+    // One-shot toggle
+    const onToggleOdGrid = () => {
+        const map = mapRef.current!;
+        toggleKashiwakuruOdGridLayer(map, odGridVisible, setIsLoading, setOdGridVisible, {
+            timeBand: odGridFilterOn ? ([odGridHour, odGridHour + 1] as [number, number]) : null,
+            showGrid: odGridShowGrid,
+            undirected: odGridUndirected,
+            minVolThreshold: odGridMinVol,
+            focusMode: odGridFocusMode,
+            showStops: odGridShowStops,
+        });
+    };
+
+    const onToggleOdGridFilter = (on: boolean) => {
+        setOdGridFilterOn(on);
+        if (odGridVisible) refreshOdGridLayer();
+    };
+    const onOdGridHourChange = (h: number) => {
+        setOdGridHour(h);
+        if (odGridVisible && odGridFilterOn) refreshOdGridLayer();
+    };
+    const onToggleOdGridShowGrid = (on: boolean) => {
+        setOdGridShowGrid(on);
+        if (odGridVisible) refreshOdGridLayer();
+    };
+    const onToggleOdGridUndirected = (on: boolean) => {
+        setOdGridUndirected(on);
+        if (odGridVisible) refreshOdGridLayer();
+    };
+
+    const onToggleOdGridShowStops = (on: boolean) => {
+        setOdGridShowStops(on);
+        if (!odGridVisible) return;
+        const map = mapRef.current!;
+        // Use UPDATE (no rebuild), and pass the new 'on' value explicitly
+        updateKashiwakuruOdGridLayer(map, setIsLoading, {
+            timeBand: odGridFilterOn ? ([odGridHour, odGridHour + 1] as [number, number]) : null,
+            showGrid: odGridShowGrid,
+            undirected: odGridUndirected,
+            minVolThreshold: odGridMinVol,
+            focusMode: odGridFocusMode,
+            showStops: on, // <-- use the fresh value
+        });
+    };
+
+    const onOdGridMinVolChange = (n: number) => setOdGridMinVol(n);
+    const onOdGridFocusModeChange = (m: "all" | "out" | "in") => setOdGridFocusMode(m);
+    const onOdGridClearFocus = () => {
+        const map = mapRef.current!;
+        clearOdGridFocus(map);
+        clearSingleOdSelection(map);
+    };
+
+
 
     const hasAnyFacilities = selectedCategories.length > 0;
     const hasAnyKashiwakuru = newBusLayerVisible || newKashiwakuruRideLayerVisible || newKashiwakuruDropLayerVisible;
     const hasAnyShops = selectedShopCategories.includes("") ||
         shopCategoriesLegend.some(c => c.category && selectedShopCategories.includes(c.category));
-    const hasAnyOdLegend = kashiwakuruOdVisible;
+    const hasAnyOdLegend = kashiwakuruOdVisible || odGridVisible;
 
     const hasAnyChomeLegend =
         chomeTotalVisible || chomeAgingVisible || chomeDensityVisible || chomeTotal2040Visible || chomeAging2040Visible;
+
 
 
     return (
@@ -1882,7 +2026,26 @@ export default function MapView() {
                 toggleTerrain={toggleTerrain}
 
                 passengerLabelsVisible={passengerLabelsVisible}
-                togglePassengerLabelsVisible={onTogglePassengerLabels }
+                togglePassengerLabelsVisible={onTogglePassengerLabels}
+
+                odGridVisible={odGridVisible}
+                onToggleOdGrid={onToggleOdGrid}
+                odGridFilterOn={odGridFilterOn}
+                onToggleOdGridFilter={onToggleOdGridFilter}
+                odGridHour={odGridHour}
+                onOdGridHourChange={onOdGridHourChange}
+                odGridShowGrid={odGridShowGrid}
+                onToggleOdGridShowGrid={onToggleOdGridShowGrid}
+                odGridUndirected={odGridUndirected}
+                onToggleOdGridUndirected={onToggleOdGridUndirected}
+                odGridMinVol={odGridMinVol}
+                onOdGridMinVolChange={onOdGridMinVolChange}
+                odGridFocusMode={odGridFocusMode}
+                onOdGridFocusModeChange={onOdGridFocusModeChange}
+                onOdGridClearFocus={onOdGridClearFocus}
+                odGridShowStops={odGridShowStops}                    // <-- NEW
+                onToggleOdGridShowStops={onToggleOdGridShowStops}    // <-- NEW
+                odGridSingleOD={odGridSingleOD}
 
             />
 
@@ -1967,7 +2130,7 @@ export default function MapView() {
                                 className="w-full"
                                 categories={shopCategoriesLegend}
                                 selectedCategories={selectedShopCategories}
-                    
+
                             />
                         </motion.div>
                     )}

@@ -187,6 +187,27 @@ interface MapControlsProps {
     passengerLabelsVisible: boolean;
     togglePassengerLabelsVisible: () => void;
 
+    odGridVisible: boolean;
+    onToggleOdGrid: () => void;
+    odGridFilterOn: boolean;
+    onToggleOdGridFilter: (on: boolean) => void;
+    odGridHour: number;
+    onOdGridHourChange: (h: number) => void;
+    odGridShowGrid: boolean;
+    onToggleOdGridShowGrid: (on: boolean) => void;
+    odGridUndirected: boolean;
+    onToggleOdGridUndirected: (on: boolean) => void;
+    odGridMinVol: number;
+    onOdGridMinVolChange: (n: number) => void;
+    odGridFocusMode: "all" | "out" | "in";
+    onOdGridFocusModeChange: (m: "all" | "out" | "in") => void;
+    onOdGridClearFocus: () => void;
+    odGridShowStops: boolean;
+    onToggleOdGridShowStops: (on: boolean) => void;
+
+    // To disable 発/着/両方 when a single OD line is isolated
+    odGridSingleOD?: boolean;
+
 }
 
 export default function MapControls({
@@ -296,6 +317,27 @@ export default function MapControls({
 
     passengerLabelsVisible,
     togglePassengerLabelsVisible,
+
+    odGridVisible,
+    onToggleOdGrid,
+    odGridFilterOn,
+    onToggleOdGridFilter,
+    odGridHour,
+    onOdGridHourChange,
+    odGridShowGrid,
+    onToggleOdGridShowGrid,
+    odGridUndirected,
+    onToggleOdGridUndirected,
+    odGridMinVol,
+    onOdGridMinVolChange,
+    odGridFocusMode,
+    onOdGridFocusModeChange,
+    onOdGridClearFocus,
+    odGridShowStops,
+    onToggleOdGridShowStops,
+
+    // To disable 発/着/両方 when a single OD line is isolated
+    odGridSingleOD
 
 }: MapControlsProps) {
 
@@ -789,7 +831,6 @@ export default function MapControls({
                                 <AccordionTrigger className="text-black bg-gray-50 text-sm hover:bg-gray-100 rounded-xl px-4 py-2 hover:no-underline cursor-pointer flex items-center ">
                                     <BusFront size={16} /> カシワニクル OD × 時間帯
                                 </AccordionTrigger>
-
                                 <AccordionContent className="flex flex-col space-y-3 bg-white rounded-xl mt-2 px-4 py-3">
                                     {/* Toggle 1: show layer (all hours) */}
                                     <div className="flex items-center justify-between">
@@ -809,7 +850,6 @@ export default function MapControls({
 
                                     {/* Slider (disabled when filter is OFF) */}
                                     <div className="flex flex-col gap-2">
-                                        {/* Label row with current hour display */}
                                         <div className="flex items-center justify-between">
                                             <Label className="text-sm text-black">時間帯（開始）</Label>
                                             <span className="text-xs text-muted-foreground">
@@ -817,7 +857,6 @@ export default function MapControls({
                                             </span>
                                         </div>
 
-                                        {/* Slider */}
                                         <Slider
                                             min={8}
                                             max={19}
@@ -828,12 +867,9 @@ export default function MapControls({
                                             disabled={!kashiwakuruOdFilterOn || !kashiwakuruOdVisible}
                                         />
 
-                                        {/* Hour markers */}
                                         <div className="flex justify-between text-[10px] text-muted-foreground">
                                             {Array.from({ length: 12 }, (_, i) => 8 + i).map((h) => (
-                                                <span key={h}>
-                                                    {h}
-                                                </span>
+                                                <span key={h}>{h}</span>
                                             ))}
                                         </div>
                                     </div>
@@ -841,11 +877,171 @@ export default function MapControls({
                                     <div className="flex justify-end">
                                         <button
                                             onClick={onClearOdEndpointHighlight}
-                                            className="px-3 py-1 rounded-md text-xs bg-gray-100 hover:bg-gray-200"
+                                            className="px-3 py-1 rounded-md text-xs bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                                             disabled={!kashiwakuruOdVisible}
                                         >
                                             ハイライト解除
                                         </button>
+                                    </div>
+
+                                    <Separator className="my-2" />
+                                    <div className="text-xs font-semibold text-gray-700">100m メッシュ（集約表示）</div>
+
+                                    {/* show/hide */}
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black">OD（集約）</Label>
+                                        <Switch
+                                            checked={odGridVisible}
+                                            onCheckedChange={() => handleLayerToggle('OD（100mメッシュ）', odGridVisible, onToggleOdGrid)}
+                                        />
+                                    </div>
+
+                                    {/* filter toggle */}
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black">時間帯でフィルター</Label>
+                                        <Switch
+                                            checked={odGridFilterOn}
+                                            onCheckedChange={onToggleOdGridFilter}
+                                            disabled={!odGridVisible}
+                                        />
+                                    </div>
+
+                                    {/* hour slider */}
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex items-center justify-between">
+                                            <Label className="text-sm text-black">時間帯（開始）</Label>
+                                            <span className="text-xs text-muted-foreground">
+                                                {odGridHour}:00 – {odGridHour + 1}:00
+                                            </span>
+                                        </div>
+                                        <Slider
+                                            min={8}
+                                            max={19}
+                                            step={1}
+                                            value={[odGridHour]}
+                                            onValueChange={(vals) => onOdGridHourChange(vals[0])}
+                                            className="w-full"
+                                            disabled={!odGridVisible || !odGridFilterOn}
+                                        />
+                                        <div className="flex justify-between text-[10px] text-muted-foreground">
+                                            {Array.from({ length: 12 }, (_, i) => 8 + i).map((h) => (
+                                                <span key={h}>{h}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* options */}
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black">100m グリッドを表示</Label>
+                                        <Switch
+                                            checked={odGridShowGrid}
+                                            onCheckedChange={onToggleOdGridShowGrid}
+                                            disabled={!odGridVisible}
+                                        />
+                                    </div>
+
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black">双方向で束ねる</Label>
+                                        <Switch
+                                            checked={odGridUndirected}
+                                            onCheckedChange={onToggleOdGridUndirected}
+                                            disabled={!odGridVisible}
+                                        />
+                                    </div>
+
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black">バス停（O/D）を表示</Label>
+                                        <Switch
+                                            checked={odGridShowStops}
+                                            onCheckedChange={onToggleOdGridShowStops}
+                                            disabled={!odGridVisible}
+                                        />
+                                    </div>
+
+                                    <Separator className="my-2" />
+
+                                    {/* Min volume slider */}
+                                    <div className="flex items-center justify-between">
+                                        <Label className="text-sm text-black">最小ボリューム</Label>
+                                        <span className="text-xs text-muted-foreground">{odGridMinVol}</span>
+                                    </div>
+                                    <Slider
+                                        min={1}
+                                        max={50}
+                                        step={1}
+                                        value={[odGridMinVol]}
+                                        onValueChange={(vals) => onOdGridMinVolChange(vals[0])}
+                                        className="w-full"
+                                        disabled={!odGridVisible}
+                                    />
+                                    <div className="flex justify-between text-[10px] text-muted-foreground">
+                                        <span>1</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span>
+                                    </div>
+
+                                    {/* Focus mode */}
+                                    <div className="mt-3">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <Label className="text-sm text-black">フォーカス（クリック時）</Label>
+                                            <button
+                                                type="button"
+                                                onClick={onOdGridClearFocus}
+                                                disabled={!odGridVisible}
+                                                title="フォーカス解除"
+                                                className="px-3 py-1 rounded-md text-xs bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                解除
+                                            </button>
+                                        </div>
+
+                                        <div className="grid grid-cols-3 gap-2">
+                                            {/* 発 */}
+                                            <button
+                                                type="button"
+                                                onClick={() => onOdGridFocusModeChange("out")}
+                                                disabled={!odGridVisible || odGridSingleOD}
+                                                aria-pressed={odGridFocusMode === "out"}
+                                                className={
+                                                    odGridFocusMode === "out"
+                                                        ? "px-3 py-1 rounded-md text-xs bg-gray-900 hover:bg-black text-white border border-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        : "px-3 py-1 rounded-md text-xs bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                }
+                                                title="発：選択セルから出るフロー"
+                                            >
+                                                発
+                                            </button>
+
+                                            {/* 着 */}
+                                            <button
+                                                type="button"
+                                                onClick={() => onOdGridFocusModeChange("in")}
+                                                disabled={!odGridVisible || odGridSingleOD}
+                                                aria-pressed={odGridFocusMode === "in"}
+                                                className={
+                                                    odGridFocusMode === "in"
+                                                        ? "px-3 py-1 rounded-md text-xs bg-gray-900 hover:bg-black text-white border border-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        : "px-3 py-1 rounded-md text-xs bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                }
+                                                title="着：選択セルに入るフロー"
+                                            >
+                                                着
+                                            </button>
+
+                                            {/* 両方 */}
+                                            <button
+                                                type="button"
+                                                onClick={() => onOdGridFocusModeChange("all")}
+                                                disabled={!odGridVisible || odGridSingleOD}
+                                                aria-pressed={odGridFocusMode === "all"}
+                                                className={
+                                                    odGridFocusMode === "all"
+                                                        ? "px-3 py-1 rounded-md text-xs bg-gray-900 hover:bg-black text-white border border-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                        : "px-3 py-1 rounded-md text-xs bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                }
+                                                title="両方：発・着の両方"
+                                            >
+                                                両方
+                                            </button>
+                                        </div>
                                     </div>
                                 </AccordionContent>
                             </AccordionItem>
