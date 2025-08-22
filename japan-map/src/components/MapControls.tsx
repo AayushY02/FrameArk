@@ -807,7 +807,7 @@ export default function MapControls({
                                 </AccordionTrigger>
                                 <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
                                     {[
-                                        { label: '全て', category: '', icon: <Store size={16} /> }, // All categories (subete)
+                                        { label: '全て', category: '', icon: <Store size={16} /> , color:"#808080" }, // All categories (subete)
                                         { label: 'デパート・ショッピングモール', category: 'デパート・ショッピングモール', icon: <ShoppingBag size={16} />, color: "#FF5733" }, // Shopping Mall
                                         { label: 'スーパーマーケット', category: 'スーパーマーケット', icon: <Store size={16} />, color: "#33FF57" } // Supermarket
                                     ].map(({ label, category, color }) => (
