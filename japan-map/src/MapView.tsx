@@ -65,7 +65,7 @@ export default function MapView() {
     const [isLoading, setIsLoading] = useState(true);
     const setSelectedMeshId = useSetRecoilState(selectedMeshIdState);
     const [chatOpen, setChatOpen] = useState(false);
-    const [chatMeshId, setChatMeshId] = useState<string | null>(null);
+    const [chatMeshRef, setChatMeshRef] = useState<{ level: "1km" | "500m" | "250m"; id: string } | null>(null); // NEW
     const selectionPopupRef = useRef<maplibregl.Popup | null>(null);
     const [transportVisible, setTransportVisible] = useState(false);
     const [pbFacilityVisible, setPbFacilityVisible] = useState(false);
@@ -799,6 +799,13 @@ export default function MapView() {
             }
         });
     }
+
+    function meshLevelFromLayerId(id: string): "1km" | "500m" | "250m" | null {
+        if (id.includes("1km")) return "1km";
+        if (id.includes("500m")) return "500m";
+        if (id.includes("250m")) return "250m";
+        return null;
+    }
     useEffect(() => {
         selectedMetricRef.current = selectedMetric;
     }, [selectedMetric]);
@@ -810,8 +817,9 @@ export default function MapView() {
 
     useEffect(() => {
         const handleAskMirai = (e: Event) => {
-            const detail = (e as CustomEvent).detail;
-            setChatMeshId(detail.meshId);
+            const detail = (e as CustomEvent).detail as { meshId: string; meshLevel: "1km" | "500m" | "250m" };
+            if (!detail?.meshId || !detail?.meshLevel) return;
+            setChatMeshRef({ id: detail.meshId, level: detail.meshLevel });   // NEW
             setChatOpen(true);
         };
         window.addEventListener('mirai:ask', handleAskMirai);
@@ -940,6 +948,9 @@ export default function MapView() {
                 const meshId = feature.properties?.MESH_ID as string | undefined;
                 if (!meshId) return;
 
+                const meshLevel = meshLevelFromLayerId(feature.layer.id!);
+                if (!meshLevel) return;
+
                 // 1️⃣ Update global state (Recoil)
                 setSelectedMeshId(meshId);
 
@@ -988,7 +999,7 @@ export default function MapView() {
                 askBtn?.addEventListener('click', () => {
                     window.dispatchEvent(
                         new CustomEvent('mirai:ask', {
-                            detail: { meshId },
+                            detail: { meshId, meshLevel },
                         }),
                     );
                     // optionally close popup
@@ -1850,7 +1861,7 @@ export default function MapView() {
             {isLoading && <LoadingOverlay />}
 
             <AnimatePresence>
-                {chatOpen && chatMeshId && (
+                {chatOpen && chatMeshRef && (
                     <motion.div
                         key="chat-container"
                         initial={{ x: -400, opacity: 1 }}
@@ -1859,7 +1870,8 @@ export default function MapView() {
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                         className="absolute top-0 left-0 z-40 h-full w-[400px]"
                     >
-                        <ChatPanel meshId={chatMeshId} onClose={() => setChatOpen(false)} />
+                        <ChatPanel meshRef={chatMeshRef}                 // NEW
+                            onClose={() => setChatOpen(false)} />
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -2213,7 +2225,7 @@ export default function MapView() {
             <h1 className={`absolute top-3 left-3 z-10 ${currentStyle === MAP_STYLES.ダーク ? "text-white" : "text-black"} text-lg font-mono rounded-2xl`}>
                 FrameArk 1.0 Beta
             </h1>
-            {!chatOpen && !chatMeshId && (
+            {!chatOpen && !chatMeshRef && (
                 <Card className='absolute bottom-10 right-3 z-10 text-black font-extrabold bg-white p-3 rounded-2xl'>
                     <h1>{cardTitle}</h1>
                 </Card>
