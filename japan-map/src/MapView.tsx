@@ -46,6 +46,8 @@ import KashiwaChomePopulationLegend from './components/Legend/KashiwaChomePopula
 import { toggleTerrainLayer } from './layers/terrain';
 import { clearOdGridFocus, clearSingleOdSelection, toggleKashiwakuruOdGridLayer, updateKashiwakuruOdGridLayer } from './layers/kashiwakuruOdGridLayer';
 import KashiwakuruOdGridLegend from './components/Legend/KashiwakuruOdGridLegend';
+import { exportCoverageGeoJSON, setBusCoverageRadius, toggleBusCoverageLayer, toggleBusStopPointsLayer } from './layers/busCoverageLayer';
+import BusCoverageLegend from './components/Legend/BusCoverageLegend';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -125,6 +127,10 @@ export default function MapView() {
     const [odGridShowStops, setOdGridShowStops] = useState<boolean>(true);  // show/hide bus stop circles
     const [odGridSingleOD, setOdGridSingleOD] = useState<boolean>(false);
 
+    const [busCoverageVisible, setBusCoverageVisible] = useState(false); // <-- NEW
+    const [busStopPointsVisible, setBusStopPointsVisible] = useState(false);
+    const [coverageRadius, setCoverageRadius] = useState(300);
+
     // const opts = {
     //     timeBand: odGridFilterOn ? [odGridHour, odGridHour + 1] as [number, number] : null,
     //     showGrid: odGridShowGrid,
@@ -197,6 +203,8 @@ export default function MapView() {
         setChomeDensityVisible,
         setChomeTotal2040Visible,
         setChomeAging2040Visible,
+
+        setBusCoverageVisible
     ];
 
     // Flip all at once
@@ -1843,6 +1851,56 @@ export default function MapView() {
         clearSingleOdSelection(map);
     };
 
+    const toggleBusCoverage = () =>
+        toggleBusCoverageLayer(
+            mapRef.current!,
+            busCoverageVisible,
+            setIsLoading,
+            setBusCoverageVisible,
+            { radiusMeters: 300, showIndividual: false } // adjust as needed
+        );
+
+    const toggleBusStopPoints = () =>
+        toggleBusStopPointsLayer(
+            mapRef.current!,
+            busStopPointsVisible,
+            setIsLoading,
+            setBusStopPointsVisible,
+            { size: 4 } // tweak size/color if you want
+        );
+
+    const handleRadiusChange = async (r: number) => {
+        setCoverageRadius(r);
+        if (busCoverageVisible && mapRef.current) {
+            await setBusCoverageRadius(mapRef.current, r);
+        }
+    };
+
+    const handleExport = () => {
+        if (mapRef.current) exportCoverageGeoJSON(mapRef.current);
+    };
+
+    const zoomToCoverage = () => {
+        const map = mapRef.current;
+        if (!map) return;
+        const src = map.getSource("bus-coverage-merged-src") as maplibregl.GeoJSONSource | undefined;
+        // fall back to our cache (already used in export)
+        // @ts-ignore
+        const data = src ? null : null;
+        // We can just use the layer's bounds via queryRenderedFeatures when visible:
+        const feats = map.queryRenderedFeatures({ layers: ["bus-coverage-merged-fill"] });
+        if (!feats.length) return;
+        const b = new maplibregl.LngLatBounds();
+        feats.forEach((f) => {
+            const g: any = f.geometry;
+            function addCoords(coords: any) {
+                if (typeof coords[0] === "number") b.extend(coords as [number, number]);
+                else coords.forEach(addCoords);
+            }
+            addCoords(g.coordinates);
+        });
+        if (!b.isEmpty()) map.fitBounds(b, { padding: 40, duration: 600 });
+    };
 
 
     const hasAnyFacilities = selectedCategories.length > 0;
@@ -1854,6 +1912,7 @@ export default function MapView() {
     const hasAnyChomeLegend =
         chomeTotalVisible || chomeAgingVisible || chomeDensityVisible || chomeTotal2040Visible || chomeAging2040Visible;
 
+    const hasAnyBusCoverage = busCoverageVisible || busStopPointsVisible;
 
 
     return (
@@ -2060,10 +2119,15 @@ export default function MapView() {
                 onToggleOdGridShowStops={onToggleOdGridShowStops}    // <-- NEW
                 odGridSingleOD={odGridSingleOD}
 
+                busCoverageVisible={busCoverageVisible}
+                toggleBusCoverage={toggleBusCoverage}
+                busStopPointsVisible={busStopPointsVisible}        // NEW
+                toggleBusStopPoints={toggleBusStopPoints}
+
             />
 
             {/* <Legend selectedMetric={selectedMetric} /> */}
-            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend || hasAnyChomeLegend || odGridVisible} width="w-80">
+            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend || hasAnyChomeLegend || odGridVisible || hasAnyBusCoverage} width="w-80">
                 <AnimatePresence mode="popLayout">
                     {hasAnyBusLegend && (
                         <motion.div
@@ -2211,6 +2275,29 @@ export default function MapView() {
                                 densityVisible={chomeDensityVisible}
                                 total2040Visible={chomeTotal2040Visible}
                                 aging2040Visible={chomeAging2040Visible}
+                            />
+                        </motion.div>
+                    )}
+
+                    {hasAnyBusCoverage && (
+                        <motion.div
+                            key="legend-chome"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <BusCoverageLegend
+                                map={mapRef.current}
+                                visible={busCoverageVisible || busStopPointsVisible}
+                                radius={coverageRadius}
+                                onRadiusChange={handleRadiusChange}
+                                coverageOn={busCoverageVisible}
+                                pointsOn={busStopPointsVisible}
+                                onExport={handleExport}
+                                onZoomToCoverage={zoomToCoverage}
                             />
                         </motion.div>
                     )}

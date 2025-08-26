@@ -208,6 +208,12 @@ interface MapControlsProps {
     // To disable 発/着/両方 when a single OD line is isolated
     odGridSingleOD?: boolean;
 
+    busCoverageVisible: boolean;
+    toggleBusCoverage: () => void;
+
+    busStopPointsVisible: boolean;        // NEW
+    toggleBusStopPoints: () => void;
+
 }
 
 export default function MapControls({
@@ -337,7 +343,13 @@ export default function MapControls({
     onToggleOdGridShowStops,
 
     // To disable 発/着/両方 when a single OD line is isolated
-    odGridSingleOD
+    odGridSingleOD,
+
+    busCoverageVisible,            // <-- NEW
+    toggleBusCoverage,
+
+    busStopPointsVisible,           // NEW
+    toggleBusStopPoints,
 
 }: MapControlsProps) {
 
@@ -569,6 +581,13 @@ export default function MapControls({
                                         { label: 'カシワニクル乗降場', checked: busPickDropLayerVisible, onChange: () => handleLayerToggle('カシワニクル乗降場', busPickDropLayerVisible, toggleBusPickDropLayerVisible), icon: <Users size={16} /> },
                                         // { label: 'バス乗降データ', checked: busPassengerLayerVisible, onChange: () => handleLayerToggle('バス乗降データ', busPassengerLayerVisible, toggleBusPassengerLayerVisible), icon: <Users size={16} /> }
                                         // { label: '降車データ', checked: alightingVisible, onChange: toggleAlighting, icon: <Users size={16} /> },
+                                        {
+                                            label: 'バス停（点）',
+                                            checked: busStopPointsVisible,
+                                            onChange: () => handleLayerToggle('バス停（点）', busStopPointsVisible, toggleBusStopPoints),
+                                            icon: <MapPinCheckIcon size={16} />,
+                                        },
+                                        { label: 'バス停 300mカバレッジ（合成）', checked: busCoverageVisible, onChange: () => handleLayerToggle('バス停 300mカバレッジ', busCoverageVisible, toggleBusCoverage), icon: <Bus size={16} /> },
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">{icon} {label}</Label>
@@ -807,7 +826,7 @@ export default function MapControls({
                                 </AccordionTrigger>
                                 <AccordionContent className="flex flex-col space-y-2 bg-white rounded-xl mt-2 px-4 py-2">
                                     {[
-                                        { label: '全て', category: '', icon: <Store size={16} /> , color:"#808080" }, // All categories (subete)
+                                        { label: '全て', category: '', icon: <Store size={16} />, color: "#808080" }, // All categories (subete)
                                         { label: 'デパート・ショッピングモール', category: 'デパート・ショッピングモール', icon: <ShoppingBag size={16} />, color: "#FF5733" }, // Shopping Mall
                                         { label: 'スーパーマーケット', category: 'スーパーマーケット', icon: <Store size={16} />, color: "#33FF57" } // Supermarket
                                     ].map(({ label, category, color }) => (
