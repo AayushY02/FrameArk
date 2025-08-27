@@ -8305,6 +8305,186 @@
                     35.8970046
                 ]
             }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "県立柏の葉公園",
+                "住所": "柏市柏の葉4-1",
+                "Latitude": 35.894874,
+                "Longitude": 139.941412,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.941412,
+                    35.894874
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "柏の葉競技場",
+                "住所": "柏市柏の葉4-1",
+                "Latitude": 35.897793,
+                "Longitude": 139.936192,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.936192,
+                    35.897793
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "中央公民館",
+                "住所": "柏市柏5-8-12",
+                "Latitude": 35.8668915,
+                "Longitude": 139.9766597,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.9766597,
+                    35.8668915
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "オークビレッジ柏の葉",
+                "住所": "柏市若柴184-1（ 柏の葉キャンパス149街区1）",
+                "Latitude": 35.894674,
+                "Longitude": 139.953051,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.953051,
+                    35.894674
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "あけぼの山農業公園",
+                "住所": "柏市布施2005-2",
+                "Latitude": 35.896316,
+                "Longitude": 140.007874,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    140.007874,
+                    35.896316
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "柏市民文化会館",
+                "住所": "柏市柏下107",
+                "Latitude": 35.8671744,
+                "Longitude": 139.9839961,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.9839961,
+                    35.8671744
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "さわやかちば県民プラザ",
+                "住所": "柏市柏の葉4-3-1",
+                "Latitude": 35.8965658,
+                "Longitude": 139.9342265,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.9342265,
+                    35.8965658
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "千葉県立柏の葉公園総合競技場",
+                "住所": "柏市柏の葉4-1",
+                "Latitude": 35.8954558,
+                "Longitude": 139.9382762,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.9382762,
+                    35.8954558
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "日立柏サッカー場",
+                "住所": "柏市立台1-2-50",
+                "Latitude": 35.848551,
+                "Longitude": 139.975188,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.975188,
+                    35.848551
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "カテゴリ": "市民サービス施設",
+                "名前": "京北ホール",
+                "住所": "柏市柏1-4-3（京北ビル6F）",
+                "Latitude": 35.8611426,
+                "Longitude": 139.9719696,
+                "category6": "市民サービス施設"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    139.9719696,
+                    35.8611426
+                ]
+            }
         }
     ]
 }

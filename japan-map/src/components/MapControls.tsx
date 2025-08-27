@@ -874,6 +874,7 @@ export default function MapControls({
                                         { label: '教育施設', category: '教育施設', color: '#CC79A7' },
                                         { label: '病院・薬局', category: '病院・薬局', color: '#56B4E9' },
 
+
                                     ].map(({ label, category, color }) => (
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">
