@@ -27,7 +27,7 @@ import { toggleTouristLayer } from './layers/touristSpot';
 import { toggleRoadsideStationLayer } from './layers/roadsideStationLayer';
 import { toggleAttractionLayer } from './layers/attractionLayer';
 import { toggleBusPickDropLayer } from './layers/busPickDropLayer';
-import { setAllPassengerLabelsVisible, toggleBusPassengerLayer, toggleMasuoCourseDropLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer } from './layers/busPassengerLayer';
+import { setAllPassengerLabelsVisible, toggleBusPassengerLayer, toggleMasuoCourseDropLayer, toggleMasuoCourseRideLayer, toggleSakaeCourseDropLayer, toggleSakaeCourseRideLayer, toggleShonanCourseDropLayer, toggleShonanCourseRideLayer, toggleWaniCityHallRouteLayer, toggleWaniOutboundDropLayer, toggleWaniOutboundRideLayer, toggleWaniReturnDropLayer, toggleWaniReturnRideLayer } from './layers/busPassengerLayer';
 import { toggleNewBusPassengerLayer, toggleNewKashiwakuruDropLayer, toggleNewKashiwakuruRideLayer } from './layers/newbusPassengerLayer';
 import { categoriesNew as categories, toggleKashiwaPublicFacilityLayer } from './layers/kashiwaPublicFacilities';
 import { shopCategories, toggleKashiwaShopsLayer } from './layers/kashiwaBusStops';
@@ -132,6 +132,12 @@ export default function MapView() {
     const [busStopPointsVisible, setBusStopPointsVisible] = useState(false);
     const [coverageRadius, setCoverageRadius] = useState(300);
 
+    const [waniOutboundRideLayerVisible, setWaniOutboundRideLayerVisible] = useState(false);
+    const [waniOutboundDropLayerVisible, setWaniOutboundDropLayerVisible] = useState(false);
+    const [waniReturnRideLayerVisible, setWaniReturnRideLayerVisible] = useState(false);
+    const [waniReturnDropLayerVisible, setWaniReturnDropLayerVisible] = useState(false);
+    const [waniRouteVisible, setWaniRouteVisible] = useState(false);
+
     const [cityMaskVisible, setCityMaskVisible] = useState(false);
 
     // const opts = {
@@ -155,6 +161,11 @@ export default function MapView() {
         sakaiRouteVisible,
         masuoRouteVisible,
         shonanRouteVisible,
+        waniOutboundRideLayerVisible,
+        waniOutboundDropLayerVisible,
+        waniReturnRideLayerVisible,
+        waniReturnDropLayerVisible,
+        waniRouteVisible,
     ].some(Boolean);
     // const hasAnyOtherLegend = someOtherLegendVisible || anotherLegendVisible;
 
@@ -520,6 +531,10 @@ export default function MapView() {
             "masuo-course-drop",
             "shonan-course-ride",
             "shonan-course-drop",
+            "wani-outbound-ride",
+            "wani-outbound-drop",
+            "wani-return-ride",
+            "wani-return-drop",
             // optionally:
             "bus-layer",
         ] as const;
@@ -1578,6 +1593,113 @@ export default function MapView() {
             transportPopupRef.remove();
         });
 
+        map.on('mousemove', 'wani-outbound-ride', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.stop_name}</strong> 
+                    <strong>${props.ride_outbound}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+
+
+        map.on('mouseleave', 'wani-outbound-ride', () => { map.getCanvas().style.cursor = ''; transportPopupRef.remove(); });
+
+        map.on('mousemove', 'wani-outbound-drop', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.stop_name}</strong> 
+                    <strong>${props.drop_outbound}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+        map.on('mouseleave', 'wani-outbound-drop', () => { map.getCanvas().style.cursor = ''; transportPopupRef.remove(); });
+
+        map.on('mousemove', 'wani-return-ride', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.stop_name}</strong> 
+                    <strong>${props.ride_return}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+        map.on('mouseleave', 'wani-return-ride', () => { map.getCanvas().style.cursor = ''; transportPopupRef.remove(); });
+
+        map.on('mousemove', 'wani-return-drop', (e) => {
+            const feature = e.features?.[0];
+            if (feature) {
+                map.getCanvas().style.cursor = 'pointer';
+                const props = feature.properties;
+                if (props) {
+                    const html = `
+                <div class="rounded-xl border flex flex-col bg-white p-4 shadow-xl space-y-2 w-fit text-xs">
+                    <strong>${props.stop_name}</strong> 
+                    <strong>${props.drop_return}</strong> 
+           
+                </div>
+            `;
+                    transportPopupRef.setLngLat(e.lngLat).setHTML(html).addTo(map);
+                }
+            }
+        });
+
+        map.on('mouseleave', 'wani-return-drop', () => { map.getCanvas().style.cursor = ''; transportPopupRef.remove(); });
+
+        // --- Wani route: hover a small label; click to pin details ---
+        ['wani-cityhall-route', 'wani-cityhall-route-line'].forEach((routeId) => {
+            map.on('mousemove', routeId, (e) => {
+                const f = e.features?.[0]; if (!f) return;
+                map.getCanvas().style.cursor = 'pointer';
+                const name = f.properties?.name || 'ワニバース（市役所線）';
+                transportPopupRef
+                    .setLngLat(e.lngLat)
+                    .setHTML(`<div class="rounded-xl border bg-white p-2 shadow text-xs">${name}</div>`)
+                    .addTo(map);
+            });
+            map.on('mouseleave', routeId, () => { map.getCanvas().style.cursor = ''; transportPopupRef.remove(); });
+            map.on('click', routeId, (e) => {
+                const f = e.features?.[0]; if (!f) return;
+                const name = f.properties?.name || 'ワニバース（市役所線）';
+                new maplibregl.Popup({ closeButton: true, offset: 8, className: "ai-popup" })
+                    .setLngLat(e.lngLat)
+                    .setHTML(`
+        <div class="rounded-xl border bg-white p-4 shadow text-xs space-y-1 w-60">
+          <div class="font-semibold">${name}</div>
+          <div>種別: ルート</div>
+        </div>
+      `)
+                    .addTo(map);
+            });
+        });
+
 
         const showKashiwaPublicFacilityPopup = (e: maplibregl.MapMouseEvent) => {
             const features = map.queryRenderedFeatures(e.point);
@@ -1702,6 +1824,25 @@ export default function MapView() {
             map.off("odgrid:single-od", handler);
         };
     }, []);
+
+    useEffect(() => {
+        if (!mapRef.current) return;
+        setAllPassengerLabelsVisible(mapRef.current, passengerLabelsVisible);
+    }, [
+        passengerLabelsVisible,
+        // existing 6 passenger circles
+        sakaeCourseRideLayerVisible,
+        sakaeCourseDropLayerVisible,
+        masuoCourseRideLayerVisible,
+        masuoCourseDropLayerVisible,
+        shonanCourseRideLayerVisible,
+        shonanCourseDropLayerVisible,
+        // Wani (市役所線) 4 circles
+        waniOutboundRideLayerVisible,
+        waniOutboundDropLayerVisible,
+        waniReturnRideLayerVisible,
+        waniReturnDropLayerVisible,
+    ]);
 
     const onClearOdEndpointHighlight = () => {
         if (mapRef.current) clearOdEndpointFocus(mapRef.current);
@@ -1890,6 +2031,55 @@ export default function MapView() {
             setIsLoading,
             setBusStopPointsVisible,
             { size: 4 } // tweak size/color if you want
+        );
+
+    const onToggleWaniOutboundRide = () =>
+        mapRef.current &&
+        toggleWaniOutboundRideLayer(
+            mapRef.current,
+            waniOutboundRideLayerVisible,
+            setIsLoading,
+            setWaniOutboundRideLayerVisible,
+            passengerLabelsVisible
+        );
+
+    const onToggleWaniOutboundDrop = () =>
+        mapRef.current &&
+        toggleWaniOutboundDropLayer(
+            mapRef.current,
+            waniOutboundDropLayerVisible,
+            setIsLoading,
+            setWaniOutboundDropLayerVisible,
+            passengerLabelsVisible
+        );
+
+    const onToggleWaniReturnRide = () =>
+        mapRef.current &&
+        toggleWaniReturnRideLayer(
+            mapRef.current,
+            waniReturnRideLayerVisible,
+            setIsLoading,
+            setWaniReturnRideLayerVisible,
+            passengerLabelsVisible
+        );
+
+    const onToggleWaniReturnDrop = () =>
+        mapRef.current &&
+        toggleWaniReturnDropLayer(
+            mapRef.current,
+            waniReturnDropLayerVisible,
+            setIsLoading,
+            setWaniReturnDropLayerVisible,
+            passengerLabelsVisible
+        );
+
+    const onToggleWaniRoute = () =>
+        mapRef.current &&
+        toggleWaniCityHallRouteLayer(
+            mapRef.current,
+            waniRouteVisible,
+            setIsLoading,
+            setWaniRouteVisible
         );
 
     const handleRadiusChange = async (r: number) => {
@@ -2150,6 +2340,17 @@ export default function MapView() {
                 cityMaskVisible={cityMaskVisible}
                 toggleCityMask={toggleCityMask}
 
+                waniOutboundRideLayerVisible={waniOutboundRideLayerVisible}
+                toggleWaniOutboundRideLayerVisible={() => onToggleWaniOutboundRide()}
+                waniOutboundDropLayerVisible={waniOutboundDropLayerVisible}
+                toggleWaniOutboundDropLayerVisible={() => onToggleWaniOutboundDrop()}
+                waniReturnRideLayerVisible={waniReturnRideLayerVisible}
+                toggleWaniReturnRideLayerVisible={() => onToggleWaniReturnRide()}
+                waniReturnDropLayerVisible={waniReturnDropLayerVisible}
+                toggleWaniReturnDropLayerVisible={() => onToggleWaniReturnDrop()}
+                waniRouteVisible={waniRouteVisible}
+                toggleWaniRouteVisible={() => onToggleWaniRoute()}
+
             />
 
             {/* <Legend selectedMetric={selectedMetric} /> */}
@@ -2177,6 +2378,11 @@ export default function MapView() {
                                 sakaiRouteVisible={sakaiRouteVisible}
                                 masuoRouteVisible={masuoRouteVisible}
                                 shonanRouteVisible={shonanRouteVisible}
+                                waniOutboundRideLayerVisible={waniOutboundRideLayerVisible}
+                                waniOutboundDropLayerVisible={waniOutboundDropLayerVisible}
+                                waniReturnRideLayerVisible={waniReturnRideLayerVisible}
+                                waniReturnDropLayerVisible={waniReturnDropLayerVisible}
+                                waniRouteVisible={waniRouteVisible}
                             />
                         </motion.div>
                     )}

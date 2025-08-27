@@ -37,6 +37,12 @@ type Props = {
   sakaiRouteVisible: boolean;
   masuoRouteVisible: boolean;
   shonanRouteVisible: boolean;
+
+  waniOutboundRideLayerVisible: boolean;
+  waniOutboundDropLayerVisible: boolean;
+  waniReturnRideLayerVisible: boolean;
+  waniReturnDropLayerVisible: boolean;
+  waniRouteVisible: boolean;
 };
 
 /** ---------- Small reusable size legend (inline) ---------- */
@@ -189,6 +195,12 @@ export default function BusPassengerLayerLegend(props: Props & { className?: str
     shonanCourseRideLayerVisible,
     shonanCourseDropLayerVisible,
 
+    waniOutboundRideLayerVisible,
+    waniOutboundDropLayerVisible,
+    waniReturnRideLayerVisible,
+    waniReturnDropLayerVisible,
+    waniRouteVisible,
+
     // NEW: route line visibilities
     sakaiRouteVisible,
     masuoRouteVisible,
@@ -206,6 +218,12 @@ export default function BusPassengerLayerLegend(props: Props & { className?: str
     sakaiRouteVisible,
     masuoRouteVisible,
     shonanRouteVisible,
+    shonanCourseDropLayerVisible,
+    waniRouteVisible,
+    waniOutboundRideLayerVisible,
+    waniOutboundDropLayerVisible,
+    waniReturnRideLayerVisible,
+    waniReturnDropLayerVisible,
   ].some(Boolean);
 
   if (!anyVisible) return null; // <- nothing to show
@@ -223,6 +241,7 @@ export default function BusPassengerLayerLegend(props: Props & { className?: str
     shonan: "#1f78b4", // blue
     masuo: "#33a02c",  // green
     sakai: "#e31a1c",  // red
+    wani: "#ef4444",
   };
 
   const layers = React.useMemo<LayerLegendConfig[]>(
@@ -234,6 +253,10 @@ export default function BusPassengerLayerLegend(props: Props & { className?: str
       { id: "masuo-drop", label: "南増尾 コース - 降車", color: "#d42", stops: sharedStops, visible: masuoCourseDropLayerVisible, opacity: 0.8 },
       { id: "shonan-ride", label: "沼南コース - 乗車", color: "#10b981", stops: sharedStops, visible: shonanCourseRideLayerVisible, opacity: 0.8 },
       { id: "shonan-drop", label: "沼南コース - 降車", color: "#f97316", stops: sharedStops, visible: shonanCourseDropLayerVisible, opacity: 0.8 },
+      { id: "wani-outbound-ride", label: "ワニバース（往路）乗車", color: "#26F0F1", stops: sharedStops, visible: waniOutboundRideLayerVisible, opacity: 0.8 },
+      { id: "wani-outbound-drop", label: "ワニバース（往路）降車", color: "#700548", stops: sharedStops, visible: waniOutboundDropLayerVisible, opacity: 0.8 },
+      { id: "wani-return-ride", label: "ワニバース（復路）乗車", color: "#433E0E", stops: sharedStops, visible: waniReturnRideLayerVisible, opacity: 0.8 },
+      { id: "wani-return-drop", label: "ワニバース（復路）降車", color: "#60a5fa", stops: sharedStops, visible: waniReturnDropLayerVisible, opacity: 0.8 },
     ],
     [
       busPassengerLayerVisible,
@@ -243,6 +266,10 @@ export default function BusPassengerLayerLegend(props: Props & { className?: str
       masuoCourseDropLayerVisible,
       shonanCourseRideLayerVisible,
       shonanCourseDropLayerVisible,
+      waniOutboundRideLayerVisible,
+     waniOutboundDropLayerVisible,
+     waniReturnRideLayerVisible,
+     waniReturnDropLayerVisible,
     ]
   );
 
@@ -251,8 +278,9 @@ export default function BusPassengerLayerLegend(props: Props & { className?: str
       { id: "route-sakai", label: "逆井コース（ルート）", color: ROUTE_COLORS.sakai, visible: sakaiRouteVisible },
       { id: "route-masuo", label: "南増尾コース（ルート）", color: ROUTE_COLORS.masuo, visible: masuoRouteVisible },
       { id: "route-shonan", label: "沼南コース（ルート）", color: ROUTE_COLORS.shonan, visible: shonanRouteVisible },
+      { id: "route-wani", label: "ワニバース（市役所線）ルート", color: ROUTE_COLORS.wani, visible: waniRouteVisible },
     ],
-    [sakaiRouteVisible, masuoRouteVisible, shonanRouteVisible]
+    [sakaiRouteVisible, masuoRouteVisible, shonanRouteVisible, waniRouteVisible]
   );
 
   return (

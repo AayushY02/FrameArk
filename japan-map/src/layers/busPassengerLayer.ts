@@ -753,6 +753,8 @@ export const PASSENGER_CIRCLE_LAYER_IDS = [
     "masuo-course-drop",
     "shonan-course-ride",
     "shonan-course-drop",
+    "wani-outbound-ride", "wani-outbound-drop",
+    "wani-return-ride", "wani-return-drop",
 ] as const;
 export type CircleLayerId = typeof PASSENGER_CIRCLE_LAYER_IDS[number];
 
@@ -763,6 +765,10 @@ const TEXT_PROP_BY_LAYER: Record<CircleLayerId, string> = {
     "masuo-course-drop": "masuo_drop",
     "shonan-course-ride": "shonan_ride",
     "shonan-course-drop": "shonan_drop",
+    "wani-outbound-ride": "ride_outbound",
+    "wani-outbound-drop": "drop_outbound",
+    "wani-return-ride": "ride_return",
+    "wani-return-drop": "drop_return",
 };
 
 // Push label (and optionally its circle) to the very top of the stack
@@ -857,3 +863,389 @@ export function syncPassengerLabelForCircle(map: maplibregl.Map, circleId: Circl
     if (shouldShow) bringLabelAboveCircle(map, circleId);
 }
 // === end labels =========================================
+
+
+const WANI_PASSENGERS_URL = "/data/city_hall_stops.geojson";
+const WANI_ROUTE_URL = "/data/kashiwa_city_hall_route.geojson";
+
+
+// === Waniverse (市役所線) – Outbound Ride ===
+export const toggleWaniOutboundRideLayer = (
+    map: maplibregl.Map,
+    layerVisible: boolean,
+    setIsLoading: (v: boolean) => void,
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
+) => {
+    setIsLoading(true);
+    const sourceId = "wani-outbound-ride";
+    const layerId = "wani-outbound-ride";
+
+    const labelLayerId = map.getStyle().layers?.find(
+        (l) => l.type === "symbol" && l.layout?.["text-field"] && l.id.includes("place")
+    )?.id;
+
+    if (!layerVisible) {
+
+        [
+            "mesh-1km-fill", "mesh-1km-outline",
+            "mesh-500m-fill", "mesh-500m-outline",
+            "mesh-250m-fill", "mesh-250m-outline",
+        ].forEach(id => {
+            if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "none");
+        });
+
+        fetch(WANI_PASSENGERS_URL)
+            .then((r) => r.json())
+            .then((fc) => {
+                if (!map.getSource(sourceId)) {
+                    map.addSource(sourceId, { type: "geojson", data: fc });
+                } else {
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(fc);
+                }
+
+                if (!map.getLayer(layerId)) {
+                    map.addLayer(
+                        {
+                            id: layerId,
+                            type: "circle",
+                            source: sourceId,
+                            paint: {
+                                "circle-radius": [
+                                    "interpolate",
+                                    ["linear"],
+                                    ["get", "ride_outbound"],
+                                    0, 6,
+                                    1000, 10,
+                                    2000, 18,
+                                    3000, 25
+                                ],
+                                "circle-color": "#26F0F1",
+                                "circle-opacity": 0.8,
+                                "circle-stroke-color": "#fff",
+                                "circle-stroke-width": 1
+                            },
+                            filter: [">", ["get", "ride_outbound"], 0]
+                        },
+                        labelLayerId
+                    );
+                } else {
+                    map.setLayoutProperty(layerId, "visibility", "visible");
+                }
+
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+                setLayerVisible(true);
+                endLoadingWhenGeoJSONReady(map, sourceId, () => setIsLoading(false));
+            });
+    } else {
+        if (map.getLayer(layerId)) {
+            map.setLayoutProperty(layerId, "visibility", "none");
+            syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+        }
+        setLayerVisible(false);
+        map.once("idle", () => setIsLoading(false));
+    }
+};
+
+// === Waniverse (市役所線) – Outbound Drop ===
+export const toggleWaniOutboundDropLayer = (
+    map: maplibregl.Map,
+    layerVisible: boolean,
+    setIsLoading: (v: boolean) => void,
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
+) => {
+    setIsLoading(true);
+    const sourceId = "wani-outbound-drop";
+    const layerId = "wani-outbound-drop";
+
+    const labelLayerId = map.getStyle().layers?.find(
+        (l) => l.type === "symbol" && l.layout?.["text-field"] && l.id.includes("place")
+    )?.id;
+
+    if (!layerVisible) {
+
+        [
+            "mesh-1km-fill", "mesh-1km-outline",
+            "mesh-500m-fill", "mesh-500m-outline",
+            "mesh-250m-fill", "mesh-250m-outline",
+        ].forEach(id => {
+            if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "none");
+        });
+        fetch(WANI_PASSENGERS_URL)
+            .then((r) => r.json())
+            .then((fc) => {
+                if (!map.getSource(sourceId)) {
+                    map.addSource(sourceId, { type: "geojson", data: fc });
+                } else {
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(fc);
+                }
+
+                if (!map.getLayer(layerId)) {
+                    map.addLayer(
+                        {
+                            id: layerId,
+                            type: "circle",
+                            source: sourceId,
+                            paint: {
+                                "circle-radius": [
+                                    "interpolate",
+                                    ["linear"],
+                                    ["get", "drop_outbound"],
+                                    0, 6,
+                                    1000, 10,
+                                    2000, 18,
+                                    3000, 25
+                                ],
+                                "circle-color": "#700548",
+                                "circle-opacity": 0.8,
+                                "circle-stroke-color": "#fff",
+                                "circle-stroke-width": 1
+                            },
+                            filter: [">", ["get", "drop_outbound"], 0]
+                        },
+                        labelLayerId
+                    );
+                } else {
+                    map.setLayoutProperty(layerId, "visibility", "visible");
+                }
+
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+                setLayerVisible(true);
+                endLoadingWhenGeoJSONReady(map, sourceId, () => setIsLoading(false));
+            });
+    } else {
+        if (map.getLayer(layerId)) {
+            map.setLayoutProperty(layerId, "visibility", "none");
+            syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+        }
+        setLayerVisible(false);
+        map.once("idle", () => setIsLoading(false));
+    }
+};
+
+// === Waniverse (市役所線) – Return Ride ===
+export const toggleWaniReturnRideLayer = (
+    map: maplibregl.Map,
+    layerVisible: boolean,
+    setIsLoading: (v: boolean) => void,
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
+) => {
+    setIsLoading(true);
+    const sourceId = "wani-return-ride";
+    const layerId = "wani-return-ride";
+
+    const labelLayerId = map.getStyle().layers?.find(
+        (l) => l.type === "symbol" && l.layout?.["text-field"] && l.id.includes("place")
+    )?.id;
+
+    if (!layerVisible) {
+
+        [
+            "mesh-1km-fill", "mesh-1km-outline",
+            "mesh-500m-fill", "mesh-500m-outline",
+            "mesh-250m-fill", "mesh-250m-outline",
+        ].forEach(id => {
+            if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "none");
+        });
+        fetch(WANI_PASSENGERS_URL)
+            .then((r) => r.json())
+            .then((fc) => {
+                if (!map.getSource(sourceId)) {
+                    map.addSource(sourceId, { type: "geojson", data: fc });
+                } else {
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(fc);
+                }
+
+                if (!map.getLayer(layerId)) {
+                    map.addLayer(
+                        {
+                            id: layerId,
+                            type: "circle",
+                            source: sourceId,
+                            paint: {
+                                "circle-radius": [
+                                    "interpolate",
+                                    ["linear"],
+                                    ["get", "ride_return"],
+                                    0, 6,
+                                    1000, 10,
+                                    2000, 18,
+                                    3000, 25
+                                ],
+                                "circle-color": "#433E0E",
+                                "circle-opacity": 0.8,
+                                "circle-stroke-color": "#fff",
+                                "circle-stroke-width": 1
+                            },
+                            filter: [">", ["get", "ride_return"], 0]
+                        },
+                        labelLayerId
+                    );
+                } else {
+                    map.setLayoutProperty(layerId, "visibility", "visible");
+                }
+
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+                setLayerVisible(true);
+                endLoadingWhenGeoJSONReady(map, sourceId, () => setIsLoading(false));
+            });
+    } else {
+        if (map.getLayer(layerId)) {
+            map.setLayoutProperty(layerId, "visibility", "none");
+            syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+        }
+        setLayerVisible(false);
+        map.once("idle", () => setIsLoading(false));
+    }
+};
+
+// === Waniverse (市役所線) – Return Drop ===
+export const toggleWaniReturnDropLayer = (
+    map: maplibregl.Map,
+    layerVisible: boolean,
+    setIsLoading: (v: boolean) => void,
+    setLayerVisible: (v: boolean) => void,
+    globalLabelsOn: boolean
+) => {
+    setIsLoading(true);
+    const sourceId = "wani-return-drop";
+    const layerId = "wani-return-drop";
+
+    const labelLayerId = map.getStyle().layers?.find(
+        (l) => l.type === "symbol" && l.layout?.["text-field"] && l.id.includes("place")
+    )?.id;
+
+    if (!layerVisible) {
+
+        [
+            "mesh-1km-fill", "mesh-1km-outline",
+            "mesh-500m-fill", "mesh-500m-outline",
+            "mesh-250m-fill", "mesh-250m-outline",
+        ].forEach(id => {
+            if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "none");
+        });
+
+        fetch(WANI_PASSENGERS_URL)
+            .then((r) => r.json())
+            .then((fc) => {
+                if (!map.getSource(sourceId)) {
+                    map.addSource(sourceId, { type: "geojson", data: fc });
+                } else {
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(fc);
+                }
+
+                if (!map.getLayer(layerId)) {
+                    map.addLayer(
+                        {
+                            id: layerId,
+                            type: "circle",
+                            source: sourceId,
+                            paint: {
+                                "circle-radius": [
+                                    "interpolate",
+                                    ["linear"],
+                                    ["get", "drop_return"],
+                                    0, 6,
+                                    1000, 10,
+                                    2000, 18,
+                                    3000, 25
+                                ],
+                                "circle-color": "#60a5fa",
+                                "circle-opacity": 0.8,
+                                "circle-stroke-color": "#fff",
+                                "circle-stroke-width": 1
+                            },
+                            filter: [">", ["get", "drop_return"], 0]
+                        },
+                        labelLayerId
+                    );
+                } else {
+                    map.setLayoutProperty(layerId, "visibility", "visible");
+                }
+
+                syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+                setLayerVisible(true);
+                endLoadingWhenGeoJSONReady(map, sourceId, () => setIsLoading(false));
+            });
+    } else {
+        if (map.getLayer(layerId)) {
+            map.setLayoutProperty(layerId, "visibility", "none");
+            syncPassengerLabelForCircle(map, layerId as CircleLayerId, globalLabelsOn);
+        }
+        setLayerVisible(false);
+        map.once("idle", () => setIsLoading(false));
+    }
+};
+
+export const toggleWaniCityHallRouteLayer = (
+    map: maplibregl.Map,
+    layerVisible: boolean,
+    setIsLoading: (v: boolean) => void,
+    setLayerVisible: (v: boolean) => void
+) => {
+    setIsLoading(true);
+    const sourceId = "wani-cityhall-route";
+    const casingId = "wani-cityhall-route-casing";
+    const lineId = "wani-cityhall-route";
+
+    const labelLayerId = map.getStyle().layers?.find(
+        (l) => l.type === "symbol" && l.layout?.["text-field"] && l.id.includes("place")
+    )?.id;
+
+    if (!layerVisible) {
+
+        [
+            "mesh-1km-fill", "mesh-1km-outline",
+            "mesh-500m-fill", "mesh-500m-outline",
+            "mesh-250m-fill", "mesh-250m-outline",
+        ].forEach(id => {
+            if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "none");
+        });
+
+        fetch(WANI_ROUTE_URL)
+            .then((r) => r.json())
+            .then((routeFC) => {
+                if (!map.getSource(sourceId)) {
+                    map.addSource(sourceId, { type: "geojson", data: routeFC });
+                } else {
+                    (map.getSource(sourceId) as maplibregl.GeoJSONSource).setData(routeFC);
+                }
+
+                if (!map.getLayer(casingId)) {
+                    map.addLayer(
+                        {
+                            id: casingId,
+                            type: "line",
+                            source: sourceId,
+                            paint: { "line-color": "#fff", "line-width": 6, "line-opacity": 0.9 }
+                        },
+                        labelLayerId
+                    );
+                }
+                if (!map.getLayer(lineId)) {
+                    map.addLayer(
+                        {
+                            id: lineId,
+                            type: "line",
+                            source: sourceId,
+                            paint: { "line-color": "#ef4444", "line-width": 3.2, "line-opacity": 0.95 }
+                        },
+                        labelLayerId
+                    );
+                } else {
+                    map.setLayoutProperty(casingId, "visibility", "visible");
+                    map.setLayoutProperty(lineId, "visibility", "visible");
+                }
+
+                setLayerVisible(true);
+                endLoadingWhenGeoJSONReady(map, sourceId, () => setIsLoading(false));
+            });
+    } else {
+        if (map.getLayer(casingId)) map.setLayoutProperty(casingId, "visibility", "none");
+        if (map.getLayer(lineId)) map.setLayoutProperty(lineId, "visibility", "none");
+        setLayerVisible(false);
+        map.once("idle", () => setIsLoading(false));
+    }
+};

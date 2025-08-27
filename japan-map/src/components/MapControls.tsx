@@ -218,6 +218,17 @@ interface MapControlsProps {
     cityMaskVisible: boolean;
     toggleCityMask: () => void;
 
+    waniOutboundRideLayerVisible: boolean;
+    toggleWaniOutboundRideLayerVisible: () => void;
+    waniOutboundDropLayerVisible: boolean;
+    toggleWaniOutboundDropLayerVisible: () => void;
+    waniReturnRideLayerVisible: boolean;
+    toggleWaniReturnRideLayerVisible: () => void;
+    waniReturnDropLayerVisible: boolean;
+    toggleWaniReturnDropLayerVisible: () => void;
+    waniRouteVisible: boolean;
+    toggleWaniRouteVisible: () => void;
+
 }
 
 export default function MapControls({
@@ -358,6 +369,17 @@ export default function MapControls({
     cityMaskVisible,
     toggleCityMask,
 
+    waniOutboundRideLayerVisible,
+    toggleWaniOutboundRideLayerVisible,
+    waniOutboundDropLayerVisible,
+    toggleWaniOutboundDropLayerVisible,
+    waniReturnRideLayerVisible,
+    toggleWaniReturnRideLayerVisible,
+    waniReturnDropLayerVisible,
+    toggleWaniReturnDropLayerVisible,
+    waniRouteVisible,
+    toggleWaniRouteVisible,
+
 }: MapControlsProps) {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -487,8 +509,12 @@ export default function MapControls({
         masuoCourseRideLayerVisible ||
         masuoCourseDropLayerVisible ||
         shonanCourseRideLayerVisible ||
-        shonanCourseDropLayerVisible;
-
+        shonanCourseDropLayerVisible ||
+        // ✅ include Wani (市役所線)
+        waniOutboundRideLayerVisible ||
+        waniOutboundDropLayerVisible ||
+        waniReturnRideLayerVisible ||
+        waniReturnDropLayerVisible;
 
     return (
         <div className="absolute right-3 top-3 z-10 max-h-screen w-fit flex flex-col items-end">
@@ -739,6 +765,37 @@ export default function MapControls({
                                             onChange: () => handleLayerToggle('沼南コース - 降車', shonanCourseDropLayerVisible, toggleShonanCourseDropLayerVisible),
                                             icon: <MapPin size={16} />,
                                         },
+                                        {
+                                            label: 'ワニバース（市役所線）ルート',
+                                            checked: waniRouteVisible,
+                                            onChange: () => handleLayerToggle('ワニバース（市役所線）ルート', waniRouteVisible, toggleWaniRouteVisible),
+                                            icon: <Bus size={16} />,
+                                        },
+                                        {
+                                            label: 'ワニバース（往路）乗車',
+                                            checked: waniOutboundRideLayerVisible,
+                                            onChange: () => handleLayerToggle('ワニバース（往路）乗車', waniOutboundRideLayerVisible, toggleWaniOutboundRideLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                        {
+                                            label: 'ワニバース（往路）降車',
+                                            checked: waniOutboundDropLayerVisible,
+                                            onChange: () => handleLayerToggle('ワニバース（往路）降車', waniOutboundDropLayerVisible, toggleWaniOutboundDropLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                        {
+                                            label: 'ワニバース（復路）乗車',
+                                            checked: waniReturnRideLayerVisible,
+                                            onChange: () => handleLayerToggle('ワニバース（復路）乗車', waniReturnRideLayerVisible, toggleWaniReturnRideLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        },
+                                        {
+                                            label: 'ワニバース（復路）降車',
+                                            checked: waniReturnDropLayerVisible,
+                                            onChange: () => handleLayerToggle('ワニバース（復路）降車', waniReturnDropLayerVisible, toggleWaniReturnDropLayerVisible),
+                                            icon: <MapPin size={16} />,
+                                        }
+
                                     ].map(({ label, checked, onChange, icon }) => (
                                         <div key={label} className="flex items-center justify-between">
                                             <Label className="text-sm text-black flex items-center gap-2">
