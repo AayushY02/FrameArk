@@ -48,6 +48,7 @@ import { clearOdGridFocus, clearSingleOdSelection, toggleKashiwakuruOdGridLayer,
 import KashiwakuruOdGridLegend from './components/Legend/KashiwakuruOdGridLegend';
 import { exportCoverageGeoJSON, setBusCoverageRadius, toggleBusCoverageLayer, toggleBusStopPointsLayer } from './layers/busCoverageLayer';
 import BusCoverageLegend from './components/Legend/BusCoverageLegend';
+import { toggleCityMaskLayer } from './layers/cityMaskLayer';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -130,6 +131,8 @@ export default function MapView() {
     const [busCoverageVisible, setBusCoverageVisible] = useState(false); // <-- NEW
     const [busStopPointsVisible, setBusStopPointsVisible] = useState(false);
     const [coverageRadius, setCoverageRadius] = useState(300);
+
+    const [cityMaskVisible, setCityMaskVisible] = useState(false);
 
     // const opts = {
     //     timeBand: odGridFilterOn ? [odGridHour, odGridHour + 1] as [number, number] : null,
@@ -1843,6 +1846,26 @@ export default function MapView() {
         });
     };
 
+    const toggleCityMask = () =>
+        toggleCityMaskLayer(
+            mapRef.current!,
+            cityMaskVisible,
+            setIsLoading,
+            setCityMaskVisible,
+            {
+                dimOpacity: 0.85,                 // stronger dim
+                highlightOpacity: 0.14,           // gentle tint inside
+                overlaysToRaise: [
+                    "bus-coverage-merged-fill",
+                    "bus-coverage-merged-line",
+                    "bus-coverage-stops-circle",
+                    // add any others you render (OD grid, meshes, POIs…)
+                ],
+            }
+        );
+
+
+
     const onOdGridMinVolChange = (n: number) => setOdGridMinVol(n);
     const onOdGridFocusModeChange = (m: "all" | "out" | "in") => setOdGridFocusMode(m);
     const onOdGridClearFocus = () => {
@@ -2123,6 +2146,9 @@ export default function MapView() {
                 toggleBusCoverage={toggleBusCoverage}
                 busStopPointsVisible={busStopPointsVisible}        // NEW
                 toggleBusStopPoints={toggleBusStopPoints}
+
+                cityMaskVisible={cityMaskVisible}
+                toggleCityMask={toggleCityMask}
 
             />
 

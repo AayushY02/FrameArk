@@ -35,6 +35,7 @@ import {
     ShoppingBag,
     NotepadTextDashed,
     Mountain,
+    MapIcon,
 
 } from 'lucide-react';
 import { Label } from './ui/label';
@@ -214,6 +215,9 @@ interface MapControlsProps {
     busStopPointsVisible: boolean;        // NEW
     toggleBusStopPoints: () => void;
 
+    cityMaskVisible: boolean;
+    toggleCityMask: () => void;
+
 }
 
 export default function MapControls({
@@ -350,6 +354,9 @@ export default function MapControls({
 
     busStopPointsVisible,           // NEW
     toggleBusStopPoints,
+
+    cityMaskVisible,
+    toggleCityMask,
 
 }: MapControlsProps) {
 
@@ -549,6 +556,13 @@ export default function MapControls({
                         >
                             <Layers size={16} />
                             {meshVisible ? 'メッシュを非表示' : 'メッシュを表示'}
+                        </Button>
+                        <Button
+                            onClick={() => toggleCityMask()}
+                            className="flex items-center gap-2 bg-white rounded-2xl text-black hover:bg-[#f2f2f2] cursor-pointer"
+                        >
+                            <MapIcon size={16} />
+                            {cityMaskVisible ? '柏市マスクを非表示' : '柏市マスクを表示'}
                         </Button>
 
                         <Button
