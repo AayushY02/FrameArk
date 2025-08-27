@@ -1,261 +1,261 @@
 {
-    "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "properties": {
-                "stop_name": "ウェルネス柏",
-                "Courses": [
-                    {
-                        "name": "outbound",
-                        "ride": 15285,
-                        "drop": null
-                    },
-                    {
-                        "name": "return",
-                        "ride": null,
-                        "drop": 11515
-                    }
-                ],
-                "total_all": 26800,
-                "total_outbound": 15285,
-                "total_return": 11515,
-                "ride_outbound": 15285,
-                "drop_outbound": null,
-                "ride_return": null,
-                "drop_return": 11515
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    139.9855540865082,
-                    35.866765042516754
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "stop_name": "ライフケアメモリイパーク柏",
-                "Courses": [
-                    {
-                        "name": "outbound",
-                        "ride": 174,
-                        "drop": 169
-                    },
-                    {
-                        "name": "return",
-                        "ride": 128,
-                        "drop": 149
-                    }
-                ],
-                "total_all": 620,
-                "total_outbound": 343,
-                "total_return": 277,
-                "ride_outbound": 174,
-                "drop_outbound": 169,
-                "ride_return": 128,
-                "drop_return": 149
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    139.97512803751198,
-                    35.86621212616558
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "stop_name": "ラコルタ柏",
-                "Courses": [
-                    {
-                        "name": "outbound",
-                        "ride": 4941,
-                        "drop": 423
-                    },
-                    {
-                        "name": "return",
-                        "ride": 366,
-                        "drop": 4019
-                    }
-                ],
-                "total_all": 975,
-                "total_outbound": 5364,
-                "total_return": 4385,
-                "ride_outbound": 4941,
-                "drop_outbound": 423,
-                "ride_return": 366,
-                "drop_return": 4019
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    139.97713372029227,
-                    35.86675736453391
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "stop_name": "柏市役所別館",
-                "Courses": [
-                    {
-                        "name": "outbound",
-                        "ride": 1898,
-                        "drop": 161
-                    },
-                    {
-                        "name": "return",
-                        "ride": 305,
-                        "drop": 4414
-                    }
-                ],
-                "total_all": 6778,
-                "total_outbound": 2059,
-                "total_return": 4719,
-                "ride_outbound": 1898,
-                "drop_outbound": 161,
-                "ride_return": 305,
-                "drop_return": 4414
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    139.97581503079817,
-                    35.866997601737225
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "stop_name": "柏市役所本庁舎",
-                "Courses": [
-                    {
-                        "name": "outbound",
-                        "ride": 7317,
-                        "drop": 877
-                    },
-                    {
-                        "name": "return",
-                        "ride": 830,
-                        "drop": 4032
-                    }
-                ],
-                "total_all": 13056,
-                "total_outbound": 8194,
-                "total_return": 4862,
-                "ride_outbound": 7317,
-                "drop_outbound": 877,
-                "ride_return": 830,
-                "drop_return": 4032
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    139.97606919519947,
-                    35.86765931356403
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "stop_name": "柏市民文化会館前",
-                "Courses": [
-                    {
-                        "name": "outbound",
-                        "ride": 3572,
-                        "drop": 70
-                    },
-                    {
-                        "name": "return",
-                        "ride": 157,
-                        "drop": 5449
-                    }
-                ],
-                "total_all": 9248,
-                "total_outbound": 3642,
-                "total_return": 5606,
-                "ride_outbound": 3572,
-                "drop_outbound": 70,
-                "ride_return": 157,
-                "drop_return": 5449
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    139.98417627193302,
-                    35.86681103296759
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "stop_name": "柏駅東口",
-                "Courses": [
-                    {
-                        "name": "outbound",
-                        "ride": null,
-                        "drop": 31487
-                    },
-                    {
-                        "name": "return",
-                        "ride": 27933,
-                        "drop": null
-                    }
-                ],
-                "total_all": 59420,
-                "total_outbound": 31487,
-                "total_return": 27933,
-                "ride_outbound": null,
-                "drop_outbound": 31487,
-                "ride_return": 27933,
-                "drop_return": null
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    139.9718519291635,
-                    35.862529058654474
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "stop_name": "深町病院前",
-                "Courses": [
-                    {
-                        "name": "outbound",
-                        "ride": null,
-                        "drop": null
-                    },
-                    {
-                        "name": "return",
-                        "ride": 156,
-                        "drop": 297
-                    }
-                ],
-                "total_all": 453,
-                "total_outbound": null,
-                "total_return": 453,
-                "ride_outbound": null,
-                "drop_outbound": null,
-                "ride_return": 156,
-                "drop_return": 297
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    139.9747428363,
-                    35.864404059337595
-                ]
-            }
-        }
-    ]
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_name": "ウェルネス柏",
+        "Courses": [
+          {
+            "name": "outbound",
+            "ride": 0,
+            "drop": 11515
+          },
+          {
+            "name": "return",
+            "ride": 15285,
+            "drop": 0
+          }
+        ],
+        "total_all": 26800,
+        "total_outbound": 11515,
+        "total_return": 15285,
+        "ride_outbound": 0,
+        "drop_outbound": 11515,
+        "ride_return": 15285,
+        "drop_return": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9855540865082,
+          35.866765042516754
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_name": "ライフケアメモリイパーク柏",
+        "Courses": [
+          {
+            "name": "outbound",
+            "ride": 128,
+            "drop": 149
+          },
+          {
+            "name": "return",
+            "ride": 174,
+            "drop": 169
+          }
+        ],
+        "total_all": 620,
+        "total_outbound": 277,
+        "total_return": 343,
+        "ride_outbound": 128,
+        "drop_outbound": 149,
+        "ride_return": 174,
+        "drop_return": 169
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.97512803751198,
+          35.86621212616558
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_name": "ラコルタ柏",
+        "Courses": [
+          {
+            "name": "outbound",
+            "ride": 366,
+            "drop": 4019
+          },
+          {
+            "name": "return",
+            "ride": 4941,
+            "drop": 423
+          }
+        ],
+        "total_all": 9749,
+        "total_outbound": 4385,
+        "total_return": 5364,
+        "ride_outbound": 366,
+        "drop_outbound": 4019,
+        "ride_return": 4941,
+        "drop_return": 423
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.97713372029227,
+          35.86675736453391
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_name": "柏市役所別館",
+        "Courses": [
+          {
+            "name": "outbound",
+            "ride": 305,
+            "drop": 4414
+          },
+          {
+            "name": "return",
+            "ride": 1898,
+            "drop": 161
+          }
+        ],
+        "total_all": 6778,
+        "total_outbound": 4719,
+        "total_return": 2059,
+        "ride_outbound": 305,
+        "drop_outbound": 4414,
+        "ride_return": 1898,
+        "drop_return": 161
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.97581503079817,
+          35.866997601737225
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_name": "柏市役所本庁舎",
+        "Courses": [
+          {
+            "name": "outbound",
+            "ride": 830,
+            "drop": 4032
+          },
+          {
+            "name": "return",
+            "ride": 7317,
+            "drop": 877
+          }
+        ],
+        "total_all": 13056,
+        "total_outbound": 4862,
+        "total_return": 8194,
+        "ride_outbound": 830,
+        "drop_outbound": 4032,
+        "ride_return": 7317,
+        "drop_return": 877
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.97606919519947,
+          35.86765931356403
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_name": "柏市民文化会館前",
+        "Courses": [
+          {
+            "name": "outbound",
+            "ride": 157,
+            "drop": 5449
+          },
+          {
+            "name": "return",
+            "ride": 3572,
+            "drop": 70
+          }
+        ],
+        "total_all": 9248,
+        "total_outbound": 5606,
+        "total_return": 3642,
+        "ride_outbound": 157,
+        "drop_outbound": 5449,
+        "ride_return": 3572,
+        "drop_return": 70
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.98417627193302,
+          35.86681103296759
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_name": "柏駅東口",
+        "Courses": [
+          {
+            "name": "outbound",
+            "ride": 27933,
+            "drop": 0
+          },
+          {
+            "name": "return",
+            "ride": 0,
+            "drop": 31487
+          }
+        ],
+        "total_all": 59420,
+        "total_outbound": 27933,
+        "total_return": 31487,
+        "ride_outbound": 27933,
+        "drop_outbound": 0,
+        "ride_return": 0,
+        "drop_return": 31487
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9718519291635,
+          35.862529058654474
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "stop_name": "深町病院前",
+        "Courses": [
+          {
+            "name": "outbound",
+            "ride": 156,
+            "drop": 297
+          },
+          {
+            "name": "return",
+            "ride": 0,
+            "drop": 0
+          }
+        ],
+        "total_all": 453,
+        "total_outbound": 453,
+        "total_return": 0,
+        "ride_outbound": 156,
+        "drop_outbound": 297,
+        "ride_return": 0,
+        "drop_return": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.9747428363,
+          35.864404059337595
+        ]
+      }
+    }
+  ]
 }
