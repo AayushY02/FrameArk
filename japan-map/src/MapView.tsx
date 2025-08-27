@@ -48,7 +48,8 @@ import { clearOdGridFocus, clearSingleOdSelection, toggleKashiwakuruOdGridLayer,
 import KashiwakuruOdGridLegend from './components/Legend/KashiwakuruOdGridLegend';
 import { exportCoverageGeoJSON, setBusCoverageRadius, toggleBusCoverageLayer, toggleBusStopPointsLayer } from './layers/busCoverageLayer';
 import BusCoverageLegend from './components/Legend/BusCoverageLegend';
-import { toggleCityMaskLayer } from './layers/cityMaskLayer';
+import { setCityMaskOpacity, toggleCityMaskLayer } from './layers/cityMaskLayer';
+import CityMaskLegend from './components/Legend/CityMaskLegend';
 // mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 export default function MapView() {
@@ -139,6 +140,7 @@ export default function MapView() {
     const [waniRouteVisible, setWaniRouteVisible] = useState(false);
 
     const [cityMaskVisible, setCityMaskVisible] = useState(false);
+    const [cityMaskOpacity, setCityMaskOpacityState] = useState(0.85);
 
     // const opts = {
     //     timeBand: odGridFilterOn ? [odGridHour, odGridHour + 1] as [number, number] : null,
@@ -851,6 +853,13 @@ export default function MapView() {
         window.addEventListener('mirai:ask', handleAskMirai);
         return () => window.removeEventListener('mirai:ask', handleAskMirai);
     }, []);
+
+    useEffect(() => {
+        if (!mapRef.current) return;
+        if (cityMaskVisible) {
+            setCityMaskOpacity(mapRef.current, cityMaskOpacity);
+        }
+    }, [cityMaskOpacity, cityMaskVisible]);
 
     useEffect(() => {
         if (!mapContainerRef.current || mapRef.current) return;
@@ -1994,12 +2003,12 @@ export default function MapView() {
             setIsLoading,
             setCityMaskVisible,
             {
-                dimOpacity: 0.85,                 // stronger dim
+                dimOpacity: 1,                 // stronger dim
                 highlightOpacity: 0.14,           // gentle tint inside
                 overlaysToRaise: [
-                    "bus-coverage-merged-fill",
-                    "bus-coverage-merged-line",
-                    "bus-coverage-stops-circle",
+                    // "bus-coverage-merged-fill",
+                    // "bus-coverage-merged-line",
+                    // "bus-coverage-stops-circle",
                     // add any others you render (OD grid, meshes, POIs…)
                 ],
             }
@@ -2354,7 +2363,7 @@ export default function MapView() {
             />
 
             {/* <Legend selectedMetric={selectedMetric} /> */}
-            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend || hasAnyChomeLegend || odGridVisible || hasAnyBusCoverage} width="w-80">
+            <LegendsStack visible={hasAnyBusLegend || hasAnyFacilities || hasAnyKashiwakuru || hasAnyShops || hasAnyOdLegend || hasAnyChomeLegend || odGridVisible || hasAnyBusCoverage || cityMaskVisible} width="w-80">
                 <AnimatePresence mode="popLayout">
                     {hasAnyBusLegend && (
                         <motion.div
@@ -2465,6 +2474,25 @@ export default function MapView() {
                                 categories={shopCategoriesLegend}
                                 selectedCategories={selectedShopCategories}
 
+                            />
+                        </motion.div>
+                    )}
+
+                    {cityMaskVisible && (
+                        <motion.div
+                            key="city-mask"
+                            layout
+                            initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="w-full"
+                        >
+                            <CityMaskLegend
+                              
+                                visible={cityMaskVisible}
+                                opacity={cityMaskOpacity}
+                                onChange={setCityMaskOpacityState}
                             />
                         </motion.div>
                     )}

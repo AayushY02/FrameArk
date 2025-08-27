@@ -1,260 +1,4 @@
-// import maplibregl from "maplibre-gl";
-// import type { Feature, FeatureCollection, Polygon, MultiPolygon } from "geojson";
-// import { featureCollection, union as turfUnion } from "@turf/turf";
 
-// let __kashiwaCache: FeatureCollection<Polygon | MultiPolygon> | null = null;
-// let __maskCache: FeatureCollection<Polygon | MultiPolygon> | null = null;
-
-// const IDS = {
-//     srcCity: "kashiwa-boundary-src",
-//     srcMask: "kashiwa-world-mask-src",
-//     lyrMask: "kashiwa-world-mask-fill",
-//     lyrCityFill: "kashiwa-highlight-fill",
-//     lyrCityLine: "kashiwa-highlight-line",
-// } as const;
-
-// const KASHIWA_URL =
-//     (import.meta as any).env?.VITE_KASHIWA_BOUNDARY_URL ??
-//     "/data/kashiwa_boundary_new.geojson";
-
-// /** World rectangle (±85° to avoid pole artifacts) */
-// function worldRect(): Feature<Polygon> {
-//     const w = -180, e = 180, s = -85, n = 85;
-//     return {
-//         type: "Feature",
-//         properties: {},
-//         geometry: {
-//             type: "Polygon",
-//             coordinates: [[[w, s], [w, n], [e, n], [e, s], [w, s]]],
-//         },
-//     };
-// }
-
-// /** Load and cache the Kashiwa boundary */
-// async function loadKashiwa(): Promise<FeatureCollection<Polygon | MultiPolygon>> {
-//     if (__kashiwaCache) return __kashiwaCache;
-//     const res = await fetch(KASHIWA_URL);
-//     if (!res.ok) throw new Error(`Failed to load Kashiwa boundary: ${res.status} ${res.statusText}`);
-//     __kashiwaCache = (await res.json()) as FeatureCollection<Polygon | MultiPolygon>;
-//     return __kashiwaCache;
-// }
-
-// function worldOuterRing(): [number, number][] {
-//     const w = -180, e = 180, s = -85, n = 85;
-//     return [[w, s], [w, n], [e, n], [e, s], [w, s]];
-// }
-
-// /** Signed area (shoelace). >0 = CCW, <0 = CW */
-// function ringSignedArea(ring: [number, number][]) {
-//     let sum = 0;
-//     for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-//         const [xi, yi] = ring[i];
-//         const [xj, yj] = ring[j];
-//         sum += (xj * yi - xi * yj);
-//     }
-//     return sum / 2;
-// }
-// function ensureCCW(r: [number, number][]) {
-//     return ringSignedArea(r) > 0 ? r : r.slice().reverse();
-// }
-// function ensureCW(r: [number, number][]) {
-//     return ringSignedArea(r) < 0 ? r : r.slice().reverse();
-// }
-
-// /** Union all city features to a single (Multi)Polygon — unchanged from your version */
-// function unionAllCity(features: Feature<(Polygon | MultiPolygon)>[]): Feature<Polygon | MultiPolygon> {
-//     let acc = features[0] as Feature<Polygon | MultiPolygon>;
-//     for (let i = 1; i < features.length; i++) {
-//         const u = turfUnion(acc as any, features[i] as any);
-//         if (u) acc = u as Feature<Polygon | MultiPolygon>;
-//     }
-//     return acc;
-// }
-
-// /**
-//  * Build a single mask Polygon that has:
-//  * - outer ring = whole world (CCW)
-//  * - inner rings = Kashiwa's outer boundaries (CW), which become HOLES
-//  */
-// async function buildMask(): Promise<FeatureCollection<Polygon>> {
-//     const cityFC = await loadKashiwa();
-//     const cityFeatures = cityFC.features.filter(
-//         (f) => f.geometry && (f.geometry.type === "Polygon" || f.geometry.type === "MultiPolygon")
-//     ) as Feature<(Polygon | MultiPolygon)>[];
-
-//     if (cityFeatures.length === 0) {
-//         // fallback: just world
-//         const worldRing = ensureCCW(worldOuterRing());
-//         return featureCollection<Polygon>([{
-//             type: "Feature",
-//             properties: {},
-//             geometry: { type: "Polygon", coordinates: [worldRing] },
-//         }]);
-//     }
-
-//     const cityUnion = unionAllCity(cityFeatures);
-//     const worldRing = ensureCCW(worldOuterRing());
-//     const holes: [number, number][][] = [];
-
-//     if (cityUnion.geometry.type === "Polygon") {
-//         // coords[0] = outer ring of Kashiwa -> becomes a HOLE (must be CW)
-//         const outer = cityUnion.geometry.coordinates[0] as [number, number][];
-//         holes.push(ensureCW(outer));
-//     } else {
-//         // MultiPolygon: take each polygon's outer ring as a hole
-//         for (const poly of cityUnion.geometry.coordinates) {
-//             const outer = poly[0] as [number, number][];
-//             holes.push(ensureCW(outer));
-//         }
-//     }
-
-//     const mask: Feature<Polygon> = {
-//         type: "Feature",
-//         properties: {},
-//         geometry: {
-//             type: "Polygon",
-//             coordinates: [worldRing, ...holes],
-//         },
-//     };
-
-//     return featureCollection<Polygon>([mask]);
-// }
-// function upsertSource(map: maplibregl.Map, id: string, data: any) {
-//     const s = map.getSource(id) as maplibregl.GeoJSONSource | undefined;
-//     if (s) s.setData(data);
-//     else map.addSource(id, { type: "geojson", data });
-// }
-
-// /** Find the first non-background layer to insert *below everything else*. */
-// function bottomInsertBeforeId(map: maplibregl.Map): string | undefined {
-//     const style = map.getStyle();
-//     if (!style?.layers?.length) return undefined;
-//     const first = style.layers.find((l) => l.type !== "background");
-//     return first?.id;
-// }
-
-// function ensureLayer(map: maplibregl.Map, layer: maplibregl.LayerSpecification, beforeId?: string) {
-//     if (!map.getLayer(layer.id)) map.addLayer(layer, beforeId);
-// }
-// function setVisibility(map: maplibregl.Map, id: string, v: "visible" | "none") {
-//     if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", v);
-// }
-
-// /** Public toggle */
-// export async function toggleCityMaskLayer(
-//     map: maplibregl.Map,
-//     currentlyVisible: boolean,
-//     setIsLoading: (b: boolean) => void,
-//     setVisible: (b: boolean) => void,
-//     opts?: {
-//         dimColor?: string;          // outside color (default black)
-//         dimOpacity?: number;        // default 0.35
-//         highlightColor?: string;    // Kashiwa tint (default warm yellow)
-//         highlightOpacity?: number;  // default 0.20
-//         outlineColor?: string;      // default #ff8c00
-//         outlineWidth?: number;      // default 1.5
-//     }
-// ) {
-//     const nextVisible = !currentlyVisible;
-//     if (!nextVisible) {
-//         setVisible(false);
-//         setVisibility(map, IDS.lyrMask, "none");
-//         setVisibility(map, IDS.lyrCityFill, "none");
-//         setVisibility(map, IDS.lyrCityLine, "none");
-//         return;
-//     }
-
-//     setIsLoading(true);
-//     try {
-//         const [maskFC, cityFC] = await Promise.all([buildMask(), loadKashiwa()]);
-
-//         upsertSource(map, IDS.srcMask, maskFC);
-//         upsertSource(map, IDS.srcCity, cityFC);
-
-//         const dimColor = opts?.dimColor ?? "#000";
-//         const dimOpacity = opts?.dimOpacity ?? 0.35;
-//         const highlightColor = opts?.highlightColor ?? "#ffd166";
-//         const highlightOpacity = opts?.highlightOpacity ?? 0.20;
-//         const outlineColor = opts?.outlineColor ?? "#ff8c00";
-//         const outlineWidth = opts?.outlineWidth ?? 1.5;
-
-//         const before = bottomInsertBeforeId(map);
-
-//         // Outside dim (with hole)
-//         ensureLayer(
-//             map,
-//             {
-//                 id: IDS.lyrMask,
-//                 type: "fill",
-//                 source: IDS.srcMask,
-//                 paint: {
-//                     "fill-color": dimColor,
-//                     "fill-opacity": dimOpacity,
-//                     "fill-antialias": true,
-//                 },
-//             },
-//             before
-//         );
-
-//         // Kashiwa highlight
-//         ensureLayer(
-//             map,
-//             {
-//                 id: IDS.lyrCityFill,
-//                 type: "fill",
-//                 source: IDS.srcCity,
-//                 paint: {
-//                     "fill-color": highlightColor,
-//                     "fill-opacity": highlightOpacity,
-//                     "fill-antialias": true,
-//                 },
-//             },
-//             before
-//         );
-
-//         ensureLayer(
-//             map,
-//             {
-//                 id: IDS.lyrCityLine,
-//                 type: "line",
-//                 source: IDS.srcCity,
-//                 paint: {
-//                     "line-color": outlineColor,
-//                     "line-width": outlineWidth,
-//                     "line-blur": 0.2,
-//                 },
-//             },
-//             before
-//         );
-
-//         setVisibility(map, IDS.lyrMask, "visible");
-//         setVisibility(map, IDS.lyrCityFill, "visible");
-//         setVisibility(map, IDS.lyrCityLine, "visible");
-//         setVisible(true);
-//     } catch (e) {
-//         console.error("[cityMaskLayer] failed:", e);
-//     } finally {
-//         setIsLoading(false);
-//     }
-// }
-
-// /** Optional: zoom to Kashiwa boundary */
-// export async function zoomToKashiwa(map: maplibregl.Map, padding = 48) {
-//     const data = await loadKashiwa();
-//     const bounds = new maplibregl.LngLatBounds();
-//     data.features.forEach((f) => {
-//         const walk = (c: any) =>
-//             typeof c[0] === "number" ? bounds.extend(c as [number, number]) : c.forEach(walk);
-//         walk((f.geometry as any).coordinates);
-//     });
-//     if (!bounds.isEmpty()) map.fitBounds(bounds, { padding, duration: 700 });
-// }
-
-// /** Reset caches if you swap boundary files at runtime */
-// export function resetCityMaskCaches() {
-//     __kashiwaCache = null;
-//     __maskCache = null;
-// }
 
 
 // src/layers/cityMaskLayer.ts
@@ -263,6 +7,7 @@ import type { Feature, FeatureCollection, Polygon, MultiPolygon } from "geojson"
 import { featureCollection, union as turfUnion } from "@turf/turf";
 
 let __kashiwaCache: FeatureCollection<Polygon | MultiPolygon> | null = null;
+let __dimOpacityCurrent = 0.85;
 
 const IDS = {
     srcCity: "kashiwa-boundary-src",
@@ -397,7 +142,9 @@ export async function toggleCityMaskLayer(
         upsertSource(map, IDS.srcCity, cityFC);
 
         const dimColor = opts?.dimColor ?? "#0b1020"; // deep slate
-        const dimOpacity = opts?.dimOpacity ?? 0.85;    // strong dim (was ~0.35)
+        // If caller passes a value, adopt it; otherwise keep the last used.
+        __dimOpacityCurrent = opts?.dimOpacity ?? __dimOpacityCurrent ?? 0.85;
+        const dimOpacity = __dimOpacityCurrent;         // use the current value
         const highlightColor = opts?.highlightColor ?? "#fff3b0";
         const highlightOpacity = opts?.highlightOpacity ?? 0.14;
         const outlineColor = opts?.outlineColor ?? "#f59e0b"; // amber-500
@@ -470,4 +217,18 @@ export async function toggleCityMaskLayer(
     } finally {
         setIsLoading(false);
     }
+}
+
+/** Live-update the opacity of the outside dim layer (0..1). Safe to call anytime. */
+export function setCityMaskOpacity(map: maplibregl.Map, opacity: number) {
+    const v = Math.max(0, Math.min(1, Number(opacity) || 0));
+    __dimOpacityCurrent = v;
+    if (map.getLayer(IDS.lyrMask)) {
+        map.setPaintProperty(IDS.lyrMask, "fill-opacity", v);
+    }
+}
+
+/** (Optional) read the current mask opacity to initialize your slider */
+export function getCityMaskOpacity(): number {
+    return __dimOpacityCurrent;
 }
