@@ -141,7 +141,7 @@ export async function toggleCityMaskLayer(
         upsertSource(map, IDS.srcMask, maskFC);
         upsertSource(map, IDS.srcCity, cityFC);
 
-        const dimColor = opts?.dimColor ?? "#0b1020"; // deep slate
+        const dimColor = opts?.dimColor ?? "#808080"; // deep slate
         // If caller passes a value, adopt it; otherwise keep the last used.
         __dimOpacityCurrent = opts?.dimOpacity ?? __dimOpacityCurrent ?? 0.85;
         const dimOpacity = __dimOpacityCurrent;         // use the current value
