@@ -33,6 +33,7 @@ dist-ssr
 
 !/data/final.geojson
 /public/data/tiles
+/public/data/kashiwa_population_with_estimate_old.geojson
 /public/data/tiles_old
 /public/tiles_old
 
