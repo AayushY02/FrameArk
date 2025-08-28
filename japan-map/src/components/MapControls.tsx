@@ -390,7 +390,7 @@ export default function MapControls({
     const isAgingMetric = chomeTarget === "aging" || chomeTarget === "aging_2040";
 
     // style controls
-    const [chomePalette, setChomePalette] = useState<"Blues" | "Greens" | "Oranges" | "Purples">("Purples");
+    // const [chomePalette, setChomePalette] = useState<"Blues" | "Greens" | "Oranges" | "Purples">("Purples");
     const [chomeMethod, setChomeMethod] = useState<"quantile" | "equal" | "jenks">("quantile");
     const [chomeBins, setChomeBins] = useState<number>(5);       // 3–7 sensible
     const [chomeOpacity, setChomeOpacity] = useState<number>(70); // 30–100 as percent
@@ -409,7 +409,7 @@ export default function MapControls({
     function resetChomeUIAndLayers() {
         // Reset UI state
         setChomeTarget("total");
-        setChomePalette("Purples");
+        // setChomePalette("Purples");
         setChomeMethod("quantile");
         setChomeBins(5);
         setChomeOpacity(70);
@@ -440,13 +440,13 @@ export default function MapControls({
     useEffect(() => {
         if (!chomeFiltersOpen) return;
         onChomeStyleChange(chomeTarget, {
-            palette: chomePalette,
+            // palette: chomePalette,
             method: chomeMethod,
             bins: chomeBins,
             opacity: chomeOpacity / 100,
         });
 
-    }, [chomeFiltersOpen, chomeTarget, chomePalette, chomeMethod, chomeBins, chomeOpacity]);
+    }, [chomeFiltersOpen, chomeTarget, chomeMethod, chomeBins, chomeOpacity]);
 
 
     useEffect(() => {
@@ -1185,17 +1185,20 @@ export default function MapControls({
                                             </div>
                                         </div>
 
+
+
                                         {/* 展開コンテンツ：閉じているときは非表示 */}
                                         <AnimatePresence initial={false}>
                                             {chomeFiltersOpen && (
                                                 <motion.div
-                                                    key="chome-filters"
-                                                    initial={{ height: 0, opacity: 0 }}
-                                                    animate={{ height: "auto", opacity: 1 }}
-                                                    exit={{ height: 0, opacity: 0 }}
-                                                    transition={{ duration: 0.15 }}
-                                                    className="overflow-hidden"
+                                                key="chome-filters"
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: "auto", opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                transition={{ duration: 0.15 }}
+                                                className="overflow-hidden space-y-4"
                                                 >
+                                                <Separator />
                                                     <div className="space-y-4">
                                                         {/* 対象 / パレット / 分類 */}
                                                         <div className="grid grid-cols-12 gap-3">
@@ -1209,16 +1212,13 @@ export default function MapControls({
                                                                         <SelectItem value="total">総数（G）</SelectItem>
                                                                         <SelectItem value="aging">高齢化率（K）</SelectItem>
                                                                         <SelectItem value="density">人口密度（L）</SelectItem>
-                                                                        <SelectItem value="total">総数（G）</SelectItem>
-                                                                        <SelectItem value="aging">高齢化率（K）</SelectItem>
-                                                                        <SelectItem value="density">人口密度（L）</SelectItem>
                                                                         <SelectItem value="total_2040">総数（2040 推計）</SelectItem>
                                                                         <SelectItem value="aging_2040">高齢化率（2040 推計）</SelectItem>
                                                                     </SelectContent>
                                                                 </Select>
                                                             </div>
 
-                                                            <Label className="col-span-4 text-xs text-muted-foreground whitespace-nowrap self-center">パレット</Label>
+                                                            {/* <Label className="col-span-4 text-xs text-muted-foreground whitespace-nowrap self-center">パレット</Label>
                                                             <div className="col-span-8">
                                                                 <Select value={chomePalette} onValueChange={(v) => setChomePalette(v as any)}>
                                                                     <SelectTrigger className="h-8 text-xs rounded-lg w-full">
@@ -1231,7 +1231,7 @@ export default function MapControls({
                                                                         <SelectItem value="Blues">ブルー</SelectItem>
                                                                     </SelectContent>
                                                                 </Select>
-                                                            </div>
+                                                            </div> */}
 
                                                             <Label className="col-span-4 text-xs text-muted-foreground whitespace-nowrap self-center">分類</Label>
                                                             <div className="col-span-8">
@@ -1248,7 +1248,7 @@ export default function MapControls({
                                                             </div>
                                                         </div>
 
-                                                        <Separator />
+                                                        {/* <Separator /> */}
 
                                                         {/* ビン数・不透明度 */}
                                                         <div className="space-y-4">
@@ -1380,7 +1380,7 @@ export default function MapControls({
                                                                     </Select>
                                                                 </div>
 
-                                                                <Label className="col-span-4 text-xs text-muted-foreground self-center">指標</Label>
+                                                                {/* <Label className="col-span-4 text-xs text-muted-foreground self-center">指標</Label>
                                                                 <div className="col-span-8">
                                                                     <Select
                                                                         value={chomeLabelsMetric}
@@ -1403,7 +1403,7 @@ export default function MapControls({
                                                                             <SelectItem value="aging_2040">高齢化率（2040 推計）</SelectItem>
                                                                         </SelectContent>
                                                                     </Select>
-                                                                </div>
+                                                                </div> */}
                                                             </div>
                                                         </div>
                                                     </div>

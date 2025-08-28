@@ -2489,7 +2489,7 @@ export default function MapView() {
                             className="w-full"
                         >
                             <CityMaskLegend
-                              
+                                className="w-full"
                                 visible={cityMaskVisible}
                                 opacity={cityMaskOpacity}
                                 onChange={setCityMaskOpacityState}
