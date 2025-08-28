@@ -154,7 +154,18 @@ export const toggleBusStops = (
     // const sourceLayer = 'bus-stops';
 
     const beforeId = map.getLayer('transportation-line-hover') ? 'transportation-line-hover' : undefined;
+    const customIconId = 'custom-bus-icon';
 
+    const ensureCustomIcon = async (map: maplibregl.Map) => {
+        if (map.hasImage(customIconId)) return;
+
+        const res = await map.loadImage('/icons/bus_custom.png');
+        const image = res.data; // ✅ extract the actual image
+
+        if (!map.hasImage(customIconId)) {
+            map.addImage(customIconId, image);
+        }
+    };
     // const labelLayerId = map.getStyle().layers?.find(
     //     l => l.type === 'symbol' && l.layout?.['text-field'] && l.id.includes('place')
     // )?.id;
@@ -181,37 +192,38 @@ export const toggleBusStops = (
         //             visibility: 'visible'
         //         }
         //     }, beforeId);
-
-        if (!map.getLayer('bus-stops')) {
-            map.addLayer({
-                id: 'bus-stops',
-                type: 'symbol',
-                source: sourceId,
-                // 'source-layer': sourceLayer,   // REQUIRED for vector/pmtiles
-                minzoom: 5,
-                layout: {
-                    'icon-image': 'bus-15',      // ✅ built-in Maki icon
-                    'icon-size': 1,
-                    'icon-allow-overlap': true,
-                    'icon-anchor': 'bottom',
-                    'visibility': 'visible',
-                    'text-field': ['get', 'stop_name'], // optional: label from your data
-                    'text-size': 11,
-                    'text-offset': [0, 0.6],
-                    'text-optional': true
-                },
-                paint: {
-                    'text-halo-width': 1,
-                    'text-halo-color': '#ffffff'
-                }
-            }, beforeId);
-
-
+        ensureCustomIcon(map).then(() => {
+            if (!map.getLayer('bus-stops')) {
+                map.addLayer({
+                    id: 'bus-stops',
+                    type: 'symbol',
+                    source: sourceId,
+                    // 'source-layer': sourceLayer,   // REQUIRED for vector/pmtiles
+                    minzoom: 5,
+                    layout: {
+                        'icon-image': customIconId,      // ✅ built-in Maki icon
+                        'icon-size': 0.4,
+                        'icon-allow-overlap': true,
+                        'icon-anchor': 'bottom',
+                        'visibility': 'visible',
+                        'text-field': ['get', 'stop_name'], // optional: label from your data
+                        'text-size': 11,
+                        'text-offset': [0, 0.6],
+                        'text-optional': true
+                    },
+                    paint: {
+                        'text-halo-width': 1,
+                        'text-halo-color': '#ffffff'
+                    }
+                }, beforeId);
 
 
-        } else {
-            map.setLayoutProperty('bus-stops', 'visibility', 'visible');
-        }
+
+
+            } else {
+                map.setLayoutProperty('bus-stops', 'visibility', 'visible');
+            }
+        }).catch(console.error);
 
         // Hide all other relevant layers
         [

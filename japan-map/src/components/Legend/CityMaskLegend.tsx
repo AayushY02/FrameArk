@@ -31,7 +31,7 @@ export default function CityMaskLegend({ className, visible, opacity, onChange }
 
         <CardContent className="p-0 space-y-3">
           {/* Preview swatch */}
-          <div className="rounded-xl bg-white/90 p-1 shadow ring-1 ring-black/5 space-y-4">
+          <div className="rounded-xl bg-white/90 p-1 space-y-4">
             <div className="text-xs font-semibold text-black">外側の不透明度</div>
 
             {/* Visual preview of dim strength */}

@@ -23,7 +23,7 @@ let __handlersBound = false;
 
 /** Configure your data path (or set VITE_BUS_STOPS_URL) */
 const BUS_STOPS_URL =
-  (import.meta as any).env?.VITE_BUS_STOPS_URL ?? "/data/bus_stops.geojson";
+  (import.meta as any).env?.VITE_BUS_STOPS_URL ?? "/data/bus_coverage.geojson";
 
 /** IDs (shared across both toggles) */
 const IDS = {
