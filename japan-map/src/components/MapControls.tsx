@@ -901,7 +901,7 @@ export default function MapControls({
                                         { label: '全て', category: '', icon: <Store size={16} />, color: "#808080" }, // All categories (subete)
                                         { label: 'デパート・ショッピングモール', category: 'デパート・ショッピングモール', icon: <ShoppingBag size={16} />, color: "#FF5733" }, // Shopping Mall
                                         { label: 'スーパーマーケット', category: 'スーパーマーケット', icon: <Store size={16} />, color: "#33FF57" }, // Supermarket
-                                        // { label: 'その他', category: 'その他', icon: <Store size={16} />, color: "#FF99C8" } // Supermarket
+                                        { label: 'その他', category: 'その他', icon: <Store size={16} />, color: "#FF99C8" }
                                     ].map(({ label, category, color }) => (
 
                                         <div key={label} className="flex items-center justify-between">
