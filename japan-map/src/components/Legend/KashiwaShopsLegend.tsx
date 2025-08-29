@@ -137,6 +137,7 @@ export const shopCategoriesLegend = [
   { label: "全て", category: "" }, // special row; not shown in legend
   { label: "デパート・ショッピングモール", category: "デパート・ショッピングモール", color: "#FF5733" },
   { label: "スーパーマーケット", category: "スーパーマーケット", color: "#33FF57" },
+  { label: "その他", category: "その他", color: "#FF99C8" },
 ];
 
 /** Utility: pick a color fallback deterministically */

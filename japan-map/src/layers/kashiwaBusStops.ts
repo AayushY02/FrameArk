@@ -1,8 +1,49 @@
+
+
+
 // export const shopCategories = [
-//     { label: 'デパート・ショッピングモール', color: '#FF5733' },  // Red for Shopping Mall
-//     { label: 'スーパーマーケット', color: '#33FF57' }  // Green for Supermarket
+//     { label: 'デパート・ショッピングモール', color: '#FF5733' }, // Red for Shopping Mall
+//     { label: 'スーパーマーケット', color: '#33FF57' },           // Green for Supermarket
+//     { label: 'その他', color: '#FF99C8' },           // Green for Supermarket
 // ];
 
+// function registerShopSquareImages(map: maplibregl.Map) {
+//     const baseSize = 80;  // px
+//     const border = 10;     // px
+//     const idsAndColors: Array<[string, string]> = [
+//         ['shop-square-デパート・ショッピングモール', '#FF5733'],
+//         ['shop-square-スーパーマーケット', '#33FF57'],
+//         ['shop-square-その他', '#FF99C8'], // default
+//     ];
+
+//     const makeSquare = (fill: string) => {
+//         const canvas = document.createElement('canvas');
+//         canvas.width = baseSize;
+//         canvas.height = baseSize;
+//         const ctx = canvas.getContext('2d')!;
+//         ctx.clearRect(0, 0, baseSize, baseSize);
+//         // outer white
+//         ctx.fillStyle = '#FFFFFF';
+//         ctx.fillRect(0, 0, baseSize, baseSize);
+//         // inner fill
+//         ctx.fillStyle = fill;
+//         ctx.fillRect(border, border, baseSize - border * 2, baseSize - border * 2);
+
+//         // Get pixel data
+//         const imageData = ctx.getImageData(0, 0, baseSize, baseSize);
+//         return {
+//             width: imageData.width,
+//             height: imageData.height,
+//             data: new Uint8ClampedArray(imageData.data.buffer),
+//         };
+//     };
+
+//     idsAndColors.forEach(([id, color]) => {
+//         if (!map.hasImage(id)) {
+//             map.addImage(id, makeSquare(color), { pixelRatio: 2 });
+//         }
+//     });
+// }
 // export const toggleKashiwaShopsLayer = (
 //     map: maplibregl.Map,
 //     kashiwaShopsVisible: boolean,
@@ -16,87 +57,98 @@
 //         const sourceId = 'kashiwa-shops';
 //         const geojsonUrl = '/data/kashiwa_shops.geojson';
 
-//         // Add the source if it's not already present
+//         // Add or refresh the source
 //         if (!map.getSource(sourceId)) {
 //             map.addSource(sourceId, {
 //                 type: 'geojson',
 //                 data: geojsonUrl
 //             });
+//         } else {
+//             const src = map.getSource(sourceId) as maplibregl.GeoJSONSource;
+//             // @ts-ignore
+//             src.setData(geojsonUrl);
 //         }
 
-//         // Define the categories and their corresponding colors
+//         // Ensure our square icons are registered
+//         registerShopSquareImages(map);
 
+//         // "All" toggle
+//         const showAllShops = selectedCategories.includes('');
 
-//         // Check if "全て" (All) is selected
-//         const showAllShops = selectedCategories.includes('');  // Check if "全て" is selected
-
-//         // Remove "subete" layer if it exists
+//         // Remove "subete" (all) layer if it exists
 //         if (map.getLayer('kashiwa-shops-subete')) {
 //             map.removeLayer('kashiwa-shops-subete');
 //         }
 
-//         // Add the "subete" layer if "全て" is selected
 //         if (showAllShops) {
-//             // Add the "subete" layer that shows all categories without any filter
-//             const layerId = `kashiwa-shops-subete`;
-
+//             // SYMBOL layer with square icons selected by category
+//             const layerId = 'kashiwa-shops-subete';
 //             if (!map.getLayer(layerId)) {
 //                 map.addLayer({
 //                     id: layerId,
-//                     type: 'circle',
+//                     type: 'symbol',
 //                     source: sourceId,
-//                     paint: {
-//                         'circle-radius': 6,
-//                         'circle-opacity': 0.8,
-//                         'circle-stroke-width': 1,
-//                         'circle-color': [
+//                     layout: {
+//                         // pick an icon per feature based on カテゴリ
+//                         'icon-image': [
 //                             'match',
 //                             ['get', 'カテゴリ'],
-//                             'デパート・ショッピングモール', '#FF5733',  // Red for Shopping Mall
-//                             'スーパーマーケット', '#33FF57',  // Green for Supermarket
-//                             '#808080'  // Default color (gray)
-//                         ]
+//                             'デパート・ショッピングモール', 'shop-square-デパート・ショッピングモール',
+//                             'スーパーマーケット', 'shop-square-スーパーマーケット',
+                            
+//               /* default */ 'shop-square-その他'
+//                         ],
+//                         'icon-size': 0.5,            // ≈12px on a 24px base
+//                         'icon-allow-overlap': true,
+//                         'icon-ignore-placement': true
+//                     },
+//                     paint: {
+//                         'icon-opacity': 0.9
 //                     }
-
 //                 });
 //             }
 //         } else {
-//             // Add layers for selected categories if "subete" is not selected
+//             // Per-category layers
 //             shopCategories.forEach((category) => {
 //                 const layerId = `kashiwa-shops-${category.label}`;
 
-//                 // Remove individual layer if it exists before adding a new one
+//                 // Remove if exists
 //                 if (map.getLayer(layerId)) {
 //                     map.removeLayer(layerId);
 //                 }
 
-//                 // Add the layer only if it's selected
 //                 if (selectedCategories.includes(category.label)) {
 //                     map.addLayer({
 //                         id: layerId,
-//                         type: 'circle',
+//                         type: 'symbol',
 //                         source: sourceId,
 //                         filter: ['==', ['get', 'カテゴリ'], category.label],
+//                         layout: {
+//                             'icon-image':
+//                                 category.label === 'デパート・ショッピングモール'
+//                                     ? 'shop-square-デパート・ショッピングモール'
+//                                     : category.label === 'スーパーマーケット'
+//                                         ? 'shop-square-スーパーマーケット'
+//                                         : 'shop-square-その他',
+//                             'icon-size': 0.5,
+//                             'icon-allow-overlap': true,
+//                             'icon-ignore-placement': true
+//                         },
 //                         paint: {
-//                             'circle-radius': 6,
-//                             'circle-opacity': 0.8,
-//                             'circle-stroke-width': 1,
-//                             'circle-color': category.color // Use category color
+//                             'icon-opacity': 0.9
 //                         }
 //                     });
 //                 }
 //             });
-
-
 //         }
 
 //         // Mark layer visibility state as updated
 //         setKashiwaShopsVisible(!kashiwaShopsVisible);
 //         map.once('idle', () => setIsLoading(false));
 //     };
+
 //     // Ensure that the map style is loaded
 //     if (map.isStyleLoaded()) {
-
 //         [
 //             'mesh-1km-fill', 'mesh-1km-outline',
 //             'mesh-500m-fill', 'mesh-500m-outline',
@@ -109,348 +161,199 @@
 
 //         addShopsLayer(map, selectedCategories);
 //     } else {
-//         // Wait for style to load before adding the layer
 //         map.on('style.load', () => {
 //             addShopsLayer(map, selectedCategories);
 //         });
 //     }
-
-
 // };
+
+
+
+
+
+
+
+
+
+
 
 
 export const shopCategories = [
-    { label: 'デパート・ショッピングモール', color: '#FF5733' }, // Red for Shopping Mall
-    { label: 'スーパーマーケット', color: '#33FF57' },           // Green for Supermarket
+  { label: 'デパート・ショッピングモール', color: '#FF5733' },
+  { label: 'スーパーマーケット', color: '#33FF57' },
+  { label: 'その他', color: '#FF99C8' },
 ];
 
 function registerShopSquareImages(map: maplibregl.Map) {
-    const baseSize = 80;  // px
-    const border = 10;     // px
-    const idsAndColors: Array<[string, string]> = [
-        ['shop-square-デパート・ショッピングモール', '#FF5733'],
-        ['shop-square-スーパーマーケット', '#33FF57'],
-        ['shop-square-その他', '#808080'], // default
-    ];
+  const baseSize = 80;  // px
+  const border = 10;    // px
+  const idsAndColors: Array<[string, string]> = [
+    ['shop-square-デパート・ショッピングモール', '#FF5733'],
+    ['shop-square-スーパーマーケット', '#33FF57'],
+    ['shop-square-その他', '#FF99C8'], // default
+  ];
 
-    const makeSquare = (fill: string) => {
-        const canvas = document.createElement('canvas');
-        canvas.width = baseSize;
-        canvas.height = baseSize;
-        const ctx = canvas.getContext('2d')!;
-        ctx.clearRect(0, 0, baseSize, baseSize);
-        // outer white
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(0, 0, baseSize, baseSize);
-        // inner fill
-        ctx.fillStyle = fill;
-        ctx.fillRect(border, border, baseSize - border * 2, baseSize - border * 2);
+  const makeSquare = (fill: string) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = baseSize;
+    canvas.height = baseSize;
+    const ctx = canvas.getContext('2d')!;
+    ctx.clearRect(0, 0, baseSize, baseSize);
 
-        // Get pixel data
-        const imageData = ctx.getImageData(0, 0, baseSize, baseSize);
-        return {
-            width: imageData.width,
-            height: imageData.height,
-            data: new Uint8ClampedArray(imageData.data.buffer),
-        };
+    // outer white
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, baseSize, baseSize);
+
+    // inner fill
+    ctx.fillStyle = fill;
+    ctx.fillRect(border, border, baseSize - border * 2, baseSize - border * 2);
+
+    const imageData = ctx.getImageData(0, 0, baseSize, baseSize);
+    return {
+      width: imageData.width,
+      height: imageData.height,
+      data: new Uint8ClampedArray(imageData.data.buffer),
     };
+  };
 
-    idsAndColors.forEach(([id, color]) => {
-        if (!map.hasImage(id)) {
-            map.addImage(id, makeSquare(color), { pixelRatio: 2 });
-        }
-    });
-}
-export const toggleKashiwaShopsLayer = (
-    map: maplibregl.Map,
-    kashiwaShopsVisible: boolean,
-    setIsLoading: (v: boolean) => void,
-    setKashiwaShopsVisible: (v: boolean) => void,
-    selectedCategories: string[]
-) => {
-    setIsLoading(true);
-
-    const addShopsLayer = (map: maplibregl.Map, selectedCategories: string[]) => {
-        const sourceId = 'kashiwa-shops';
-        const geojsonUrl = '/data/kashiwa_shops.geojson';
-
-        // Add or refresh the source
-        if (!map.getSource(sourceId)) {
-            map.addSource(sourceId, {
-                type: 'geojson',
-                data: geojsonUrl
-            });
-        } else {
-            const src = map.getSource(sourceId) as maplibregl.GeoJSONSource;
-            // @ts-ignore
-            src.setData(geojsonUrl);
-        }
-
-        // Ensure our square icons are registered
-        registerShopSquareImages(map);
-
-        // "All" toggle
-        const showAllShops = selectedCategories.includes('');
-
-        // Remove "subete" (all) layer if it exists
-        if (map.getLayer('kashiwa-shops-subete')) {
-            map.removeLayer('kashiwa-shops-subete');
-        }
-
-        if (showAllShops) {
-            // SYMBOL layer with square icons selected by category
-            const layerId = 'kashiwa-shops-subete';
-            if (!map.getLayer(layerId)) {
-                map.addLayer({
-                    id: layerId,
-                    type: 'symbol',
-                    source: sourceId,
-                    layout: {
-                        // pick an icon per feature based on カテゴリ
-                        'icon-image': [
-                            'match',
-                            ['get', 'カテゴリ'],
-                            'デパート・ショッピングモール', 'shop-square-デパート・ショッピングモール',
-                            'スーパーマーケット', 'shop-square-スーパーマーケット',
-              /* default */ 'shop-square-その他'
-                        ],
-                        'icon-size': 0.5,            // ≈12px on a 24px base
-                        'icon-allow-overlap': true,
-                        'icon-ignore-placement': true
-                    },
-                    paint: {
-                        'icon-opacity': 0.9
-                    }
-                });
-            }
-        } else {
-            // Per-category layers
-            shopCategories.forEach((category) => {
-                const layerId = `kashiwa-shops-${category.label}`;
-
-                // Remove if exists
-                if (map.getLayer(layerId)) {
-                    map.removeLayer(layerId);
-                }
-
-                if (selectedCategories.includes(category.label)) {
-                    map.addLayer({
-                        id: layerId,
-                        type: 'symbol',
-                        source: sourceId,
-                        filter: ['==', ['get', 'カテゴリ'], category.label],
-                        layout: {
-                            'icon-image':
-                                category.label === 'デパート・ショッピングモール'
-                                    ? 'shop-square-デパート・ショッピングモール'
-                                    : category.label === 'スーパーマーケット'
-                                        ? 'shop-square-スーパーマーケット'
-                                        : 'shop-square-その他',
-                            'icon-size': 0.5,
-                            'icon-allow-overlap': true,
-                            'icon-ignore-placement': true
-                        },
-                        paint: {
-                            'icon-opacity': 0.9
-                        }
-                    });
-                }
-            });
-        }
-
-        // Mark layer visibility state as updated
-        setKashiwaShopsVisible(!kashiwaShopsVisible);
-        map.once('idle', () => setIsLoading(false));
-    };
-
-    // Ensure that the map style is loaded
-    if (map.isStyleLoaded()) {
-        [
-            'mesh-1km-fill', 'mesh-1km-outline',
-            'mesh-500m-fill', 'mesh-500m-outline',
-            'mesh-250m-fill', 'mesh-250m-outline',
-        ].forEach(id => {
-            if (map.getLayer(id)) {
-                map.setLayoutProperty(id, 'visibility', 'none');
-            }
-        });
-
-        addShopsLayer(map, selectedCategories);
-    } else {
-        map.on('style.load', () => {
-            addShopsLayer(map, selectedCategories);
-        });
+  idsAndColors.forEach(([id, color]) => {
+    if (!map.hasImage(id)) {
+      map.addImage(id, makeSquare(color), { pixelRatio: 2 });
     }
+  });
+}
+
+/**
+ * Filter for “その他” = anything that is NOT in the two main categories,
+ * plus records with missing/empty カテゴリ.
+ */
+const SONOTA_FILTER: any = [
+  'any',
+  ['!', ['has', 'カテゴリ']],                                   // property missing
+  ['==', ['coalesce', ['get', 'カテゴリ'], ''], ''],            // null or empty string
+  ['!', ['in', ['get', 'カテゴリ'], 'デパート・ショッピングモール', 'スーパーマーケット']], // not in set
+];
+
+export const toggleKashiwaShopsLayer = (
+  map: maplibregl.Map,
+  kashiwaShopsVisible: boolean,
+  setIsLoading: (v: boolean) => void,
+  setKashiwaShopsVisible: (v: boolean) => void,
+  selectedCategories: string[]
+) => {
+  setIsLoading(true);
+
+  const addShopsLayer = (map: maplibregl.Map, selectedCategories: string[]) => {
+    const sourceId = 'kashiwa-shops';
+    const geojsonUrl = '/data/kashiwa_shops.geojson';
+
+    // Add or refresh the source
+    if (!map.getSource(sourceId)) {
+      map.addSource(sourceId, {
+        type: 'geojson',
+        data: geojsonUrl,
+      });
+    } else {
+      const src = map.getSource(sourceId) as maplibregl.GeoJSONSource;
+      // @ts-ignore - allow setting URL to refresh
+      src.setData(geojsonUrl);
+    }
+
+    // Ensure our square icons are registered
+    registerShopSquareImages(map);
+
+    // “All” toggle
+    const showAllShops = selectedCategories.includes('');
+
+    // Clean up any existing shop layers to avoid duplicates
+    if (map.getLayer('kashiwa-shops-subete')) {
+      map.removeLayer('kashiwa-shops-subete');
+    }
+    shopCategories.forEach((c) => {
+      const lid = `kashiwa-shops-${c.label}`;
+      if (map.getLayer(lid)) {
+        map.removeLayer(lid);
+      }
+    });
+
+    if (showAllShops) {
+      // One layer showing all features, with per-feature icon
+      const layerId = 'kashiwa-shops-subete';
+      if (!map.getLayer(layerId)) {
+        map.addLayer({
+          id: layerId,
+          type: 'symbol',
+          source: sourceId,
+          layout: {
+            'icon-image': [
+              'match',
+              ['get', 'カテゴリ'],
+              'デパート・ショッピングモール', 'shop-square-デパート・ショッピングモール',
+              'スーパーマーケット', 'shop-square-スーパーマーケット',
+              /* default */ 'shop-square-その他',
+            ],
+            'icon-size': 0.5,
+            'icon-allow-overlap': true,
+            'icon-ignore-placement': true,
+          },
+          paint: {
+            'icon-opacity': 0.9,
+          },
+        });
+      }
+    } else {
+      // Per-category layers
+      shopCategories.forEach((category) => {
+        if (!selectedCategories.includes(category.label)) return;
+
+        const layerId = `kashiwa-shops-${category.label}`;
+        const isSonota = category.label === 'その他';
+
+        map.addLayer({
+          id: layerId,
+          type: 'symbol',
+          source: sourceId,
+          filter: isSonota
+            ? SONOTA_FILTER
+            : ['==', ['get', 'カテゴリ'], category.label],
+          layout: {
+            'icon-image':
+              category.label === 'デパート・ショッピングモール'
+                ? 'shop-square-デパート・ショッピングモール'
+                : category.label === 'スーパーマーケット'
+                ? 'shop-square-スーパーマーケット'
+                : 'shop-square-その他',
+            'icon-size': 0.5,
+            'icon-allow-overlap': true,
+            'icon-ignore-placement': true,
+          },
+          paint: {
+            'icon-opacity': 0.9,
+          },
+        });
+      });
+    }
+
+    // Mark layer visibility state as updated
+    setKashiwaShopsVisible(!kashiwaShopsVisible);
+    map.once('idle', () => setIsLoading(false));
+  };
+
+  // Ensure that the map style is loaded
+  if (map.isStyleLoaded()) {
+    // Hide mesh layers if desired when showing shops
+    [
+      'mesh-1km-fill', 'mesh-1km-outline',
+      'mesh-500m-fill', 'mesh-500m-outline',
+      'mesh-250m-fill', 'mesh-250m-outline',
+    ].forEach((id) => {
+      if (map.getLayer(id)) {
+        map.setLayoutProperty(id, 'visibility', 'none');
+      }
+    });
+
+    addShopsLayer(map, selectedCategories);
+  } else {
+    map.on('style.load', () => addShopsLayer(map, selectedCategories));
+  }
 };
-
-
-
-
-
-
-
-
-
-
-
-// import mapboxgl from "mapbox-gl";
-// import { PmTilesSource } from "mapbox-pmtiles";
-
-// export const shopCategories = [
-//     { label: "デパート・ショッピングモール", color: "#FF5733" },
-//     { label: "スーパーマーケット", color: "#33FF57" }
-// ];
-
-// // optional: keep ASCII-only layer ids
-// const slug = (s: string) =>
-//     s
-//         .normalize("NFKD")
-//         .replace(/[^\w\s-]/g, "")
-//         .trim()
-//         .replace(/\s+/g, "-")
-//         .toLowerCase();
-
-// export const toggleKashiwaShopsLayer = (
-//     map: maplibregl.Map,
-//     kashiwaShopsVisible: boolean,
-//     setIsLoading: (v: boolean) => void,
-//     setKashiwaShopsVisible: (v: boolean) => void,
-//     selectedCategories: string[]
-// ) => {
-//     setIsLoading(true);
-
-//     const ensurePmtilesRegistered = () => {
-//         const g = mapboxgl as any;
-//         if (!g.__pmtilesRegistered) {
-//             (mapboxgl.Style as any).setSourceType(PmTilesSource.SOURCE_TYPE, PmTilesSource);
-//             g.__pmtilesRegistered = true;
-//         }
-//     };
-
-//     const addShopsLayer = async (map: maplibregl.Map, selectedCategories: string[]) => {
-//         ensurePmtilesRegistered();
-
-//         const sourceId = "kashiwa-shops";
-//         const pmtilesUrl = `${location.origin}/tiles/kashiwa_shops.pmtiles`;
-//         const SOURCE_LAYER = "kashiwa_shops"; // <- tippecanoe -l name from your script
-
-//         // header gives min/max zoom and optional bounds/center
-//         const h = await PmTilesSource.getHeader(pmtilesUrl);
-
-//         if (!map.getSource(sourceId)) {
-//             map.addSource(sourceId, {
-//                 type: PmTilesSource.SOURCE_TYPE as any,
-//                 url: pmtilesUrl,
-//                 minzoom: h.minZoom,
-//                 maxzoom: h.maxZoom,
-//                 bounds:
-//                     h.minLon !== undefined
-//                         ? [h.minLon, h.minLat, h.maxLon, h.maxLat]
-//                         : undefined
-//             } as any);
-//         }
-
-//         const showAllShops = selectedCategories.includes(""); // your "全て" sentinel
-
-//         // Always clear the "all" layer first
-//         if (map.getLayer("kashiwa-shops-subete")) {
-//             map.removeLayer("kashiwa-shops-subete");
-//         }
-
-//         if (showAllShops) {
-//             // Also clear any category layers if switching to "all"
-//             for (const category of shopCategories) {
-//                 const layerId = `kashiwa-shops-${slug(category.label)}`;
-//                 if (map.getLayer(layerId)) map.removeLayer(layerId);
-//             }
-
-//             const layerId = "kashiwa-shops-subete";
-//             if (!map.getLayer(layerId)) {
-//                 map.addLayer({
-//                     id: layerId,
-//                     type: "circle",
-//                     source: sourceId,
-//                     "source-layer": SOURCE_LAYER,
-//                     paint: {
-//                         "circle-radius": 6,
-//                         "circle-opacity": 0.8,
-//                         "circle-stroke-width": 1,
-//                         "circle-stroke-color": "#000000", // optional
-//                         "circle-color": [
-//                             "match",
-//                             ["get", "カテゴリ"],
-//                             "デパート・ショッピングモール",
-//                             "#FF5733",
-//                             "スーパーマーケット",
-//                             "#33FF57",
-//                             "#808080"
-//                         ]
-//                     }
-//                 });
-//             }
-//         } else {
-//             // Build per-category layers; first clear any that exist
-//             for (const category of shopCategories) {
-//                 const layerId = `kashiwa-shops-${slug(category.label)}`;
-
-//                 if (map.getLayer(layerId)) {
-//                     map.removeLayer(layerId);
-//                 }
-//                 if (selectedCategories.includes(category.label)) {
-//                     map.addLayer({
-//                         id: layerId,
-//                         type: "circle",
-//                         source: sourceId,
-//                         "source-layer": SOURCE_LAYER, // <-- REQUIRED
-//                         filter: ["==", ["get", "カテゴリ"], category.label],
-//                         paint: {
-//                             "circle-radius": 6,
-//                             "circle-opacity": 0.8,
-//                             "circle-stroke-width": 1,
-//                             "circle-stroke-color": "#000000", // optional
-//                             "circle-color": category.color
-//                         }
-//                     });
-//                 }
-//             }
-//         }
-
-//         // Set initial view once (optional)
-//         if (h.centerLon != null && h.centerLat != null && !(map as any).__kashiwaViewSet) {
-//             map.setCenter([h.centerLon, h.centerLat]);
-//             if (typeof h.maxZoom === "number") {
-//                 map.setZoom(Math.max(0, h.maxZoom - 2));
-//             }
-//             (map as any).__kashiwaViewSet = true;
-//         }
-
-//         setKashiwaShopsVisible(!kashiwaShopsVisible);
-//         map.once("idle", () => setIsLoading(false));
-//     };
-
-//     // Hide your mesh layers (unchanged)
-//     const hideMeshLayers = () => {
-//         [
-//             "mesh-1km-fill",
-//             "mesh-1km-outline",
-//             "mesh-500m-fill",
-//             "mesh-500m-outline",
-//             "mesh-250m-fill",
-//             "mesh-250m-outline"
-//         ].forEach((id) => {
-//             if (map.getLayer(id)) {
-//                 map.setLayoutProperty(id, "visibility", "none");
-//             }
-//         });
-//     };
-
-//     if (map.isStyleLoaded()) {
-//         hideMeshLayers();
-//         addShopsLayer(map, selectedCategories);
-//     } else {
-//         map.on("style.load", () => {
-//             hideMeshLayers();
-//             addShopsLayer(map, selectedCategories);
-//         });
-//     }
-// };
