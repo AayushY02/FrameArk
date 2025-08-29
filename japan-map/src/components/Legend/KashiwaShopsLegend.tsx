@@ -169,7 +169,7 @@ export default function KashiwaShopsLegend({
         </CardHeader>
 
         <CardContent className="p-0 space-y-2">
-          <div className="rounded-xl bg-white/90 p-3 shadow ring-1 ring-black/5">
+          <div className="rounded-xl bg-white/90 p-3 ">
             <div className="text-xs font-semibold text-gray-900 mb-2">レイヤー</div>
             <ul className="grid grid-cols-1 gap-2">
               {visibleItems.map((item, idx) => {
